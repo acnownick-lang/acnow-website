@@ -6,6 +6,7 @@
     <title>AC Repair &amp; HVAC Service in Port St. Lucie, FL | A/C Now LLC</title>
     <meta name="description" content="Veteran-owned AC repair delivering military-grade precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568 for a free estimate today!">
     <link rel="canonical" href="https://acnowllc.netlify.app/">
+    <link rel="manifest" href="manifest.json">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://acnowllc.netlify.app/">
     <meta property="og:title" content="A/C Now LLC | Port St. Lucie AC Repair & HVAC">
@@ -666,7 +667,7 @@
             <span class="top-bar-item">
                 <!-- WCAG 1.1.1: Decorative SVG must be aria-hidden -->
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
             </span>
             <span class="top-bar-item highlight">
                 <span class="badge">PROMO</span> Are you a new customer? Save 10% on your first repair service!
@@ -914,7 +915,7 @@
                 <div class="comparison-slider-container">
                     <div class="comparison-image comparison-image-before" style="background-image: url('downloaded_images/split_res_repair.jpg');"></div>
                     <div class="comparison-image comparison-image-after" style="background-image: url('downloaded_images/split_res_install.jpg');"></div>
-                    <div class="comparison-handle">⬌</div>
+                    <button class="comparison-handle" aria-label="Coil comparison slider. Use Left and Right arrow keys to compare clean vs dirty." aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">⬌</button>
                     <span class="comparison-label label-before">Clogged Coil</span>
                     <span class="comparison-label label-after">A/C Now Overhaul</span>
                 </div>
@@ -1034,7 +1035,7 @@
                                 </div>
                             </div>
                             <div class="calc-results-pane">
-                                <div class="results-wrapper">
+                                <div class="results-wrapper" role="status" aria-live="polite">
                                     <span class="results-lbl">Estimated Monthly Savings</span>
                                     <div class="results-price" id="seer-monthly-savings">$133.33</div>
                                     <div class="results-yearly">Estimated Yearly Savings: <strong id="seer-yearly-savings">$1,600.00</strong></div>
@@ -1043,6 +1044,10 @@
                                     </div>
                                     <p class="results-note">Upgrading to an 18 SEER2 unit reduces your cooling power draw by approximately 44% compared to a standard 10 SEER condenser.</p>
                                     <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Claim Your Free Installation Quote</a>
+                                    <button class="btn btn-secondary share-btn-seer" style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--primary);"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                        <span>Share Savings Report</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1083,12 +1088,16 @@
                                 </div>
                             </div>
                             <div class="calc-results-pane">
-                                <div class="results-wrapper">
+                                <div class="results-wrapper" role="status" aria-live="polite">
                                     <span class="results-lbl">Net Annual Membership Savings</span>
                                     <div class="results-price" id="club-savings-val">$47.00</div>
                                     <div class="results-yearly">Annual Member Cost: <strong>$228.00</strong></div>
                                     <p class="results-note" style="margin-top: 15px;">Your savings covers the entire cost of membership, plus gives you priority front-of-the-line scheduling during peak summer hours!</p>
                                     <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Join the Service Club Now</a>
+                                    <button class="btn btn-secondary share-btn-club" style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--primary);"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                        <span>Share Benefits Summary</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1197,13 +1206,13 @@
                     </svg>
 
                     <!-- Interactive Glowing Hotspots -->
-                    <button class="van-hotspot active hs-parts" data-target="parts" aria-label="Replacement Parts Hotspot">1</button>
-                    <button class="van-hotspot hs-refrigerant" data-target="refrigerant" aria-label="Refrigerant & Tools Hotspot">2</button>
-                    <button class="van-hotspot hs-filters" data-target="filters" aria-label="Air Quality Filters Hotspot">3</button>
-                    <button class="van-hotspot hs-tools" data-target="tools" aria-label="Diagnostic Equipment Hotspot">4</button>
+                    <button class="van-hotspot active hs-parts" data-target="parts" aria-label="Replacement Parts Hotspot" aria-pressed="true">1</button>
+                    <button class="van-hotspot hs-refrigerant" data-target="refrigerant" aria-label="Refrigerant & Tools Hotspot" aria-pressed="false">2</button>
+                    <button class="van-hotspot hs-filters" data-target="filters" aria-label="Air Quality Filters Hotspot" aria-pressed="false">3</button>
+                    <button class="van-hotspot hs-tools" data-target="tools" aria-label="Diagnostic Equipment Hotspot" aria-pressed="false">4</button>
                 </div>
 
-                <div class="van-details-panel">
+                <div class="van-details-panel" role="status" aria-live="polite">
                     <h3 id="van-detail-title">⚡ Core Replacement Parts</h3>
                     <p id="van-detail-desc">We carry high-quality replacement parts on every truck, including dual run capacitors (35/5uF to 45/5uF), contactors, fan relays, and universal transformer modules. This ensures we can resolve 85% of common AC electrical issues right on the spot without leaving you in the heat to fetch parts.</p>
                 </div>
@@ -1377,6 +1386,78 @@
                                 <span class="checklist-item-text">Audit gas furnace furnace limit safety switches</span>
                             </div>
                         </div>
+    </section>
+
+    <!-- Smart Climate Interactive Experience Section -->
+    <section class="reveal smart-climate-section" style="background-color: var(--dark); padding: 100px 0; position: relative; overflow: hidden; z-index: 1;">
+        <!-- Background glows -->
+        <div class="smart-bg-glow" style="position: absolute; top: -10%; right: -10%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(11, 99, 229, 0.08) 0%, transparent 70%); pointer-events: none; z-index: -1;"></div>
+        
+        <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+            <div class="smart-climate-text">
+                <span class="section-tag" style="color: #60A5FA;">INTERACTIVE COMFORT</span>
+                <h2 style="font-family: var(--font-heading); font-size: 42px; font-weight: 800; color: var(--white); margin: 15px 0 25px 0; line-height: 1.2;">Calibrate Your Smart Climate</h2>
+                <p style="font-size: 16px; color: var(--gray-dark); line-height: 1.8; margin-bottom: 20px;">
+                    Modern comfort is built on digital precision. Our veteran technicians calibrate smart thermostats to run custom staging algorithms, optimizing both runtime cycles and humidity levels inside your Florida home.
+                </p>
+                <p style="font-size: 16px; color: var(--gray-dark); line-height: 1.8; margin-bottom: 30px;">
+                    Interact with our 3D simulator to test how changing target temperatures controls cooling, heating, or ECO cycles in real time. Hover to feel the responsive 3D parallax tilt.
+                </p>
+                <div class="smart-climate-actions" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <a href="contact.html" class="btn btn-primary" style="background: linear-gradient(135deg, var(--primary) 0%, #084fc2 100%);">Upgrade to Smart Thermostat</a>
+                    <a href="contact.html" class="btn btn-secondary">Request Calibration</a>
+                </div>
+            </div>
+            
+            <div class="smart-climate-widget-wrap" style="perspective: 1200px; display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%;">
+                <!-- Dynamic Interactive Tabs -->
+                <div class="smart-tabs" style="display: flex; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 5px; border-radius: 12px; margin-bottom: 10px; z-index: 10;">
+                    <button class="smart-tab-btn active" data-tab="thermostat" style="background: var(--primary); border: none; color: var(--white); padding: 8px 16px; border-radius: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Comfort Dial</button>
+                    <button class="smart-tab-btn" data-tab="airflow" style="background: none; border: none; color: var(--gray-dark); padding: 8px 16px; border-radius: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Duct Airflow Map</button>
+                </div>
+                
+                <!-- Tab Panel 1: Thermostat -->
+                <div id="panel-thermostat" class="smart-panel active" style="width: 100%; display: flex; justify-content: center;">
+                    <!-- 3D Thermostat Card -->
+                    <div class="thermostat-card" id="thermostat-card" role="group" aria-label="Digital Thermostat Climate Control" style="background: rgba(10, 25, 47, 0.45); backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 28px; padding: 40px; width: 340px; height: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 50px rgba(11,99,229,0.15); display: flex; flex-direction: column; align-items: center; justify-content: space-between; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-8deg); transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease;">
+                        <span class="sr-only">Interactive Thermostat Dial. Current setting is 72 degrees Fahrenheit. Drag dial or use Left/Right arrow keys to adjust.</span>
+                        
+                        <div class="card-header" style="text-align: center; transform: translateZ(30px);">
+                            <h2 style="font-size: 14px; font-weight: 600; letter-spacing: 2px; margin: 0; color: #94a3b8; text-transform: uppercase;">Climate Control</h2>
+                            <span class="status" id="status-text" style="font-size: 11px; font-weight: 700; color: #60A5FA; text-shadow: 0 0 8px #60A5FA; margin-top: 6px; display: block; letter-spacing: 1px; transition: color 0.5s ease;">COOLING SYSTEM ACTIVE</span>
+                        </div>
+
+                        <div class="dial-outer" id="dial-outer" tabindex="0" aria-valuemin="55" aria-valuemax="85" aria-valuenow="72" aria-valuetext="72 degrees Fahrenheit" style="width: 210px; height: 210px; border-radius: 50%; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(11,99,229,0.15); display: flex; justify-content: center; align-items: center; position: relative; cursor: grab; transform: translateZ(45px); transform-style: preserve-3d; touch-action: none;">
+                            <div class="dial-ring" id="dial-ring" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; background: linear-gradient(135deg, #475569, #1e293b, #64748b) border-box; -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; pointer-events: none; transition: transform 0.1s linear;"></div>
+                            <div class="dial-tick" id="dial-tick" style="position: absolute; top: 10px; width: 4px; height: 12px; background-color: #60A5FA; border-radius: 2px; box-shadow: 0 0 8px #60A5FA; transform-origin: center 95px; pointer-events: none;"></div>
+
+                            <div class="screen-inner" style="width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(17, 24, 39, 0.95) 0%, rgba(3, 7, 18, 0.98) 100%); border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; transform: translateZ(25px); pointer-events: none; overflow: hidden;">
+                                <div class="screen-glare" style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 50%); transform: rotate(-15deg);"></div>
+                                <svg class="progress-svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg);">
+                                    <circle cx="80" cy="80" r="75" stroke="rgba(255,255,255,0.03)" stroke-width="4" fill="none"></circle>
+                                    <circle id="progress-bar" cx="80" cy="80" r="75" stroke="#60A5FA" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="471.23" stroke-dashoffset="471.23" style="transition: stroke 0.5s ease, stroke-dashoffset 0.1s linear;"></circle>
+                                </svg>
+                                <div class="temp-value" style="font-size: 56px; font-weight: 800; line-height: 1; margin: 0; background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Outfit', sans-serif; display: flex; align-items: flex-start;">
+                                    <span id="temp-val">72</span>
+                                    <span class="temp-unit" style="font-size: 18px; font-weight: 600; margin-top: 6px; color: #94a3b8;">°</span>
+                                </div>
+                                <div class="temp-ambient" style="font-size: 10px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; margin-top: 2px; text-transform: uppercase;">Room: 73.5°</div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer" style="display: flex; justify-content: space-between; width: 100%; transform: translateZ(30px);">
+                            <button class="mode-btn active" id="btn-cool" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #94a3b8; padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease;">COOL</button>
+                            <button class="mode-btn" id="btn-heat" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #94a3b8; padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease;">HEAT</button>
+                            <button class="mode-btn" id="btn-eco" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #94a3b8; padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease;">ECO</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab Panel 2: WebGL Airflow (Loaded lazily inside iframe) -->
+                <div id="panel-airflow" class="smart-panel" style="width: 100%; display: none; justify-content: center; align-items: center; height: 400px; border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: rgba(10, 25, 47, 0.45); box-shadow: 0 30px 60px rgba(0,0,0,0.4);">
+                    <div id="airflow-iframe-placeholder" style="color: #b0c4de; font-size: 13px; text-align: center; font-family: var(--font-heading); display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                        <span>Loading WebGL Simulation...</span>
+                        <div class="typing-dots"><span></span><span></span><span></span></div>
                     </div>
                 </div>
             </div>
@@ -1465,7 +1546,7 @@
                         <span class="channel-icon" aria-hidden="true">📞</span>
                         <div>
                             <strong>Phone Number</strong>
-                            <p><a href="tel:+17725213568" class="phone-link" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></p>
+                            <p><a href="tel:+17725213568" class="phone-link" data-geo="phone" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></p>
                         </div>
                     </div>
                     <div class="contact-channel">
@@ -1663,7 +1744,7 @@
                     <strong>A/C Now LLC</strong><br>
                     1391 NW St. Lucie West Blvd, STE 120<br>
                     Port St. Lucie, FL 34986<br>
-                    <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
+                    <a href="tel:7725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
                 </address>
             </div>
             <div class="footer-links">
@@ -1696,10 +1777,90 @@
         </div>
     </footer>
     <script src="app.js" defer></script>
-    <!-- WCAG 4.1.2 + 1.3.1: Sticky CTA bar with role, aria-label, and emoji aria-hidden -->
+    <!-- Mobile Sticky CTA Bar -->
     <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
-        <a href="tel:7725213568" class="sticky-cta-btn phone-btn">📞 Call Service Line</a>
+        <a href="tel:7725213568" class="sticky-cta-btn phone-btn" data-geo="phone">📞 Call Service Line</a>
         <a href="contact.html" class="sticky-cta-btn book-btn">📅 Book Service Visit</a>
+    </div>
+
+    <!-- Floating AI Chat Assistant Widget -->
+    <!-- Floating Action Button (FAB) -->
+    <button id="ac-chat-fab" aria-label="Open AC Diagnostic Helper">
+        <div class="fab-pulse"></div>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </button>
+
+    <!-- Main Chat Widget Window -->
+    <div id="ac-chat-widget" class="chat-hidden">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-info">
+                <div class="avatar-container">
+                    <span class="pulse-indicator"></span>
+                    <img src="downloaded_images/Logo2.webp" alt="A/C Now Assistant Mascot" onerror="this.src='https://acnowllc.netlify.app/downloaded_images/Logo2.webp'">
+                </div>
+                <div>
+                    <h4 style="font-family: var(--font-heading); margin: 0; font-size: 15px; font-weight: 600;">A/C Now Assistant</h4>
+                    <p style="margin: 0; font-size: 11px; opacity: 0.8;">Virtual HVAC Support • Online</p>
+                </div>
+            </div>
+            <button id="chat-close-btn" aria-label="Close chat">×</button>
+        </div>
+
+        <!-- Messages Panel -->
+        <div id="chat-messages-container">
+            <!-- Automated greeting -->
+            <div class="message system">
+                <p>Hello! Welcome to A/C Now LLC. I am your Virtual HVAC Assistant. Let's pre-qualify your issue so our dispatch desk can act quickly.</p>
+            </div>
+
+            <!-- Structured Input Wizard Card -->
+            <div id="chat-wizard-card" class="wizard-card">
+                <h5 style="margin: 0; font-size: 14px; font-weight: 700; color: var(--dark); border-bottom: 1px solid var(--gray-light); padding-bottom: 8px;">AC Pre-Qualification Wizard</h5>
+                <form id="chat-wizard-form" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                        <label for="chat-w-name" style="font-size: 11px; font-weight: 600; color: var(--gray-dark);">Your Full Name</label>
+                        <input type="text" id="chat-w-name" placeholder="John Doe" required style="padding: 8px 12px; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 13px; background-color: var(--light);">
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                        <label for="chat-w-city" style="font-size: 11px; font-weight: 600; color: var(--gray-dark);">Your Service City</label>
+                        <select id="chat-w-city" required style="padding: 8px 12px; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 13px; background-color: var(--light);">
+                            <option value="" disabled selected>Select your city...</option>
+                            <option value="Palm City">Palm City</option>
+                            <option value="Stuart">Stuart</option>
+                            <option value="Port St. Lucie">Port St. Lucie</option>
+                            <option value="Hobe Sound">Hobe Sound</option>
+                            <option value="Jensen Beach">Jensen Beach</option>
+                            <option value="Jupiter">Jupiter</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                        <label for="chat-w-issue" style="font-size: 11px; font-weight: 600; color: var(--gray-dark);">Describe your AC's behavior</label>
+                        <textarea id="chat-w-issue" placeholder="E.g., System is running but blowing warm air, or water is leaking from the unit inside..." rows="3" required style="padding: 8px 12px; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 13px; background-color: var(--light); resize: none;"></textarea>
+                    </div>
+                    <button type="submit" class="submit-wizard-btn" style="background-color: var(--primary); color: var(--white); border: none; border-radius: 6px; padding: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; margin-top: 5px;">
+                        <span>Draft Dispatch Report</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer Interactive Chat Bar (Hidden initially) -->
+        <div id="chat-input-bar" class="chat-input-hidden">
+            <input type="text" id="chat-user-text" placeholder="Ask troubleshooting questions..." aria-label="Message Input">
+            <button id="chat-send-btn" aria-label="Send Message">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
     </div>
 
 </body>

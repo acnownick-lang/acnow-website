@@ -60,6 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger-btn');
 
     if (mobileNav && hamburger) {
+        const focusableElements = mobileNav.querySelectorAll('a[href], button');
+        const firstFocusable = focusableElements[0];
+        const lastFocusable = focusableElements[focusableElements.length - 1];
+
         function closeNav() {
             mobileNav.classList.remove('active');
             hamburger.setAttribute('aria-expanded', 'false');
@@ -70,6 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileNav.classList.add('active');
             hamburger.setAttribute('aria-expanded', 'true');
             hamburger.textContent = '✕';
+            if (firstFocusable) {
+                setTimeout(() => firstFocusable.focus(), 50); // Focus the first link in navigation
+            }
         }
 
         // Replace inline onclick with proper JS toggle so aria-expanded stays in sync
@@ -81,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Close when any nav link is tapped (prevents drawer staying open on anchor links)
-        // Optimized using event delegation on mobileNav
         mobileNav.addEventListener('click', (e) => {
             if (e.target.closest('.nav-link')) {
                 closeNav();
@@ -99,11 +105,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Close on Escape key
+        // Close on Escape key and restore focus to hamburger
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
                 closeNav();
                 hamburger.focus();
+            }
+        });
+
+        // Keyboard Focus Trap within mobile navigation drawer overlay
+        mobileNav.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab') return;
+
+            if (e.shiftKey) { // Shift + Tab
+                if (document.activeElement === firstFocusable || document.activeElement === mobileNav) {
+                    hamburger.focus();
+                    e.preventDefault();
+                }
+            } else { // Tab
+                if (document.activeElement === lastFocusable) {
+                    hamburger.focus();
+                    e.preventDefault();
+                }
+            }
+        });
+
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && !e.shiftKey && mobileNav.classList.contains('active')) {
+                if (firstFocusable) {
+                    firstFocusable.focus();
+                    e.preventDefault();
+                }
             }
         });
     }
@@ -159,7 +191,7 @@ window.updateSeerSavings = function() {
     const targetSeer = parseFloat(targetSeerEl.value);
     const monthlyBill = parseFloat(monthlyBillEl.value);
     
-    // Set labels
+    // Set labels & update ARIA slider values
     const valCurrentSeer = document.getElementById("val-current-seer");
     const valTargetSeer = document.getElementById("val-target-seer");
     const valMonthlyBill = document.getElementById("val-monthly-bill");
@@ -167,6 +199,10 @@ window.updateSeerSavings = function() {
     if (valCurrentSeer) valCurrentSeer.textContent = `${currentSeer} SEER (${currentSeer <= 10 ? 'Over 10 Years Old' : 'Standard Older Unit'})`;
     if (valTargetSeer) valTargetSeer.textContent = `${targetSeer} SEER2 (Ultra High Efficiency)`;
     if (valMonthlyBill) valMonthlyBill.textContent = `$${monthlyBill}`;
+
+    currentSeerEl.setAttribute('aria-valuetext', `${currentSeer} SEER`);
+    targetSeerEl.setAttribute('aria-valuetext', `${targetSeer} SEER2`);
+    monthlyBillEl.setAttribute('aria-valuetext', `$${monthlyBill}`);
     
     // Calculation: savings % = 1 - (current_seer / target_seer)
     const savingsRatio = 1 - (currentSeer / targetSeer);
@@ -261,6 +297,13 @@ window.goToWizardStep2 = function() {
         const randomHour = hours[Math.floor(Math.random() * hours.length)];
         slotTimeText.textContent = `Next Dispatch Slot in ${city}: Today between ${randomHour}`;
     }
+
+    // Programmatically move focus to Step 2 heading to prevent focus loss
+    const step2Heading = pane2.querySelector("h3") || pane2.querySelector(".success-slot-box");
+    if (step2Heading) {
+        step2Heading.setAttribute("tabindex", "-1");
+        step2Heading.focus();
+    }
 };
 
 window.goToWizardStep1 = function() {
@@ -276,6 +319,13 @@ window.goToWizardStep1 = function() {
     const step2Indicator = document.getElementById("step-2-indicator");
     if (step1Indicator) step1Indicator.classList.add("active");
     if (step2Indicator) step2Indicator.classList.remove("active");
+
+    // Programmatically move focus to Step 1 heading to prevent focus loss
+    const step1Heading = pane1.querySelector("h3");
+    if (step1Heading) {
+        step1Heading.setAttribute("tabindex", "-1");
+        step1Heading.focus();
+    }
 };
 
 window.submitDispatch = function() {
@@ -634,17 +684,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const handle = sliderContainer.querySelector(".comparison-handle");
         
         let isDragging = false;
+        let currentPercent = 50;
+
+        const setSliderPosition = (percent) => {
+            currentPercent = Math.max(0, Math.min(100, percent));
+            afterImage.style.width = `${currentPercent}%`;
+            handle.style.left = `${currentPercent}%`;
+            handle.setAttribute("aria-valuenow", Math.round(currentPercent));
+        };
 
         const updateSlider = (clientX) => {
             const rect = sliderContainer.getBoundingClientRect();
             let position = ((clientX - rect.left) / rect.width) * 100;
-            
-            // Constrain between 0% and 100%
-            if (position < 0) position = 0;
-            if (position > 100) position = 100;
-
-            afterImage.style.width = `${position}%`;
-            handle.style.left = `${position}%`;
+            setSliderPosition(position);
         };
 
         const startDragging = () => { isDragging = true; };
@@ -665,6 +717,23 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isDragging) return;
             if (e.touches && e.touches[0]) {
                 updateSlider(e.touches[0].clientX);
+            }
+        });
+
+        // Keyboard navigation keys
+        handle.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft") {
+                setSliderPosition(currentPercent - 5);
+                e.preventDefault();
+            } else if (e.key === "ArrowRight") {
+                setSliderPosition(currentPercent + 5);
+                e.preventDefault();
+            } else if (e.key === "Home") {
+                setSliderPosition(0);
+                e.preventDefault();
+            } else if (e.key === "End") {
+                setSliderPosition(100);
+                e.preventDefault();
             }
         });
     };
@@ -708,9 +777,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = hotspotData[target];
 
                 if (data) {
-                    // Update active classes
-                    hotspots.forEach(h => h.classList.remove("active"));
+                    // Update active classes and aria-pressed attributes
+                    hotspots.forEach(h => {
+                        h.classList.remove("active");
+                        h.setAttribute("aria-pressed", "false");
+                    });
                     hs.classList.add("active");
+                    hs.setAttribute("aria-pressed", "true");
 
                     // Fade transition effect
                     panel.style.opacity = "0";
@@ -762,11 +835,30 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
+        // Setup checklist accessibility programmatically
+        items.forEach(item => {
+            item.setAttribute("tabindex", "0");
+            item.setAttribute("role", "checkbox");
+            const isChecked = item.classList.contains("checked");
+            item.setAttribute("aria-checked", isChecked ? "true" : "false");
+        });
+
         // Item toggle checks
         items.forEach(item => {
-            item.addEventListener("click", () => {
+            const toggleItem = () => {
+                const isChecked = item.getAttribute("aria-checked") === "true";
+                item.setAttribute("aria-checked", isChecked ? "false" : "true");
                 item.classList.toggle("checked");
                 updateProgress();
+            };
+
+            item.addEventListener("click", toggleItem);
+
+            item.addEventListener("keydown", (e) => {
+                if (e.key === " " || e.key === "Enter") {
+                    e.preventDefault(); // Prevents page scrolling with Space
+                    toggleItem();
+                }
             });
         });
 
@@ -862,7 +954,499 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     initializeReviewTicker();
+
+    // ==========================================================================
+    // 9. Floating AI Chat Assistant Widget
+    // ==========================================================================
+    const initializeChatWidget = () => {
+        const fab = document.getElementById("ac-chat-fab");
+        const widget = document.getElementById("ac-chat-widget");
+        const closeBtn = document.getElementById("chat-close-btn");
+        const wizardForm = document.getElementById("chat-wizard-form");
+        const messagesContainer = document.getElementById("chat-messages-container");
+        const inputBar = document.getElementById("chat-input-bar");
+        const userTextInput = document.getElementById("chat-user-text");
+        const sendBtn = document.getElementById("chat-send-btn");
+
+        if (!fab || !widget || !closeBtn || !wizardForm || !messagesContainer || !inputBar || !userTextInput || !sendBtn) {
+            return;
+        }
+
+        const serverlessUrl = "/.netlify/functions/chat-assistant";
+        let conversationHistory = [];
+
+        // Toggle widget visibility
+        fab.addEventListener("click", () => {
+            widget.classList.toggle("chat-hidden");
+            if (!widget.classList.contains("chat-hidden")) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        });
+
+        closeBtn.addEventListener("click", () => {
+            widget.classList.add("chat-hidden");
+        });
+
+        // Handle pre-qualification form submission
+        wizardForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("chat-w-name").value.trim();
+            const city = document.getElementById("chat-w-city").value;
+            const issue = document.getElementById("chat-w-issue").value.trim();
+
+            if (!name || !city || !issue) return;
+
+            // Append user input summary visually into chat as a user bubble
+            appendMessage("user", `My name is ${name}. I am in ${city}. My AC issue: "${issue}"`);
+
+            // Hide the input form card
+            document.getElementById("chat-wizard-card").remove();
+
+            // Show loading typing dots
+            const loadingId = showLoading();
+
+            try {
+                const response = await fetch(serverlessUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ action: "prequalify", name, city, issue }),
+                });
+
+                removeLoading(loadingId);
+
+                if (!response.ok) throw new Error("Failed to contact serverless handler.");
+                const data = await response.json();
+
+                if (data.success && data.briefing) {
+                    appendMessage("ai", data.briefing);
+                    
+                    // Add to history
+                    conversationHistory.push({ sender: "user", text: `Name: ${name}, City: ${city}, Issue: ${issue}` });
+                    conversationHistory.push({ sender: "ai", text: data.briefing });
+
+                    // Unlock interactive chat mode
+                    inputBar.classList.remove("chat-input-hidden");
+                    userTextInput.focus();
+                } else {
+                    appendMessage("ai", "I've logged your request for the dispatch desk, but hit a slight technical snag. How else can I assist you?");
+                }
+            } catch (err) {
+                removeLoading(loadingId);
+                console.error(err);
+                appendMessage("ai", "Thank you. Your dispatch details have been saved. Our technicians have been notified. Please call us at (772) 521-3568 for immediate same-day service.");
+            }
+        });
+
+        // Handle follow-up chat inputs
+        async function handleSend() {
+            const text = userTextInput.value.trim();
+            if (!text) return;
+
+            userTextInput.value = "";
+            appendMessage("user", text);
+
+            // Track user message in history
+            conversationHistory.push({ sender: "user", text });
+
+            const loadingId = showLoading();
+
+            try {
+                const response = await fetch(serverlessUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ action: "chat", messages: conversationHistory }),
+                });
+
+                removeLoading(loadingId);
+
+                if (!response.ok) throw new Error("Connection failed.");
+                const data = await response.json();
+
+                if (data.success && data.reply) {
+                    appendMessage("ai", data.reply);
+                    conversationHistory.push({ sender: "ai", text: data.reply });
+                } else {
+                    appendMessage("ai", "I'm having trouble analyzing that message. Please try again or call our hotline.");
+                }
+            } catch (err) {
+                removeLoading(loadingId);
+                console.error(err);
+                appendMessage("ai", "I am currently offline. Please call us at (772) 521-3568 for emergency service.");
+            }
+        }
+
+        sendBtn.addEventListener("click", handleSend);
+        userTextInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") handleSend();
+        });
+
+        // Helper: Append a chat bubble
+        function appendMessage(sender, text) {
+            const msgDiv = document.createElement("div");
+            msgDiv.className = `message ${sender}`;
+            msgDiv.innerHTML = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:inherit;text-decoration:underline;">$1</a>').replace(/\n/g, '<br>');
+            messagesContainer.appendChild(msgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Helper: Show typing indicator
+        function showLoading() {
+            const loaderId = "loader-" + Date.now();
+            const loaderDiv = document.createElement("div");
+            loaderDiv.id = loaderId;
+            loaderDiv.className = "message ai";
+            loaderDiv.innerHTML = `
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            messagesContainer.appendChild(loaderDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return loaderId;
+        }
+
+        // Helper: Remove typing indicator
+        function removeLoading(id) {
+            const loader = document.getElementById(id);
+            if (loader) loader.remove();
+        }
+    };
+
+    initializeChatWidget();
+
+    // ==========================================================================
+    // 10. 3D Digital Thermostat Interactive Widget
+    // ==========================================================================
+    const initializeThermostatWidget = () => {
+        let targetTemp = 72;
+        const minTemp = 55;
+        const maxTemp = 85;
+
+        const card = document.getElementById('thermostat-card');
+        const dial = document.getElementById('dial-outer');
+        const dialRing = document.getElementById('dial-ring');
+        const dialTick = document.getElementById('dial-tick');
+        const tempDisplay = document.getElementById('temp-val');
+        const progressBar = document.getElementById('progress-bar');
+        const statusText = document.getElementById('status-text');
+
+        const btnCool = document.getElementById('btn-cool');
+        const btnHeat = document.getElementById('btn-heat');
+        const btnEco = document.getElementById('btn-eco');
+
+        if (!card || !dial || !dialRing || !dialTick || !tempDisplay || !progressBar || !statusText || !btnCool || !btnHeat || !btnEco) {
+            return;
+        }
+
+        let systemMode = 'cool'; // cool, heat, eco
+        let isDragging = false;
+        let centerX, centerY;
+        const strokeCircumference = 2 * Math.PI * 75; // Radius = 75
+
+        function updateUI() {
+            // 1. Update text display
+            tempDisplay.textContent = targetTemp;
+
+            // Update ARIA values
+            dial.setAttribute('aria-valuenow', targetTemp);
+            dial.setAttribute('aria-valuetext', `${targetTemp} degrees Fahrenheit`);
+
+            // 2. Map Temp values to Hue
+            const tempPercent = (targetTemp - minTemp) / (maxTemp - minTemp);
+            let hue = 210 - (tempPercent * 200); // 210 (Cyan) down to 10 (Red)
+            
+            if (systemMode === 'eco') {
+                hue = 135; // Green
+            }
+
+            card.style.setProperty('--temp-glow', `hsla(${hue}, 95%, 50%, 0.15)`);
+            card.style.setProperty('--temp-color', `hsl(${hue}, 100%, 60%)`);
+
+            // 3. Update status HUD text
+            if (systemMode === 'cool') {
+                statusText.textContent = targetTemp < 74 ? 'COOLING SYSTEM ACTIVE' : 'STAGE 1 CLIMATE COMFORT';
+                statusText.style.color = 'hsl(200, 100%, 60%)';
+            } else if (systemMode === 'heat') {
+                statusText.textContent = targetTemp > 68 ? 'HEATING CORE ENGAGED' : 'STANDBY MODE';
+                statusText.style.color = 'hsl(10, 100%, 60%)';
+            } else {
+                statusText.textContent = 'ECO SAVINGS ACTIVE';
+                statusText.style.color = 'hsl(135, 100%, 60%)';
+            }
+
+            // 4. Update SVG progress circle
+            const progressPercent = tempPercent * 0.75; // cap at 75% for bottom cutout gap
+            const strokeOffset = strokeCircumference - (progressPercent * strokeCircumference);
+            progressBar.style.strokeDashoffset = strokeOffset;
+
+            // 5. Rotate indicator notch
+            const tickRotation = -135 + (tempPercent * 270);
+            dialTick.style.transform = `rotate(${tickRotation}deg)`;
+            dialRing.style.transform = `rotate(${tickRotation}deg)`;
+        }
+
+        // Initialize UI State
+        updateUI();
+
+        // Drag handlers
+        function startDrag(e) {
+            isDragging = true;
+            const rect = dial.getBoundingClientRect();
+            centerX = rect.left + rect.width / 2;
+            centerY = rect.top + rect.height / 2;
+            if (e.cancelable && e.type !== 'touchstart') e.preventDefault();
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+
+            let clientX, clientY;
+            if (e.touches && e.touches[0]) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            const dx = clientX - centerX;
+            const dy = clientY - centerY;
+            const angleRad = Math.atan2(dy, dx);
+            let angleDeg = angleRad * (180 / Math.PI);
+            
+            let normalizedAngle = angleDeg + 90;
+            if (normalizedAngle < 0) {
+                normalizedAngle += 360;
+            }
+
+            let percentValue = 0;
+            if (normalizedAngle <= 135) {
+                percentValue = (normalizedAngle + 135) / 270;
+            } else if (normalizedAngle >= 225) {
+                percentValue = (normalizedAngle - 225) / 270;
+            } else {
+                percentValue = normalizedAngle > 180 ? 0 : 1;
+            }
+
+            percentValue = Math.max(0, Math.min(1, percentValue));
+            const calculatedTemp = Math.round(minTemp + percentValue * (maxTemp - minTemp));
+            
+            if (calculatedTemp !== targetTemp) {
+                targetTemp = calculatedTemp;
+                updateUI();
+            }
+        }
+
+        function stopDrag() {
+            isDragging = false;
+        }
+
+        // Attach event listeners
+        dial.addEventListener('mousedown', startDrag);
+        window.addEventListener('mousemove', drag);
+        window.addEventListener('mouseup', stopDrag);
+
+        dial.addEventListener('touchstart', startDrag, { passive: true });
+        window.addEventListener('touchmove', drag, { passive: false });
+        window.addEventListener('touchend', stopDrag);
+
+        // Keyboard navigation
+        dial.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (targetTemp < maxTemp) {
+                    targetTemp++;
+                    updateUI();
+                }
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (targetTemp > minTemp) {
+                    targetTemp--;
+                    updateUI();
+                }
+            }
+        });
+
+        // Mode switches
+        function setMode(mode) {
+            systemMode = mode;
+            btnCool.classList.remove('active');
+            btnHeat.classList.remove('active');
+            btnEco.classList.remove('active');
+
+            if (mode === 'cool') btnCool.classList.add('active');
+            if (mode === 'heat') btnHeat.classList.add('active');
+            if (mode === 'eco') btnEco.classList.add('active');
+
+            updateUI();
+        }
+
+        btnCool.addEventListener('click', () => setMode('cool'));
+        btnHeat.addEventListener('click', () => setMode('heat'));
+        btnEco.addEventListener('click', () => setMode('eco'));
+
+        // Parallax hover tilt
+        const hoverArea = document.querySelector('.smart-climate-section');
+        if (hoverArea) {
+            hoverArea.addEventListener('mousemove', (e) => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                const mouseX = (e.clientX / width) - 0.5;
+                const mouseY = (e.clientY / height) - 0.5;
+                
+                const rotateX = -mouseY * 25;
+                const rotateY = mouseX * 25;
+                
+                card.style.transform = `rotateX(${12 + rotateX}deg) rotateY(${-8 + rotateY}deg)`;
+            });
+
+            hoverArea.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(12deg) rotateY(-8deg)';
+            });
+        }
+    };
+
+    initializeThermostatWidget();
+
+    // ==========================================================================
+    // 11. Smart Climate Tab Switcher (Lazy Loading WebGL iframe)
+    // ==========================================================================
+    const initializeSmartClimateTabs = () => {
+        const tabBtns = document.querySelectorAll(".smart-tab-btn");
+        const panelThermostat = document.getElementById("panel-thermostat");
+        const panelAirflow = document.getElementById("panel-airflow");
+        const airflowPlaceholder = document.getElementById("airflow-iframe-placeholder");
+
+        if (tabBtns.length === 0 || !panelThermostat || !panelAirflow) return;
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const targetTab = btn.getAttribute("data-tab");
+
+                // Toggle active button states
+                tabBtns.forEach(b => {
+                    b.classList.remove("active");
+                    b.style.backgroundColor = "transparent";
+                    b.style.color = "var(--gray-dark)";
+                });
+                btn.classList.add("active");
+                btn.style.backgroundColor = "var(--primary)";
+                btn.style.color = "var(--white)";
+
+                // Switch panels
+                if (targetTab === "thermostat") {
+                    panelThermostat.style.display = "flex";
+                    panelAirflow.style.display = "none";
+                } else if (targetTab === "airflow") {
+                    panelThermostat.style.display = "none";
+                    panelAirflow.style.display = "flex";
+
+                    // Lazy load the WebGL Three.js iframe only when requested
+                    if (airflowPlaceholder) {
+                        const iframe = document.createElement("iframe");
+                        iframe.src = "3d-airflow.html";
+                        iframe.style.width = "100%";
+                        iframe.style.height = "100%";
+                        iframe.style.border = "none";
+                        iframe.setAttribute("title", "3D Thermodynamic Airflow Map");
+                        airflowPlaceholder.replaceWith(iframe);
+                    }
+                }
+            });
+        });
+    initializeSmartClimateTabs();
+
+    // ==========================================================================
+    // 12. Progressive Web Share API (Quotes & Calibration Sharing)
+    // ==========================================================================
+    const initializeShareButtons = () => {
+        const shareSeerBtn = document.querySelector(".share-btn-seer");
+        const shareClubBtn = document.querySelector(".share-btn-club");
+
+        const shareData = (title, text, url) => {
+            if (navigator.share) {
+                navigator.share({ title, text, url })
+                    .then(() => console.log("Successful share"))
+                    .catch((error) => console.log("Error sharing:", error));
+            } else {
+                // Clipboard fallback + toast notification
+                navigator.clipboard.writeText(`${text} Learn more: ${url}`)
+                    .then(() => {
+                        showShareToast("Link copied to clipboard!");
+                    })
+                    .catch(() => {
+                        // SMS fallback
+                        const smsBody = encodeURIComponent(`${text} ${url}`);
+                        window.location.href = `sms:?body=${smsBody}`;
+                    });
+            }
+        };
+
+        const showShareToast = (message) => {
+            const toast = document.createElement("div");
+            toast.textContent = message;
+            toast.style.position = "fixed";
+            toast.style.bottom = "80px";
+            toast.style.left = "50%";
+            toast.style.transform = "translateX(-50%)";
+            toast.style.background = "var(--dark)";
+            toast.style.border = "1px solid rgba(255,255,255,0.1)";
+            toast.style.color = "var(--white)";
+            toast.style.padding = "12px 24px";
+            toast.style.borderRadius = "12px";
+            toast.style.fontSize = "13px";
+            toast.style.fontFamily = "var(--font-heading)";
+            toast.style.zIndex = "1000";
+            toast.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
+            toast.style.opacity = "0";
+            toast.style.transition = "opacity 0.3s ease";
+            
+            document.body.appendChild(toast);
+            setTimeout(() => toast.style.opacity = "1", 10);
+            
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        };
+
+        if (shareSeerBtn) {
+            shareSeerBtn.addEventListener("click", () => {
+                const text = "I just calculated that upgrading my home air conditioner unit can reduce my cooling bill by over 40%! Check out A/C Now LLC on the Treasure Coast.";
+                shareData("A/C Now Energy Savings Calc", text, window.location.origin);
+            });
+        }
+
+        if (shareClubBtn) {
+            shareClubBtn.addEventListener("click", () => {
+                const text = "Check out the A/C Now LLC service club! Covers regular cleanings, waives diagnostic fees, and gives priority scheduling during summer peaks.";
+                shareData("A/C Now Service Club Membership", text, window.location.origin);
+            });
+        }
+    };
+
+    initializeShareButtons();
+
+    // Register Service Worker for PWA Offline capability
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('A/C Now Service Worker registered successfully with scope:', registration.scope);
+                })
+                .catch(err => {
+                    console.warn('A/C Now Service Worker registration failed:', err);
+                });
+        });
+    }
 });
+
+
+
+
 
 
 

@@ -1,0 +1,22 @@
+{
+  "short_name": "A/C Now",
+  "name": "A/C Now LLC | HVAC Diagnostics & Service",
+  "icons": [
+    {
+      "src": "downloaded_images/Logo2.webp",
+      "type": "image/webp",
+      "sizes": "192x192"
+    },
+    {
+      "src": "downloaded_images/mascot-logo-transparent.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "index.html?utm_source=pwa",
+  "background_color": "#0A182F",
+  "theme_color": "#0B63E5",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/"
+}
