@@ -1,0 +1,20 @@
+# Netlify _redirects
+# -------------------------------------------------------------------------
+# Trailing-slash normalization (prevents duplicate canonical content)
+/index.html   /   301
+
+# Legacy or common path aliases → canonical pages
+/home         /   301
+/home/        /   301
+/services/    /services.html  301
+/about/       /about.html     301
+/contact/     /contact.html   301
+/areas/       /areas.html     301
+/reviews/     /reviews.html   301
+/commercial/  /commercial.html 301
+/pool-heating/ /pool-heating.html 301
+/hvac-services-palm-city/ /hvac-services-palm-city.html 301
+/hvac-services-stuart/    /hvac-services-stuart.html    301
+
+# SPA fallback — serve index.html for any unmatched route (404 handled separately)
+# /*  /index.html  200   ← only enable if you ever convert to a SPA framework

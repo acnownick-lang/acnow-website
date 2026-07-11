@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | A/C Now LLC</title>
+    <meta name="description" content="Sorry, the page you are looking for could not be found. Return to AC Now LLC's homepage.">
+    <meta name="robots" content="noindex, follow">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="redesign.css">
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0A182F 0%, #0d2240 100%);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .error-content {
+            max-width: 560px;
+        }
+
+        .error-code {
+            font-family: var(--font-heading);
+            font-size: clamp(80px, 20vw, 140px);
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #60A5FA 0%, #0B63E5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .error-title {
+            font-family: var(--font-heading);
+            font-size: clamp(22px, 5vw, 32px);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .error-desc {
+            font-size: 16px;
+            color: #94A3B8;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #0B63E5, #E63946);
+            border-radius: 2px;
+            margin: 24px auto;
+        }
+
+        .error-links {
+            margin-top: 48px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .error-link {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 600;
+            color: #60A5FA;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid rgba(96,165,250,0.25);
+            border-radius: 50px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .error-link:hover {
+            background: rgba(11,99,229,0.15);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-page">
+        <div class="error-content">
+            <div class="error-code" aria-label="Error 404">404</div>
+            <div class="error-divider"></div>
+            <h1 class="error-title">Page Not Found</h1>
+            <p class="error-desc">
+                The page you're looking for has moved, been renamed, or doesn't exist.<br>
+                Let us help you find what you need.
+            </p>
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary btn-large" id="error-home-btn">Back to Home</a>
+                <a href="tel:7725213568" class="btn btn-secondary btn-large" id="error-call-btn">📞 Call Us Now</a>
+            </div>
+
+            <nav class="error-links" aria-label="Quick page links">
+                <a href="/services.html" class="error-link">Services</a>
+                <a href="/commercial.html" class="error-link">Commercial</a>
+                <a href="/pool-heating.html" class="error-link">Pool Heating</a>
+                <a href="/areas.html" class="error-link">Service Areas</a>
+                <a href="/reviews.html" class="error-link">Reviews</a>
+                <a href="/contact.html" class="error-link">Contact</a>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

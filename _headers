@@ -1,0 +1,25 @@
+# Netlify _headers — security & performance headers applied to all pages
+# -------------------------------------------------------------------------
+
+/*
+  # Prevent clickjacking — site must not be framed by other origins
+  X-Frame-Options: SAMEORIGIN
+
+  # Stop MIME-type sniffing attacks
+  X-Content-Type-Options: nosniff
+
+  # Force HTTPS for 1 year, include subdomains
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+  # Referrer Policy — send referrer only to same origin
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Permissions Policy — restrict dangerous browser features
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+  # Content Security Policy
+  # Allows: self, Google Fonts, Google Maps embeds, inline styles (needed for inline <style> blocks)
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://www.google.com https://maps.google.com; connect-src 'self';
+
+  # XSS Protection header (legacy browsers)
+  X-XSS-Protection: 1; mode=block

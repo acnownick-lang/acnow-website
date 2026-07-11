@@ -1,0 +1,2329 @@
+/* Redesigned Premium Site Styles */
+
+:root {
+    --primary: #0B63E5;
+    --primary-hover: #084fc2;
+    --secondary: #D92B3A;
+    --gold: #FFC72C;
+    --gold-hover: #E0AE20;
+    --dark: #0A182F;
+    --light: #F6F8FC;
+    --gray-light: #E5E9F0;
+    --gray-dark: #3D5478; /* WCAG AA: #3D5478 on #F6F8FC = ~5.1:1 contrast ratio */
+    --text: #2D3748;
+    --white: #FFFFFF;
+    --border-radius: 12px;
+    --transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: var(--font-body);
+    color: var(--text);
+    background-color: var(--white);
+}
+
+body {
+    line-height: 1.6;
+    font-size: 16px;
+    overflow-x: hidden;
+}
+
+/* Containers & Grid */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Top bar contact details */
+.top-bar {
+    background-color: var(--dark);
+    color: var(--white);
+    font-size: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.top-bar-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.top-bar-item svg {
+    color: var(--primary);
+}
+
+.top-bar-item.highlight {
+    color: #E2E8F0;
+}
+
+.badge {
+    background-color: var(--secondary);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Header & Nav */
+.header {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid var(--gray-light);
+    padding: 15px 0;
+    transition: var(--transition);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    /* mascot-logo-transparent.png: 550×249px native — never upscale */
+    max-width: 550px;
+    max-height: 249px;
+}
+
+.nav {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    font-size: 15px;
+    transition: var(--transition);
+    position: relative;
+    padding: 8px 0;
+}
+
+.nav-link:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary);
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+.nav-link:hover:after {
+    width: 100%;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #004ecc 100%);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(11, 99, 229, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(11, 99, 229, 0.4);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-secondary:hover {
+    border-color: var(--white);
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-large {
+    padding: 16px 36px;
+    font-size: 16px;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Hero Section */
+.hero {
+    padding: 140px 0 100px;
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 650px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-subtitle {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 2px;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, #60A5FA, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-text {
+    font-size: 18px;
+    color: #E2E8F0;
+    margin-bottom: 36px;
+    line-height: 1.7;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Trust Bar */
+.trust-bar {
+    background-color: var(--white);
+    padding: 40px 0;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.03);
+    position: relative;
+    z-index: 10;
+    margin-top: -50px;
+    border-radius: var(--border-radius);
+    max-width: 1152px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid var(--gray-light);
+}
+
+.trust-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.trust-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-right: 1px solid var(--gray-light);
+    padding-right: 16px;
+}
+
+.trust-card:last-child {
+    border-right: none;
+    padding-right: 0;
+}
+
+.trust-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.trust-info h4 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.trust-info p {
+    font-size: 13px;
+    color: var(--gray-dark);
+}
+
+/* Sections General */
+section {
+    padding: 90px 0;
+}
+
+.section-header {
+    max-width: 600px;
+    margin-bottom: 60px;
+}
+
+.section-header.centered {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.section-tag {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--primary);
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.section-header h2, .about-text-column h2 {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 18px;
+}
+
+.section-header p {
+    font-size: 17px;
+    color: var(--gray-dark);
+}
+
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.service-card {
+    background-color: var(--dark);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border: none;
+    box-shadow: 0 15px 35px rgba(10, 24, 47, 0.15);
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(10, 24, 47, 0.25);
+}
+
+.service-img-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.service-img-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(10, 24, 47, 0.3) 0%, rgba(10, 24, 47, 0.8) 100%);
+    transition: var(--transition);
+    z-index: 2;
+}
+
+.service-card:hover .service-img-wrapper::after {
+    background: linear-gradient(180deg, rgba(10, 24, 47, 0.4) 0%, rgba(10, 24, 47, 0.9) 100%);
+}
+
+.service-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Smallest service-img in use: hvac-commercial-img.webp & view-Services.webp at 185×185px.
+       object-fit: cover means upscaling is driven by the container, not the image itself.
+       All other service images are 1200×896 or 1376×768 — safe at any typical card size. */
+}
+
+.service-card:hover .service-img {
+    transform: scale(1.08);
+}
+
+.service-icon-badge {
+    display: none; /* Removed for the elegant design */
+}
+
+.service-card-body {
+    position: relative;
+    z-index: 3;
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    color: var(--white);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card-body h3 {
+    font-family: 'Outfit', 'Georgia', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(10, 24, 47, 0.5);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover .service-card-body h3 {
+    transform: translateY(-5px);
+}
+
+.service-card-body p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    max-width: 280px;
+    margin: 0;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Let's show description on hover for premium interaction */
+.service-card:hover .service-card-body p {
+    opacity: 1;
+    height: auto;
+    transform: translateY(0);
+    margin-top: 10px;
+}
+
+.service-link {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    color: #60A5FA; /* slate blue accent */
+    text-decoration: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.3);
+    padding-bottom: 4px;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.service-card:hover .service-link {
+    opacity: 1;
+    transform: translateY(0);
+    color: var(--white);
+    border-bottom-color: var(--white);
+}
+
+/* About Us Section */
+.about-section {
+    background-color: var(--light);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-image-column {
+    position: relative;
+}
+
+.about-main-img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    /* Smallest about-main-img: content-v3-b-img-1.webp at 496×603px native.
+       All others (hvac-repair, hvac-install, hvac-maintenance) are 1376×768. */
+    max-width: 100%;
+    /* Belt-and-suspenders: content-v3-b-img-1 cap */
+}
+
+.about-experience-badge {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    background-color: var(--dark);
+    color: var(--white);
+    padding: 24px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.exp-num {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.exp-text {
+    font-size: 12px;
+    text-align: center;
+    color: #E2E8F0;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.about-text-column p {
+    font-size: 16px;
+    color: var(--gray-dark);
+    margin-bottom: 30px;
+}
+
+.about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.about-detail-item {
+    display: flex;
+    gap: 16px;
+}
+
+.detail-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(11, 99, 229, 0.1);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.detail-content h5 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.detail-content p {
+    font-size: 14px;
+    color: var(--gray-dark);
+    margin-bottom: 0;
+}
+
+/* Team Section */
+.about-team-grid {
+    display: flex;
+    gap: 24px;
+    border-top: 1px solid var(--gray-light);
+    padding-top: 30px;
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.team-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+    /* Hard cap: Chris.webp and Sean.webp are 639×639px native.
+       Never render above native resolution — prevents pixelation. */
+    max-width: 639px;
+    max-height: 639px;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.team-info strong {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: var(--dark);
+}
+
+.team-info span {
+    font-size: 12px;
+    color: var(--gray-dark);
+}
+
+/* Reviews Section */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.review-card {
+    background-color: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    padding: 36px 30px;
+    transition: var(--transition);
+}
+
+.review-card:hover {
+    box-shadow: var(--box-shadow);
+    border-color: rgba(11, 99, 229, 0.1);
+}
+
+.review-rating {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+}
+
+.star-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.review-quote {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 24px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.review-author {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-author strong {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    color: var(--dark);
+}
+
+.review-author span {
+    font-size: 12px;
+    color: var(--gray-dark);
+}
+
+/* Service Area */
+.serve-section {
+    background-size: cover;
+    background-position: center;
+}
+
+.serve-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.areas-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.areas-list span {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.areas-list span:before {
+    content: '📍';
+    font-size: 14px;
+}
+
+.map-img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gray-light);
+    /* map.webp and map-1.webp: 1016×550px native — never render wider */
+    max-width: 1016px;
+    max-height: 550px;
+}
+
+/* Contact Section */
+.contact-container {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 60px;
+    align-items: stretch;
+}
+
+.contact-info-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.contact-channel {
+    display: flex;
+    gap: 20px;
+}
+
+.channel-icon {
+    width: 48px;
+    height: 48px;
+    background-color: var(--light);
+    color: var(--primary);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.contact-channel strong {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: var(--dark);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.contact-channel p {
+    font-size: 14px;
+    color: var(--gray-dark);
+}
+
+.contact-form-panel {
+    background-color: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    box-shadow: var(--box-shadow);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    border: 1px solid var(--gray-light);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    transition: var(--transition);
+    background-color: var(--light);
+    width: 100%;
+}
+
+/* WCAG 2.4.7 Focus Visible — never remove outline entirely */
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+    border-color: var(--primary);
+    background-color: var(--white);
+    box-shadow: 0 0 0 3px rgba(11, 99, 229, 0.15);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--dark);
+    color: var(--white);
+    padding: 80px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-brand p {
+    color: #A8B8CC; /* WCAG AA: Lightened from #94A3B8 for ~4.7:1 ratio on dark bg */
+    margin-top: 20px;
+    max-width: 320px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    /* Logo2.webp: 550×249px native — never upscale */
+    max-width: 550px;
+    max-height: 249px;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer-links h5 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: #94A3B8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+    padding-left: 4px;
+}
+
+.footer-bottom {
+    padding: 30px 0;
+    background-color: #050E1E;
+    font-size: 13px;
+    color: #8A9BB0; /* WCAG AA: Lightened from #64748B for ~4.5:1 on #050E1E */
+}
+
+.footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.partner-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.7;
+    transition: var(--transition);
+}
+
+.partner-logo:hover {
+    opacity: 1;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .trust-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .trust-card {
+        border-right: none;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--gray-light);
+    }
+    
+    .trust-card:nth-child(even) {
+        border-bottom: 1px solid var(--gray-light);
+    }
+    
+    .trust-card:nth-last-child(-n+2) {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .about-grid, .serve-grid, .contact-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .about-image-column {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav {
+        display: none; /* Mobile nav would be a burger menu, simplified here */
+    }
+    
+    .hero-title {
+        font-size: 44px;
+    }
+    
+    .services-grid, .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+
+/* --- AUDIT FIXES: RESPONSIVE GRID CLASSES & MOBILE BURGER NAV --- */
+:root {
+    --accent: var(--primary);
+    --text-main: var(--text);
+}
+
+.phone-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.phone-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* Responsive Grid Helper Classes */
+.grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+.grid-3-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.grid-4-col {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+.grid-about {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+}
+.grid-about-reverse {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+.grid-contact {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 60px;
+    align-items: stretch;
+}
+
+/* Mobile Toggle Hamburger styling */
+/* WCAG 2.5.5: min 44×44px touch target */
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--dark);
+    font-size: 32px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 8px; /* Increased from 4px to achieve 44px+ touch target */
+    min-width: 44px;
+    min-height: 44px;
+    transition: var(--transition);
+}
+
+.mobile-nav-toggle:hover {
+    color: var(--primary);
+}
+
+@media (max-width: 1024px) {
+    .grid-2-col, .grid-3-col, .grid-4-col, .grid-about, .grid-about-reverse, .grid-contact {
+        grid-template-columns: 1fr !important;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-nav-toggle {
+        display: block;
+        /* FIX 6: Ensure hamburger meets 44px WCAG tap target */
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* FIX 1: display:none (no !important) — safe now that desktop .nav block no longer uses !important on display */
+    /* FIX 5: z-index raised to 1002 to sit above header (1000) and absolute logo-link (1001) */
+    /* FIX 7: right:0 + width:auto instead of width:100% prevents overflow-x scroll on Android */
+    .nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: auto;
+        background-color: var(--white);
+        border-bottom: 1px solid var(--gray-light);
+        padding: 16px 20px;
+        gap: 4px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        z-index: 1002;
+        animation: slideDown 0.25s ease-out;
+    }
+
+    .nav.active {
+        display: flex;
+    }
+
+    /* FIX 6: Increase nav-link tap targets to meet 44px WCAG minimum */
+    .nav .nav-link {
+        padding: 12px 8px !important;
+        width: 100%;
+        display: block !important;
+        border-bottom: 1px solid var(--gray-light);
+        font-size: 15px !important;
+        white-space: normal !important;
+    }
+
+    .nav .nav-link:last-of-type {
+        border-bottom: none;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Innovations Section Styles */
+.innovations-tab-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--gray-light);
+    box-shadow: 0 15px 45px rgba(10, 24, 47, 0.05);
+    overflow: hidden;
+    margin-top: 40px;
+}
+
+.innovations-tab-header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: var(--light);
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.inno-tab-btn {
+    padding: 20px 15px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gray-dark);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    border-bottom: 3px solid transparent;
+    text-align: center;
+}
+
+.inno-tab-btn:hover {
+    color: var(--primary);
+    background-color: rgba(11, 99, 229, 0.02);
+}
+
+.inno-tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    background-color: var(--white);
+}
+
+.innovations-tab-body {
+    padding: 50px;
+}
+
+.inno-tab-panel {
+    display: none;
+}
+
+.inno-tab-panel.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+}
+
+.calc-inputs-pane h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+}
+
+.calc-control-group {
+    margin-bottom: 25px;
+}
+
+.control-label-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.control-label-box label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.control-label-box span {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.calc-control-group input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background-color: var(--gray-light);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.calc-control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(11, 99, 229, 0.4);
+    transition: var(--transition);
+}
+
+.calc-control-group input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.calc-results-pane {
+    background: linear-gradient(135deg, var(--dark) 0%, #0d223f 100%);
+    border-radius: 16px;
+    padding: 40px;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+}
+
+.results-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.results-lbl {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #94A3B8;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.results-price {
+    font-family: 'Outfit', sans-serif;
+    font-size: 54px;
+    font-weight: 800;
+    color: #60A5FA;
+    margin-bottom: 8px;
+}
+
+.results-yearly {
+    font-size: 15px;
+    color: #E2E8F0;
+    margin-bottom: 24px;
+}
+
+.results-visual-bar {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #60A5FA 0%, #3B82F6 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease-out;
+}
+
+.results-note {
+    font-size: 13px;
+    color: #94A3B8;
+    line-height: 1.5;
+}
+
+/* Membership Builder styles */
+.club-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.club-option-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px;
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.club-option-item:hover {
+    border-color: rgba(11, 99, 229, 0.3);
+    background-color: rgba(11, 99, 229, 0.01);
+}
+
+.club-option-item input[type="checkbox"] {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.club-option-item strong {
+    display: block;
+    font-size: 14px;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.club-option-item span {
+    font-size: 12px;
+    color: var(--gray-dark);
+}
+
+/* Emergency Dispatch styles */
+.dispatch-wizard {
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid var(--gray-light);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.wizard-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.wizard-steps-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--gray-light);
+    color: var(--gray-dark);
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.step-num.active {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.step-line {
+    width: 40px;
+    height: 2px;
+    background-color: var(--gray-light);
+}
+
+.wizard-body {
+    position: relative;
+}
+
+.wizard-pane {
+    display: none;
+}
+
+.wizard-pane.active {
+    display: block;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.wizard-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.wizard-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.wizard-field select {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--gray-light);
+    font-size: 14px;
+    /* WCAG 2.4.7: Never remove outline — box-shadow provides the visual ring */
+}
+.wizard-field select:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.success-slot-box {
+    background-color: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.slot-badge {
+    display: inline-block;
+    background-color: #22C55E;
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.success-slot-box h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #14532D;
+}
+
+@media (max-width: 991px) {
+    .calc-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .innovations-tab-header {
+        grid-template-columns: 1fr;
+    }
+    
+    .innovations-tab-body {
+        padding: 30px;
+    }
+}
+
+/* Layout Switcher */
+.layout-switcher {
+    display: inline-flex;
+    background-color: var(--light);
+    border: 1px solid var(--gray-light);
+    border-radius: 20px;
+    padding: 3px;
+    gap: 2px;
+    align-items: center;
+}
+.layout-switcher-btn {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-dark);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 16px;
+    transition: var(--transition);
+}
+.layout-switcher-btn:hover {
+    color: var(--primary);
+}
+.layout-switcher-btn.active {
+    background-color: var(--primary);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(11, 99, 229, 0.2);
+}
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+@media (max-width: 991px) {
+    .logo-box {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+}
+
+/* Global Mobile/Tablet responsive overrides for Layout Switcher Panel */
+@media (max-width: 768px) {
+    .design-toggle-panel {
+        padding: 8px 4px !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 4px !important;
+    }
+    .design-toggle-panel span {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 4px !important;
+        margin-right: 0 !important;
+        text-align: center !important;
+        font-size: 11px !important;
+    }
+    .design-toggle-panel .toggle-btn,
+    .design-toggle-panel .toggle-btn-inactive {
+        margin: 0 3px !important;
+        padding: 5px 10px !important;
+        font-size: 10px !important;
+        display: inline-block !important;
+    }
+}
+
+
+
+
+/* ==========================================================================
+   Universal Large Floating Logo Header Layout Styles
+   ========================================================================== */
+.header {
+    background-color: var(--white) !important;
+    border-bottom: 1px solid var(--gray-light) !important;
+    /* FIX 8: Removed position:relative — conflicts with position:sticky declared later (iOS Safari) */
+    z-index: 1000;
+}
+.header-container {
+    display: flex !important;
+    justify-content: space-between !important; /* Align nav and CTA cleanly with space between */
+    align-items: center !important;
+    position: relative !important;
+    min-height: 105px !important;
+    padding-left: 310px !important; /* Push flex content past the absolute logo */
+    padding-right: 20px !important;
+}
+.logo-link {
+    position: absolute !important;
+    left: 20px !important;
+    top: 0px !important;
+    z-index: 1001 !important;
+    display: block !important;
+}
+.logo-img {
+    max-height: 130px !important;
+    height: 130px !important;
+    width: auto !important;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12)) !important;
+    transition: transform 0.3s ease !important;
+    margin: 0 !important;
+    background: transparent !important;
+}
+.logo-img:hover {
+    transform: scale(1.04) !important;
+}
+.nav {
+    /* FIX 1: Removed display:flex !important — it was overriding the mobile display:none media query
+       because this block appears AFTER the 768px breakpoint in cascade order. */
+    display: flex;
+    align-items: center !important;
+    gap: 20px !important; /* Spacing between link labels */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.nav-link {
+    white-space: nowrap !important; /* Prevent label wrapping */
+    font-size: 14.5px !important;
+    font-weight: 600 !important;
+    color: var(--dark) !important;
+}
+@media (max-width: 991px) {
+    .header-container {
+        justify-content: space-between !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        min-height: 80px !important;
+        /* FIX 3: Prevent column stacking from index.html inline style override */
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+    .logo-link {
+        position: static !important;
+        transform: none !important;
+    }
+    .logo-img {
+        max-height: 80px !important;
+        height: 80px !important;
+    }
+    .nav {
+        margin-right: 0 !important;
+        gap: 15px !important;
+    }
+}
+
+
+/* ==========================================================================
+   UX/UI Audit Recommendations - General Polish & Compliance
+   ========================================================================== */
+h1, h2, h3, .hero-title {
+    text-wrap: balance;
+}
+
+section {
+    padding: clamp(50px, 8vw, 90px) 0 !important; /* Fluid responsive padding */
+}
+
+/* Glassmorphic Header blur */
+.header {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+}
+
+/* Glassmorphic border effect on cards */
+.review-card, .contact-form-panel {
+    border: 1px solid rgba(11, 99, 229, 0.08) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(246, 248, 252, 0.5) 100%) !important;
+}
+
+@media (max-width: 768px) {
+    .trust-bar {
+        margin-top: -20px !important; /* Reduced overlap on mobile to avoid layout crowding */
+        padding: 30px 20px !important;
+    }
+    /* FIX 2: Hide header CTA on mobile — full-width width:100% was stretching it across the
+       entire header row alongside the hamburger. Mobile sticky bar already provides Call/Book CTAs. */
+    .nav-cta {
+        display: none !important;
+    }
+}
+
+
+/* Reusable Premium Gold Call-To-Action Button Components */
+.btn-gold {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hover) 100%) !important;
+    color: var(--dark) !important;
+    font-weight: 700 !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(255, 199, 44, 0.35) !important;
+    transition: var(--transition) !important;
+    cursor: pointer !important;
+}
+
+.btn-gold:hover {
+    background: linear-gradient(135deg, #FFE042 0%, #F0B810 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 199, 44, 0.5) !important;
+}
+
+
+/* ==========================================================================
+   Premium Scrollbar & Scroll Animation Upgrades
+   ========================================================================== */
+
+/* 1. Custom Branded Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #0A182F;
+}
+::-webkit-scrollbar-thumb {
+    background: #0B63E5;
+    border-radius: 5px;
+    border: 2px solid #0A182F;
+    transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #FFC72C;
+}
+
+/* 2. Scroll Reveal Animations */
+.reveal {
+    opacity: 0;
+    transform: translate3d(0, 35px, 0);
+    /* will-change applied dynamically by IntersectionObserver in app.js — not set here to avoid
+       permanently promoting all sections as GPU layers (high memory cost on mobile) */
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* GPU promotion only during animation window — app.js adds/removes .animating class */
+.reveal.animating {
+    will-change: transform, opacity;
+}
+.reveal.active {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+
+/* 3. Sticky Shrinking Header */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--white);
+    transform: translate3d(0, 0, 0); 
+    will-change: background-color, box-shadow;
+    /* Transition only paint properties (background, shadow) - prevents layout reflow stutters */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.header.scrolled {
+    /* Solid high-performance paint background to avoid expensive GPU backdrop blurs */
+    background-color: #0A182F !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Header links toggle color inside scrolled state */
+.header.scrolled .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.header.scrolled .nav-link:hover {
+    color: var(--gold) !important;
+}
+
+.header.scrolled .nav-link.active {
+    color: var(--gold) !important;
+    border-bottom-color: var(--gold) !important;
+}
+
+/* Kept constant to avoid layout recalculations (reflow) */
+.header.scrolled .logo-img {
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+/* Adjust scroll target offsets globally for all section IDs */
+section[id] {
+    scroll-margin-top: 110px;
+}
+
+
+/* ==========================================================================
+   Sticky Mobile Call-To-Action (Conversion Optimizer)
+   ========================================================================== */
+.mobile-sticky-cta-bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-sticky-cta-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: #0A182F;
+        border-top: 2px solid #FFC72C;
+        z-index: 99999;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sticky-cta-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 700;
+        font-family: 'Outfit', sans-serif;
+        text-decoration: none;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+    }
+    
+    .sticky-cta-btn.phone-btn {
+        background: #0B63E5;
+        color: #FFFFFF;
+    }
+    
+    .sticky-cta-btn.book-btn {
+        background: #FFC72C;
+        color: #0A182F;
+    }
+    
+    body {
+        padding-bottom: 60px !important;
+    }
+}
+
+
+/* ==========================================================================
+   WCAG 2.1 AA — Skip Navigation Link
+   ========================================================================== */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 99999;
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 0 0 8px 8px;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    text-decoration: none;
+    font-size: 15px;
+    transition: top 0.2s ease;
+    white-space: nowrap;
+}
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
+/* WCAG 2.4.7 — Global focus-visible for all interactive elements */
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 3px solid var(--primary) !important;
+    outline-offset: 2px !important;
+}
+
+/* WCAG 2.1.1 — Keyboard-accessible hover-only service links */
+.service-link:focus-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 30px;
+}
+
+/* Custom non-heading class for semantic document integrity */
+.footer-links .footer-heading {
+    color: var(--white);
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+
+/* Responsive Grid Stacking Overrides (Forces 2-column inline layouts to stack on mobile) */
+@media (max-width: 768px) {
+    .grid-2-col {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+}
+
+
+/* Visually Hidden Helper (WCAG A11y & SEO text hidden from layout, visible to screen readers) */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* ==========================================================================
+   AUDIT FIX 1 — Global image responsiveness (no srcset present on any page)
+   Ensures all <img> elements never cause horizontal scroll on any viewport.
+   ========================================================================== */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==========================================================================
+   AUDIT FIX 2 — Typography scaling for 320px screens
+   hero-title 64px → 28px, section h2 40px → 24px, hero-text 18px → 15px
+   Uses clamp() so scaling is fluid between 320px and 768px.
+   ========================================================================== */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: clamp(26px, 8vw, 38px) !important;
+        line-height: 1.2 !important;
+    }
+
+    .section-header h2,
+    .about-text-column h2 {
+        font-size: clamp(22px, 6.5vw, 32px) !important;
+    }
+
+    .hero-text {
+        font-size: 15px !important;
+    }
+
+    /* Prevent inline side-headline (index split hero) from overflowing */
+    .side-headline {
+        font-size: clamp(24px, 7vw, 36px) !important;
+    }
+
+    /* Dispatch wizard & calc panels: ensure no horizontal overflow */
+    .dispatch-wizard,
+    .calc-results-pane {
+        padding: 24px 16px !important;
+    }
+
+    /* Contact form: prevent very small right-gutter on 320px */
+    .contact-form-panel {
+        padding: 24px 16px !important;
+    }
+
+    /* Trust bar: prevent 4-column from squishing below 320px */
+    .trust-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Footer container single col */
+    .footer-container {
+        gap: 30px !important;
+    }
+}
+
+/* ==========================================================================
+   AUDIT FIX 3 — Tablet grid collapse (768px – 1024px gap)
+   The existing 1024px breakpoint collapses about-grid but NOT reviews-grid.
+   The existing 768px breakpoint targets mobile only.
+   This fills the gap: reviews + footer go 2-col at 768-1024px.
+   ========================================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .reviews-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 40px !important;
+    }
+}
+
+/* ==========================================================================
+   AUDIT FIX 4 — Overflow-x containment on body & container
+   body already has overflow-x: hidden. Ensure .container never overflows.
+   ========================================================================== */
+.container {
+    overflow-x: clip; /* clip (not hidden) avoids sticky-position clipping */
+}
+
+
+/* ==========================================================================
+   AUDIT PATCH — 2026-07-11
+   Full UI & Visual Design Audit — 10-Category Surgical Fixes
+   ========================================================================== */
+
+
+/* ── FIX A: WCAG AA Contrast — Body Text on White/Light Backgrounds ──────── */
+/* --gray-dark at #4A5D7E gives ~4.3:1 on white — just below 4.5:1 threshold.
+   Patch all small-text instances to a darker, accessible value. */
+.trust-info p,
+.section-header p,
+.review-author span,
+.footer-brand p,
+.grid-header-desc,
+.about-text-column p,
+.detail-content p,
+.team-info span,
+.contact-channel p,
+.results-note,
+.calc-inputs-pane p,
+.wizard-field label,
+.club-option-item span,
+.inno-tab-btn {
+    color: #374151; /* Slate 700 — 7.0:1 on white. Replaces #4A5D7E. */
+}
+
+/* section-tag: #0B63E5 on white = ~4.0:1 — FAIL. Darken to #0052C2. */
+.section-tag {
+    color: #0052C2;
+    font-size: 13px; /* Up from 12px for legibility minimum */
+}
+
+/* side-desc in split hero: #A0AEC0 on dark overlay ≈ 2.8:1 — FAIL */
+.side-desc {
+    color: #CBD5E1; /* ~7.5:1 on rgba(10,24,47,0.85) */
+}
+
+/* Footer links: #94A3B8 on #0A182F ≈ 3.9:1 — FAIL */
+.footer-links a {
+    color: #B0BEC5; /* ~4.6:1 on #0A182F */
+}
+
+/* Footer bottom bar: #64748B on #050E1E ≈ 3.7:1 — FAIL */
+.footer-bottom {
+    color: #94A3B8; /* ~4.8:1 on #050E1E */
+}
+
+/* Results panel dark bg — label and note text */
+.results-lbl,
+.results-note {
+    color: #CBD5E1;
+}
+
+
+/* ── FIX B: Typography Consistency ──────────────────────────────────────── */
+
+/* Remove Georgia fallback — use system var throughout */
+.service-card-body h3,
+.calc-inputs-pane h3,
+.results-price,
+.wizard-header h3,
+.success-slot-box h4 {
+    font-family: var(--font-heading) !important;
+}
+
+/* Subpage hero title has inline font-size: 48px but no mobile override → overflow */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 32px !important;
+        line-height: 1.2;
+    }
+    .hero-text {
+        font-size: 16px !important;
+    }
+    /* Ensure side-headline inline style also scales */
+    .side-headline {
+        font-size: 30px !important;
+    }
+}
+
+
+/* ── FIX C: Spacing & Padding ────────────────────────────────────────────── */
+
+/* Give about-image-column room for the -20px offset badge to breathe */
+.about-image-column {
+    padding-bottom: 30px;
+    overflow: visible; /* Ensure absolutely-positioned badge is not clipped */
+}
+
+/* Innovations tab body mobile padding — no override existed below 768px */
+@media (max-width: 768px) {
+    .innovations-tab-body {
+        padding: 20px 16px !important;
+    }
+    .dispatch-wizard {
+        padding: 24px 16px !important;
+    }
+}
+
+/* Trust-bar: clamp() section rule was applying extra padding above its own rule */
+section.trust-bar {
+    padding: 40px 0 !important; /* Explicit override — not a duplicate section */
+}
+
+
+/* ── FIX D: Service Card — height: auto animation fix ───────────────────── */
+/* CSS cannot animate height: 0 → auto. Replace with max-height approach.   */
+
+.service-card-body p {
+    max-height: 0;
+    height: auto; /* Let content define natural height */
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    margin-top: 0;
+    /* Remove the explicit height: 0 set in redesign.css line ~449 */
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                margin-top 0.35s ease;
+}
+
+.service-card:hover .service-card-body p {
+    max-height: 130px; /* Enough for 4 lines at 13px/1.5 line-height */
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 10px;
+}
+
+
+/* ── FIX E: Button Styles ────────────────────────────────────────────────── */
+
+/* WCAG 2.4.7 — Keyboard focus-visible rings on ALL interactive elements */
+.btn:focus-visible,
+.inno-tab-btn:focus-visible,
+.sticky-cta-btn:focus-visible,
+.mobile-nav-toggle:focus-visible,
+.layout-switcher-btn:focus-visible {
+    outline: 3px solid var(--gold) !important;
+    outline-offset: 3px !important;
+    border-radius: inherit;
+}
+
+.nav-link:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* Secondary button: border too faint at rgba(255,255,255,0.4) — raise to 0.65 */
+.btn-secondary {
+    border-color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.btn-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.9) !important;
+    background-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+
+/* ── FIX F: Split Hero — Mobile Layout ──────────────────────────────────── */
+
+@media (max-width: 991px) {
+    /* Reduce min-height from 50vh per panel — total 100vh is too tall on mobile */
+    .split-hero-side {
+        min-height: 44vh !important;
+        padding: 50px 20px !important;
+    }
+
+    /* The mascot floats at top:50% of the full stacked split-hero height.
+       When stacked, this puts it on the border between the two panels
+       but with 100px size, it covers content on one panel. Hide it on mobile. */
+    .split-hero-center {
+        display: none !important;
+    }
+
+    /* Compensate: add a visible divider between the two stacked panels */
+    .split-hero .left-side {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2) !important;
+    }
+}
+
+
+/* ── FIX G: Footer Polish ────────────────────────────────────────────────── */
+
+/* Hover: replace layout-reflow padding-left with GPU-composited translateX */
+.footer-links a {
+    display: inline-block;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.2s ease !important;
+    padding-left: 0 !important;
+}
+
+.footer-links a:hover {
+    transform: translateX(4px) !important;
+    color: var(--primary) !important;
+    padding-left: 0 !important; /* Disable the original reflow-causing rule */
+}
+
+
+/* ── FIX H: Sticky Mobile CTA Bar ───────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .mobile-sticky-cta-bar {
+        /* iOS safe area padding for notched devices */
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        height: calc(60px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body {
+        /* Match the bar's dynamic height */
+        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    /* Visual divider between the two CTA buttons */
+    .sticky-cta-btn.phone-btn {
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+    }
+}
+
+
+/* ── FIX I: Overflow-X / Tablet Header Layout ───────────────────────────── */
+
+/* Tablet range 769–991px: absolute-positioned 130px logo + 310px padding
+   risks right-side nav overflow at this breakpoint range. */
+@media (min-width: 769px) and (max-width: 991px) {
+    .header-container {
+        padding-left: 200px !important; /* Reduced from 310px to fit 80px logo */
+        min-height: 90px !important;
+    }
+    .logo-link {
+        position: absolute !important;
+        left: 16px !important;
+    }
+    .logo-img {
+        max-height: 80px !important;
+        height: 80px !important;
+    }
+}
+
+/* About badge: left: -20px can cause horizontal scroll on ≤1024px layouts */
+@media (max-width: 1024px) {
+    .about-experience-badge {
+        left: 0 !important;
+        bottom: -10px !important;
+    }
+}
+
+
+/* ── FIX J: Animation Performance ───────────────────────────────────────── */
+
+/* Remove box-shadow from universal --transition: it triggers re-paint on
+   every frame. Apply selectively only where shadow animates. */
+:root {
+    --transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                  background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    /* box-shadow intentionally removed from universal transition */
+}
+
+/* Re-add box-shadow transition only on elements that animate it */
+.service-card,
+.review-card,
+.btn-primary,
+.btn-gold,
+.contact-form-panel {
+    transition: var(--transition),
+                box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* will-change: remove static application to all .reveal elements.
+   Static will-change permanently allocates GPU memory for every element.
+   JS should add .animating just before IntersectionObserver fires,
+   and remove it (or add .active) after animation completes. */
+.reveal {
+    will-change: auto !important; /* Override the static will-change */
+}
+
+/* JS should add this class transiently — 1 tick before animation */
+.reveal.animating {
+    will-change: transform, opacity;
+}
+
+/* After animation: strip will-change to free GPU memory */
+.reveal.active {
+    will-change: auto;
+}
+
+
+/* ── FIX K: "Elite Military Precision" Brand Phrase Placement ─────────────
+   Client brand phrase — placed surgically in 2 locations (not overused):
+   1. .trust-card for the veteran badge area (via CSS attr, applied in HTML)
+   2. .section-tag--elite modifier class for selective use in hero/subpages
+   ────────────────────────────────────────────────────────────────────────── */
+.brand-phrase {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background-color: rgba(255, 199, 44, 0.08);
+    border: 1px solid rgba(255, 199, 44, 0.25);
+    padding: 5px 14px;
+    border-radius: 30px;
+    margin-bottom: 14px;
+}
+
+.brand-phrase::before {
+    content: '★';
+    font-size: 9px;
+    color: var(--gold);
+}
+
+
+/* ==========================================================================
+   CWV FIX — content-visibility: auto on below-fold sections
+   Allows browser to skip rendering off-screen content until scroll.
+   Chrome 85+, Edge 85+, Firefox 125+. Safari degrades gracefully.
+   ========================================================================== */
+.split-services-section,
+.about-section,
+.innovations-section,
+.reviews-section,
+.serve-section,
+.contact-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 800px; /* Reserve approx height to prevent CLS */
+}
+
+/* ==========================================================================
+   CWV FIX — CSS Star Ratings
+   Replaces 5× star.webp <img> tags per review card (15–30 requests per page)
+   with a single CSS class. Add class="stars" inside .review-rating divs.
+   ========================================================================== */
+.review-rating .stars {
+    color: #FFC72C;
+    font-size: 18px;
+    letter-spacing: 1px;
+    display: inline-block;
+    line-height: 1;
+    font-style: normal;
+}
+

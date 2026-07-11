@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block any admin/draft paths if added later
+# Disallow: /draft/
+# Disallow: /admin/
+
+Sitemap: https://acnowllc.netlify.app/sitemap.xml

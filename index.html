@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC Repair &amp; HVAC Service in Port St. Lucie, FL | A/C Now LLC</title>
+    <meta name="description" content="Veteran-owned AC repair delivering elite military precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568 for a free estimate today!">
+    <link rel="canonical" href="https://acnowllc.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://acnowllc.netlify.app/">
+    <meta property="og:title" content="A/C Now LLC | Port St. Lucie AC Repair & HVAC">
+    <meta property="og:description" content="Veteran-owned AC repair delivering elite military precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568!">
+    <meta property="og:image" content="https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png">
+    <!-- Google Fonts: Non-blocking to eliminate render-blocking (CWV fix) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+    </noscript>
+    <!-- Base redesign CSS file -->
+    <link rel="stylesheet" href="redesign.css">
+    <!-- HVACBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HVACBusiness",
+      "name": "A/C Now LLC",
+      "@id": "https://acnowllc.netlify.app/#hvacbusiness",
+      "url": "https://acnowllc.netlify.app/",
+      "telephone": "(772) 521-3568",
+      "email": "info@acnowllc.com",
+      "priceRange": "$$",
+      "description": "A/C Now LLC is a veteran-owned HVAC contractor in Port St. Lucie, FL delivering same-day residential AC repair, commercial HVAC systems, pool heat pumps, and preventive maintenance across the Treasure Coast. Florida License #CAC1820542.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
+        "addressLocality": "Port St. Lucie",
+        "addressRegion": "FL",
+        "postalCode": "34986",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 27.3138016,
+        "longitude": -80.3954409
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "08:00",
+          "closes": "18:00"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "6"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Robert M." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+          "reviewBody": "Sean and Chris were phenomenal! They replaced our entire AC system in less than a day, and the price was extremely fair."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Jessica S." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+          "reviewBody": "My air conditioner broke down in the middle of a hot Sunday afternoon. A/C Now responded within 45 minutes and got it fixed immediately."
+        }
+      ]
+    }
+    </script>
+    <!-- LCP Critical Image Preloads -->
+    <link rel="preload" as="image" href="downloaded_images/mascot-logo-transparent.png" fetchpriority="high">
+    <link rel="preload" as="image" href="downloaded_images/split_res_hero.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="downloaded_images/split_com_hero.jpg">
+    
+    <!-- Custom Dual-Gate Split Hero and Dual Grid Styling -->
+    <style>
+        /* Split Hero Styles */
+        .split-hero {
+            display: flex;
+            width: 100%;
+            min-height: 80vh;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--dark);
+        }
+        
+        .split-hero-side {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 48px;
+            background-size: cover;
+            background-position: center;
+            transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+        }
+        
+        /* Dark overlay for contrast on background images */
+        .split-hero-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(10, 24, 47, 0.7) 0%, rgba(10, 24, 47, 0.85) 100%);
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .left-side {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Interactive Hover expand/collapse */
+        @media (min-width: 992px) {
+            .split-hero-side:hover {
+                flex: 1.25;
+            }
+            .split-hero-side:hover::before {
+                background: linear-gradient(180deg, rgba(10, 24, 47, 0.55) 0%, rgba(10, 24, 47, 0.75) 100%);
+            }
+        }
+        
+        .side-content {
+            position: relative;
+            z-index: 2;
+            max-width: 520px;
+            text-align: center;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease;
+        }
+        
+        .split-hero-side:hover .side-content {
+            transform: scale(1.02);
+        }
+        
+        .side-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+        }
+        
+        .left-side .side-tag {
+            background-color: rgba(11, 99, 229, 0.15);
+            color: #60A5FA;
+            border: 1px solid rgba(11, 99, 229, 0.35);
+        }
+        
+        .right-side .side-tag {
+            background-color: rgba(230, 57, 70, 0.15);
+            color: #FCA5A5;
+            border: 1px solid rgba(230, 57, 70, 0.35);
+        }
+        
+        .side-headline {
+            font-family: var(--font-heading);
+            font-size: 46px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+        
+        .side-desc {
+            font-size: 16px;
+            color: #A0AEC0;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+        
+        .side-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        /* Mascot Central Floating Container */
+        .split-hero-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .center-mascot {
+            width: 175px;
+            height: 175px;
+            background: rgba(10, 24, 47, 0.85);
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 
+                        0 0 20px rgba(11, 99, 229, 0.3),
+                        inset 0 0 15px rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            
+            pointer-events: auto;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .center-mascot:hover {
+            transform: scale(1.08);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 
+                        0 0 25px rgba(11, 99, 229, 0.5);
+        }
+        
+        .mascot-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+        }
+        
+        @keyframes float-logo {
+            0% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) translateY(-12px) rotate(1deg); }
+            100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+        }
+        
+        /* Mobile Responsive Split Hero */
+        @media (max-width: 991px) {
+            .split-hero {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .split-hero-side {
+                width: 100%;
+                min-height: 50vh;
+                padding: 60px 24px;
+                border-right: none;
+            }
+            .left-side {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .side-headline {
+                font-size: 32px;
+            }
+            .split-hero-center {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .center-mascot {
+                width: 100px;
+                height: 100px;
+                padding: 18px;
+            }
+        }
+        
+        /* Split Section Dual Card Grids */
+        .split-services-section {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+        
+        .grid-header {
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .grid-header-left {
+            max-width: 600px;
+        }
+        
+        .grid-header h3 {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 5px;
+        }
+        
+        .grid-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .commercial-tag {
+            color: var(--secondary);
+        }
+        
+        .grid-header-desc {
+            font-size: 15px;
+            color: var(--gray-dark);
+            margin-top: 5px;
+        }
+        
+        .grid-badge-count {
+            background-color: var(--light);
+            border: 1px solid var(--gray-light);
+            color: var(--dark);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+        
+        .res-grid-badge {
+            border-color: rgba(11, 99, 229, 0.2);
+            color: var(--primary);
+            background-color: rgba(11, 99, 229, 0.03);
+        }
+        
+        .com-grid-badge {
+            border-color: rgba(230, 57, 70, 0.2);
+            color: var(--secondary);
+            background-color: rgba(230, 57, 70, 0.03);
+        }
+        
+        .dual-services-wrap {
+            margin-bottom: 60px;
+        }
+        
+        .dual-services-wrap:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Adjust Link colors on commercial cards to match the red style guide */
+        .commercial-card:hover .service-link {
+            color: #F87171 !important;
+            border-color: rgba(248, 113, 113, 0.6) !important;
+        }
+
+        /* Large absolute mascot logo layout overrides */
+        .header-container {
+            position: relative;
+            padding-left: 330px; /* Fully clear the wide mascot logo container */
+            min-height: 110px;
+        }
+        .logo-link {
+            position: absolute !important;
+            left: 10px;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 100 !important;
+            display: block !important;
+        }
+        .logo-img {
+            max-height: 100px !important;
+            height: 100px !important;
+            width: auto !important;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12)) !important;
+            transition: transform 0.3s ease !important;
+            margin: 0 !important;
+        }
+        .logo-img:hover {
+            transform: scale(1.04) !important;
+        }
+        .nav {
+            margin-left: auto;
+            gap: 15px !important; /* Smaller link spacing to prevent collisions */
+        }
+        .nav-link {
+            white-space: nowrap !important; /* Prevent vertical wrapping of link labels */
+            font-size: 13.5px !important; /* Slightly smaller font size to fit header container */
+        }
+        @media (max-width: 991px) {
+            .header-container {
+                padding-left: 0 !important;
+                min-height: auto;
+                /* FIX 3: was flex-direction:column — caused logo/hamburger to stack vertically */
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 0;
+            }
+            .logo-link {
+                position: static !important;
+                transform: none !important;
+                margin: 10px 0 !important;
+            }
+            .logo-img {
+                max-height: 90px !important;
+                height: 90px !important;
+            }
+            .nav {
+                margin-left: 0;
+            }
+        }
+        
+    </style>
+<style>
+        /* ==========================================================================
+           Cinematic Split Hero & Dual Themed Card Grid overrides
+           ========================================================================== */
+        .split-hero-side {
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 48px;
+            z-index: 1;
+            transition: flex 0.7s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+        
+        .side-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+        
+        .side-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 24, 47, 0.65) 0%, rgba(10, 24, 47, 0.85) 100%);
+            z-index: 2;
+            transition: opacity 0.6s ease;
+        }
+        
+        /* Expansion physics via parent has() */
+        @media (min-width: 992px) {
+            .split-hero:has(.left-side:hover) .left-side {
+                flex: 1.6;
+            }
+            .split-hero:has(.left-side:hover) .right-side {
+                flex: 0.6;
+            }
+            .split-hero:has(.right-side:hover) .right-side {
+                flex: 1.6;
+            }
+            .split-hero:has(.right-side:hover) .left-side {
+                flex: 0.6;
+            }
+        
+            /* Cinematic background zoom */
+            .split-hero-side:hover .side-bg {
+                transform: scale(1.08);
+            }
+            .split-hero-side:hover .side-overlay {
+                opacity: 0.75;
+            }
+        
+            /* Content focus effect - dim the opposite side */
+            .split-hero:has(.left-side:hover) .right-side .side-content {
+                opacity: 0.45;
+                transform: scale(0.96);
+            }
+            .split-hero:has(.right-side:hover) .left-side .side-content {
+                opacity: 0.45;
+                transform: scale(0.96);
+            }
+            
+            .side-content {
+                transition: transform 0.7s cubic-bezier(0.25, 1, 0.3, 1), 
+                            opacity 0.7s cubic-bezier(0.25, 1, 0.3, 1);
+            }
+        }
+        
+        /* Divider glow overlay */
+        .split-hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.15) 30%, 
+                rgba(255, 255, 255, 0.15) 70%, 
+                transparent 100%);
+            z-index: 5;
+            transition: left 0.7s cubic-bezier(0.25, 1, 0.3, 1), 
+                        background 0.5s ease, 
+                        box-shadow 0.5s ease;
+            pointer-events: none;
+        }
+        
+        @media (min-width: 992px) {
+            .split-hero:has(.left-side:hover)::after {
+                left: 72.7%;
+                background: linear-gradient(to bottom, transparent 0%, #60A5FA 30%, #60A5FA 70%, transparent 100%);
+                box-shadow: 0 0 15px rgba(96, 165, 250, 0.8), 0 0 30px rgba(96, 165, 250, 0.4);
+            }
+            .split-hero:has(.right-side:hover)::after {
+                left: 27.3%;
+                background: linear-gradient(to bottom, transparent 0%, #F87171 30%, #F87171 70%, transparent 100%);
+                box-shadow: 0 0 15px rgba(248, 113, 113, 0.8), 0 0 30px rgba(248, 113, 113, 0.4);
+            }
+        }
+        
+        @media (max-width: 991px) {
+            .split-hero::after {
+                display: none;
+            }
+        }
+        
+        /* Mascot Drift transition */
+        .split-hero-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            pointer-events: none;
+            transition: left 0.7s cubic-bezier(0.25, 1, 0.3, 1);
+            animation: float-logo 5s ease-in-out infinite;
+        }
+        
+        .center-mascot {
+            
+            transition: transform 0.3s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        @media (min-width: 992px) {
+            .split-hero:has(.left-side:hover) .split-hero-center {
+                left: 72.7%;
+            }
+            .split-hero:has(.left-side:hover) .center-mascot {
+                border-color: #60A5FA;
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(96, 165, 250, 0.6), inset 0 0 15px rgba(96, 165, 250, 0.2);
+            }
+            .split-hero:has(.right-side:hover) .split-hero-center {
+                left: 27.3%;
+            }
+            .split-hero:has(.right-side:hover) .center-mascot {
+                border-color: #F87171;
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(248, 113, 113, 0.6), inset 0 0 15px rgba(248, 113, 113, 0.2);
+            }
+        }
+        
+        /* Dual themed card styles */
+        .residential-card {
+            border: 1px solid rgba(11, 99, 229, 0.1) !important;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.3, 1), border-color 0.4s ease;
+        }
+        .residential-card:hover {
+            border-color: rgba(96, 165, 250, 0.4) !important;
+            box-shadow: 0 20px 45px rgba(10, 24, 47, 0.25), 0 0 20px rgba(11, 99, 229, 0.2) !important;
+        }
+        .commercial-card {
+            border: 1px solid rgba(230, 57, 70, 0.1) !important;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.3, 1), border-color 0.4s ease;
+        }
+        .commercial-card:hover {
+            border-color: rgba(248, 113, 113, 0.4) !important;
+            box-shadow: 0 20px 45px rgba(10, 24, 47, 0.25), 0 0 20px rgba(230, 57, 70, 0.2) !important;
+        }
+        
+        .service-link {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 15px;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.4s cubic-bezier(0.25, 1, 0.3, 1), transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), background-color 0.3s ease, color 0.3s ease;
+        }
+        .residential-card .service-link {
+            background-color: rgba(11, 99, 229, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            color: #60A5FA;
+        }
+        .residential-card:hover .service-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .residential-card .service-link:hover {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(11, 99, 229, 0.4);
+        }
+        
+        .commercial-card .service-link {
+            background-color: rgba(230, 57, 70, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            color: #F87171;
+        }
+        .commercial-card:hover .service-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .commercial-card .service-link:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
+        }
+        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+        </style>
+</head>
+<body>
+    <!-- WCAG 2.4.1: Skip Navigation Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span class="top-bar-item">
+                <!-- WCAG 1.1.1: Decorative SVG must be aria-hidden -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+            </span>
+            <span class="top-bar-item highlight">
+                <span class="badge">PROMO</span> Are you a new customer? Save 10% on your first repair service!
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-link">
+                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            </a>
+            <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
+            <button class="mobile-nav-toggle"
+                    id="hamburger-btn"
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-nav" id="hamburger-btn">☰</button>
+            <nav class="nav" id="site-nav" aria-label="Primary navigation">
+                <a href="index.html" class="nav-link active" aria-current="page">Home</a>
+                <a href="services.html" class="nav-link">HVAC Services</a>
+                <a href="pool-heating.html" class="nav-link">Pool Heating</a>
+                <a href="commercial.html" class="nav-link">Commercial</a>
+                <a href="areas.html" class="nav-link">Service Area</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="contact.html" class="nav-link">Contact</a></nav>
+            <a href="contact.html" class="btn btn-primary nav-cta">Get Free Estimate</a>
+        </div>
+    </header>
+    <!-- WCAG 2.4.1: main landmark with skip-link target id -->
+    <main id="main-content">
+
+
+    <!-- Dual-Gate Split Hero Section -->
+    <section class="reveal split-hero">
+        <h1 class="visually-hidden">A/C Now LLC — AC Repair &amp; HVAC Service in Port St. Lucie, FL | Same-Day | 24/7 Emergency</h1>
+        <!-- Left Side: Residential -->
+        <div class="split-hero-side left-side">
+            <div class="side-bg" style="background-image: url('downloaded_images/split_res_hero.jpg');"></div>
+            <div class="side-overlay"></div>
+            <div class="side-content">
+                <span class="side-tag">Residential Comfort</span>
+                <h2 class="side-headline" style="font-size: 46px; font-weight: 800; color: var(--white); margin-bottom: 15px; font-family: var(--font-heading); text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Keep Your Family Cool</h2>
+                <p class="side-desc">Precision flat-rate cooling repair, ductless system configuration, and preventive maintenance designed to handle extreme Florida humidity.</p>
+                <div class="side-actions">
+                    <a href="#residential-services" class="btn btn-primary btn-large">Residential Services</a>
+                    <a href="contact.html" class="btn btn-secondary btn-large">Book AC Service</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="split-hero-center">
+            <div class="center-mascot">
+                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now Logo Emblem" class="mascot-img">
+            </div>
+        </div>
+        
+        <!-- Right Side: Commercial -->
+        <div class="split-hero-side right-side">
+            <div class="side-bg" style="background-image: url('downloaded_images/split_com_hero.jpg');"></div>
+            <div class="side-overlay" style="background: linear-gradient(180deg, rgba(10, 24, 47, 0.75) 0%, rgba(10, 24, 47, 0.9) 100%);"></div>
+            <div class="side-content">
+                <span class="side-tag">Commercial & Towers</span>
+                <h2 class="side-headline" style="font-size: 46px; font-weight: 800; color: var(--white); margin-bottom: 15px; font-family: var(--font-heading); text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Manage Your Complex</h2>
+                <p class="side-desc">Heavy-equipment chiller replacements, rooftop package systems, and custom priority facility agreements for property managers.</p>
+                <div class="side-actions">
+                    <a href="#commercial-services" class="btn btn-primary btn-large" style="background: linear-gradient(135deg, var(--secondary) 0%, #a31d27 100%); box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);">Commercial Services</a>
+                    <a href="contact.html" class="btn btn-secondary btn-large">Request Industrial Bid</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges Section -->
+    <section class="reveal trust-bar">
+        <div class="container trust-container">
+            <div class="trust-card">
+                <img src="downloaded_images/Veteran.webp" alt="Veteran Owned icon" class="trust-icon" width="48" height="48">
+                <div class="trust-info">
+                    <!-- WCAG 1.3.1: h3 here (sub-items of a section, not top-level headings) -->
+                    <h3>Veteran Owned</h3>
+                    <p>Built on integrity and respect.</p>
+                    <span style="color: var(--primary); font-weight: 700;">Elite Military Precision</span>
+                </div>
+            </div>
+            <div class="trust-card">
+                <img src="downloaded_images/Locally.webp" alt="Locally Owned icon" class="trust-icon" width="48" height="48">
+                <div class="trust-info">
+                    <h3>Locally Operated</h3>
+                    <p>Serving Port St. Lucie &amp; Stuart.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <img src="downloaded_images/Trained.webp" alt="Elite Certified Technicians icon" class="trust-icon" width="48" height="48">
+                <div class="trust-info">
+                    <h3>Elite Certified Experts</h3>
+                    <p>Fully trained, licensed &amp; insured.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <img src="downloaded_images/Personalized.webp" alt="Personalized service icon" class="trust-icon">
+                <div class="trust-info">
+                    <h2>Upfront Pricing</h2>
+                    <p>Flat-rate pricing, zero hidden fees.</p>
+                </div>
+            </div>
+            <div class="trust-card" style="border-left: 3px solid var(--primary);">
+                <div class="trust-info">
+                    <p style="font-style:italic; font-size:13px; color:var(--gray-dark); margin-bottom:6px; line-height:1.5;">&ldquo;Sean and Chris are true professionals — fast, honest, and extremely fair pricing. Best AC company on the Treasure Coast!&rdquo;</p>
+                    <strong style="font-size:11px; color:var(--primary); text-transform:uppercase; letter-spacing:1px;">⭐⭐⭐⭐⭐ Robert M. — Port St. Lucie, FL</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dual Service Card Grids Section -->
+    <section id="services" class="reveal split-services-section">
+        <div class="container">
+            
+            <!-- Residential Services Section -->
+            <div class="dual-services-wrap" id="residential-services">
+                <div class="grid-header">
+                    <div class="grid-header-left">
+                        <span class="grid-tag">Residential Care</span>
+                        <h3>Keep Your Family Cool</h3>
+                        <p class="grid-header-desc">Specialized domestic climate systems engineered for maximum reliability, lower utility bills, and consistent cooling.</p>
+                    </div>
+                    <div class="grid-badge-count res-grid-badge">3 Residential Programs</div>
+                </div>
+                
+                <div class="services-grid">
+                    <!-- Service Card 1 -->
+                    <div class="service-card residential-card">
+                        <div class="service-img-wrapper">
+                            <img src="downloaded_images/split_res_repair.jpg" alt="AC Diagnostic &amp; Repair" class="service-img" loading="lazy" width="400" height="300">
+                        </div>
+                        <div class="service-card-body">
+                            <h3>AC Repair & Diagnostics</h3>
+                            <p>Blowing warm air? We perform comprehensive diagnostic checks on relay panels, capacitors, coils, and compressors to fix it fast.</p>
+                            <a href="contact.html" class="service-link">Schedule Repair &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 2 -->
+                    <div class="service-card residential-card">
+                        <div class="service-img-wrapper">
+                            <img src="downloaded_images/split_res_install.jpg" alt="Residential Condenser Installation" class="service-img" loading="lazy" width="400" height="300">
+                        </div>
+                        <div class="service-card-body">
+                            <h3>Elite Installations</h3>
+                            <p>Upgrade to a modern, energy-saving SEER2 cooling system. High-quality construction, solid warranties, and upfront pricing.</p>
+                            <a href="contact.html" class="service-link">Get Free Estimate &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 3 -->
+                    <div class="service-card residential-card">
+                        <div class="service-img-wrapper">
+                            <img src="downloaded_images/split_res_maintenance.jpg" alt="Air Handler Maintenance Inspection" class="service-img" loading="lazy" width="400" height="300">
+                        </div>
+                        <div class="service-card-body">
+                            <h3>Air Handler Maintenance</h3>
+                            <p>Keep your system operating efficiently and prevent expensive breakdowns with our comprehensive Service Club inspections.</p>
+                            <a href="contact.html" class="service-link">View Memberships &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commercial Services Section -->
+            <div class="dual-services-wrap" id="commercial-services" style="margin-top: 80px;">
+                <div class="grid-header">
+                    <div class="grid-header-left">
+                        <span class="grid-tag commercial-tag">Commercial & High-Rises</span>
+                        <h3>Manage Your Complex</h3>
+                        <p class="grid-header-desc">Heavy-commercial HVAC engineering, rooftop package replacements, chiller maintenance, and multi-tenant systems.</p>
+                    </div>
+                    <div class="grid-badge-count com-grid-badge">3 Commercial Programs</div>
+                </div>
+                
+                <div class="services-grid">
+                    <!-- Service Card 4 -->
+                    <div class="service-card commercial-card">
+                        <div class="service-img-wrapper">
+                            <img src="downloaded_images/split_com_install.jpg" alt="Rooftop Commercial Chiller Upgrade" class="service-img" loading="lazy" width="400" height="300">
+                        </div>
+                        <div class="service-card-body">
+                            <h3>Rooftop & Chiller Installs</h3>
+                            <p>We manage complicated crane lifts, tenant improvement modifications, and new heavy industrial chiller installations.</p>
+                            <a href="contact.html" class="service-link">Request Quote &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 5 -->
+                    <div class="service-card commercial-card">
+                        <div class="service-img-wrapper">
+                            <img src="downloaded_images/split_com_maintenance.jpg" alt="Commercial Unit Rooftop Inspection" class="service-img" loading="lazy" width="400" height="300">
+                        </div>
+                        <div class="service-card-body">
+                            <h3>Facility HVAC Maintenance</h3>
+                            <p>Prevent system down-time. Custom preventative service plans for condominium associations, office complexes, and storefronts.</p>
+                            <a href="contact.html" class="service-link">View Facility Programs &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Service Card 6 -->
+                    <div class="service-card commercial-card">
+                        <div class="service-img-wrapper">
+                            <img src="downloaded_images/split_com_repair.jpg" alt="Commercial Manifold Gauges Pressure Check" class="service-img" loading="lazy" width="400" height="300">
+                        </div>
+                        <div class="service-card-body">
+                            <h3>Industrial HVAC Repair</h3>
+                            <p>Fast mechanical troubleshooting, pressure testing, and system rebuilds. Available 24/7 for commercial facilities.</p>
+                            <a href="contact.html" class="service-link">Schedule Service &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Why Us Section (Two Column Layout) -->
+    <section id="about" class="reveal about-section">
+        <div class="container about-grid">
+            <div class="about-image-column">
+                <img src="downloaded_images/content-v3-img-1.webp" alt="AC Unit Installation" class="about-main-img" loading="lazy" width="600" height="450">
+                <div class="about-experience-badge">
+                    <span class="exp-num">30+</span>
+                    <span class="exp-text">Years of Combined Service</span>
+                </div>
+            </div>
+            <div class="about-text-column">
+                <span class="section-tag">ABOUT OUR TEAM</span>
+                <h2>Veteran-Owned Accountability</h2>
+                <p>At A/C Now, owners Chris and Sean apply military discipline to home services. We serve the Treasure Coast with transparent diagnostic fees, flat-rate quotes, and reliable system installations.</p>
+                
+                <div class="about-details">
+                    <div class="about-detail-item">
+                        <div class="detail-icon">✓</div>
+                        <div class="detail-content">
+                            <h3>Transparent Pricing</h3>
+                            <p>No hidden fees or bait-and-switch. We present all costs upfront for your approval.</p>
+                        </div>
+                    </div>
+                    <div class="about-detail-item">
+                        <div class="detail-icon">✓</div>
+                        <div class="detail-content">
+                            <h3>Veteran Leadership</h3>
+                            <p>We bring discipline, accountability, and pride in service to every single call.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-team-grid">
+                    <div class="team-member">
+                        <img src="downloaded_images/Chris.webp" alt="Chris - A/C Now Team" class="team-img" loading="lazy" width="60" height="60">
+                        <div class="team-info">
+                            <strong>Chris</strong>
+                            <span>Owner / Lead Specialist</span>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <img src="downloaded_images/Sean.webp" alt="Sean - A/C Now Team" class="team-img" loading="lazy" width="60" height="60">
+                        <div class="team-info">
+                            <strong>Sean</strong>
+                            <span>Owner / Operations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive HVAC Innovations Panel -->
+    <section class="reveal innovations-section" style="background-color: var(--white); border-top: 1px solid var(--gray-light);">
+        <div class="container">
+            <div class="section-header centered">
+                <span class="section-tag">DIGITAL EXPERIENCES</span>
+                <h2>HVAC Interactive Optimizations</h2>
+                <p>Try out these custom visual calculator tools designed to maximize home comfort, transparency, and ROI.</p>
+            </div>
+
+            <!-- TABBED INNOVATIONS INTERFACE -->
+            <div class="innovations-tab-container">
+                <!-- WCAG 4.1.2: Tab interface with proper ARIA roles -->
+                <div class="innovations-tab-header" role="tablist" aria-label="HVAC Interactive Tools">
+                    <button class="inno-tab-btn active"
+                            role="tab"
+                            id="tab-seer"
+                            aria-selected="true"
+                            aria-controls="seer-calc"
+                            onclick="switchInnoTab(event, 'seer-calc')">⚡ SEER2 Savings Calculator</button>
+                    <button class="inno-tab-btn"
+                            role="tab"
+                            id="tab-club"
+                            aria-selected="false"
+                            aria-controls="club-builder"
+                            onclick="switchInnoTab(event, 'club-builder')">🛡️ Membership ROI Builder</button>
+                    <button class="inno-tab-btn"
+                            role="tab"
+                            id="tab-dispatch"
+                            aria-selected="false"
+                            aria-controls="dispatch-scheduler"
+                            onclick="switchInnoTab(event, 'dispatch-scheduler')">🚨 Priority Emergency Dispatch</button>
+                </div>
+
+                <div class="innovations-tab-body">
+                    <!-- WCAG 4.1.2: tabpanel role + labelledby + focusable -->
+                    <div id="seer-calc" class="inno-tab-panel active"
+                         role="tabpanel"
+                         aria-labelledby="tab-seer"
+                         tabindex="0">
+                        <div class="calc-grid">
+                            <div class="calc-inputs-pane">
+                                <h3>Calculate Your SEER2 Energy Savings</h3>
+                                <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 24px;">Florida utility bills climb fast on old units. Slide the bars to see your potential monthly savings by upgrading to a modern SEER2 condenser.</p>
+                                
+                                <div class="calc-control-group">
+                                    <div class="control-label-box">
+                                        <label for="current-seer">Current System Age / SEER Rating</label>
+                                        <span id="val-current-seer">10 SEER (Over 10 Years Old)</span>
+                                    </div>
+                                    <input type="range" id="current-seer" min="8" max="14" value="10" step="1" oninput="updateSeerSavings()">
+                                </div>
+
+                                <div class="calc-control-group">
+                                    <div class="control-label-box">
+                                        <label for="target-seer">Proposed New System SEER2</label>
+                                        <span id="val-target-seer">18 SEER2 (Ultra High Efficiency)</span>
+                                    </div>
+                                    <input type="range" id="target-seer" min="15" max="22" value="18" step="1" oninput="updateSeerSavings()">
+                                </div>
+
+                                <div class="calc-control-group">
+                                    <div class="control-label-box">
+                                        <label for="monthly-bill">Average Monthly Cooling Bill ($)</label>
+                                        <span id="val-monthly-bill">$300</span>
+                                    </div>
+                                    <input type="range" id="monthly-bill" min="150" max="600" value="300" step="10" oninput="updateSeerSavings()">
+                                </div>
+                            </div>
+                            <div class="calc-results-pane">
+                                <div class="results-wrapper">
+                                    <span class="results-lbl">Estimated Monthly Savings</span>
+                                    <div class="results-price" id="seer-monthly-savings">$133.33</div>
+                                    <div class="results-yearly">Estimated Yearly Savings: <strong id="seer-yearly-savings">$1,600.00</strong></div>
+                                    <div class="results-visual-bar">
+                                        <div class="bar-fill" id="seer-bar-fill" style="width: 44%;"></div>
+                                    </div>
+                                    <p class="results-note">Upgrading to an 18 SEER2 unit reduces your cooling power draw by approximately 44% compared to a standard 10 SEER condenser.</p>
+                                    <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Claim Your Free Installation Quote</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Membership ROI Builder -->
+                    <div id="club-builder" class="inno-tab-panel"
+                         role="tabpanel"
+                         aria-labelledby="tab-club"
+                         tabindex="0">
+                        <div class="calc-grid">
+                            <div class="calc-inputs-pane">
+                                <h3>Service Club Membership ROI Builder</h3>
+                                <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 24px;">Select the regular service fees you face to calculate the cost-offset savings of our $19/mo Service Club agreement.</p>
+                                
+                                <div class="club-options-list">
+                                    <label class="club-option-item">
+                                        <input type="checkbox" id="opt-cleanings" checked onchange="updateClubROI()">
+                                        <div>
+                                            <strong>2 Annual Maintenance Cleanings</strong>
+                                            <span>Normal Price: $180/year</span>
+                                        </div>
+                                    </label>
+                                    <label class="club-option-item">
+                                        <input type="checkbox" id="opt-repair-cost" onchange="updateClubROI()">
+                                        <div>
+                                            <strong>Annual Repair Diagnostic Fee</strong>
+                                            <span>Normal Price: $95 (Saved with Membership)</span>
+                                        </div>
+                                    </label>
+                                    <label class="club-option-item">
+                                        <input type="checkbox" id="opt-repairs-value" onchange="updateClubROI()">
+                                        <div>
+                                            <strong>Estimated Repairs Needed ($300 value)</strong>
+                                            <span>Get 15% discount on all parts & labor</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="calc-results-pane">
+                                <div class="results-wrapper">
+                                    <span class="results-lbl">Net Annual Membership Savings</span>
+                                    <div class="results-price" id="club-savings-val">$47.00</div>
+                                    <div class="results-yearly">Annual Member Cost: <strong>$228.00</strong></div>
+                                    <p class="results-note" style="margin-top: 15px;">Your savings covers the entire cost of membership, plus gives you priority front-of-the-line scheduling during peak summer hours!</p>
+                                    <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Join the Service Club Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Emergency Dispatch Scheduler -->
+                    <div id="dispatch-scheduler" class="inno-tab-panel"
+                         role="tabpanel"
+                         aria-labelledby="tab-dispatch"
+                         tabindex="0">
+                        <div class="dispatch-wizard">
+                            <div class="wizard-header">
+                                <div class="wizard-steps-indicator">
+                                    <span class="step-num active" id="step-1-indicator">1</span>
+                                    <span class="step-line"></span>
+                                    <span class="step-num" id="step-2-indicator">2</span>
+                                </div>
+                                <h3>Priority Repair Booking Wizard</h3>
+                            </div>
+                            <div class="wizard-body">
+                                <div class="wizard-pane active" id="pane-step-1">
+                                    <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 20px;">AC broken down? Answer three simple questions to find the next priority technician dispatch slot in your city.</p>
+                                    <div class="wizard-field">
+                                        <!-- WCAG 1.3.1: labels must be programmatically associated -->
+                                        <label for="dispatch-city">1. Select Your Location</label>
+                                        <select id="dispatch-city" name="dispatch-city">
+                                            <option>Port Saint Lucie</option>
+                                            <option>Stuart</option>
+                                            <option>Palm City</option>
+                                            <option>Jupiter</option>
+                                            <option>Jensen Beach / Fort Pierce</option>
+                                        </select>
+                                    </div>
+                                    <div class="wizard-field" style="margin-top: 15px;">
+                                        <label for="dispatch-status">2. Current System Status</label>
+                                        <select id="dispatch-status" name="dispatch-status">
+                                            <option>AC is completely dead / house is hot</option>
+                                            <option>AC is blowing warm air</option>
+                                            <option>System is leaking water / freezing up</option>
+                                            <option>Requesting routine tune-up / maintenance</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" style="margin-top: 25px;" onclick="goToWizardStep2()">Find Next Available Slot &rarr;</button>
+                                </div>
+                                <div class="wizard-pane" id="pane-step-2">
+                                    <div class="success-slot-box">
+                                        <div class="slot-badge">CONFIRMED AVAILABILITY</div>
+                                        <h3 id="slot-time-text">Next Dispatch Slot: Today between 3:00 PM - 5:00 PM</h3>
+                                        <p style="font-size: 13px; color: var(--gray-dark); margin-top: 5px;">A technician is routing near your location. Enter your details to secure this priority slot.</p>
+                                    </div>
+                                    <div class="form-row" style="margin-top: 20px;">
+                                        <div class="form-group">
+                                            <!-- WCAG 1.3.1: label for/id association -->
+                                            <label for="dispatch-name">Name</label>
+                                            <input type="text" id="dispatch-name" name="dispatch-name" placeholder="John Doe">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dispatch-phone">Phone Number</label>
+                                            <input type="tel" id="dispatch-phone" name="dispatch-phone" placeholder="(772) 555-0100">
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 15px; margin-top: 20px;">
+                                        <button class="btn btn-secondary" onclick="goToWizardStep1()" style="color: var(--dark); border-color: var(--gray-light);">Back</button>
+                                        <button class="btn btn-primary" onclick="submitDispatch()">Book Dispatch Slot Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reveal reviews-section">
+        <div class="container">
+            <div class="section-header centered">
+                <span class="section-tag">TESTIMONIALS</span>
+                <h2>Why the Treasure Coast Trusts A/C Now LLC</h2>
+                <p>We pride ourselves on service that wows. See feedback from our happy local neighbors.</p>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-rating" aria-label="5 Star Rating">
+                        <span class="stars" aria-hidden="true">★★★★★</span>
+                    </div>
+                    <p class="review-quote">"Sean and Chris were phenomenal! They replaced our entire AC system in less than a day, and the price was extremely fair. Service was quick, professional, and very clean."</p>
+                    <div class="review-author">
+                        <strong>Robert M.</strong>
+                        <span>Port St. Lucie, FL</span>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-rating" aria-label="5 Star Rating">
+                        <span class="stars" aria-hidden="true">★★★★★</span>
+                    </div>
+                    <p class="review-quote">"As a veteran myself, I highly appreciate their promptness, direct honesty, and attention to detail. No pushy sales, just clear diagnostics and high-quality repairs."</p>
+                    <div class="review-author">
+                        <strong>David K.</strong>
+                        <span>Stuart, FL</span>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-rating" aria-label="5 Star Rating">
+                        <span class="stars" aria-hidden="true">★★★★★</span>
+                    </div>
+                    <p class="review-quote">"My air conditioner broke down in the middle of a hot Sunday afternoon. A/C Now responded within 45 minutes and got it fixed immediately. Outstanding customer care!"</p>
+                    <div class="review-author">
+                        <strong>Jessica S.</strong>
+                        <span>Palm City, FL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Areas -->
+    <section id="serve" class="reveal serve-section" style="background-image: linear-gradient(180deg, rgba(246, 248, 252, 0.95) 0%, rgba(246, 248, 252, 0.95) 100%), url('downloaded_images/banner-areas.jpg');">
+        <div class="container serve-grid">
+            <div class="serve-text">
+                <span class="section-tag">SERVICE REGIONS</span>
+                <h2>Proudly Serving the Treasure Coast</h2>
+                <p>We bring premium climate services to communities across Martin County, St. Lucie County, and northern Palm Beach County, including:</p>
+                <div class="areas-list">
+                    <span>Port St. Lucie</span>
+                    <span>Stuart</span>
+                    <span>Palm City</span>
+                    <span>Jensen Beach</span>
+                    <span>Fort Pierce</span>
+                    <span>Jupiter</span>
+                    <span>Hobe Sound</span>
+                    <span>Palm Beach Gardens</span>
+                </div>
+            </div>
+            <div class="serve-map">
+                <img src="downloaded_images/map.webp" alt="Service Area Map" class="map-img" loading="lazy" width="600" height="450">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Form Section -->
+    <section id="contact" class="reveal contact-section">
+        <div class="container contact-container">
+            <div class="contact-info-panel">
+                <span class="section-tag">GET IN TOUCH</span>
+                <h2>Contact Us Today</h2>
+                <p>Have an AC emergency? Need an estimate on a replacement? Send us a message or call directly. We'd love to help.</p>
+                
+                <div class="contact-channels">
+                    <div class="contact-channel">
+                        <span class="channel-icon" aria-hidden="true">📞</span>
+                        <div>
+                            <strong>Phone Number</strong>
+                            <p><a href="tel:+17725213568" class="phone-link" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-channel">
+                        <span class="channel-icon">✉️</span>
+                        <div>
+                            <strong>Email Address</strong>
+                            <p>info@acnowllc.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-channel">
+                        <span class="channel-icon">⏰</span>
+                        <div>
+                            <strong>Business Hours</strong>
+                            <p>Mon - Sat: 8:00 AM - 6:00 PM<br>Emergency Callout: 24/7 Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-panel">
+                <form class="contact-form" method="POST" onsubmit="event.preventDefault(); alert('Estimate request submitted successfully! Chris or Sean will contact you shortly.');">
+                <div style="display:none;"><label for="honeypot">Leave this field blank</label><input type="text" id="honeypot" name="honeypot"></div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="John Doe" required name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="(123) 456-7890" required name="phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="john@example.com" required name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Select Service</label>
+                        <select id="service" name="service">
+                            <option>AC Repair</option>
+                            <option>AC Installation / Replacement</option>
+                            <option>HVAC Maintenance Agreement</option>
+                            <option>Indoor Air Quality Evaluation</option>
+                            <option>Pool Heater Service</option>
+                            <option>Commercial HVAC</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" rows="4" placeholder="Briefly describe your request..." required name="message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section aria-labelledby="hp-faq-heading" style="background-color: var(--light); padding: 80px 0; border-top: 1px solid var(--gray-light);">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-header centered" style="margin-bottom:40px;">
+                <span class="section-tag">COMMON QUESTIONS</span>
+                <h2 id="hp-faq-heading" style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark);">AC &amp; HVAC FAQs &mdash; Port St. Lucie, FL</h2>
+            </div>
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);" open>
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">What HVAC services does A/C Now LLC offer?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">A/C Now LLC offers a full range of HVAC services including residential AC repair, AC installation and system replacement, preventive maintenance plans, ductless mini-split installation, indoor air quality solutions, pool heat pump service, and commercial HVAC for condo boards and businesses. We serve Port St. Lucie, Palm City, Stuart, Jupiter, and the entire Treasure Coast. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>.</p>
+            </details>
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Are you a veteran-owned HVAC company?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">Yes. A/C Now LLC is proudly veteran-owned and operated. Founders Chris and Sean are military veterans who bring the same discipline, integrity, and precision from their service to every HVAC job. We hold Florida HVAC Contractor License #CAC1820542 and are fully insured, serving Port St. Lucie and the Treasure Coast.</p>
+            </details>
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Do you serve Palm City and Stuart?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">Yes. A/C Now LLC provides same-day AC repair and HVAC installation in Palm City, Stuart, Port St. Lucie, Jupiter, Hobe Sound, Jensen Beach, and Fort Pierce, FL. Our service area covers all of Martin County and St. Lucie County. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a> to schedule.</p>
+            </details>
+            <details style="border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">What makes A/C Now different from other HVAC companies?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">A/C Now LLC stands apart with veteran-owned accountability, flat-rate pricing with no hidden fees, fully stocked service trucks for same-day repairs, and direct ownership oversight on every job. Chris and Sean personally ensure every installation and repair meets factory warranty standards. No subcontractors, no surprises &mdash; just dependable, military-grade HVAC service on the Treasure Coast.</p>
+            </details>
+        </div>
+    </section>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What HVAC services does A/C Now LLC offer?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A/C Now LLC offers residential AC repair, AC installation and replacement, preventive maintenance plans, ductless mini-split installation, indoor air quality solutions, pool heat pump service, and commercial HVAC for condo boards and businesses. We serve Port St. Lucie, Palm City, Stuart, Jupiter, and the Treasure Coast. Call (772) 521-3568." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are you a veteran-owned HVAC company?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. A/C Now LLC is proudly veteran-owned and operated by founders Chris and Sean, military veterans who bring discipline, integrity, and precision to every HVAC job. Licensed #CAC1820542 and fully insured, serving Port St. Lucie and the Treasure Coast." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you serve Palm City and Stuart?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. A/C Now LLC provides same-day AC repair and HVAC installation in Palm City, Stuart, Port St. Lucie, Jupiter, Hobe Sound, Jensen Beach, and Fort Pierce, FL — covering all of Martin County and St. Lucie County. Call (772) 521-3568 to schedule." }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes A/C Now different from other HVAC companies?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A/C Now LLC stands apart with veteran-owned accountability, flat-rate pricing with no hidden fees, fully stocked service trucks for same-day repairs, and direct ownership oversight on every job. No subcontractors, no surprises — just dependable HVAC service on the Treasure Coast." }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Footer -->
+    
+    </main>
+<footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="downloaded_images/Logo2.webp" alt="A/C Now LLC — Elite Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="120" height="48">
+                <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
+                    <strong>A/C Now LLC</strong><br>
+                    1391 NW St. Lucie West Blvd, STE 120<br>
+                    Port St. Lucie, FL 34986<br>
+                    <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
+                </address>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Our Services</div>
+                <a href="services.html">AC Repair</a>
+                <a href="services.html">AC Installation</a>
+                <a href="services.html">Maintenance</a>
+                <a href="services.html">Air Quality</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Quick Links</div>
+                <a href="about.html">About Us</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="pool-heating.html">Pool Heating</a>
+                <a href="areas.html">Service Areas</a>
+                <a href="contact.html">Contact Us</a>
+            <div class="footer-links">
+                <div class="footer-heading">Service Cities</div>
+                <a href="index.html">Port St. Lucie</a>
+                <a href="hvac-services-palm-city.html">Palm City</a>
+                <a href="hvac-services-stuart.html">Stuart</a>
+                <a href="areas.html">All Service Areas</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>&copy; 2026 A/C Now LLC. All rights reserved. Licensed & Insured. Florida License #CAC1820542</p>
+            </div>
+        </div>
+    </footer>
+    <script src="app.js" defer></script>
+    <!-- WCAG 4.1.2 + 1.3.1: Sticky CTA bar with role, aria-label, and emoji aria-hidden -->
+    <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
+        <a href="tel:7725213568" class="sticky-cta-btn phone-btn">📞 Elite Service Line</a>
+        <a href="contact.html" class="sticky-cta-btn book-btn">📅 Book Elite Visit</a>
+    </div>
+
+</body>
+</html>
