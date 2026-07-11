@@ -3,6 +3,12 @@
 # Trailing-slash normalization (prevents duplicate canonical content)
 /index.html   /   301
 
+# Canonical Domain Redirection (www to non-www and HTTP to HTTPS)
+http://www.acnowllc.com/*   https://acnowllc.com/:splat   301!
+https://www.acnowllc.com/*  https://acnowllc.com/:splat   301!
+http://acnowllc.com/*       https://acnowllc.com/:splat   301!
+
+
 # Legacy or common path aliases → canonical pages
 /home         /   301
 /home/        /   301

@@ -9,7 +9,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://acnowllc.netlify.app/reviews.html">
     <meta property="og:title" content="Customer Reviews | A/C Now LLC | 5-Star HVAC Reviews">
-    <meta property="og:description" content="Read 5-star customer reviews for elite AC repair, installation and tune-ups from homeowners on the Treasure Coast. Real feedback from A/C Now clients.">
+    <meta property="og:description" content="Read 5-star customer reviews for professional AC repair, installation and tune-ups from homeowners on the Treasure Coast. Real feedback from A/C Now clients.">
     <meta property="og:image" content="https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png">
     <!-- Google Fonts: Non-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,10 +30,11 @@
       "name": "A/C Now LLC",
       "@id": "https://acnowllc.netlify.app/#hvacbusiness",
       "url": "https://acnowllc.netlify.app/",
+      "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
       "telephone": "(772) 521-3568",
       "email": "info@acnowllc.com",
       "priceRange": "$$",
-      "description": "A/C Now LLC is a veteran-owned HVAC contractor in Port St. Lucie, FL serving the Treasure Coast with 5-star rated AC repair, installation, and maintenance. Florida License #CAC1820542.",
+      "description": "A/C Now LLC is a veteran-owned HVAC contractor in Port St. Lucie, FL delivering same-day residential AC repair, commercial HVAC systems, pool heat pumps, and preventive maintenance across the Treasure Coast. Florida License #CAC1820542.",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
@@ -42,6 +43,19 @@
         "postalCode": "34986",
         "addressCountry": "US"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 27.3138016,
+        "longitude": -80.3954409
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "08:00",
+          "closes": "18:00"
+        }
+      ],
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "5.0",
@@ -51,9 +65,9 @@
         { "@type": "Review", "author": { "@type": "Person", "name": "Thomas D." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "We had them install a new A/C system. Very professional and honest and knowledgeable. We will be happy to refer them to our friends." },
         { "@type": "Review", "author": { "@type": "Person", "name": "Nicole R." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "These guys are responsive, honest and reliable. I had cooling issues and they showed up fast. I highly recommend their team." },
         { "@type": "Review", "author": { "@type": "Person", "name": "John H." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "Outstanding knowledge of what system is best for Florida and our home. Very trustworthy and professional crew." },
-        { "@type": "Review", "author": { "@type": "Person", "name": "Tom K." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "Notified of arrival, arrived on time as scheduled, and performed inspection of unit. Offered options for maintenance programs." },
-        { "@type": "Review", "author": { "@type": "Person", "name": "Todd G." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "Sean was awesome! Very knowledgeable and got us back up and going right away. Fixed our compressor electrical wires in minutes." },
-        { "@type": "Review", "author": { "@type": "Person", "name": "Ron A." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "This company is amazing! Their professionalism is welcomed in this day of poor service. This company is a step above — I highly recommend them." }
+        { "@type": "Review", "author": { "@type": "Person", "name": "Tom K." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "Notified of arrival, arrived on time as scheduled, and performed inspection of unit. Offered options for maintenance programs. Responded to additional questions we had as new homeowners." },
+        { "@type": "Review", "author": { "@type": "Person", "name": "Todd G." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "Sean was awesome! Very knowledgeable and got us back up and going right away. Fixed our compressor electrical wires in minutes. Highly recommend!" },
+        { "@type": "Review", "author": { "@type": "Person", "name": "Ron A." }, "reviewRating": { "@type": "Rating", "ratingValue": "5" }, "reviewBody": "This company is amazing! Their professionalism is welcomed in this day of poor service. This company is a step above I highly recommend them." }
       ]
     }
     </script>
@@ -116,8 +130,8 @@
             <a href="index.html" class="logo-link">
                 <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-nav" id="hamburger-btn">☰</button>
-            <nav class="nav">                <a href="index.html" class="nav-link">Home</a>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+            <nav class="nav" id="primary-nav">                <a href="index.html" class="nav-link">Home</a>
                 <a href="services.html" class="nav-link">HVAC Services</a>
                 <a href="pool-heating.html" class="nav-link">Pool Heating</a>
                 <a href="commercial.html" class="nav-link">Commercial</a>

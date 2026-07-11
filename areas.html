@@ -9,7 +9,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://acnowllc.netlify.app/areas.html">
     <meta property="og:title" content="Areas We Serve | A/C Now LLC | Treasure Coast HVAC Service Areas">
-    <meta property="og:description" content="AC Now LLC provides elite AC repair and HVAC installation services across Martin County, St. Lucie County, and northern Palm Beach County.">
+    <meta property="og:description" content="AC Now LLC provides professional AC repair and HVAC installation services across Martin County, St. Lucie County, and northern Palm Beach County.">
     <meta property="og:image" content="https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png">
     <!-- Google Fonts: Non-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,12 +32,13 @@
       "@context": "https://schema.org",
       "@type": "HVACBusiness",
       "name": "A/C Now LLC",
-      "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
       "@id": "https://acnowllc.netlify.app/#hvacbusiness",
       "url": "https://acnowllc.netlify.app/",
+      "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
       "telephone": "(772) 521-3568",
+      "email": "info@acnowllc.com",
       "priceRange": "$$",
-      "openingHours": ["Mo-Sa 08:00-18:00"],
+      "description": "A/C Now LLC is a veteran-owned HVAC contractor in Port St. Lucie, FL delivering same-day residential AC repair, commercial HVAC systems, pool heat pumps, and preventive maintenance across the Treasure Coast. Florida License #CAC1820542.",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
@@ -51,6 +52,14 @@
         "latitude": 27.3138016,
         "longitude": -80.3954409
       },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "08:00",
+          "closes": "18:00"
+        }
+      ],
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "5.0",
@@ -58,14 +67,6 @@
         "worstRating": "1",
         "reviewCount": "6"
       },
-      "review": [
-        {"@type":"Review","author":{"@type":"Person","name":"Robert M."},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"Sean and Chris are true professionals. They arrived quickly, diagnosed my AC issue immediately, and had us cooling down in under an hour."},
-        {"@type":"Review","author":{"@type":"Person","name":"Linda K."},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"Honest, reliable, and fair pricing. As a military family, we love supporting veteran-owned businesses. A/C Now is the absolute best on the Treasure Coast."},
-        {"@type":"Review","author":{"@type":"Person","name":"Thomas D."},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"Very professional and honest and knowledgeable. We will happily refer them to our friends."},
-        {"@type":"Review","author":{"@type":"Person","name":"Nicole R."},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"Responsive, honest and reliable. They showed up fast and fixed our cooling issue right away."},
-        {"@type":"Review","author":{"@type":"Person","name":"Todd G."},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"Sean was awesome! Very knowledgeable and got us back up and going right away. Highly recommend!"},
-        {"@type":"Review","author":{"@type":"Person","name":"Ron A."},"reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"This company is amazing! Their professionalism is a step above the rest in this day of poor service."}
-      ],
       "areaServed": [
         {
           "@type": "City",
@@ -171,7 +172,7 @@
     <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.9) 0%, rgba(10, 24, 47, 0.85) 100%), url('downloaded_images/banner-jupiter-island.jpg'); min-height: 40vh; padding: 80px 0;">
         <div class="container">
             <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
-                <span class="hero-subtitle">ELITE MILITARY PRECISION • ACROSS THE TREASURE COAST</span>
+                <span class="hero-subtitle">VETERAN-LED HVAC SERVICES • ACROSS THE TREASURE COAST</span>
                 <h1 class="hero-title" style="font-size: 48px; margin-bottom: 12px;">Areas We Serve</h1>
                 <p class="hero-text" style="margin-bottom: 0;">Our veteran-owned team brings same-day HVAC repair and installation — backed by military-grade accountability — across three Florida counties.</p>
                 <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:28px;">
@@ -188,7 +189,7 @@
             <div>
                 <span class="section-tag">GEOGRAPHIC COVERAGE</span>
                 <h2>Prompt Climate Service Across the Treasure Coast</h2>
-                <p style="color: var(--gray-dark); margin-bottom: 24px; line-height: 1.7;">A/C Now LLC is based in Port Saint Lucie, but our service trucks actively route daily through neighborhoods across St. Lucie, Martin, and northern Palm Beach Counties. Because we are locally owned, we understand the local grid and neighborhood housing configurations, allowing us to perform fast, accurate air conditioner repairs and custom-designed system installations.</p>
+                <p style="color: var(--gray-dark); margin-bottom: 24px; line-height: 1.7;">A/C Now LLC is based in Port St. Lucie, but our service trucks actively route daily through neighborhoods across St. Lucie, Martin, and northern Palm Beach Counties. Because we are locally owned, we understand the local grid and neighborhood housing configurations, allowing us to perform fast, accurate air conditioner repairs and custom-designed system installations.</p>
                 
                 <h3 style="font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 16px;">HVAC Services by City:</h3>
                 <div style="margin-bottom: 30px;">
@@ -277,17 +278,26 @@
         {
           "@type": "Question",
           "name": "Does A/C Now LLC offer AC repair in Jupiter, FL?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. A/C Now LLC provides AC repair in Jupiter, FL and across northern Palm Beach County with same-day service. Call (772) 521-3568." }
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Yes. A/C Now LLC provides AC repair in Jupiter, FL and across northern Palm Beach County with same-day residential and commercial service. Call (772) 521-3568 for immediate dispatch." 
+          }
         },
         {
           "@type": "Question",
           "name": "What areas does A/C Now LLC cover on the Treasure Coast?",
-          "acceptedAnswer": { "@type": "Answer", "text": "A/C Now LLC serves Port St. Lucie, Stuart, Palm City, Fort Pierce, Jensen Beach, Jupiter, Hobe Sound, and Palm Beach Gardens, FL — across St. Lucie County, Martin County, and northern Palm Beach County." }
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "A/C Now LLC serves St. Lucie County, Martin County, and northern Palm Beach County, including Port St. Lucie, Stuart, Palm City, Fort Pierce, Jensen Beach, Jupiter, Hobe Sound, and Palm Beach Gardens, FL. Technicians route daily across all these areas." 
+          }
         },
         {
           "@type": "Question",
           "name": "Is A/C Now LLC available for emergency AC repair near me?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. A/C Now LLC offers 24/7 emergency AC repair across the Treasure Coast. Call (772) 521-3568 anytime for emergency service in Port St. Lucie, Stuart, Palm City, Jupiter, and surrounding areas." }
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Yes. A/C Now LLC offers 24/7 emergency AC repair dispatch across the entire Treasure Coast service area. Call (772) 521-3568 any time — day or night — for emergency service in Port St. Lucie, Stuart, Palm City, Jupiter, and surrounding areas." 
+          }
         }
       ]
     }

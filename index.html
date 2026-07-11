@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AC Repair &amp; HVAC Service in Port St. Lucie, FL | A/C Now LLC</title>
-    <meta name="description" content="Veteran-owned AC repair delivering elite military precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568 for a free estimate today!">
+    <meta name="description" content="Veteran-owned AC repair delivering military-grade precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568 for a free estimate today!">
     <link rel="canonical" href="https://acnowllc.netlify.app/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://acnowllc.netlify.app/">
     <meta property="og:title" content="A/C Now LLC | Port St. Lucie AC Repair & HVAC">
-    <meta property="og:description" content="Veteran-owned AC repair delivering elite military precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568!">
+    <meta property="og:description" content="Veteran-owned AC repair delivering military-grade precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568!">
     <meta property="og:image" content="https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png">
     <!-- Google Fonts: Non-blocking to eliminate render-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,6 +31,7 @@
       "name": "A/C Now LLC",
       "@id": "https://acnowllc.netlify.app/#hvacbusiness",
       "url": "https://acnowllc.netlify.app/",
+      "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
       "telephone": "(772) 521-3568",
       "email": "info@acnowllc.com",
       "priceRange": "$$",
@@ -66,13 +67,19 @@
           "@type": "Review",
           "author": { "@type": "Person", "name": "Robert M." },
           "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-          "reviewBody": "Sean and Chris were phenomenal! They replaced our entire AC system in less than a day, and the price was extremely fair."
+          "reviewBody": "Sean and Chris were phenomenal! They replaced our entire AC system in less than a day, and the price was extremely fair. Service was quick, professional, and very clean."
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "David K." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+          "reviewBody": "As a veteran myself, I highly appreciate their promptness, direct honesty, and attention to detail. No pushy sales, just clear diagnostics and high-quality repairs."
         },
         {
           "@type": "Review",
           "author": { "@type": "Person", "name": "Jessica S." },
           "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-          "reviewBody": "My air conditioner broke down in the middle of a hot Sunday afternoon. A/C Now responded within 45 minutes and got it fixed immediately."
+          "reviewBody": "My air conditioner broke down in the middle of a hot Sunday afternoon. A/C Now responded within 45 minutes and got it fixed immediately. Outstanding customer care!"
         }
       ]
     }
@@ -674,10 +681,8 @@
                 <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
             <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
-            <button class="mobile-nav-toggle"
-                    id="hamburger-btn"
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-nav" id="hamburger-btn">☰</button>
-            <nav class="nav" id="site-nav" aria-label="Primary navigation">
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+            <nav class="nav" id="primary-nav" aria-label="Primary navigation">
                 <a href="index.html" class="nav-link active" aria-current="page">Home</a>
                 <a href="services.html" class="nav-link">HVAC Services</a>
                 <a href="pool-heating.html" class="nav-link">Pool Heating</a>
@@ -752,16 +757,16 @@
                 </div>
             </div>
             <div class="trust-card">
-                <img src="downloaded_images/Trained.webp" alt="Elite Certified Technicians icon" class="trust-icon" width="48" height="48">
+                <img src="downloaded_images/Trained.webp" alt="Certified Technicians icon" class="trust-icon" width="48" height="48">
                 <div class="trust-info">
-                    <h3>Elite Certified Experts</h3>
+                    <h3>Certified HVAC Experts</h3>
                     <p>Fully trained, licensed &amp; insured.</p>
                 </div>
             </div>
             <div class="trust-card">
                 <img src="downloaded_images/Personalized.webp" alt="Personalized service icon" class="trust-icon">
                 <div class="trust-info">
-                    <h2>Upfront Pricing</h2>
+                    <h3>Upfront Pricing</h3>
                     <p>Flat-rate pricing, zero hidden fees.</p>
                 </div>
             </div>
@@ -808,7 +813,7 @@
                             <img src="downloaded_images/split_res_install.jpg" alt="Residential Condenser Installation" class="service-img" loading="lazy" width="400" height="300">
                         </div>
                         <div class="service-card-body">
-                            <h3>Elite Installations</h3>
+                            <h3>Precision Installations</h3>
                             <p>Upgrade to a modern, energy-saving SEER2 cooling system. High-quality construction, solid warranties, and upfront pricing.</p>
                             <a href="contact.html" class="service-link">Get Free Estimate &rarr;</a>
                         </div>
@@ -1083,7 +1088,7 @@
                                         <!-- WCAG 1.3.1: labels must be programmatically associated -->
                                         <label for="dispatch-city">1. Select Your Location</label>
                                         <select id="dispatch-city" name="dispatch-city">
-                                            <option>Port Saint Lucie</option>
+                                            <option>Port St. Lucie</option>
                                             <option>Stuart</option>
                                             <option>Palm City</option>
                                             <option>Jupiter</option>
@@ -1305,22 +1310,34 @@
         {
           "@type": "Question",
           "name": "What HVAC services does A/C Now LLC offer?",
-          "acceptedAnswer": { "@type": "Answer", "text": "A/C Now LLC offers residential AC repair, AC installation and replacement, preventive maintenance plans, ductless mini-split installation, indoor air quality solutions, pool heat pump service, and commercial HVAC for condo boards and businesses. We serve Port St. Lucie, Palm City, Stuart, Jupiter, and the Treasure Coast. Call (772) 521-3568." }
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "A/C Now LLC offers a full range of HVAC services including residential AC repair, AC installation and system replacement, preventive maintenance plans, ductless mini-split installation, indoor air quality solutions, pool heat pump service, and commercial HVAC for condo boards and businesses. We serve Port St. Lucie, Palm City, Stuart, Jupiter, and the entire Treasure Coast. Call (772) 521-3568." 
+          }
         },
         {
           "@type": "Question",
           "name": "Are you a veteran-owned HVAC company?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. A/C Now LLC is proudly veteran-owned and operated by founders Chris and Sean, military veterans who bring discipline, integrity, and precision to every HVAC job. Licensed #CAC1820542 and fully insured, serving Port St. Lucie and the Treasure Coast." }
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Yes. A/C Now LLC is proudly veteran-owned and operated. Founders Chris and Sean are military veterans who bring the same discipline, integrity, and precision from their service to every HVAC job. We hold Florida HVAC Contractor License #CAC1820542 and are fully insured, serving Port St. Lucie and the Treasure Coast." 
+          }
         },
         {
           "@type": "Question",
           "name": "Do you serve Palm City and Stuart?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. A/C Now LLC provides same-day AC repair and HVAC installation in Palm City, Stuart, Port St. Lucie, Jupiter, Hobe Sound, Jensen Beach, and Fort Pierce, FL — covering all of Martin County and St. Lucie County. Call (772) 521-3568 to schedule." }
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Yes. A/C Now LLC provides same-day AC repair and HVAC installation in Palm City, Stuart, Port St. Lucie, Jupiter, Hobe Sound, Jensen Beach, and Fort Pierce, FL. Our service area covers all of Martin County and St. Lucie County. Call (772) 521-3568 to schedule." 
+          }
         },
         {
           "@type": "Question",
           "name": "What makes A/C Now different from other HVAC companies?",
-          "acceptedAnswer": { "@type": "Answer", "text": "A/C Now LLC stands apart with veteran-owned accountability, flat-rate pricing with no hidden fees, fully stocked service trucks for same-day repairs, and direct ownership oversight on every job. No subcontractors, no surprises — just dependable HVAC service on the Treasure Coast." }
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "A/C Now LLC stands apart with veteran-owned accountability, flat-rate pricing with no hidden fees, fully stocked service trucks for same-day repairs, and direct ownership oversight on every job. Chris and Sean personally ensure every installation and repair meets factory warranty standards. No subcontractors, no surprises — just dependable, military-grade HVAC service on the Treasure Coast." 
+          }
         }
       ]
     }
@@ -1332,7 +1349,7 @@
 <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="downloaded_images/Logo2.webp" alt="A/C Now LLC — Elite Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="120" height="48">
+                <img src="downloaded_images/Logo2.webp" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="120" height="48">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
@@ -1355,6 +1372,7 @@
                 <a href="pool-heating.html">Pool Heating</a>
                 <a href="areas.html">Service Areas</a>
                 <a href="contact.html">Contact Us</a>
+            </div>
             <div class="footer-links">
                 <div class="footer-heading">Service Cities</div>
                 <a href="index.html">Port St. Lucie</a>
@@ -1372,8 +1390,8 @@
     <script src="app.js" defer></script>
     <!-- WCAG 4.1.2 + 1.3.1: Sticky CTA bar with role, aria-label, and emoji aria-hidden -->
     <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
-        <a href="tel:7725213568" class="sticky-cta-btn phone-btn">📞 Elite Service Line</a>
-        <a href="contact.html" class="sticky-cta-btn book-btn">📅 Book Elite Visit</a>
+        <a href="tel:7725213568" class="sticky-cta-btn phone-btn">📞 Call Service Line</a>
+        <a href="contact.html" class="sticky-cta-btn book-btn">📅 Book Service Visit</a>
     </div>
 
 </body>

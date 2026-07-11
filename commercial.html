@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commercial HVAC &amp; Condo Board Air Conditioning — Port St. Lucie | A/C Now LLC</title>
-    <meta name="description" content="Elite commercial & condominium HVAC systems in Port St. Lucie. Expert design, installation and maintenance for condo boards and business owners on the Treasure Coast.">
+    <meta name="description" content="Professional commercial & condominium HVAC systems in Port St. Lucie. Expert design, installation and maintenance for condo boards and business owners on the Treasure Coast.">
     <link rel="canonical" href="https://acnowllc.netlify.app/commercial.html">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://acnowllc.netlify.app/commercial.html">
     <meta property="og:title" content="Commercial HVAC Services | Condo &amp; Business AC | A/C Now LLC">
-    <meta property="og:description" content="Elite commercial &amp; condominium HVAC systems in Port St. Lucie. Expert design, installation and maintenance for condo boards and business owners on the Treasure Coast.">
+    <meta property="og:description" content="Professional commercial &amp; condominium HVAC systems in Port St. Lucie. Expert design, installation and maintenance for condo boards and business owners on the Treasure Coast.">
     <meta property="og:image" content="https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png">
     <!-- Google Fonts: Non-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +30,7 @@
       "name": "A/C Now LLC",
       "@id": "https://acnowllc.netlify.app/#hvacbusiness",
       "url": "https://acnowllc.netlify.app/",
+      "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
       "telephone": "(772) 521-3568",
       "email": "info@acnowllc.com",
       "priceRange": "$$",
@@ -47,6 +48,14 @@
         "latitude": 27.3138016,
         "longitude": -80.3954409
       },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "08:00",
+          "closes": "18:00"
+        }
+      ],
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "5.0",
@@ -93,27 +102,7 @@
         }
     </style>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "HVACBusiness",
-  "name": "A/C Now LLC",
-  "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
-  "@id": "https://acnowllc.netlify.app/#hvacbusiness",
-  "url": "https://acnowllc.netlify.app/commercial.html",
-  "telephone": "(772) 521-3568",
-  "openingHours": ["Mo-Sa 08:00-18:00"],
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
-    "addressLocality": "Port St. Lucie",
-    "addressRegion": "FL",
-    "postalCode": "34986",
-    "addressCountry": "US"
-  },
-  "aggregateRating": {"@type":"AggregateRating","ratingValue":"5.0","bestRating":"5","worstRating":"1","reviewCount":"6"}
-}
-</script>
+
 </head>
 <body>
     
@@ -135,8 +124,8 @@
     <header class="header"><div class="container header-container">            <a href="index.html" class="logo-link">
                 <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-nav" id="hamburger-btn">☰</button>
-            <nav class="nav">                <a href="index.html" class="nav-link">Home</a>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+            <nav class="nav" id="primary-nav">                <a href="index.html" class="nav-link">Home</a>
                 <a href="services.html" class="nav-link">HVAC Services</a>
                 <a href="pool-heating.html" class="nav-link">Pool Heating</a>
                 <a href="commercial.html" class="nav-link active">Commercial</a>

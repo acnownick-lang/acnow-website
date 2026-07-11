@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HVAC Services in Stuart, FL | AC Repair & Installation | A/C Now</title>
-    <meta name="description" content="Elite HVAC services in Stuart, FL. AC repair, installation, pool heating & air quality by A/C Now — trusted veteran-owned service across Martin County.">
+    <meta name="description" content="Premium HVAC services in Stuart, FL. AC repair, installation, pool heating & air quality by A/C Now — trusted veteran-owned service across Martin County.">
     <link rel="canonical" href="https://acnowllc.netlify.app/hvac-services-stuart.html">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://acnowllc.netlify.app/hvac-services-stuart.html">
     <meta property="og:title" content="HVAC Services in Stuart, FL | AC Repair &amp; Installation | A/C Now">
-    <meta property="og:description" content="Elite HVAC services in Stuart, FL. AC repair, installation, pool heating &amp; air quality by A/C Now — trusted veteran-owned service across Martin County.">
+    <meta property="og:description" content="Premium HVAC services in Stuart, FL. AC repair, installation, pool heating &amp; air quality by A/C Now — trusted veteran-owned service across Martin County.">
     <meta property="og:image" content="https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,11 +30,13 @@
   "@context": "https://schema.org",
   "@type": "HVACBusiness",
   "name": "A/C Now LLC",
-  "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
   "@id": "https://acnowllc.netlify.app/#hvacbusiness",
-  "url": "https://acnowllc.netlify.app/hvac-services-stuart.html",
+  "url": "https://acnowllc.netlify.app/",
+  "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
   "telephone": "(772) 521-3568",
-  "openingHours": ["Mo-Sa 08:00-18:00"],
+  "email": "info@acnowllc.com",
+  "priceRange": "$$",
+  "description": "A/C Now LLC is a veteran-owned HVAC contractor in Port St. Lucie, FL delivering same-day residential AC repair, commercial HVAC systems, pool heat pumps, and preventive maintenance across the Treasure Coast. Florida License #CAC1820542.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
@@ -43,8 +45,29 @@
     "postalCode": "34986",
     "addressCountry": "US"
   },
-  "areaServed": {"@type":"City","name":"Stuart","sameAs":"https://en.wikipedia.org/wiki/Stuart,_Florida"},
-  "aggregateRating": {"@type":"AggregateRating","ratingValue":"5.0","bestRating":"5","worstRating":"1","reviewCount":"6"}
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 27.3138016,
+    "longitude": -80.3954409
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "6"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Stuart",
+    "sameAs": "https://en.wikipedia.org/wiki/Stuart,_Florida"
+  }
 }
 </script>
 <script type="application/ld+json">
@@ -80,8 +103,8 @@
             <a href="index.html" class="logo-link">
                 <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav').classList.toggle('active')">☰</button>
-            <nav class="nav">                <a href="index.html" class="nav-link">Home</a>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+            <nav class="nav" id="primary-nav">                <a href="index.html" class="nav-link">Home</a>
                 <a href="services.html" class="nav-link">HVAC Services</a>
                 <a href="pool-heating.html" class="nav-link">Pool Heating</a>
                 <a href="commercial.html" class="nav-link">Commercial</a>
@@ -253,6 +276,7 @@
                 <a href="pool-heating.html">Pool Heating</a>
                 <a href="areas.html">Service Areas</a>
                 <a href="contact.html">Contact Us</a>
+            </div>
             <div class="footer-links">
                 <div class="footer-heading">Service Cities</div>
                 <a href="index.html">Port St. Lucie</a>

@@ -1,0 +1,13 @@
+# Netlify configuration file for A/C Now LLC
+# Configures build settings, redirects, headers, serverless functions, and edge functions.
+
+[build]
+  publish = "."
+
+[functions]
+  node_bundler = "esbuild"
+
+# Edge function routing for homepage geolocation personalization
+[[edge_functions]]
+  path = "/"
+  function = "localize-geo"
