@@ -794,9 +794,9 @@
                     <div class="grid-badge-count res-grid-badge">3 Residential Programs</div>
                 </div>
                 
-                <div class="services-grid">
+                <div class="services-grid card-3d-perspective">
                     <!-- Service Card 1 -->
-                    <div class="service-card residential-card">
+                    <div class="service-card residential-card card-3d reveal-up" data-delay="0">
                         <div class="service-img-wrapper">
                             <img src="downloaded_images/split_res_repair.jpg" alt="AC Diagnostic &amp; Repair" class="service-img" loading="lazy" width="400" height="300">
                         </div>
@@ -808,7 +808,7 @@
                     </div>
 
                     <!-- Service Card 2 -->
-                    <div class="service-card residential-card">
+                    <div class="service-card residential-card card-3d reveal-up" data-delay="150">
                         <div class="service-img-wrapper">
                             <img src="downloaded_images/split_res_install.jpg" alt="Residential Condenser Installation" class="service-img" loading="lazy" width="400" height="300">
                         </div>
@@ -820,7 +820,7 @@
                     </div>
 
                     <!-- Service Card 3 -->
-                    <div class="service-card residential-card">
+                    <div class="service-card residential-card card-3d reveal-up" data-delay="300">
                         <div class="service-img-wrapper">
                             <img src="downloaded_images/split_res_maintenance.jpg" alt="Air Handler Maintenance Inspection" class="service-img" loading="lazy" width="400" height="300">
                         </div>
@@ -844,9 +844,9 @@
                     <div class="grid-badge-count com-grid-badge">3 Commercial Programs</div>
                 </div>
                 
-                <div class="services-grid">
+                <div class="services-grid card-3d-perspective">
                     <!-- Service Card 4 -->
-                    <div class="service-card commercial-card">
+                    <div class="service-card commercial-card card-3d reveal-up" data-delay="0">
                         <div class="service-img-wrapper">
                             <img src="downloaded_images/split_com_install.jpg" alt="Rooftop Commercial Chiller Upgrade" class="service-img" loading="lazy" width="400" height="300">
                         </div>
@@ -858,7 +858,7 @@
                     </div>
 
                     <!-- Service Card 5 -->
-                    <div class="service-card commercial-card">
+                    <div class="service-card commercial-card card-3d reveal-up" data-delay="150">
                         <div class="service-img-wrapper">
                             <img src="downloaded_images/split_com_maintenance.jpg" alt="Commercial Unit Rooftop Inspection" class="service-img" loading="lazy" width="400" height="300">
                         </div>
@@ -870,7 +870,7 @@
                     </div>
 
                     <!-- Service Card 6 -->
-                    <div class="service-card commercial-card">
+                    <div class="service-card commercial-card card-3d reveal-up" data-delay="300">
                         <div class="service-img-wrapper">
                             <img src="downloaded_images/split_com_repair.jpg" alt="Commercial Manifold Gauges Pressure Check" class="service-img" loading="lazy" width="400" height="300">
                         </div>
@@ -887,16 +887,22 @@
     </section>
 
     <!-- Why Us Section (Two Column Layout) -->
-    <section id="about" class="reveal about-section">
-        <div class="container about-grid">
-            <div class="about-image-column">
+    <section id="about" class="about-section" style="position: relative;">
+        <!-- Ambient Background Glow -->
+        <div class="ambient-glow-container">
+            <div class="ambient-glow-blob ambient-glow-blob-1" style="background: radial-gradient(circle, rgba(255, 199, 44, 0.04) 0%, rgba(10, 24, 47, 0) 100%);"></div>
+            <div class="ambient-glow-blob ambient-glow-blob-2" style="background: radial-gradient(circle, rgba(11, 99, 229, 0.04) 0%, rgba(10, 24, 47, 0) 100%);"></div>
+        </div>
+
+        <div class="container about-grid" style="position: relative; z-index: 2;">
+            <div class="about-image-column reveal-slide-left">
                 <img src="downloaded_images/content-v3-img-1.webp" alt="AC Unit Installation" class="about-main-img" loading="lazy" width="600" height="450">
                 <div class="about-experience-badge">
                     <span class="exp-num">30+</span>
                     <span class="exp-text">Years of Combined Service</span>
                 </div>
             </div>
-            <div class="about-text-column">
+            <div class="about-text-column reveal-slide-right">
                 <span class="section-tag">ABOUT OUR TEAM</span>
                 <h2>Veteran-Owned Accountability</h2>
                 <p>At A/C Now, owners Chris and Sean apply military discipline to home services. We serve the Treasure Coast with transparent diagnostic fees, flat-rate quotes, and reliable system installations.</p>
@@ -950,7 +956,7 @@
             <!-- TABBED INNOVATIONS INTERFACE -->
             <div class="innovations-tab-container">
                 <!-- WCAG 4.1.2: Tab interface with proper ARIA roles -->
-                <div class="innovations-tab-header" role="tablist" aria-label="HVAC Interactive Tools">
+                <div class="innovations-tab-header inno-tabs" role="tablist" aria-label="HVAC Interactive Tools">
                     <button class="inno-tab-btn active"
                             role="tab"
                             id="tab-seer"

@@ -2327,3 +2327,150 @@ section.trust-bar {
     font-style: normal;
 }
 
+
+/* ==========================================================================
+   PREMIUM UI/UX & ANIMATION MODULES
+   ========================================================================== */
+
+/* Ambient Glowing Background Blobs */
+.ambient-glow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ambient-glow-blob {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(11, 99, 229, 0.08) 0%, rgba(255, 199, 44, 0.03) 50%, rgba(10, 24, 47, 0) 100%);
+    filter: blur(80px);
+    animation: drift 25s infinite alternate ease-in-out;
+}
+
+.ambient-glow-blob-1 {
+    top: -10%;
+    right: -10%;
+    animation-delay: 0s;
+}
+
+.ambient-glow-blob-2 {
+    bottom: -10%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(217, 43, 58, 0.05) 0%, rgba(11, 99, 229, 0.03) 50%, rgba(10, 24, 47, 0) 100%);
+    animation-delay: -5s;
+    animation-duration: 30s;
+}
+
+@keyframes drift {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    33% { transform: translate(50px, -50px) scale(1.1) rotate(120deg); }
+    66% { transform: translate(-30px, 40px) scale(0.9) rotate(240deg); }
+    100% { transform: translate(0, 0) scale(1) rotate(360deg); }
+}
+
+/* 3D Perspective Card Tilts */
+.card-3d-perspective {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.card-3d {
+    transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.15s ease-out;
+    transform: rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg));
+}
+
+.card-3d:hover {
+    box-shadow: 0 20px 40px rgba(11, 99, 229, 0.12), 0 0 1px var(--primary);
+}
+
+/* Scroll-Driven Reveal Elements */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal-slide-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal-slide-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal-up.active,
+.reveal-scale.active,
+.reveal-slide-left.active,
+.reveal-slide-right.active {
+    opacity: 1;
+    transform: translate(0) scale(1);
+}
+
+/* Stagger delay classes generated dynamically by JS via custom properties */
+.reveal.active {
+    transition-delay: var(--delay, 0ms);
+}
+
+/* Sliding Tab Indicator pill background */
+.tab-pill-container {
+    position: relative;
+    display: inline-flex;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 40px;
+    padding: 4px;
+    z-index: 1;
+}
+
+.tab-pill-background {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
+    background: linear-gradient(135deg, var(--primary) 0%, #004ecc 100%);
+    border-radius: 30px;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+    box-shadow: 0 4px 15px rgba(11, 99, 229, 0.3);
+}
+
+.tab-pill-btn {
+    position: relative;
+    background: transparent !important;
+    border: none !important;
+    color: var(--white) !important;
+    font-weight: 600 !important;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.tab-pill-btn.active {
+    color: var(--white) !important;
+}
+
+.tab-pill-btn:not(.active) {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.tab-pill-btn:not(.active):hover {
+    color: var(--white) !important;
+}
+
+

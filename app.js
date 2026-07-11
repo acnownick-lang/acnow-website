@@ -472,3 +472,154 @@ window.resetDiagnosticWizard = function() {
     if (wizardPane1) wizardPane1.style.display = "block";
     if (wizardPane2) wizardPane2.style.display = "none";
 };
+
+
+/* ==========================================================================
+   PREMIUM DYNAMIC VISUAL INTERACTIONS
+   ========================================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Scroll-Driven Navigation Blur
+    const header = document.querySelector(".header");
+    if (header) {
+        const handleScroll = () => {
+            if (window.scrollY > 30) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll(); // Initial run on load
+    }
+
+    // 2. Interactive 3D Card Perspective Tilt
+    const tiltCards = document.querySelectorAll(".card-3d");
+    tiltCards.forEach(card => {
+        card.addEventListener("mousemove", e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            
+            // Calculate tilt angle (max 10 degrees)
+            const rx = -(y - yc) / (yc / 10);
+            const ry = (x - xc) / (xc / 10);
+            
+            card.style.setProperty("--rx", rx.toFixed(2));
+            card.style.setProperty("--ry", ry.toFixed(2));
+        });
+
+        card.addEventListener("mouseleave", () => {
+            card.style.setProperty("--rx", "0");
+            card.style.setProperty("--ry", "0");
+        });
+    });
+
+    // 3. Scroll-Driven IntersectionObserver Reveal Scheduler
+    const reveals = document.querySelectorAll(".reveal-up, .reveal-scale, .reveal-slide-left, .reveal-slide-right");
+    if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    
+                    // Allocate GPU footprint transiently
+                    el.classList.add("animating");
+                    
+                    // Add delay if defined in data attributes
+                    const delay = el.dataset.delay || 0;
+                    el.style.setProperty("--delay", `${delay}ms`);
+                    
+                    // Activate animation frame
+                    requestAnimationFrame(() => {
+                        el.classList.add("active");
+                    });
+                    
+                    // Cleanup GPU trace when transition finishes
+                    const transitionEndHandler = () => {
+                        el.classList.remove("animating");
+                        el.removeEventListener("transitionend", transitionEndHandler);
+                    };
+                    el.addEventListener("transitionend", transitionEndHandler);
+                    
+                    observer.unobserve(el);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -40px 0px"
+        });
+
+        reveals.forEach(el => observer.observe(el));
+    } else {
+        // Fallback for older browsers
+        reveals.forEach(el => el.classList.add("active"));
+    }
+
+    // 4. Sliding Active Tab Indicators
+    const initializeSlidingTabs = () => {
+        const containers = document.querySelectorAll(".innovations-tab-container");
+        containers.forEach(container => {
+            const tabList = container.querySelector(".inno-tabs");
+            if (!tabList) return;
+
+            // Inject background pill markup if missing
+            let pillBg = tabList.querySelector(".tab-pill-background");
+            if (!pillBg) {
+                pillBg = document.createElement("div");
+                pillBg.className = "tab-pill-background";
+                tabList.appendChild(pillBg);
+                tabList.classList.add("tab-pill-container");
+            }
+
+            const buttons = tabList.querySelectorAll(".inno-tab-btn");
+            buttons.forEach(btn => {
+                btn.classList.add("tab-pill-btn");
+                btn.addEventListener("click", () => {
+                    // Update active class on button siblings
+                    buttons.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    updatePillPosition(btn, pillBg, tabList);
+                });
+            });
+
+            // Set initial pill position based on active tab button
+            const activeBtn = tabList.querySelector(".inno-tab-btn.active") || buttons[0];
+            if (activeBtn) {
+                activeBtn.classList.add("active");
+                // Wait for styles/dimensions load
+                setTimeout(() => updatePillPosition(activeBtn, pillBg, tabList), 50);
+            }
+        });
+    };
+
+    const updatePillPosition = (activeBtn, pillBg, tabList) => {
+        const tabListRect = tabList.getBoundingClientRect();
+        const activeBtnRect = activeBtn.getBoundingClientRect();
+
+        // Calculate relative coordinates
+        const offsetLeft = activeBtnRect.left - tabListRect.left;
+        const width = activeBtnRect.width;
+
+        pillBg.style.transform = `translateX(${offsetLeft}px)`;
+        pillBg.style.width = `${width}px`;
+    };
+
+    initializeSlidingTabs();
+    
+    // Re-adjust pill width/offsets on screen resize
+    window.addEventListener("resize", () => {
+        const containers = document.querySelectorAll(".innovations-tab-container");
+        containers.forEach(container => {
+            const tabList = container.querySelector(".inno-tabs");
+            const pillBg = container.querySelector(".tab-pill-background");
+            const activeBtn = container.querySelector(".inno-tab-btn.active");
+            if (tabList && pillBg && activeBtn) {
+                updatePillPosition(activeBtn, pillBg, tabList);
+            }
+        });
+    });
+});
+
