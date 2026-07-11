@@ -898,8 +898,8 @@
             <div class="about-image-column reveal-slide-left">
                 <!-- Interactive Before/After Comparison Slider -->
                 <div class="comparison-slider-container">
-                    <div class="comparison-image comparison-image-before" style="background-image: url('downloaded_images/hvac-maintenance-img.webp');"></div>
-                    <div class="comparison-image comparison-image-after" style="background-image: url('downloaded_images/hvac-install-img-1.webp');"></div>
+                    <div class="comparison-image comparison-image-before" style="background-image: url('downloaded_images/split_res_repair.jpg');"></div>
+                    <div class="comparison-image comparison-image-after" style="background-image: url('downloaded_images/split_res_install.jpg');"></div>
                     <div class="comparison-handle">⬌</div>
                     <span class="comparison-label label-before">Clogged Coil</span>
                     <span class="comparison-label label-after">A/C Now Overhaul</span>
@@ -1150,7 +1150,7 @@
     </section>
 
     <!-- Interactive Van Tour Section -->
-    <section class="reveal van-tour-section" style="background-color: #0A182F; padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.08); position: relative;">
+    <section class="reveal van-tour-section" style="background-color: #0A182F; padding: 120px 0 80px 0; scroll-margin-top: 100px; border-top: 1px solid rgba(255,255,255,0.08); position: relative;">
         <!-- Ambient Background Glow -->
         <div class="ambient-glow-container">
             <div class="ambient-glow-blob ambient-glow-blob-1" style="background: radial-gradient(circle, rgba(11, 99, 229, 0.06) 0%, rgba(10, 24, 47, 0) 100%);"></div>
@@ -1198,7 +1198,7 @@
     </section>
 
     <!-- Interactive 50-Point Mission Checklist Section -->
-    <section class="reveal checklist-section" style="background-color: var(--white); padding: 80px 0; border-top: 1px solid var(--gray-light);">
+    <section class="reveal checklist-section" style="background-color: var(--white); padding: 120px 0 80px 0; scroll-margin-top: 100px; border-top: 1px solid var(--gray-light);">
         <div class="container">
             <div class="section-header centered" style="margin-bottom: 50px;">
                 <span class="section-tag">COMPREHENSIVE TUNE-UPS</span>
@@ -1431,8 +1431,9 @@
                     <span>Palm Beach Gardens</span>
                 </div>
             </div>
-            <div class="serve-map">
-                <img src="downloaded_images/map.webp" alt="Service Area Map" class="map-img" loading="lazy" width="600" height="450">
+            <div class="serve-map" style="position: relative; overflow: hidden; border-radius: 12px; box-shadow: var(--box-shadow); border: 1px solid var(--gray-light); height: 450px;">
+                <!-- Live scalable interactive Google Map centered on A/C Now -->
+                <iframe src="https://maps.google.com/maps?q=1391%20NW%20St.%20Lucie%20West%20Blvd,%20STE%20120,%20Port%20St.%20Lucie,%20FL%2034986&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-label="A/C Now LLC Interactive Google Map"></iframe>
             </div>
         </div>
     </section>
@@ -1510,28 +1511,64 @@
     </section>
 
     <!-- FAQ Section -->
-    <section aria-labelledby="hp-faq-heading" style="background-color: var(--light); padding: 80px 0; border-top: 1px solid var(--gray-light);">
-        <div class="container" style="max-width: 800px;">
-            <div class="section-header centered" style="margin-bottom:40px;">
-                <span class="section-tag">COMMON QUESTIONS</span>
-                <h2 id="hp-faq-heading" style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark);">AC &amp; HVAC FAQs &mdash; Port St. Lucie, FL</h2>
+    <section aria-labelledby="hp-faq-heading" class="faq-section-wrapper" style="background-color: var(--light); padding: 80px 0; border-top: 1px solid var(--gray-light); position: relative;">
+        <div class="container" style="max-width: 850px;">
+            <div class="section-header centered" style="margin-bottom: 50px;">
+                <span class="section-tag">EXPERT ANSWERS</span>
+                <h2 id="hp-faq-heading" style="font-family: var(--font-heading); font-size: 34px; font-weight: 800; color: var(--dark);">AC &amp; HVAC Frequently Asked Questions</h2>
+                <p>Learn more about how A/C Now LLC delivers elite HVAC service on the Treasure Coast.</p>
             </div>
-            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);" open>
-                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">What HVAC services does A/C Now LLC offer?</h3></summary>
-                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">A/C Now LLC offers a full range of HVAC services including residential AC repair, AC installation and system replacement, preventive maintenance plans, ductless mini-split installation, indoor air quality solutions, pool heat pump service, and commercial HVAC for condo boards and businesses. We serve Port St. Lucie, Palm City, Stuart, Jupiter, and the entire Treasure Coast. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>.</p>
-            </details>
-            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
-                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Are you a veteran-owned HVAC company?</h3></summary>
-                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">Yes. A/C Now LLC is proudly veteran-owned and operated. Founders Chris and Sean are military veterans who bring the same discipline, integrity, and precision from their service to every HVAC job. We hold Florida HVAC Contractor License #CAC1820542 and are fully insured, serving Port St. Lucie and the Treasure Coast.</p>
-            </details>
-            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
-                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Do you serve Palm City and Stuart?</h3></summary>
-                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">Yes. A/C Now LLC provides same-day AC repair and HVAC installation in Palm City, Stuart, Port St. Lucie, Jupiter, Hobe Sound, Jensen Beach, and Fort Pierce, FL. Our service area covers all of Martin County and St. Lucie County. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a> to schedule.</p>
-            </details>
-            <details style="border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
-                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">What makes A/C Now different from other HVAC companies?</h3></summary>
-                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">A/C Now LLC stands apart with veteran-owned accountability, flat-rate pricing with no hidden fees, fully stocked service trucks for same-day repairs, and direct ownership oversight on every job. Chris and Sean personally ensure every installation and repair meets factory warranty standards. No subcontractors, no surprises &mdash; just dependable, military-grade HVAC service on the Treasure Coast.</p>
-            </details>
+            
+            <div class="faq-accordion-container">
+                <details class="faq-details" open>
+                    <summary class="faq-summary"><h3 style="display:inline; font-size:16px;">What HVAC services does A/C Now LLC offer?</h3></summary>
+                    <div class="faq-answer">
+                        <p>A/C Now LLC offers a full suite of HVAC services on the Treasure Coast. This includes residential air conditioning repair, high-efficiency system replacement and new installation, preventative maintenance service contracts, ductless mini-split systems, pool heat pumps, indoor air quality filtration, and commercial HVAC maintenance for local businesses and condo associations. All services are performed by licensed, veteran-trained technicians.</p>
+                    </div>
+                </details>
+                
+                <details class="faq-details">
+                    <summary class="faq-summary"><h3 style="display:inline; font-size:16px;">Are you a veteran-owned and licensed contractor?</h3></summary>
+                    <div class="faq-answer">
+                        <p>Yes. A/C Now LLC is proudly veteran-owned and operated by local residents Chris and Sean. We carry full general liability insurance and hold active State of Florida HVAC Contractor License #CAC1820542. We apply military-grade discipline, transparency, and accountability to every service call.</p>
+                    </div>
+                </details>
+                
+                <details class="faq-details">
+                    <summary class="faq-summary"><h3 style="display:inline; font-size:16px;">Do you serve Stuart, Palm City, and Jupiter?</h3></summary>
+                    <div class="faq-answer">
+                        <p>Yes. Our physical office is located in Port St. Lucie, and our dispatcher fleets cover the entire Treasure Coast, including Port St. Lucie, Stuart, Palm City, Jensen Beach, Fort Pierce, Hobe Sound, and northern Palm Beach County (Jupiter). We offer rapid dispatch and same-day availability for diagnostic emergencies across Martin and St. Lucie counties.</p>
+                    </div>
+                </details>
+
+                <details class="faq-details">
+                    <summary class="faq-summary"><h3 style="display:inline; font-size:16px;">How do I know if my AC condenser coil needs cleaning or replacement?</h3></summary>
+                    <div class="faq-answer">
+                        <p>In Florida's coastal environment, saltwater and humidity cause copper coils to corrode and accumulate sand. Signs of a clogged coil include high power bills, system short-cycling, or air blowing lukewarm. Regular coil cleanings remove salt crust and straighten fins, while heavily corroded coils may require a full system replacement. Use our <strong>Before/After Overhaul Slider</strong> above to see what a properly restored condenser looks like.</p>
+                    </div>
+                </details>
+
+                <details class="faq-details">
+                    <summary class="faq-summary"><h3 style="display:inline; font-size:16px;">What is included in your 50-point precision tune-up check?</h3></summary>
+                    <div class="faq-answer">
+                        <p>Our 50-point check covers every critical system failure node. This includes testing compressor amp draw, verifying contactors for pit wear, measuring capacitance limits, checking refrigeration superheat, clearing the condensate drain line, and verifying high-limit safety float switches to prevent flooding. You can click through our interactive **Checklist Tracker** above to view specific inspection items in each category.</p>
+                    </div>
+                </details>
+
+                <details class="faq-details">
+                    <summary class="faq-summary"><h3 style="display:inline; font-size:16px;">Why is vehicle parts logistics (Warehouse on Wheels) important for repairs?</h3></summary>
+                    <div class="faq-answer">
+                        <p>Most AC companies diagnose a problem and then force you to wait days while they order replacement parts. A/C Now LLC addresses this by deploying "Warehouses on Wheels." Our service trucks are stocked with common run capacitors, contactors, fan relays, recovery pumps, and clean filters on every call. This logistics policy allows our technicians to repair 85% of common HVAC issues on the spot.</p>
+                    </div>
+                </details>
+
+                <details class="faq-details">
+                    <summary class="faq-summary"><h3 style="display:inline; font-size:16px;">What makes A/C Now different from standard HVAC companies?</h3></summary>
+                    <div class="faq-answer">
+                        <p>We stand apart through direct accountability. We offer a flat $95 diagnostic fee, transparent up-front quotes, and zero hidden markups. Owners Chris and Sean oversee operations directly, ensuring every installation meets manufacturer warrantied specifications. No subcontractors, no bait-and-switch pricing &mdash; just honest, veteran-led service built on military integrity.</p>
+                    </div>
+                </details>
+            </div>
         </div>
     </section>
 
@@ -1545,31 +1582,55 @@
           "name": "What HVAC services does A/C Now LLC offer?",
           "acceptedAnswer": { 
             "@type": "Answer", 
-            "text": "A/C Now LLC offers a full range of HVAC services including residential AC repair, AC installation and system replacement, preventive maintenance plans, ductless mini-split installation, indoor air quality solutions, pool heat pump service, and commercial HVAC for condo boards and businesses. We serve Port St. Lucie, Palm City, Stuart, Jupiter, and the entire Treasure Coast. Call (772) 521-3568." 
+            "text": "A/C Now LLC offers a full suite of HVAC services on the Treasure Coast. This includes residential air conditioning repair, high-efficiency system replacement and new installation, preventative maintenance service contracts, ductless mini-split systems, pool heat pumps, indoor air quality filtration, and commercial HVAC maintenance for local businesses and condo associations." 
           }
         },
         {
           "@type": "Question",
-          "name": "Are you a veteran-owned HVAC company?",
+          "name": "Are you a veteran-owned and licensed contractor?",
           "acceptedAnswer": { 
             "@type": "Answer", 
-            "text": "Yes. A/C Now LLC is proudly veteran-owned and operated. Founders Chris and Sean are military veterans who bring the same discipline, integrity, and precision from their service to every HVAC job. We hold Florida HVAC Contractor License #CAC1820542 and are fully insured, serving Port St. Lucie and the Treasure Coast." 
+            "text": "Yes. A/C Now LLC is proudly veteran-owned and operated by local residents Chris and Sean. We carry full general liability insurance and hold active State of Florida HVAC Contractor License #CAC1820542." 
           }
         },
         {
           "@type": "Question",
-          "name": "Do you serve Palm City and Stuart?",
+          "name": "Do you serve Stuart, Palm City, and Jupiter?",
           "acceptedAnswer": { 
             "@type": "Answer", 
-            "text": "Yes. A/C Now LLC provides same-day AC repair and HVAC installation in Palm City, Stuart, Port St. Lucie, Jupiter, Hobe Sound, Jensen Beach, and Fort Pierce, FL. Our service area covers all of Martin County and St. Lucie County. Call (772) 521-3568 to schedule." 
+            "text": "Yes. Our physical office is located in Port St. Lucie, and our dispatcher fleets cover the entire Treasure Coast, including Port St. Lucie, Stuart, Palm City, Jensen Beach, Fort Pierce, Hobe Sound, and northern Palm Beach County (Jupiter)." 
           }
         },
         {
           "@type": "Question",
-          "name": "What makes A/C Now different from other HVAC companies?",
+          "name": "How do I know if my AC condenser coil needs cleaning or replacement?",
           "acceptedAnswer": { 
             "@type": "Answer", 
-            "text": "A/C Now LLC stands apart with veteran-owned accountability, flat-rate pricing with no hidden fees, fully stocked service trucks for same-day repairs, and direct ownership oversight on every job. Chris and Sean personally ensure every installation and repair meets factory warranty standards. No subcontractors, no surprises — just dependable, military-grade HVAC service on the Treasure Coast." 
+            "text": "In Florida's coastal environment, saltwater and humidity cause copper coils to corrode and accumulate sand. Signs of a clogged coil include high power bills, system short-cycling, or air blowing lukewarm. Regular coil cleanings remove salt crust and straighten fins, while heavily corroded coils may require a full system replacement." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in your 50-point precision tune-up check?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Our 50-point check covers every critical system failure node. This includes testing compressor amp draw, verifying contactors for pit wear, measuring capacitance limits, checking refrigeration superheat, clearing the condensate drain line, and verifying high-limit safety float switches to prevent flooding." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is vehicle parts logistics (Warehouse on Wheels) important for repairs?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Most AC companies diagnose a problem and then force you to wait days while they order replacement parts. A/C Now LLC addresses this by deploying 'Warehouses on Wheels' stocked with common run capacitors, contactors, fan relays, recovery pumps, and clean filters on every call. This allows us to repair 85% of common HVAC issues on the spot." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes A/C Now different from standard HVAC companies?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "We stand apart through direct accountability. We offer a flat $95 diagnostic fee, transparent up-front quotes, and zero hidden markups. Owners Chris and Sean oversee operations directly, ensuring every installation meets manufacturer warrantied specifications." 
           }
         }
       ]
