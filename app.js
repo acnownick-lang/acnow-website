@@ -803,6 +803,66 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     initializeChecklist();
+
+
+    // ==========================================================================
+    // 8. Live Customer Reviews Spotlight Ticker
+    // ==========================================================================
+    const initializeReviewTicker = () => {
+        const slides = document.querySelectorAll(".ticker-slide");
+        const prevBtn = document.getElementById("ticker-prev");
+        const nextBtn = document.getElementById("ticker-next");
+
+        if (slides.length <= 1 || !prevBtn || !nextBtn) return;
+
+        let activeIndex = 0;
+        let timer = null;
+
+        const showSlide = (index) => {
+            slides.forEach(slide => slide.classList.remove("active"));
+            
+            // Handle wrap-around bounds
+            if (index < 0) {
+                activeIndex = slides.length - 1;
+            } else if (index >= slides.length) {
+                activeIndex = 0;
+            } else {
+                activeIndex = index;
+            }
+
+            slides[activeIndex].classList.add("active");
+        };
+
+        const nextSlide = () => {
+            showSlide(activeIndex + 1);
+        };
+
+        const prevSlide = () => {
+            showSlide(activeIndex - 1);
+        };
+
+        const resetTimer = () => {
+            if (timer) clearInterval(timer);
+            timer = setInterval(nextSlide, 6000); // Rotate every 6 seconds
+        };
+
+        // Navigation clicks
+        nextBtn.addEventListener("click", () => {
+            nextSlide();
+            resetTimer();
+        });
+
+        prevBtn.addEventListener("click", () => {
+            prevSlide();
+            resetTimer();
+        });
+
+        // Start auto rotation
+        resetTimer();
+    };
+
+    initializeReviewTicker();
 });
+
 
 
