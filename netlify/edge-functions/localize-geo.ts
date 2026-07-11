@@ -1,5 +1,4 @@
-import { HTMLRewriter } from "html-rewriter";
-import type { Context } from "@netlify/edge-functions";
+import { Context } from "netlify:edge";
 
 interface MarketCopy {
   headlineRes: string;
@@ -105,37 +104,64 @@ export default async (request: Request, context: Context) => {
     );
   }
 
-  return new HTMLRewriter()
-    .on("title", {
-      element(el) {
-        el.setInnerContent(`A/C Repair & HVAC Services in ${market}, FL | A/C Now LLC`);
-      }
-    })
-    .on("h1.visually-hidden", {
-      element(el) {
-        el.setInnerContent(`A/C Now LLC — AC Repair & HVAC Service in ${market}, FL | Same-Day | 24/7 Emergency`);
-      }
-    })
-    .on(".left-side .side-headline", {
-      element(el) {
-        el.setInnerContent(copy.headlineRes);
-      }
-    })
-    .on(".right-side .side-headline", {
-      element(el) {
-        el.setInnerContent(copy.headlineCom);
-      }
-    })
-    .on(".trust-card:nth-child(2) .trust-info p", {
-      element(el) {
-        el.setInnerContent(copy.serving);
-      }
-    })
-    .on("[data-geo='phone']", {
-      element(el) {
-        el.setInnerContent(copy.phone);
-        el.setAttribute("href", copy.phoneHref);
-      }
-    })
-    .transform(new Response(response.body, { ...response, headers }));
+  const isNullBodyStatus = [101, 204, 205, 304].includes(response.status);
+  if (isNullBodyStatus) {
+    return new Response(null, {
+      status: response.status,
+      statusText: response.statusText,
+      headers
+    });
+  }
+
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.includes("text/html")) {
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers
+    });
+  }
+
+  // Pure string replacement logic
+  let html = await response.text();
+
+  // 1. Replace title tag content
+  html = html.replace(/<title>[^<]*<\/title>/i, `<title>A/C Repair & HVAC Services in ${market}, FL | A/C Now LLC</title>`);
+
+  // 2. Replace visually hidden H1 content
+  html = html.replace(
+    /<h1 class="visually-hidden">[^<]*<\/h1>/i,
+    `<h1 class="visually-hidden">A/C Now LLC — AC Repair & HVAC Service in ${market}, FL | Same-Day | 24/7 Emergency</h1>`
+  );
+
+  // 3. Replace Residential side headline
+  html = html.replace(
+    /(<div class="split-hero-side left-side">[\s\S]*?<h2 class="side-headline"[^>]*>)[^<]*(<\/h2>)/i,
+    `$1${copy.headlineRes}$2`
+  );
+
+  // 4. Replace Commercial side headline
+  html = html.replace(
+    /(<div class="split-hero-side right-side">[\s\S]*?<h2 class="side-headline"[^>]*>)[^<]*(<\/h2>)/i,
+    `$1${copy.headlineCom}$2`
+  );
+
+  // 5. Replace serving area description
+  html = html.replace(
+    /<p>Serving Port St\. Lucie &amp; Stuart\.<\/p>/i,
+    `<p>${copy.serving}</p>`
+  );
+
+  // 6. Replace phone numbers and hrefs dynamically for non-default markets
+  if (copy.phone !== "(772) 521-3568") {
+    html = html.replaceAll("(772) 521-3568", copy.phone);
+    html = html.replaceAll(`href="tel:+17725213568"`, `href="${copy.phoneHref}"`);
+    html = html.replaceAll(`href="tel:7725213568"`, `href="${copy.phoneHref}"`);
+  }
+
+  return new Response(html, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
 };
