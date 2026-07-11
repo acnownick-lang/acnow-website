@@ -896,7 +896,14 @@
 
         <div class="container about-grid" style="position: relative; z-index: 2;">
             <div class="about-image-column reveal-slide-left">
-                <img src="downloaded_images/content-v3-img-1.webp" alt="AC Unit Installation" class="about-main-img" loading="lazy" width="600" height="450">
+                <!-- Interactive Before/After Comparison Slider -->
+                <div class="comparison-slider-container">
+                    <div class="comparison-image comparison-image-before" style="background-image: url('downloaded_images/hvac-maintenance-img.webp');"></div>
+                    <div class="comparison-image comparison-image-after" style="background-image: url('downloaded_images/hvac-install-img-1.webp');"></div>
+                    <div class="comparison-handle">⬌</div>
+                    <span class="comparison-label label-before">Clogged Coil</span>
+                    <span class="comparison-label label-after">A/C Now Overhaul</span>
+                </div>
                 <div class="about-experience-badge">
                     <span class="exp-num">30+</span>
                     <span class="exp-text">Years of Combined Service</span>
@@ -1134,6 +1141,226 @@
                                         <button class="btn btn-primary" onclick="submitDispatch()">Book Dispatch Slot Now</button>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Van Tour Section -->
+    <section class="reveal van-tour-section" style="background-color: #0A182F; padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.08); position: relative;">
+        <!-- Ambient Background Glow -->
+        <div class="ambient-glow-container">
+            <div class="ambient-glow-blob ambient-glow-blob-1" style="background: radial-gradient(circle, rgba(11, 99, 229, 0.06) 0%, rgba(10, 24, 47, 0) 100%);"></div>
+            <div class="ambient-glow-blob ambient-glow-blob-2" style="background: radial-gradient(circle, rgba(255, 199, 44, 0.04) 0%, rgba(10, 24, 47, 0) 100%);"></div>
+        </div>
+
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="section-header centered" style="margin-bottom: 50px;">
+                <span class="section-tag" style="color: var(--gold);">MISSION READY LOGISTICS</span>
+                <h2 style="color: var(--white);">Inside Our "Warehouse on Wheels"</h2>
+                <p style="color: #E2E8F0;">Carrying the right diagnostic sensors and replacement modules allows our veteran technicians to fix 85% of issues on the first visit.</p>
+            </div>
+
+            <div class="van-tour-wrapper">
+                <div class="van-blueprint-container">
+                    <!-- High-tech SVG Grid Line Blueprint Van Tour -->
+                    <svg class="van-svg-blueprint" viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Van outline path -->
+                        <path d="M 50 160 C 50 160 50 150 55 140 C 60 130 80 120 90 120 L 140 100 L 160 70 C 165 60 180 50 195 50 L 390 50 C 410 50 430 65 435 85 L 450 130 C 455 140 455 160 455 160 C 455 170 445 180 435 180 L 415 180 C 415 195 400 210 380 210 C 360 210 345 195 345 180 L 185 180 C 185 195 170 210 150 210 C 130 210 115 195 115 180 L 70 180 C 60 180 50 170 50 160 Z" />
+                        <!-- Wheels -->
+                        <circle cx="150" cy="180" r="24" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
+                        <circle cx="150" cy="180" r="12" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                        <circle cx="380" cy="180" r="24" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
+                        <circle cx="380" cy="180" r="12" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                        <!-- Windows & Lines -->
+                        <path d="M 180 60 L 220 60 L 220 95 L 180 95 Z" />
+                        <path d="M 230 60 L 300 60 L 300 95 L 230 95 Z" />
+                        <line x1="50" y1="140" x2="140" y2="140" />
+                        <line x1="140" y1="100" x2="450" y2="100" />
+                    </svg>
+
+                    <!-- Interactive Glowing Hotspots -->
+                    <button class="van-hotspot active hs-parts" data-target="parts" aria-label="Replacement Parts Hotspot">1</button>
+                    <button class="van-hotspot hs-refrigerant" data-target="refrigerant" aria-label="Refrigerant & Tools Hotspot">2</button>
+                    <button class="van-hotspot hs-filters" data-target="filters" aria-label="Air Quality Filters Hotspot">3</button>
+                    <button class="van-hotspot hs-tools" data-target="tools" aria-label="Diagnostic Equipment Hotspot">4</button>
+                </div>
+
+                <div class="van-details-panel">
+                    <h3 id="van-detail-title">⚡ Core Replacement Parts</h3>
+                    <p id="van-detail-desc">We carry high-quality replacement parts on every truck, including dual run capacitors (35/5uF to 45/5uF), contactors, fan relays, and universal transformer modules. This ensures we can resolve 85% of common AC electrical issues right on the spot without leaving you in the heat to fetch parts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive 50-Point Mission Checklist Section -->
+    <section class="reveal checklist-section" style="background-color: var(--white); padding: 80px 0; border-top: 1px solid var(--gray-light);">
+        <div class="container">
+            <div class="section-header centered" style="margin-bottom: 50px;">
+                <span class="section-tag">COMPREHENSIVE TUNE-UPS</span>
+                <h2>Our 50-Point Precision Checklist</h2>
+                <p>Toggle checklist categories below to see the rigorous criteria our veteran technicians verify on every maintenance visit.</p>
+            </div>
+
+            <div class="checklist-dashboard">
+                <div class="checklist-metric-column">
+                    <div class="checklist-progress-ring-box">
+                        <svg class="checklist-svg-ring" width="160" height="160">
+                            <circle class="checklist-circle-bg" cx="80" cy="80" r="70" />
+                            <circle class="checklist-circle-bar" id="chk-ring-bar" cx="80" cy="80" r="70" stroke-dashoffset="0" />
+                        </svg>
+                        <div class="checklist-progress-percentage" id="chk-percentage">0%<span>Verified</span></div>
+                    </div>
+
+                    <div class="checklist-category-selector">
+                        <button class="checklist-tab-btn active" data-target="chk-electrical">
+                            ⚡ 1. Electrical & Controls
+                            <span class="badge-count">0/6</span>
+                        </button>
+                        <button class="checklist-tab-btn" data-target="chk-refrigeration">
+                            ❄️ 2. Refrigeration Cycle
+                            <span class="badge-count">0/6</span>
+                        </button>
+                        <button class="checklist-tab-btn" data-target="chk-airhandler">
+                            🌀 3. Air Handler & IAQ
+                            <span class="badge-count">0/6</span>
+                        </button>
+                        <button class="checklist-tab-btn" data-target="chk-safety">
+                            🛡️ 4. Safety Controls
+                            <span class="badge-count">0/6</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checklist-list-column">
+                    <!-- Panel 1: Electrical -->
+                    <div class="checklist-panel active" id="chk-electrical">
+                        <h3>Electrical & Control Inspections</h3>
+                        <p style="font-size:13.5px; color:var(--gray-dark); margin-bottom:15px;">Check contacts, voltages, and wiring connections to prevent arc faults and control failure.</p>
+                        <div class="checklist-items-grid">
+                            <div class="checklist-item checked">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Measure compressor amp draw against LRA rating</span>
+                            </div>
+                            <div class="checklist-item checked">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Verify contactor points for pitting/arcing</span>
+                            </div>
+                            <div class="checklist-item checked">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Audit capacitor microfarads (uF) capacitance value</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Check low-voltage thermostat wire connections</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Inspect outdoor disconnect block & fuses</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Tighten loose terminals on control board</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 2: Refrigeration -->
+                    <div class="checklist-panel" id="chk-refrigeration">
+                        <h3>Refrigeration Cycle Diagnostics</h3>
+                        <p style="font-size:13.5px; color:var(--gray-dark); margin-bottom:15px;">Measure refrigerant pressures and coil temperatures to ensure peak heat transfers.</p>
+                        <div class="checklist-items-grid">
+                            <div class="checklist-item checked">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Audit suction & liquid pressures</span>
+                            </div>
+                            <div class="checklist-item checked">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Calculate liquid superheat and subcooling</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Leak-check evaporator coil joints</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Clean outdoor condenser coil surfaces</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Verify thermal expansion valve (TXV) operation</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Inspect liquid line filter dryer blockages</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 3: Air Handler -->
+                    <div class="checklist-panel" id="chk-airhandler">
+                        <h3>Air Handler & Air Flow Calibration</h3>
+                        <p style="font-size:13.5px; color:var(--gray-dark); margin-bottom:15px;">Inspect blower dynamics and coil restrictions to secure high indoor air quality.</p>
+                        <div class="checklist-items-grid">
+                            <div class="checklist-item checked">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Inspect blower motor wheel for debris</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Test static system pressure inside ducts</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Verify return filter sizing & sealing</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Flush algae out of condensate drain line</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Add slow-dissolve biological drain pan tablets</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Inspect indoor coil for organic growth</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 4: Safety -->
+                    <div class="checklist-panel" id="chk-safety">
+                        <h3>System Safety Limit Controls</h3>
+                        <p style="font-size:13.5px; color:var(--gray-dark); margin-bottom:15px;">Verify that all fail-safes trip correctly to protect your property from floods or fires.</p>
+                        <div class="checklist-items-grid">
+                            <div class="checklist-item checked">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Verify float switch shuts system down on water backups</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Inspect auxiliary drain pan under air handler</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Verify high-limit thermal switch trip point</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Check outdoor condenser thermal lockouts</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Verify low-voltage short circuit fuse ratings</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-item-checkbox"></div>
+                                <span class="checklist-item-text">Audit gas furnace furnace limit safety switches</span>
                             </div>
                         </div>
                     </div>

@@ -621,5 +621,188 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+
+    // ==========================================================================
+    // 5. Interactive Before/After Coil Slider
+    // ==========================================================================
+    const initializeCoilSlider = () => {
+        const sliderContainer = document.querySelector(".comparison-slider-container");
+        if (!sliderContainer) return;
+
+        const afterImage = sliderContainer.querySelector(".comparison-image-after");
+        const handle = sliderContainer.querySelector(".comparison-handle");
+        
+        let isDragging = false;
+
+        const updateSlider = (clientX) => {
+            const rect = sliderContainer.getBoundingClientRect();
+            let position = ((clientX - rect.left) / rect.width) * 100;
+            
+            // Constrain between 0% and 100%
+            if (position < 0) position = 0;
+            if (position > 100) position = 100;
+
+            afterImage.style.width = `${position}%`;
+            handle.style.left = `${position}%`;
+        };
+
+        const startDragging = () => { isDragging = true; };
+        const stopDragging = () => { isDragging = false; };
+
+        // Mouse Events
+        handle.addEventListener("mousedown", startDragging);
+        window.addEventListener("mouseup", stopDragging);
+        window.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            updateSlider(e.clientX);
+        });
+
+        // Touch Events (Mobile)
+        handle.addEventListener("touchstart", startDragging, { passive: true });
+        window.addEventListener("touchend", stopDragging);
+        window.addEventListener("touchmove", (e) => {
+            if (!isDragging) return;
+            if (e.touches && e.touches[0]) {
+                updateSlider(e.touches[0].clientX);
+            }
+        });
+    };
+
+    initializeCoilSlider();
+
+
+    // ==========================================================================
+    // 6. "Warehouse on Wheels" Interactive Van Tour
+    // ==========================================================================
+    const initializeVanTour = () => {
+        const hotspots = document.querySelectorAll(".van-hotspot");
+        const titleEl = document.getElementById("van-detail-title");
+        const descEl = document.getElementById("van-detail-desc");
+        const panel = document.querySelector(".van-details-panel");
+
+        if (hotspots.length === 0 || !titleEl || !descEl || !panel) return;
+
+        const hotspotData = {
+            parts: {
+                title: "⚡ Core Replacement Parts",
+                desc: "We carry high-quality replacement parts on every truck, including dual run capacitors (35/5uF to 45/5uF), contactors, fan relays, and universal transformer modules. This ensures we can resolve 85% of common AC electrical issues right on the spot without leaving you in the heat to fetch parts."
+            },
+            refrigerant: {
+                title: "❄️ Refrigerant & Recovery Equipment",
+                desc: "Equipped with dedicated EPA-compliant refrigerant recovery tanks, dry-nitrogen pressure test manifolds, and full charges of R-410A and next-gen R-454B refrigerants. This allows us to run pressure audits, find condenser leaks, and recharge your cooling coils on the first visit."
+            },
+            filters: {
+                title: "💨 Indoor Air Quality Filters & Cleaners",
+                desc: "Stocked with standard pleated media filters (16x25 to 20x25 dimensions), drain line flush cartridges, condensate tablets, and UV lamp bulb upgrades. We resolve drain blockages and indoor air restrictions to restore smooth system airflow instantly."
+            },
+            tools: {
+                title: "🛠️ Diagnostic Tools & Recovery Pumps",
+                desc: "Loaded with Fieldpiece digital manifolds, digital clamp meters, vacuum pumps, and specialized coil fin combs. Carrying these high-end diagnostic sensors allows our veteran technicians to find thermal locks and electrical shorts with extreme accuracy."
+            }
+        };
+
+        hotspots.forEach(hs => {
+            hs.addEventListener("click", () => {
+                const target = hs.dataset.target;
+                const data = hotspotData[target];
+
+                if (data) {
+                    // Update active classes
+                    hotspots.forEach(h => h.classList.remove("active"));
+                    hs.classList.add("active");
+
+                    // Fade transition effect
+                    panel.style.opacity = "0";
+                    panel.style.transform = "translateY(5px)";
+
+                    setTimeout(() => {
+                        titleEl.textContent = data.title;
+                        descEl.textContent = data.desc;
+                        panel.style.opacity = "1";
+                        panel.style.transform = "translateY(0)";
+                    }, 150);
+                }
+            });
+        });
+    };
+
+    initializeVanTour();
+
+
+    // ==========================================================================
+    // 7. 50-Point Mission Checklist Dashboard
+    // ==========================================================================
+    const initializeChecklist = () => {
+        const tabButtons = document.querySelectorAll(".checklist-tab-btn");
+        const panels = document.querySelectorAll(".checklist-panel");
+        const items = document.querySelectorAll(".checklist-item");
+
+        const percentageEl = document.getElementById("chk-percentage");
+        const progressRing = document.getElementById("chk-ring-bar");
+
+        if (tabButtons.length === 0 || panels.length === 0 || items.length === 0 || !percentageEl || !progressRing) return;
+
+        // SVG Ring Circle configuration
+        const radius = 70;
+        const circumference = 2 * Math.PI * radius; // ~439.82 px
+        progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
+
+        // Checklist category tabs switcher
+        tabButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const target = btn.dataset.target;
+
+                tabButtons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                panels.forEach(p => p.classList.remove("active"));
+                const targetPanel = document.getElementById(target);
+                if (targetPanel) targetPanel.classList.add("active");
+            });
+        });
+
+        // Item toggle checks
+        items.forEach(item => {
+            item.addEventListener("click", () => {
+                item.classList.toggle("checked");
+                updateProgress();
+            });
+        });
+
+        const updateProgress = () => {
+            const totalItems = items.length;
+            const checkedItems = document.querySelectorAll(".checklist-item.checked").length;
+            const percentage = Math.round((checkedItems / totalItems) * 100);
+
+            // Update percentage text
+            percentageEl.textContent = `${percentage}%`;
+
+            // Update SVG Ring dashoffset
+            const offset = circumference - (percentage / 100) * circumference;
+            progressRing.style.strokeDashoffset = offset;
+
+            // Recalculate badge counts for each category tab dynamically
+            panels.forEach(panel => {
+                const panelId = panel.id;
+                const tabBtn = document.querySelector(`.checklist-tab-btn[data-target="${panelId}"]`);
+                if (tabBtn) {
+                    const badge = tabBtn.querySelector(".badge-count");
+                    const checkedInPanel = panel.querySelectorAll(".checklist-item.checked").length;
+                    const totalInPanel = panel.querySelectorAll(".checklist-item").length;
+                    
+                    if (badge) {
+                        badge.textContent = `${checkedInPanel}/${totalInPanel}`;
+                    }
+                }
+            });
+        };
+
+        // Run initial calculations
+        updateProgress();
+    };
+
+    initializeChecklist();
 });
+
 
