@@ -28,7 +28,7 @@
                     path.includes('team-portal') || 
                     path.includes('3d-airflow') || 
                     path.includes('corrosion-predictor')) {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -49,7 +49,7 @@
     <meta property="og:url" content="https://acnowllc.com/areas.html">
     <meta property="og:title" content="Areas We Serve | A/C Now LLC | Treasure Coast HVAC Service Areas">
     <meta property="og:description" content="AC Now LLC provides professional AC repair and HVAC installation services across Martin County, St. Lucie County, and northern Palm Beach County.">
-    <meta property="og:image" content="https://acnowllc.com/downloaded_images/mascot-logo.svg">
+    <meta property="og:image" content="https://acnowllc.com/../assets/images/mascot-logo.svg">
     <!-- Google Fonts: Non-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,10 +60,10 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="redesign.css?v=101">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=101">
     <!-- LCP Preload -->
-    <link rel="preload" as="image" href="downloaded_images/banner-areas.webp" type="image/webp" fetchpriority="high">
-    <link rel="preload" as="image" href="downloaded_images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
+    <link rel="preload" as="image" href="../assets/images/banner-areas.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="../assets/images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
 
                         <!-- Google LocalBusiness Schema Markup -->
     <script type="application/ld+json">
@@ -73,7 +73,7 @@
       "name": "A/C Now LLC",
       "@id": "https://acnowllc.com/#hvacbusiness",
       "url": "https://acnowllc.com/",
-      "image": "https://acnowllc.com/downloaded_images/mascot-logo.svg",
+      "image": "https://acnowllc.com/../assets/images/mascot-logo.svg",
       "telephone": "(772) 521-3568",
       "email": "info@acnowllc.com",
       "priceRange": "$$",
@@ -164,9 +164,9 @@
             border: none !important;
         }
     </style>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
-    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/mascot-logo.svg">
 </head>
 <body>
     <!-- WCAG 2.4.1: Skip Navigation Link -->
@@ -186,8 +186,8 @@
     <!-- Main Navigation -->
     <header class="header">
         <div class="container header-container">
-            <a href="index.html" class="logo-link">
-                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            <a href="../index.html" class="logo-link">
+                <img src="../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
             <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
             <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
@@ -217,7 +217,7 @@
 
 
     <!-- Subpage Banner -->
-    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('downloaded_images/banner-areas.webp'); min-height: 40vh; padding: 80px 0;">
+    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('../assets/images/banner-areas.webp'); min-height: 40vh; padding: 80px 0;">
         <div class="container">
             <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
                 <span class="hero-subtitle">VETERAN-LED HVAC SERVICES • ACROSS THE TREASURE COAST</span>
@@ -266,7 +266,7 @@
                 <p style="color: var(--gray-dark); font-size: 14px; margin-bottom: 0; font-style: italic;">Don't see your city listed but live in Martin County or St. Lucie County? Give our office a call at <a href="tel:+17725213568" class="phone-link" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a> to confirm technician availability in your neighborhood.</p>
             </div>
             <div>
-                <img src="downloaded_images/map.webp" alt="Service Area Map" class="map-img" loading="lazy" width="600" height="450" style="width: 100%; border: 1px solid var(--gray-light);">
+                <img src="../assets/images/map.webp" alt="Service Area Map" class="map-img" loading="lazy" width="600" height="450" style="width: 100%; border: 1px solid var(--gray-light);">
             </div>
         </div>
     </section>
@@ -375,7 +375,7 @@
             <div class="planner-grid" style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; text-align: left; align-items: center;">
                 <!-- Left: Treated blue coil visual -->
                 <div style="position: relative; border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--box-shadow); height: 350px;">
-                    <img src="downloaded_images/treated-coil.webp" width="1376" height="768" loading="lazy" alt="A/C Now condenser unit treated with blue Blygold corrosion protection" style="width:100%; height:100%; object-fit:cover;">
+                    <img src="../assets/images/treated-coil.webp" width="1376" height="768" loading="lazy" alt="A/C Now condenser unit treated with blue Blygold corrosion protection" style="width:100%; height:100%; object-fit:cover;">
                     <div style="position: absolute; inset:0; background: linear-gradient(135deg, rgba(10,24,47,0.3) 0%, rgba(10,24,47,0.1) 100%);"></div>
                     <div style="position: absolute; bottom:15px; left:20px; right:20px; background:rgba(255,255,255,0.95); padding:10px 15px; border-radius:6px; font-size:11.5px; color:var(--dark); font-weight:700;">
                         💧 Blue marine-grade coil sealant applied in Port St. Lucie.
@@ -486,7 +486,7 @@
 <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="downloaded_images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <img src="../assets/images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
@@ -516,7 +516,7 @@
             </div>
             <div class="footer-links">
                 <div class="footer-heading">Service Cities</div>
-                <a href="index.html">Port St. Lucie</a>
+                <a href="../index.html">Port St. Lucie</a>
                 <a href="hvac-services-palm-city.html">Palm City</a>
                 <a href="hvac-services-stuart.html">Stuart</a>
                 <a href="areas.html">All Service Areas</a>
@@ -533,8 +533,8 @@
             </div>
         </div>
     </footer>
-    <script src="app.js?v=101" defer></script>
-    <script src="corrosion-meter.js?v=10" defer></script>
+    <script src="../assets/js/app.js?v=101" defer></script>
+    <script src="../assets/js/corrosion-meter.js?v=10" defer></script>
     <!-- WCAG 4.1.2: Sticky CTA with role + aria-labels -->
     <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
         <a href="tel:7725213568" class="sticky-cta-btn phone-btn"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call Now</a>

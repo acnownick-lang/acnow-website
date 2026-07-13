@@ -35,7 +35,7 @@
                     path.includes('team-portal') || 
                     path.includes('3d-airflow') || 
                     path.includes('corrosion-predictor')) {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -54,7 +54,7 @@
         })();
     </script>
 
-    <script src="error-logger.js?v=11"></script>
+    <script src="../assets/js/error-logger.js?v=11"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0B63E5">
@@ -71,7 +71,7 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="redesign.css?v=101">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=101">
     
     <style>
         .members-container {
@@ -696,9 +696,9 @@
             }
         }
     </style>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
-    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/mascot-logo.svg">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -719,8 +719,8 @@
     <!-- Main Navigation -->
     <header class="header">
         <div class="container header-container">
-            <a href="index.html" class="logo-link">
-                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            <a href="../index.html" class="logo-link">
+                <img src="../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
             <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
                                     <nav class="nav" id="primary-nav" aria-label="Primary navigation">
@@ -747,7 +747,7 @@
 
     <main id="main-content">
         <!-- Hero Header -->
-        <section class="hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.75) 0%, rgba(10, 24, 47, 0.65) 100%), url('downloaded_images/van_branded.webp'); background-size: cover; background-position: center; min-height: 45vh; display: flex; align-items: center; justify-content: center; position: relative;">
+        <section class="hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.75) 0%, rgba(10, 24, 47, 0.65) 100%), url('../assets/images/van_branded.webp'); background-size: cover; background-position: center; min-height: 45vh; display: flex; align-items: center; justify-content: center; position: relative;">
             <div class="container" style="text-align: center;">
                 <span class="section-tag" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">STAFF COMMAND CONSOLE</span>
                 <h1 style="font-family: var(--font-heading); font-size: 38px; color: #fff; margin-top: 15px; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">Owner & Technician Control Center</h1>
@@ -2012,7 +2012,7 @@
     <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="downloaded_images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <img src="../assets/images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
@@ -2042,7 +2042,7 @@
             </div>
             <div class="footer-links">
                 <div class="footer-heading">Service Cities</div>
-                <a href="index.html">Port St. Lucie</a>
+                <a href="../index.html">Port St. Lucie</a>
                 <a href="hvac-services-palm-city.html">Palm City</a>
                 <a href="hvac-services-stuart.html">Stuart</a>
                 <a href="areas.html">All Service Areas</a>
@@ -2061,7 +2061,7 @@
     </footer>
 </div><!-- /#view-dashboard .portal-view -->
 
-    <script src="app.js?v=101" defer></script>
+    <script src="../assets/js/app.js?v=101" defer></script>
     <script>
         window.__testVal = "script_executed";
         window.initTechPortal = () => {
@@ -2677,7 +2677,7 @@
                 const path = window.location.pathname;
                 const page = path.substring(path.lastIndexOf('/') + 1);
                 if (page === 'members.html' || page === 'team-portal.html') {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -2831,7 +2831,7 @@
                 const path = window.location.pathname;
                 const page = path.substring(path.lastIndexOf('/') + 1);
                 if (page === 'members.html' || page === 'team-portal.html') {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -3465,7 +3465,7 @@
                 const path = window.location.pathname;
                 const page = path.substring(path.lastIndexOf('/') + 1);
                 if (page === 'members.html' || page === 'team-portal.html') {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -5188,7 +5188,7 @@
                 const path = window.location.pathname;
                 const page = path.substring(path.lastIndexOf('/') + 1);
                 if (page === 'members.html' || page === 'team-portal.html') {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }

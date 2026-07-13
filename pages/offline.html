@@ -28,7 +28,7 @@
                     path.includes('team-portal') || 
                     path.includes('3d-airflow') || 
                     path.includes('corrosion-predictor')) {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -189,13 +189,13 @@
             line-height: 1.5;
         }
     </style>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
-    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/mascot-logo.svg">
 </head>
 <body>
     <div class="container">
-        <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+        <img src="../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
         <div class="offline-icon">📶🚫</div>
         <h1>Connection Lost</h1>
         <p>You are currently offline. A/C failures are urgent, and we are still here to help! Call Chris or Sean directly for immediate dispatches.</p>
@@ -237,7 +237,7 @@
             btn.disabled = true;
             try {
                 // Fetch request with a cache-busting query parameter to test actual connectivity
-                await fetch('/downloaded_images/Logo2.webp?cb=' + Date.now(), { method: 'HEAD' });
+                await fetch('/../assets/images/Logo2.webp?cb=' + Date.now(), { method: 'HEAD' });
                 window.location.reload();
             } catch (e) {
                 alert('Device is still offline. Please check your connection or call the office.');

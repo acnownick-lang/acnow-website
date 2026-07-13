@@ -1089,7 +1089,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.showToast("Technician ID detected. Redirecting to Staff Portal...", "success");
                 }
                 setTimeout(() => {
-                    window.location.href = "team-portal.html";
+                    window.location.href = (window.location.pathname.includes('/pages/') ? "" : "pages/") + "team-portal.html";
                 }, 800);
             } else {
                 fab.classList.remove("shake");
@@ -1575,7 +1575,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isIos) {
             banner.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
-                    <img src="/downloaded_images/Logo2.webp" alt="A/C Now Logo" style="width: 40px; height: 40px; border-radius: 6px;">
+                    <img src="/assets/images/Logo2.webp" alt="A/C Now Logo" style="width: 40px; height: 40px; border-radius: 6px;">
                     <div style="flex-grow: 1;">
                         <h4 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700;">Add to Home Screen</h4>
                         <p style="margin: 0; font-size: 0.75rem; color: #4A5568;">Tap share icon <span style="font-size: 1rem;">📤</span> then click "Add to Home Screen" <span style="font-size: 1rem;">➕</span> for the offline app.</p>
@@ -1586,7 +1586,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             banner.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="/downloaded_images/Logo2.webp" alt="A/C Now Logo" style="width: 40px; height: 40px; border-radius: 6px;">
+                    <img src="/assets/images/Logo2.webp" alt="A/C Now Logo" style="width: 40px; height: 40px; border-radius: 6px;">
                     <div>
                         <h4 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;">Install A/C Now App</h4>
                         <p style="margin: 0; font-size: 0.8rem; color: #4A5568;">Fast offline requests & priority emergency calling</p>
@@ -2463,7 +2463,20 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
                         <div class="checklist-top-row">
                             <div class="left-side">
                                 <input type="checkbox" data-url="${item.url}" ${isChecked}>
-                                <a href="${item.url}">${item.phase === '2' ? '🚀 ' : ''}${item.name}</a>
+                                <a href="${(() => {
+                    let resolvedUrl = item.url;
+                    const isSubpage = window.location.pathname.includes('/pages/');
+                    if (isSubpage) {
+                        if (item.url === 'index.html') {
+                            resolvedUrl = '../index.html';
+                        }
+                    } else {
+                        if (item.url !== 'index.html') {
+                            resolvedUrl = 'pages/' + item.url;
+                        }
+                    }
+                    return resolvedUrl;
+                })()}">${item.phase === '2' ? '🚀 ' : ''}${item.name}</a>
                             </div>
                             <span class="phase-tag ${tagClass}">${tagLabel}</span>
                         </div>

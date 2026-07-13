@@ -28,7 +28,7 @@
                     path.includes('team-portal') || 
                     path.includes('3d-airflow') || 
                     path.includes('corrosion-predictor')) {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -49,7 +49,7 @@
     <meta property="og:url" content="https://acnowllc.com/reviews.html">
     <meta property="og:title" content="Customer Reviews | A/C Now LLC | 5-Star HVAC Reviews">
     <meta property="og:description" content="Read 5-star customer reviews for professional AC repair, installation and tune-ups from homeowners on the Treasure Coast. Real feedback from A/C Now clients.">
-    <meta property="og:image" content="https://acnowllc.com/downloaded_images/mascot-logo.svg">
+    <meta property="og:image" content="https://acnowllc.com/../assets/images/mascot-logo.svg">
     <!-- Google Fonts: Non-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,7 +60,7 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="redesign.css?v=101">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=101">
     <!-- HVACBusiness Schema -->
     <script type="application/ld+json">
     {
@@ -69,7 +69,7 @@
       "name": "A/C Now LLC",
       "@id": "https://acnowllc.com/#hvacbusiness",
       "url": "https://acnowllc.com/",
-      "image": "https://acnowllc.com/downloaded_images/mascot-logo.svg",
+      "image": "https://acnowllc.com/../assets/images/mascot-logo.svg",
       "telephone": "(772) 521-3568",
       "email": "info@acnowllc.com",
       "priceRange": "$$",
@@ -111,8 +111,8 @@
     }
     </script>
     <!-- LCP Preload: hero banner -->
-    <link rel="preload" as="image" href="downloaded_images/banner-areas.webp" fetchpriority="high">
-    <link rel="preload" as="image" href="downloaded_images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
+    <link rel="preload" as="image" href="../assets/images/banner-areas.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="../assets/images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
 
     <style>
         /* Dual-Gate Split Hero layout aesthetics */
@@ -147,9 +147,9 @@
             border: none !important;
         }
     </style>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
-    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/mascot-logo.svg">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -168,8 +168,8 @@
     <!-- Main Navigation -->
     <header class="header">
         <div class="container header-container">
-            <a href="index.html" class="logo-link">
-                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            <a href="../index.html" class="logo-link">
+                <img src="../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
             <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
             <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
@@ -199,7 +199,7 @@
 
 
     <!-- Subpage Banner -->
-    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('downloaded_images/banner-about.webp'); min-height: 40vh; padding: 80px 0;">
+    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('../assets/images/banner-about.webp'); min-height: 40vh; padding: 80px 0;">
         <div class="container">
             <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
                 <span class="hero-subtitle">REPUTATION FOR EXCELLENCE</span>
@@ -310,7 +310,7 @@
 <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="downloaded_images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <img src="../assets/images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
@@ -340,7 +340,7 @@
             </div>
             <div class="footer-links">
                 <div class="footer-heading">Service Cities</div>
-                <a href="index.html">Port St. Lucie</a>
+                <a href="../index.html">Port St. Lucie</a>
                 <a href="hvac-services-palm-city.html">Palm City</a>
                 <a href="hvac-services-stuart.html">Stuart</a>
                 <a href="areas.html">All Service Areas</a>
@@ -357,7 +357,7 @@
             </div>
         </div>
     </footer>
-    <script src="app.js?v=101" defer></script>
+    <script src="../assets/js/app.js?v=101" defer></script>
     <!-- STICKY MOBILE CALL-TO-ACTION BAR -->
     <div class="mobile-sticky-cta-bar">
         <a href="tel:7725213568" class="sticky-cta-btn phone-btn"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call Now</a>

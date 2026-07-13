@@ -28,7 +28,7 @@
                     path.includes('team-portal') || 
                     path.includes('3d-airflow') || 
                     path.includes('corrosion-predictor')) {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -49,7 +49,7 @@
     <meta property="og:url" content="https://acnowllc.com/services.html">
     <meta property="og:title" content="HVAC Services | Port St. Lucie AC Repair &amp; Installation | A/C Now">
     <meta property="og:description" content="Impeccable HVAC services in Port St. Lucie, Palm City, Jupiter, and Stuart. Professional AC repair, installation, pool heating, air quality and maintenance.">
-    <meta property="og:image" content="https://acnowllc.com/downloaded_images/mascot-logo.svg">
+    <meta property="og:image" content="https://acnowllc.com/../assets/images/mascot-logo.svg">
     <!-- Google Fonts: Non-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,7 +60,7 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="redesign.css?v=101">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=101">
     <!-- HVACBusiness Schema -->
     <script type="application/ld+json">
     {
@@ -69,7 +69,7 @@
       "name": "A/C Now LLC",
       "@id": "https://acnowllc.com/#hvacbusiness",
       "url": "https://acnowllc.com/",
-      "image": "https://acnowllc.com/downloaded_images/mascot-logo.svg",
+      "image": "https://acnowllc.com/../assets/images/mascot-logo.svg",
       "telephone": "(772) 521-3568",
       "email": "info@acnowllc.com",
       "priceRange": "$$",
@@ -103,8 +103,8 @@
     }
     </script>
     <!-- LCP Preload -->
-    <link rel="preload" as="image" href="downloaded_images/banner-services.webp" type="image/webp" fetchpriority="high">
-    <link rel="preload" as="image" href="downloaded_images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
+    <link rel="preload" as="image" href="../assets/images/banner-services.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="../assets/images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
 
     <style>
         /* Dual-Gate Split Hero layout aesthetics */
@@ -139,9 +139,9 @@
             border: none !important;
         }
     </style>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
-    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/mascot-logo.svg">
 </head>
 <body>
     <!-- WCAG 2.4.1: Skip Navigation Link -->
@@ -161,8 +161,8 @@
     <!-- Main Navigation -->
     <header class="header">
         <div class="container header-container">
-            <a href="index.html" class="logo-link">
-                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            <a href="../index.html" class="logo-link">
+                <img src="../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
             <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
             <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
@@ -192,7 +192,7 @@
 
 
     <!-- Subpage Banner -->
-    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('downloaded_images/banner-services.webp'); min-height: 40vh; padding: 80px 0;">
+    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('../assets/images/banner-services.webp'); min-height: 40vh; padding: 80px 0;">
         <div class="container">
             <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
                 <span class="hero-subtitle">HVAC SERVICE WITH MILITARY-GRADE PRECISION</span>
@@ -249,14 +249,14 @@
                     <a href="contact.html" class="btn btn-primary">Schedule Same-Day Repair</a>
                 </div>
                 <div>
-                    <img src="downloaded_images/hvac-repair-img.webp" alt="AC Repair Service" class="about-main-img" loading="lazy" width="600" height="450" style="border: 1px solid var(--gray-light);">
+                    <img src="../assets/images/hvac-repair-img.webp" alt="AC Repair Service" class="about-main-img" loading="lazy" width="600" height="450" style="border: 1px solid var(--gray-light);">
                 </div>
             </div>
 
             <!-- Service 2: Installation -->
             <div id="installation" style="margin-bottom: 90px;" class="about-grid grid-about-reverse">
                 <div>
-                    <img src="downloaded_images/hvac-install-img-1.webp" alt="AC Installation Service" class="about-main-img" loading="lazy" width="600" height="450" style="border: 1px solid var(--gray-light);">
+                    <img src="../assets/images/hvac-install-img-1.webp" alt="AC Installation Service" class="about-main-img" loading="lazy" width="600" height="450" style="border: 1px solid var(--gray-light);">
                 </div>
                 <div>
                     <span class="section-tag">ENERGY EFFICIENCY</span>
@@ -285,7 +285,7 @@
                     <a href="contact.html" class="btn btn-primary">Join our Service Club</a>
                 </div>
                 <div>
-                    <img src="downloaded_images/hvac-maintenance-img.webp" alt="HVAC Maintenance" class="about-main-img" style="border: 1px solid var(--gray-light);">
+                    <img src="../assets/images/hvac-maintenance-img.webp" alt="HVAC Maintenance" class="about-main-img" style="border: 1px solid var(--gray-light);">
                 </div>
             </div>
 
@@ -493,7 +493,7 @@
 
                     <!-- Right: Branded photo showing compliance fence -->
                     <div style="position: relative; border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--box-shadow); height: 380px;">
-                        <img src="downloaded_images/hoa-screening.jpg" width="1376" height="768" loading="lazy" alt="Neatly screened outdoor AC condenser with grey composite fencing and lush garden landscaping" style="width:100%; height:100%; object-fit:cover;">
+                        <img src="../assets/images/hoa-screening.jpg" width="1376" height="768" loading="lazy" alt="Neatly screened outdoor AC condenser with grey composite fencing and lush garden landscaping" style="width:100%; height:100%; object-fit:cover;">
                         <div style="position: absolute; inset:0; background: linear-gradient(180deg, transparent 50%, rgba(10,24,47,0.7) 100%);"></div>
                         <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; color:#fff; font-size:11px; font-weight:700; text-align:center; background:rgba(10,24,47,0.6); padding:8px 12px; border-radius:4px;">
                             <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Approved PVC vinyl privacy screening in Port St. Lucie.
@@ -515,7 +515,7 @@
                 <!-- Card 1 -->
                 <div class="service-card card-3d reveal-up" data-delay="0">
                     <div class="service-img-wrapper">
-                        <img src="downloaded_images/iaq-ecobee.webp" alt="Indoor Air Quality" class="service-img" loading="lazy" width="400" height="300">
+                        <img src="../assets/images/iaq-ecobee.webp" alt="Indoor Air Quality" class="service-img" loading="lazy" width="400" height="300">
                     </div>
                     <div class="service-card-body">
                         <h3>Indoor Air Quality</h3>
@@ -533,7 +533,7 @@
                 <!-- Card 2 -->
                 <div class="service-card card-3d reveal-up" data-delay="150">
                     <div class="service-img-wrapper">
-                        <img src="downloaded_images/ductless-img.webp" alt="Ductless Mini Splits" class="service-img" loading="lazy" width="400" height="300">
+                        <img src="../assets/images/ductless-img.webp" alt="Ductless Mini Splits" class="service-img" loading="lazy" width="400" height="300">
                     </div>
                     <div class="service-card-body">
                         <h3>Ductless Mini-Splits</h3>
@@ -544,7 +544,7 @@
                 <!-- Card 3 -->
                 <div class="service-card card-3d reveal-up" data-delay="300">
                     <div class="service-img-wrapper">
-                        <img src="downloaded_images/pool-inno-install.webp" alt="Pool Heating" class="service-img" loading="lazy" width="400" height="300">
+                        <img src="../assets/images/pool-inno-install.webp" alt="Pool Heating" class="service-img" loading="lazy" width="400" height="300">
                     </div>
                     <div class="service-card-body">
                         <h3>Pool Heat Pumps</h3>
@@ -555,7 +555,7 @@
                 <!-- Card 4: Duct Cleaning & Sanitization -->
                 <div class="service-card card-3d reveal-up" data-delay="450">
                     <div class="service-img-wrapper">
-                        <img src="downloaded_images/maintenance_premium.webp" alt="Duct Cleaning and Sanitization" class="service-img" loading="lazy" width="400" height="300">
+                        <img src="../assets/images/maintenance_premium.webp" alt="Duct Cleaning and Sanitization" class="service-img" loading="lazy" width="400" height="300">
                     </div>
                     <div class="service-card-body">
                         <h3>Duct Cleaning</h3>
@@ -842,7 +842,7 @@
 <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="downloaded_images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <img src="../assets/images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
@@ -872,7 +872,7 @@
             </div>
             <div class="footer-links">
                 <div class="footer-heading">Service Cities</div>
-                <a href="index.html">Port St. Lucie</a>
+                <a href="../index.html">Port St. Lucie</a>
                 <a href="hvac-services-palm-city.html">Palm City</a>
                 <a href="hvac-services-stuart.html">Stuart</a>
                 <a href="areas.html">All Service Areas</a>
@@ -889,9 +889,9 @@
             </div>
         </div>
     </footer>
-    <script src="app.js?v=101" defer></script>
-    <script src="duct-simulator.js?v=10" defer></script>
-    <script src="soundboard.js?v=10" defer></script>
+    <script src="../assets/js/app.js?v=101" defer></script>
+    <script src="../assets/js/duct-simulator.js?v=10" defer></script>
+    <script src="../assets/js/soundboard.js?v=10" defer></script>
     <!-- WCAG 4.1.2: Sticky CTA with role + aria-labels -->
     <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
         <a href="tel:+17725213568" class="sticky-cta-btn phone-btn" aria-label="Call A/C Now LLC at (772) 521-3568"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> Call Now</a>

@@ -2713,7 +2713,7 @@ section.trust-bar {
     position: relative;
     width: 100%;
     aspect-ratio: 1.8 / 1;
-    background: linear-gradient(rgba(10, 24, 47, 0.78), rgba(10, 24, 47, 0.78)), url('downloaded_images/van_branded.jpg');
+    background: linear-gradient(rgba(10, 24, 47, 0.78), rgba(10, 24, 47, 0.78)), url('../images/van_branded.jpg');
     background-size: cover;
     background-position: center;
     border-radius: var(--border-radius);
@@ -3736,15 +3736,15 @@ section.trust-bar {
 }
 
 .cta-banner-about {
-    background: url('downloaded_images/cta-about.jpg');
+    background: url('../images/cta-about.jpg');
 }
 
 .cta-banner-services {
-    background: url('downloaded_images/cta-services.jpg');
+    background: url('../images/cta-services.jpg');
 }
 
 .cta-banner-reviews {
-    background: url('downloaded_images/cta-reviews.jpg');
+    background: url('../images/cta-reviews.jpg');
 }
 
 #dial-outer:focus-visible {

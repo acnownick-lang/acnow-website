@@ -26,7 +26,7 @@
                     path.includes('team-portal') || 
                     path.includes('3d-airflow') || 
                     path.includes('corrosion-predictor')) {
-                    window.location.replace('index.html?redirected=phase2-restricted');
+                    window.location.replace('../index.html?redirected=phase2-restricted');
                     return;
                 }
             }
@@ -1156,12 +1156,12 @@
     <!-- Top Nav Header -->
     <header class="top-nav-bar">
         <div class="logo-container">
-            <img src="downloaded_images/mascot-logo.svg" alt="A/C Now Logo" class="nav-logo" width="40" height="40">
+            <img src="../assets/images/mascot-logo.svg" alt="A/C Now Logo" class="nav-logo" width="40" height="40">
             <span class="logo-text">A/C Now <span class="logo-sub">LLC</span></span>
         </div>
         <div class="header-right">
             <a href="tel:8662266935" class="phone-cta">📞 (866) AC-NOW-FL</a>
-            <a href="index.html" class="back-link">Back to Home</a>
+            <a href="../index.html" class="back-link">Back to Home</a>
         </div>
     </header>
 
@@ -1457,8 +1457,8 @@
     <div class="controls-hint">Drag blue floor registers to move them • Left-click background and drag to rotate view</div>
     <canvas id="webgl-canvas"></canvas>
 
-    <script src="three.min.js"></script>
-    <script src="OrbitControls.js"></script>
+    <script src="../assets/lib/three.min.js"></script>
+    <script src="../assets/lib/OrbitControls.js"></script>
 
     <script>
         const OrbitControls = THREE.OrbitControls;

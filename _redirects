@@ -8,23 +8,38 @@ http://www.acnowllc.com/*   https://acnowllc.com/:splat   301!
 https://www.acnowllc.com/*  https://acnowllc.com/:splat   301!
 http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 
+# Redirect clean endpoints to structured subpages (internal rewrite 200)
+/about                  /pages/about.html                   200
+/services               /pages/services.html                200
+/contact                /pages/contact.html                 200
+/areas                  /pages/areas.html                   200
+/reviews                /pages/reviews.html                 200
+/commercial             /pages/commercial.html              200
+/pool-heating           /pages/pool-heating.html            200
+/hvac-services-palm-city /pages/hvac-services-palm-city.html 200
+/hvac-services-stuart    /pages/hvac-services-stuart.html    200
+/privacy                /pages/privacy.html                 200
+/accessibility          /pages/accessibility.html           200
+/members                /pages/members.html                 200
+/team-portal            /pages/team-portal.html             200
+/corrosion-predictor    /pages/corrosion-predictor.html     200
+/3d-airflow            /pages/3d-airflow.html              200
+/diagnose               /pages/diagnose.html                200
+/configurator           /pages/configurator.html            200
+/planner                /pages/planner.html                 200
+/storm-prep             /pages/storm-prep.html              200
+/directions             /pages/directions.html              200
+/offline                /pages/offline.html                 200
 
-# Legacy or common path aliases → canonical pages
-/home         /   301
-/home/        /   301
-/services/    /services.html  301
-/about/       /about.html     301
-/contact/     /contact.html   301
-/areas/       /areas.html     301
-/reviews/     /reviews.html   301
-/commercial/  /commercial.html 301
-/pool-heating/ /pool-heating.html 301
-/hvac-services-palm-city/ /hvac-services-palm-city.html 301
-/hvac-services-stuart/    /hvac-services-stuart.html    301
-/privacy                  /privacy.html                 301
-/privacy/                 /privacy.html                 301
-/accessibility            /accessibility.html           301
-/accessibility/           /accessibility.html           301
-
-# SPA fallback — serve index.html for any unmatched route (404 handled separately)
-# /*  /index.html  200   ← only enable if you ever convert to a SPA framework
+# Legacy slash-appended paths → subpages (301 redirect)
+/about/                 /pages/about.html                   301
+/services/              /pages/services.html                301
+/contact/               /pages/contact.html                 301
+/areas/                 /pages/areas.html                   301
+/reviews/               /pages/reviews.html                 301
+/commercial/            /pages/commercial.html              301
+/pool-heating/          /pages/pool-heating.html            301
+/hvac-services-palm-city/ /pages/hvac-services-palm-city.html 301
+/hvac-services-stuart/  /pages/hvac-services-stuart.html    301
+/privacy/               /pages/privacy.html                 301
+/accessibility/         /pages/accessibility.html           301
