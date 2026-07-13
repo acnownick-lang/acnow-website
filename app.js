@@ -1,1452 +1,223 @@
-// Dashboard Logic for A/C Now Redesign & SEO Audit Showcase
-
-/* ==========================================================================
-   Premium Scroll Effects (Header Shrinking & Reveal Animations) and
-   Mobile Nav — Close on tap-outside, close on link-click, aria-expanded
-   ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Shrink header and apply dark transparent background on scroll
-    const headerElement = document.querySelector('.header');
-    
-    function toggleHeaderScroll() {
-        if (window.scrollY > 40) {
-            headerElement.classList.add('scrolled');
-        } else {
-            headerElement.classList.remove('scrolled');
-        }
-    }
-    
-    if (headerElement) {
-        window.addEventListener('scroll', toggleHeaderScroll, { passive: true });
-        toggleHeaderScroll(); // Trigger check on load
-    }
-
-    // 2. Intersection Observer to slide sections up as they enter viewport
-    const revealElements = document.querySelectorAll('.reveal');
-    
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    // Add .animating 1 frame before .active to pre-warm GPU layer
-                    // This ensures will-change is only active during the animation
-                    requestAnimationFrame(() => {
-                        el.classList.add('animating');
-                        requestAnimationFrame(() => {
-                            el.classList.add('active');
-                        });
-                    });
-                    // Remove will-change after animation completes (saves GPU memory)
-                    el.addEventListener('transitionend', () => {
-                        el.classList.remove('animating');
-                    }, { once: true });
-                    obs.unobserve(el); // Only trigger once
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -40px 0px'
-        });
-        
-        revealElements.forEach(el => observer.observe(el));
-    } else {
-        // Fallback for older browsers
-        revealElements.forEach(el => el.classList.add('active'));
-    }
-
-    // 3. Mobile Navigation Toggle and Click-Outside-to-Close Handler
-    const mobileNav = document.getElementById('primary-nav');
-    const hamburger = document.getElementById('hamburger-btn');
-
-    if (mobileNav && hamburger) {
-        const focusableElements = mobileNav.querySelectorAll('a[href], button');
-        const firstFocusable = focusableElements[0];
-        const lastFocusable = focusableElements[focusableElements.length - 1];
-
-        function closeNav() {
-            mobileNav.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
-            hamburger.textContent = '☰';
-        }
-
-        function openNav() {
-            mobileNav.classList.add('active');
-            hamburger.setAttribute('aria-expanded', 'true');
-            hamburger.textContent = '✕';
-            if (firstFocusable) {
-                setTimeout(() => firstFocusable.focus(), 50); // Focus the first link in navigation
-            }
-        }
-
-        // Replace inline onclick with proper JS toggle so aria-expanded stays in sync
-        hamburger.removeAttribute('onclick');
-        hamburger.setAttribute('aria-expanded', 'false');
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            mobileNav.classList.contains('active') ? closeNav() : openNav();
-        });
-
-        // Close when any nav link is tapped (prevents drawer staying open on anchor links)
-        mobileNav.addEventListener('click', (e) => {
-            if (e.target.closest('.nav-link')) {
-                closeNav();
-            }
-        });
-
-        // Close when tapping anywhere outside the drawer or hamburger
-        document.addEventListener('click', (e) => {
-            if (
-                mobileNav.classList.contains('active') &&
-                !mobileNav.contains(e.target) &&
-                !hamburger.contains(e.target)
-            ) {
-                closeNav();
-            }
-        });
-
-        // Close on Escape key and restore focus to hamburger
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                closeNav();
-                hamburger.focus();
-            }
-        });
-
-        // Keyboard Focus Trap within mobile navigation drawer overlay
-        mobileNav.addEventListener('keydown', (e) => {
-            if (e.key !== 'Tab') return;
-
-            if (e.shiftKey) { // Shift + Tab
-                if (document.activeElement === firstFocusable || document.activeElement === mobileNav) {
-                    hamburger.focus();
-                    e.preventDefault();
-                }
-            } else { // Tab
-                if (document.activeElement === lastFocusable) {
-                    hamburger.focus();
-                    e.preventDefault();
-                }
-            }
-        });
-
-        hamburger.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab' && !e.shiftKey && mobileNav.classList.contains('active')) {
-                if (firstFocusable) {
-                    firstFocusable.focus();
-                    e.preventDefault();
-                }
-            }
-        });
-    }
-
-    // Initialize calculations on DOM content load if they exist on the page
-    const optCleanings = document.getElementById("opt-cleanings");
-    if (optCleanings && typeof window.updateClubROI === "function") {
-        window.updateClubROI();
-    }
-});
-
-
-/* ==========================================================================
-   Interactive Innovations Tab Logic
-   ========================================================================== */
-// WCAG 4.1.2: manage aria-selected on role="tab" buttons
-window.switchInnoTab = function(event, tabId) {
-    const tabContainer = event.currentTarget.closest(".innovations-tab-container");
-    if (!tabContainer) return;
-    
-    // Toggle Tab Headers + aria-selected
-    const buttons = tabContainer.querySelectorAll(".inno-tab-btn");
-    buttons.forEach(btn => {
-        btn.classList.remove("active");
-        btn.setAttribute('aria-selected', 'false');
-    });
-    event.currentTarget.classList.add("active");
-    event.currentTarget.setAttribute('aria-selected', 'true');
-    
-    // Toggle Tab Panels
-    const panels = tabContainer.querySelectorAll(".inno-tab-panel");
-    panels.forEach(p => p.classList.remove("active"));
-    
-    const targetPanel = tabContainer.querySelector(`#${tabId}`);
-    if (targetPanel) {
-        targetPanel.classList.add("active");
-        targetPanel.focus(); // Move keyboard focus to the activated panel
-    }
-};
-
-
-/* ==========================================================================
-   SEER2 Energy Savings Calculator Logic
-   ========================================================================== */
-window.updateSeerSavings = function() {
-    const currentSeerEl = document.getElementById("current-seer");
-    const targetSeerEl = document.getElementById("target-seer");
-    const monthlyBillEl = document.getElementById("monthly-bill");
-    
-    if (!currentSeerEl || !targetSeerEl || !monthlyBillEl) return;
-
-    const currentSeer = parseFloat(currentSeerEl.value);
-    const targetSeer = parseFloat(targetSeerEl.value);
-    const monthlyBill = parseFloat(monthlyBillEl.value);
-    
-    // Set labels & update ARIA slider values
-    const valCurrentSeer = document.getElementById("val-current-seer");
-    const valTargetSeer = document.getElementById("val-target-seer");
-    const valMonthlyBill = document.getElementById("val-monthly-bill");
-
-    if (valCurrentSeer) valCurrentSeer.textContent = `${currentSeer} SEER (${currentSeer <= 10 ? 'Over 10 Years Old' : 'Standard Older Unit'})`;
-    if (valTargetSeer) valTargetSeer.textContent = `${targetSeer} SEER2 (Ultra High Efficiency)`;
-    if (valMonthlyBill) valMonthlyBill.textContent = `$${monthlyBill}`;
-
-    currentSeerEl.setAttribute('aria-valuetext', `${currentSeer} SEER`);
-    targetSeerEl.setAttribute('aria-valuetext', `${targetSeer} SEER2`);
-    monthlyBillEl.setAttribute('aria-valuetext', `$${monthlyBill}`);
-    
-    // Calculation: savings % = 1 - (current_seer / target_seer)
-    const savingsRatio = 1 - (currentSeer / targetSeer);
-    const monthlySavings = monthlyBill * savingsRatio;
-    const yearlySavings = monthlySavings * 12;
-    
-    // Display results
-    const seerMonthlySavings = document.getElementById("seer-monthly-savings");
-    const seerYearlySavings = document.getElementById("seer-yearly-savings");
-    if (seerMonthlySavings) seerMonthlySavings.textContent = `$${monthlySavings.toFixed(2)}`;
-    if (seerYearlySavings) seerYearlySavings.textContent = `$${yearlySavings.toFixed(2)}`;
-    
-    // Update visual percentage bar fill
-    const fillPercent = Math.round(savingsRatio * 100);
-    const barFill = document.getElementById("seer-bar-fill");
-    if (barFill) {
-        barFill.style.width = `${fillPercent}%`;
-    }
-    
-    const resultsNote = document.querySelector(".results-note");
-    if (resultsNote) {
-        resultsNote.textContent = `Upgrading to an ${targetSeer} SEER2 unit reduces your cooling power draw by approximately ${fillPercent}% compared to a standard ${currentSeer} SEER condenser.`;
-    }
-};
-
-
-/* ==========================================================================
-   Service Club Membership ROI Builder Logic
-   ========================================================================== */
-window.updateClubROI = function() {
-    let yearlySavings = 0;
-    
-    const optCleanings = document.getElementById("opt-cleanings");
-    const optRepairCost = document.getElementById("opt-repair-cost");
-    const optRepairsValue = document.getElementById("opt-repairs-value");
-    
-    if (!optCleanings || !optRepairCost || !optRepairsValue) return;
-
-    const hasCleanings = optCleanings.checked;
-    const hasDiagnostic = optRepairCost.checked;
-    const hasRepairs = optRepairsValue.checked;
-    
-    if (hasCleanings) {
-        yearlySavings += 180; // $90 per clean, twice a year
-    }
-    if (hasDiagnostic) {
-        yearlySavings += 95; // Saved service diagnostic callout
-    }
-    if (hasRepairs) {
-        yearlySavings += 45; // 15% discount on estimated $300 parts/labor ticket
-    }
-    
-    // Membership cost: $19/mo * 12 months = $228
-    const netSavings = yearlySavings - 228;
-    
-    const savingsDisplay = document.getElementById("club-savings-val");
-    if (savingsDisplay) {
-        if (netSavings >= 0) {
-            savingsDisplay.textContent = `$${netSavings.toFixed(2)}`;
-            savingsDisplay.style.color = "#60A5FA";
-        } else {
-            savingsDisplay.textContent = `-$${Math.abs(netSavings).toFixed(2)}`;
-            savingsDisplay.style.color = "#ef4444"; // Red for net-negative offset
-        }
-    }
-};
-
-
-/* ==========================================================================
-   Emergency Dispatch Wizard Logic (index.html)
-   ========================================================================== */
-window.goToWizardStep2 = function() {
-    const pane1 = document.getElementById("pane-step-1");
-    const pane2 = document.getElementById("pane-step-2");
-    
-    if (!pane1 || !pane2) return;
-
-    pane1.classList.remove("active");
-    pane2.classList.add("active");
-    
-    const step1Indicator = document.getElementById("step-1-indicator");
-    const step2Indicator = document.getElementById("step-2-indicator");
-    if (step1Indicator) step1Indicator.classList.remove("active");
-    if (step2Indicator) step2Indicator.classList.add("active");
-    
-    // Dynamic slot scheduling based on city
-    const dispatchCityEl = document.getElementById("dispatch-city");
-    const city = dispatchCityEl ? dispatchCityEl.value : "your city";
-    const slotTimeText = document.getElementById("slot-time-text");
-    if (slotTimeText) {
-        const hours = ["1:00 PM - 3:00 PM", "3:00 PM - 5:00 PM", "5:00 PM - 7:00 PM"];
-        const randomHour = hours[Math.floor(Math.random() * hours.length)];
-        slotTimeText.textContent = `Next Dispatch Slot in ${city}: Today between ${randomHour}`;
-    }
-
-    // Programmatically move focus to Step 2 heading to prevent focus loss
-    const step2Heading = pane2.querySelector("h3") || pane2.querySelector(".success-slot-box");
-    if (step2Heading) {
-        step2Heading.setAttribute("tabindex", "-1");
-        step2Heading.focus();
-    }
-};
-
-window.goToWizardStep1 = function() {
-    const pane1 = document.getElementById("pane-step-1");
-    const pane2 = document.getElementById("pane-step-2");
-    
-    if (!pane1 || !pane2) return;
-
-    pane1.classList.add("active");
-    pane2.classList.remove("active");
-    
-    const step1Indicator = document.getElementById("step-1-indicator");
-    const step2Indicator = document.getElementById("step-2-indicator");
-    if (step1Indicator) step1Indicator.classList.add("active");
-    if (step2Indicator) step2Indicator.classList.remove("active");
-
-    // Programmatically move focus to Step 1 heading to prevent focus loss
-    const step1Heading = pane1.querySelector("h3");
-    if (step1Heading) {
-        step1Heading.setAttribute("tabindex", "-1");
-        step1Heading.focus();
-    }
-};
-
-window.submitDispatch = function() {
-    const dispatchNameEl = document.getElementById("dispatch-name");
-    const dispatchPhoneEl = document.getElementById("dispatch-phone");
-    
-    if (!dispatchNameEl || !dispatchPhoneEl) return;
-
-    const name = dispatchNameEl.value.trim();
-    const phone = dispatchPhoneEl.value.trim();
-    
-    if (!name || !phone) {
-        alert("Please enter both your name and phone number to secure the dispatch slot!");
-        return;
-    }
-    
-    alert(`Thank you, ${name}! Your priority dispatch slot has been secured. Our team will contact you at ${phone} within 5 minutes.`);
-    window.goToWizardStep1();
-    
-    // Clear inputs
-    dispatchNameEl.value = "";
-    dispatchPhoneEl.value = "";
-};
-
-
-/* ==========================================================================
-   Service Area Zip Code Checker (areas.html)
-   ========================================================================== */
-window.checkZipAvailability = function() {
-    const zipInputEl = document.getElementById("zip-input");
-    const resultDiv = document.getElementById("zip-result");
-    
-    if (!zipInputEl || !resultDiv) return;
-
-    const zipInput = zipInputEl.value.trim();
-    
-    // 1. Validate Input Format (must be exactly 5 digits)
-    const zipFormatRegex = /^\d{5}$/;
-    if (!zipInput || !zipFormatRegex.test(zipInput)) {
-        alert("Please enter a valid 5-digit zip code.");
-        return;
-    }
-    
-    resultDiv.style.display = "block";
-    
-    // Core Florida Zips mapping (Martin, St. Lucie, and Jupiter regions)
-    const activeZips = [
-        "34952", "34953", "34957", "34981", "34982", "34983", "34984", "34986", "34987", // PSL
-        "34994", "34995", "34996", "34997", // Stuart
-        "34990", // Palm City
-        "33458", "33469", "33477", "33478", // Jupiter / Hobe Sound
-        "34945", "34946", "34947", "34950" // Fort Pierce
-    ];
-    
-    // Regional prefix check for broader local area (Martin, St. Lucie, and Palm Beach counties)
-    const regionalPrefixRegex = /^(349\d{2}|334\d{2})$/;
-    
-    if (activeZips.includes(zipInput)) {
-        // Core area coverage (Green light)
-        resultDiv.style.backgroundColor = "rgba(16, 185, 129, 0.08)";
-        resultDiv.style.border = "1px solid rgba(16, 185, 129, 0.2)";
-        resultDiv.style.color = "#10B981";
-        resultDiv.innerHTML = `🟢 <strong>Service Availability: Green Light!</strong><br>We have active technicians routing in zip code <strong>${zipInput}</strong> today. Next dispatch slot available between 1:00 PM - 3:00 PM. Call <a href="tel:7725213568" style="color: inherit; font-weight: 700;">(772) 521-3568</a> to secure this slot immediately!`;
-    } else if (regionalPrefixRegex.test(zipInput)) {
-        // Extended area coverage (Yellow light - limited routing)
-        resultDiv.style.backgroundColor = "rgba(245, 158, 11, 0.08)";
-        resultDiv.style.border = "1px solid rgba(245, 158, 11, 0.2)";
-        resultDiv.style.color = "#F59E0B";
-        resultDiv.innerHTML = `🟡 <strong>Service Availability: Limited Routing</strong><br>Zip code <strong>${zipInput}</strong> is outside our core daily route, but we still cover your neighborhood. Call <a href="tel:7725213568" style="color: inherit; font-weight: 700;">(772) 521-3568</a> to coordinate a priority technician slot!`;
-    } else {
-        // Out of service area (Red light)
-        resultDiv.style.backgroundColor = "rgba(239, 68, 68, 0.08)";
-        resultDiv.style.border = "1px solid rgba(239, 68, 68, 0.2)";
-        resultDiv.style.color = "#EF4444";
-        resultDiv.innerHTML = `🔴 <strong>Service Availability: Out of Service Area</strong><br>Zip code <strong>${zipInput}</strong> is currently outside our service region. We only serve Martin, St. Lucie, and northern Palm Beach counties. If you believe this is in error, call <a href="tel:7725213568" style="color: inherit; font-weight: 700;">(772) 521-3568</a>.`;
-    }
-};
-
-
-/* ==========================================================================
-   Pool Temperature ROI & Heating Estimator (pool-heating.html)
-   ========================================================================== */
-window.calculatePoolROI = function() {
-    const poolGallonsEl = document.getElementById("pool-gallons");
-    const poolFrequencyEl = document.getElementById("pool-frequency");
-    const resultsDiv = document.getElementById("pool-roi-results");
-    
-    if (!poolGallonsEl || !poolFrequencyEl || !resultsDiv) return;
-
-    const gallons = parseInt(poolGallonsEl.value);
-    const months = parseInt(poolFrequencyEl.value);
-    
-    if (isNaN(gallons) || isNaN(months)) {
-        alert("Please select valid options.");
-        return;
-    }
-    
-    resultsDiv.style.display = "block";
-    
-    // Estimate cost models: COP pump is ~75% more energy efficient than propane gas
-    const gasMonthlyFactor = 0.015;  // Propane/gas multiplier per gallon
-    const pumpMonthlyFactor = 0.0035; // COP Heat pump multiplier per gallon
-    
-    const gasCost = gallons * gasMonthlyFactor;
-    const pumpCost = gallons * pumpMonthlyFactor;
-    const monthlySavings = gasCost - pumpCost;
-    const yearlySavings = monthlySavings * months;
-    
-    const poolPumpCostEl = document.getElementById("pool-pump-cost");
-    const poolGasCostEl = document.getElementById("pool-gas-cost");
-    const poolMonthlySavingsEl = document.getElementById("pool-monthly-savings");
-    const poolYearlySavingsEl = document.getElementById("pool-yearly-savings");
-
-    if (poolPumpCostEl) poolPumpCostEl.textContent = `$${pumpCost.toFixed(2)}`;
-    if (poolGasCostEl) poolGasCostEl.textContent = `$${gasCost.toFixed(2)}`;
-    if (poolMonthlySavingsEl) poolMonthlySavingsEl.textContent = `$${monthlySavings.toFixed(2)}`;
-    if (poolYearlySavingsEl) poolYearlySavingsEl.textContent = `$${yearlySavings.toFixed(2)}`;
-};
-
-
-/* ==========================================================================
-   Tab Switching in Contact Form (contact.html)
-   ========================================================================== */
-window.switchContactTab = function(event, tabId) {
-    const tabContainer = event.currentTarget.closest(".innovations-tab-container");
-    if (!tabContainer) return;
-    
-    // Toggle active headers & manage aria-selected
-    const buttons = tabContainer.querySelectorAll(".inno-tab-btn");
-    buttons.forEach(btn => {
-        btn.classList.remove("active");
-        btn.setAttribute('aria-selected', 'false');
-    });
-    event.currentTarget.classList.add("active");
-    event.currentTarget.setAttribute('aria-selected', 'true');
-    
-    // Toggle active panels
-    const panels = tabContainer.querySelectorAll(".inno-tab-panel");
-    panels.forEach(p => p.style.display = "none");
-    
-    const targetPanel = tabContainer.querySelector(`#${tabId}`);
-    if (targetPanel) {
-        targetPanel.style.display = "block";
-    }
-};
-
-
-/* ==========================================================================
-   System Diagnostic assessment runs (contact.html)
-   ========================================================================== */
-window.runDiagnosticAssessment = function() {
-    const checkedRadio = document.querySelector('input[name="ac-issue"]:checked');
-    if (!checkedRadio) {
-        alert("Please select an AC issue.");
-        return;
-    }
-    const selectedIssue = checkedRadio.value;
-    
-    const diagnosisTextEl = document.getElementById("diagnostic-assessment-text");
-    const wizardPane1 = document.getElementById("wizard-pane-1");
-    const wizardPane2 = document.getElementById("wizard-pane-2");
-    
-    if (!diagnosisTextEl || !wizardPane1 || !wizardPane2) return;
-    
-    let diagnosis = "";
-    if (selectedIssue === "warm-air") {
-        diagnosis = "Your system is turning on but not cooling, which typically indicates a refrigerant leak, a failed dual capacitor, or a compressor thermal lockout. We recommend shutting down the thermostat immediately to prevent compressor burn-out.";
-    } else if (selectedIssue === "no-power") {
-        diagnosis = "Complete power loss often points to a tripped breaker, a clogged condensate drain safety switch, or a blown low-voltage transformer fuse on the control board. A technician will inspect these safety locks.";
-    } else if (selectedIssue === "water-leak") {
-        diagnosis = "Water leakage indicates a clogged condensate drain line or a rusted primary drain pan. If left unaddressed, this can cause mold or severe ceiling water damage.";
-    } else if (selectedIssue === "loud-noise") {
-        diagnosis = "Loud noises indicate a failing outdoor fan motor, a loose blower assembly belt, or compressor valve damage. Shutting down the unit prevents mechanical component fracture.";
-    }
-    
-    diagnosisTextEl.innerHTML = diagnosis;
-    
-    // Hide Step 1 and Show Step 2 (prevents UI overlap)
-    wizardPane1.style.display = "none";
-    wizardPane2.style.display = "block";
-};
-
-window.resetDiagnosticWizard = function() {
-    const wizardPane1 = document.getElementById("wizard-pane-1");
-    const wizardPane2 = document.getElementById("wizard-pane-2");
-    
-    const wNameEl = document.getElementById("w-name");
-    const wPhoneEl = document.getElementById("w-phone");
-    
-    if (wNameEl) wNameEl.value = "";
-    if (wPhoneEl) wPhoneEl.value = "";
-    
-    // Reset wizard back to step 1
-    if (wizardPane1) wizardPane1.style.display = "block";
-    if (wizardPane2) wizardPane2.style.display = "none";
-};
-
-
-/* ==========================================================================
-   PREMIUM DYNAMIC VISUAL INTERACTIONS
-   ========================================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Scroll-Driven Navigation Blur
-    const header = document.querySelector(".header");
-    if (header) {
-        const handleScroll = () => {
-            if (window.scrollY > 30) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
-        };
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        handleScroll(); // Initial run on load
-    }
-
-    // 2. Interactive 3D Card Perspective Tilt
-    const tiltCards = document.querySelectorAll(".card-3d");
-    tiltCards.forEach(card => {
-        card.addEventListener("mousemove", e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const xc = rect.width / 2;
-            const yc = rect.height / 2;
-            
-            // Calculate tilt angle (max 10 degrees)
-            const rx = -(y - yc) / (yc / 10);
-            const ry = (x - xc) / (xc / 10);
-            
-            card.style.setProperty("--rx", rx.toFixed(2));
-            card.style.setProperty("--ry", ry.toFixed(2));
-        });
-
-        card.addEventListener("mouseleave", () => {
-            card.style.setProperty("--rx", "0");
-            card.style.setProperty("--ry", "0");
-        });
-    });
-
-    // 3. Scroll-Driven IntersectionObserver Reveal Scheduler
-    const reveals = document.querySelectorAll(".reveal-up, .reveal-scale, .reveal-slide-left, .reveal-slide-right");
-    if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    
-                    // Allocate GPU footprint transiently
-                    el.classList.add("animating");
-                    
-                    // Add delay if defined in data attributes
-                    const delay = el.dataset.delay || 0;
-                    el.style.setProperty("--delay", `${delay}ms`);
-                    
-                    // Activate animation frame
-                    requestAnimationFrame(() => {
-                        el.classList.add("active");
-                    });
-                    
-                    // Cleanup GPU trace when transition finishes
-                    const transitionEndHandler = () => {
-                        el.classList.remove("animating");
-                        el.removeEventListener("transitionend", transitionEndHandler);
-                    };
-                    el.addEventListener("transitionend", transitionEndHandler);
-                    
-                    observer.unobserve(el);
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: "0px 0px -40px 0px"
-        });
-
-        reveals.forEach(el => observer.observe(el));
-    } else {
-        // Fallback for older browsers
-        reveals.forEach(el => el.classList.add("active"));
-    }
-
-    // 4. Sliding Active Tab Indicators
-    const initializeSlidingTabs = () => {
-        const containers = document.querySelectorAll(".innovations-tab-container");
-        containers.forEach(container => {
-            const tabList = container.querySelector(".inno-tabs");
-            if (!tabList) return;
-
-            // Inject background pill markup if missing
-            let pillBg = tabList.querySelector(".tab-pill-background");
-            if (!pillBg) {
-                pillBg = document.createElement("div");
-                pillBg.className = "tab-pill-background";
-                tabList.appendChild(pillBg);
-                tabList.classList.add("tab-pill-container");
-            }
-
-            const buttons = tabList.querySelectorAll(".inno-tab-btn");
-            buttons.forEach(btn => {
-                btn.classList.add("tab-pill-btn");
-                btn.addEventListener("click", () => {
-                    // Update active class on button siblings
-                    buttons.forEach(b => b.classList.remove("active"));
-                    btn.classList.add("active");
-                    updatePillPosition(btn, pillBg, tabList);
-                });
-            });
-
-            // Set initial pill position based on active tab button
-            const activeBtn = tabList.querySelector(".inno-tab-btn.active") || buttons[0];
-            if (activeBtn) {
-                activeBtn.classList.add("active");
-                // Wait for styles/dimensions load
-                setTimeout(() => updatePillPosition(activeBtn, pillBg, tabList), 50);
-            }
-        });
-    };
-
-    const updatePillPosition = (activeBtn, pillBg, tabList) => {
-        const tabListRect = tabList.getBoundingClientRect();
-        const activeBtnRect = activeBtn.getBoundingClientRect();
-
-        // Calculate relative coordinates
-        const offsetLeft = activeBtnRect.left - tabListRect.left;
-        const width = activeBtnRect.width;
-
-        pillBg.style.transform = `translateX(${offsetLeft}px)`;
-        pillBg.style.width = `${width}px`;
-    };
-
-    initializeSlidingTabs();
-    
-    // Re-adjust pill width/offsets on screen resize
-    window.addEventListener("resize", () => {
-        const containers = document.querySelectorAll(".innovations-tab-container");
-        containers.forEach(container => {
-            const tabList = container.querySelector(".inno-tabs");
-            const pillBg = container.querySelector(".tab-pill-background");
-            const activeBtn = container.querySelector(".inno-tab-btn.active");
-            if (tabList && pillBg && activeBtn) {
-                updatePillPosition(activeBtn, pillBg, tabList);
-            }
-        });
-    });
-
-
-    // ==========================================================================
-    // 5. Interactive Before/After Coil Slider
-    // ==========================================================================
-    const initializeCoilSlider = () => {
-        const sliderContainer = document.querySelector(".comparison-slider-container");
-        if (!sliderContainer) return;
-
-        const afterImage = sliderContainer.querySelector(".comparison-image-after");
-        const handle = sliderContainer.querySelector(".comparison-handle");
-        
-        let isDragging = false;
-        let currentPercent = 50;
-
-        const setSliderPosition = (percent) => {
-            currentPercent = Math.max(0, Math.min(100, percent));
-            afterImage.style.width = `${currentPercent}%`;
-            handle.style.left = `${currentPercent}%`;
-            handle.setAttribute("aria-valuenow", Math.round(currentPercent));
-        };
-
-        const updateSlider = (clientX) => {
-            const rect = sliderContainer.getBoundingClientRect();
-            let position = ((clientX - rect.left) / rect.width) * 100;
-            setSliderPosition(position);
-        };
-
-        const startDragging = () => { isDragging = true; };
-        const stopDragging = () => { isDragging = false; };
-
-        // Mouse Events
-        handle.addEventListener("mousedown", startDragging);
-        window.addEventListener("mouseup", stopDragging);
-        window.addEventListener("mousemove", (e) => {
-            if (!isDragging) return;
-            updateSlider(e.clientX);
-        });
-
-        // Touch Events (Mobile)
-        handle.addEventListener("touchstart", startDragging, { passive: true });
-        window.addEventListener("touchend", stopDragging);
-        window.addEventListener("touchmove", (e) => {
-            if (!isDragging) return;
-            if (e.touches && e.touches[0]) {
-                updateSlider(e.touches[0].clientX);
-            }
-        });
-
-        // Keyboard navigation keys
-        handle.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowLeft") {
-                setSliderPosition(currentPercent - 5);
-                e.preventDefault();
-            } else if (e.key === "ArrowRight") {
-                setSliderPosition(currentPercent + 5);
-                e.preventDefault();
-            } else if (e.key === "Home") {
-                setSliderPosition(0);
-                e.preventDefault();
-            } else if (e.key === "End") {
-                setSliderPosition(100);
-                e.preventDefault();
-            }
-        });
-    };
-
-    initializeCoilSlider();
-
-
-    // ==========================================================================
-    // 6. "Warehouse on Wheels" Interactive Van Tour
-    // ==========================================================================
-    const initializeVanTour = () => {
-        const hotspots = document.querySelectorAll(".van-hotspot");
-        const titleEl = document.getElementById("van-detail-title");
-        const descEl = document.getElementById("van-detail-desc");
-        const panel = document.querySelector(".van-details-panel");
-
-        if (hotspots.length === 0 || !titleEl || !descEl || !panel) return;
-
-        const hotspotData = {
-            parts: {
-                title: "⚡ Core Replacement Parts",
-                desc: "We carry high-quality replacement parts on every truck, including dual run capacitors (35/5uF to 45/5uF), contactors, fan relays, and universal transformer modules. This ensures we can resolve 85% of common AC electrical issues right on the spot without leaving you in the heat to fetch parts."
-            },
-            refrigerant: {
-                title: "❄️ Refrigerant & Recovery Equipment",
-                desc: "Equipped with dedicated EPA-compliant refrigerant recovery tanks, dry-nitrogen pressure test manifolds, and full charges of R-410A and next-gen R-454B refrigerants. This allows us to run pressure audits, find condenser leaks, and recharge your cooling coils on the first visit."
-            },
-            filters: {
-                title: "💨 Indoor Air Quality Filters & Cleaners",
-                desc: "Stocked with standard pleated media filters (16x25 to 20x25 dimensions), drain line flush cartridges, condensate tablets, and UV lamp bulb upgrades. We resolve drain blockages and indoor air restrictions to restore smooth system airflow instantly."
-            },
-            tools: {
-                title: "🛠️ Diagnostic Tools & Recovery Pumps",
-                desc: "Loaded with Fieldpiece digital manifolds, digital clamp meters, vacuum pumps, and specialized coil fin combs. Carrying these high-end diagnostic sensors allows our veteran technicians to find thermal locks and electrical shorts with extreme accuracy."
-            }
-        };
-
-        hotspots.forEach(hs => {
-            hs.addEventListener("click", () => {
-                const target = hs.dataset.target;
-                const data = hotspotData[target];
-
-                if (data) {
-                    // Update active classes and aria-pressed attributes
-                    hotspots.forEach(h => {
-                        h.classList.remove("active");
-                        h.setAttribute("aria-pressed", "false");
-                    });
-                    hs.classList.add("active");
-                    hs.setAttribute("aria-pressed", "true");
-
-                    // Fade transition effect
-                    panel.style.opacity = "0";
-                    panel.style.transform = "translateY(5px)";
-
-                    setTimeout(() => {
-                        titleEl.textContent = data.title;
-                        descEl.textContent = data.desc;
-                        panel.style.opacity = "1";
-                        panel.style.transform = "translateY(0)";
-                    }, 150);
-                }
-            });
-        });
-    };
-
-    initializeVanTour();
-
-
-    // ==========================================================================
-    // 7. 50-Point Mission Checklist Dashboard
-    // ==========================================================================
-    const initializeChecklist = () => {
-        const tabButtons = document.querySelectorAll(".checklist-tab-btn");
-        const panels = document.querySelectorAll(".checklist-panel");
-        const items = document.querySelectorAll(".checklist-item");
-
-        const percentageEl = document.getElementById("chk-percentage");
-        const progressRing = document.getElementById("chk-ring-bar");
-
-        if (tabButtons.length === 0 || panels.length === 0 || items.length === 0 || !percentageEl || !progressRing) return;
-
-        // SVG Ring Circle configuration
-        const radius = 70;
-        const circumference = 2 * Math.PI * radius; // ~439.82 px
-        progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
-
-        // Checklist category tabs switcher
-        tabButtons.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const target = btn.dataset.target;
-
-                tabButtons.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-
-                panels.forEach(p => p.classList.remove("active"));
-                const targetPanel = document.getElementById(target);
-                if (targetPanel) targetPanel.classList.add("active");
-            });
-        });
-
-        // Setup checklist accessibility programmatically
-        items.forEach(item => {
-            item.setAttribute("tabindex", "0");
-            item.setAttribute("role", "checkbox");
-            const isChecked = item.classList.contains("checked");
-            item.setAttribute("aria-checked", isChecked ? "true" : "false");
-        });
-
-        // Item toggle checks
-        items.forEach(item => {
-            const toggleItem = () => {
-                const isChecked = item.getAttribute("aria-checked") === "true";
-                item.setAttribute("aria-checked", isChecked ? "false" : "true");
-                item.classList.toggle("checked");
-                updateProgress();
-            };
-
-            item.addEventListener("click", toggleItem);
-
-            item.addEventListener("keydown", (e) => {
-                if (e.key === " " || e.key === "Enter") {
-                    e.preventDefault(); // Prevents page scrolling with Space
-                    toggleItem();
-                }
-            });
-        });
-
-        const updateProgress = () => {
-            const totalItems = items.length;
-            const checkedItems = document.querySelectorAll(".checklist-item.checked").length;
-            const percentage = Math.round((checkedItems / totalItems) * 100);
-
-            // Update percentage text
-            percentageEl.textContent = `${percentage}%`;
-
-            // Update SVG Ring dashoffset
-            const offset = circumference - (percentage / 100) * circumference;
-            progressRing.style.strokeDashoffset = offset;
-
-            // Recalculate badge counts for each category tab dynamically
-            panels.forEach(panel => {
-                const panelId = panel.id;
-                const tabBtn = document.querySelector(`.checklist-tab-btn[data-target="${panelId}"]`);
-                if (tabBtn) {
-                    const badge = tabBtn.querySelector(".badge-count");
-                    const checkedInPanel = panel.querySelectorAll(".checklist-item.checked").length;
-                    const totalInPanel = panel.querySelectorAll(".checklist-item").length;
-                    
-                    if (badge) {
-                        badge.textContent = `${checkedInPanel}/${totalInPanel}`;
-                    }
-                }
-            });
-        };
-
-        // Run initial calculations
-        updateProgress();
-    };
-
-    initializeChecklist();
-
-
-    // ==========================================================================
-    // 8. Live Customer Reviews Spotlight Ticker
-    // ==========================================================================
-    const initializeReviewTicker = () => {
-        const slides = document.querySelectorAll(".ticker-slide");
-        const prevBtn = document.getElementById("ticker-prev");
-        const nextBtn = document.getElementById("ticker-next");
-
-        if (slides.length <= 1 || !prevBtn || !nextBtn) return;
-
-        let activeIndex = 0;
-        let timer = null;
-
-        const showSlide = (index) => {
-            slides.forEach(slide => slide.classList.remove("active"));
-            
-            // Handle wrap-around bounds
-            if (index < 0) {
-                activeIndex = slides.length - 1;
-            } else if (index >= slides.length) {
-                activeIndex = 0;
-            } else {
-                activeIndex = index;
-            }
-
-            slides[activeIndex].classList.add("active");
-        };
-
-        const nextSlide = () => {
-            showSlide(activeIndex + 1);
-        };
-
-        const prevSlide = () => {
-            showSlide(activeIndex - 1);
-        };
-
-        const resetTimer = () => {
-            if (timer) clearInterval(timer);
-            timer = setInterval(nextSlide, 6000); // Rotate every 6 seconds
-        };
-
-        // Navigation clicks
-        nextBtn.addEventListener("click", () => {
-            nextSlide();
-            resetTimer();
-        });
-
-        prevBtn.addEventListener("click", () => {
-            prevSlide();
-            resetTimer();
-        });
-
-        // Start auto rotation
-        resetTimer();
-    };
-
-    initializeReviewTicker();
-
-    // ==========================================================================
-    // 9. Floating AI Chat Assistant Widget
-    // ==========================================================================
-    const initializeChatWidget = () => {
-        const fab = document.getElementById("ac-chat-fab");
-        const widget = document.getElementById("ac-chat-widget");
-        const closeBtn = document.getElementById("chat-close-btn");
-        const wizardForm = document.getElementById("chat-wizard-form");
-        const messagesContainer = document.getElementById("chat-messages-container");
-        const inputBar = document.getElementById("chat-input-bar");
-        const userTextInput = document.getElementById("chat-user-text");
-        const sendBtn = document.getElementById("chat-send-btn");
-
-        if (!fab || !widget || !closeBtn || !wizardForm || !messagesContainer || !inputBar || !userTextInput || !sendBtn) {
-            return;
-        }
-
-        const serverlessUrl = "/.netlify/functions/chat-assistant";
-        let conversationHistory = [];
-
-        // Toggle widget visibility
-        fab.addEventListener("click", () => {
-            widget.classList.toggle("chat-hidden");
-            if (!widget.classList.contains("chat-hidden")) {
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
-        });
-
-        closeBtn.addEventListener("click", () => {
-            widget.classList.add("chat-hidden");
-        });
-
-        // Handle pre-qualification form submission
-        wizardForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById("chat-w-name").value.trim();
-            const city = document.getElementById("chat-w-city").value;
-            const issue = document.getElementById("chat-w-issue").value.trim();
-
-            if (!name || !city || !issue) return;
-
-            // Append user input summary visually into chat as a user bubble
-            appendMessage("user", `My name is ${name}. I am in ${city}. My AC issue: "${issue}"`);
-
-            // Hide the input form card
-            document.getElementById("chat-wizard-card").remove();
-
-            // Show loading typing dots
-            const loadingId = showLoading();
-
-            try {
-                const response = await fetch(serverlessUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "prequalify", name, city, issue }),
-                });
-
-                removeLoading(loadingId);
-
-                if (!response.ok) throw new Error("Failed to contact serverless handler.");
-                const data = await response.json();
-
-                if (data.success && data.briefing) {
-                    appendMessage("ai", data.briefing);
-                    
-                    // Add to history
-                    conversationHistory.push({ sender: "user", text: `Name: ${name}, City: ${city}, Issue: ${issue}` });
-                    conversationHistory.push({ sender: "ai", text: data.briefing });
-
-                    // Unlock interactive chat mode
-                    inputBar.classList.remove("chat-input-hidden");
-                    userTextInput.focus();
-                } else {
-                    appendMessage("ai", "I've logged your request for the dispatch desk, but hit a slight technical snag. How else can I assist you?");
-                }
-            } catch (err) {
-                removeLoading(loadingId);
-                console.error(err);
-                appendMessage("ai", "Thank you. Your dispatch details have been saved. Our technicians have been notified. Please call us at (772) 521-3568 for immediate same-day service.");
-            }
-        });
-
-        // Handle follow-up chat inputs
-        async function handleSend() {
-            const text = userTextInput.value.trim();
-            if (!text) return;
-
-            userTextInput.value = "";
-            appendMessage("user", text);
-
-            // Track user message in history
-            conversationHistory.push({ sender: "user", text });
-
-            const loadingId = showLoading();
-
-            try {
-                const response = await fetch(serverlessUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "chat", messages: conversationHistory }),
-                });
-
-                removeLoading(loadingId);
-
-                if (!response.ok) throw new Error("Connection failed.");
-                const data = await response.json();
-
-                if (data.success && data.reply) {
-                    appendMessage("ai", data.reply);
-                    conversationHistory.push({ sender: "ai", text: data.reply });
-                } else {
-                    appendMessage("ai", "I'm having trouble analyzing that message. Please try again or call our hotline.");
-                }
-            } catch (err) {
-                removeLoading(loadingId);
-                console.error(err);
-                appendMessage("ai", "I am currently offline. Please call us at (772) 521-3568 for emergency service.");
-            }
-        }
-
-        sendBtn.addEventListener("click", handleSend);
-        userTextInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") handleSend();
-        });
-
-        // Helper: Append a chat bubble
-        function appendMessage(sender, text) {
-            const msgDiv = document.createElement("div");
-            msgDiv.className = `message ${sender}`;
-            msgDiv.innerHTML = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:inherit;text-decoration:underline;">$1</a>').replace(/\n/g, '<br>');
-            messagesContainer.appendChild(msgDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // Helper: Show typing indicator
-        function showLoading() {
-            const loaderId = "loader-" + Date.now();
-            const loaderDiv = document.createElement("div");
-            loaderDiv.id = loaderId;
-            loaderDiv.className = "message ai";
-            loaderDiv.innerHTML = `
+window.__appJsRan=!0;function setSubmitState(r,n,c="Submitting..."){r&&(n?(r.disabled=!0,r.dataset.originalText=r.textContent,r.innerHTML=c):(r.disabled=!1,r.textContent=r.dataset.originalText||r.textContent))}function queueLeadOffline(r){return new Promise((n,c)=>{const d=indexedDB.open("acnow-offline-db",3);d.onupgradeneeded=u=>{const a=u.target.result;a.objectStoreNames.contains("leads")||a.createObjectStore("leads",{keyPath:"id",autoIncrement:!0}),a.objectStoreNames.contains("logs")||a.createObjectStore("logs",{keyPath:"id",autoIncrement:!0}),a.objectStoreNames.contains("specs")||a.createObjectStore("specs",{keyPath:"id",autoIncrement:!0}),a.objectStoreNames.contains("dead_letter")||a.createObjectStore("dead_letter",{keyPath:"id",autoIncrement:!0}),a.objectStoreNames.contains("diagnostics")||a.createObjectStore("diagnostics",{keyPath:"id",autoIncrement:!0})},d.onsuccess=u=>{const s=u.target.result.transaction(["leads","diagnostics"],"readwrite"),C=s.objectStore("leads"),T=s.objectStore("diagnostics");C.add({payload:r,retries:0,timestamp:Date.now()}),T.add({level:"info",message:"[PWA Client] Form submitted while offline. Lead saved to queue.",details:JSON.stringify(r),timestamp:Date.now()}),s.oncomplete=()=>{console.log("[PWA Client] Lead stored in IndexedDB successfully."),"serviceWorker"in navigator&&"SyncManager"in window?navigator.serviceWorker.ready.then(S=>S.sync.register("sync-leads")).then(()=>{console.log("[PWA Client] Background Sync ('sync-leads') registered."),n()}).catch(S=>{console.error("[PWA Client] Background Sync registration failed:",S),n()}):n()},s.onerror=()=>c(s.error)},d.onerror=u=>c(d.error)})}function logClientDiagnostic(r,n,c=null){const d=indexedDB.open("acnow-offline-db",3);d.onupgradeneeded=u=>{const a=u.target.result;a.objectStoreNames.contains("leads")||a.createObjectStore("leads",{keyPath:"id",autoIncrement:!0}),a.objectStoreNames.contains("logs")||a.createObjectStore("logs",{keyPath:"id",autoIncrement:!0}),a.objectStoreNames.contains("specs")||a.createObjectStore("specs",{keyPath:"id",autoIncrement:!0}),a.objectStoreNames.contains("dead_letter")||a.createObjectStore("dead_letter",{keyPath:"id",autoIncrement:!0}),a.objectStoreNames.contains("diagnostics")||a.createObjectStore("diagnostics",{keyPath:"id",autoIncrement:!0})},d.onsuccess=u=>{const a=u.target.result;if(!a.objectStoreNames.contains("diagnostics"))return;const C=a.transaction("diagnostics","readwrite").objectStore("diagnostics");C.add({level:r,message:`[PWA Client] ${n}`,details:c?c.message||String(c):null,timestamp:Date.now()});const T=C.count();T.onsuccess=()=>{if(T.result>100){const S=C.openCursor();let E=0;const L=T.result-100;S.onsuccess=p=>{const y=p.target.result;y&&E<L&&(y.delete(),E++,y.continue())}}}}}async function submitFormWithSync(r,n,c,d){r.preventDefault();const u=n.querySelector("button[type='submit']");if(setSubmitState(u,!0),!navigator.onLine){console.warn("[PWA Client] Network offline. Redirecting submission to IndexedDB."),await queueLeadOffline(c),alert("You are currently offline. Your service request has been saved and will submit automatically as soon as your connection returns."),n.reset(),setSubmitState(u,!1),d&&d();return}try{const a=await fetch("/.netlify/functions/submit-lead",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(c)});let s;try{s=await a.json()}catch{throw new Error("Invalid server response format.")}a.status===200&&s.success?(n.reset(),d&&d()):alert(`Validation Error: ${s.error||s.message||"Please check your inputs and try again."}`)}catch(a){console.error("[PWA Client] Submission failed. Checking background sync capabilities:",a),await queueLeadOffline(c),alert("Network connection issue. Your request has been queued offline and will automatically submit once connectivity returns."),n.reset(),d&&d()}finally{setSubmitState(u,!1)}}async function configurePushNotifications(){if(!("serviceWorker"in navigator)||!("PushManager"in window)){console.warn("[PWA Client] Push messaging is not supported in this browser.");return}try{const r=await Notification.requestPermission();if(console.log("[PWA Client] Push Notification permission:",r),r==="granted"){const n=await navigator.serviceWorker.ready;let c=await n.pushManager.getSubscription();c||(c=await n.pushManager.subscribe({userVisibleOnly:!0,applicationServerKey:urlBase64ToUint8Array("BI7Yn7d6d54s321dFGHJKLuio9876543210qwertyuiopasdfghjklzxcvbnm1234567890qwertyuiop")}),console.log("[PWA Client] Push subscription created:",c),await fetch("/.netlify/functions/save-push-subscription",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(c)}).catch(()=>console.log("[PWA Client] Failed to register push subscription on mock endpoint.")))}}catch(r){console.error("[PWA Client] Push configuration failed:",r)}}function urlBase64ToUint8Array(r){const n="=".repeat((4-r.length%4)%4),c=(r+n).replace(/\-/g,"+").replace(/_/g,"/"),d=window.atob(c),u=new Uint8Array(d.length);for(let a=0;a<d.length;++a)u[a]=d.charCodeAt(a);return u}document.addEventListener("DOMContentLoaded",()=>{function r(){const S=document.cookie.match(/(?:^|; )nf_city=([^;]*)/);if(!S)return;const E=decodeURIComponent(S[1]);console.log(`[Geotargeting] Detected nf_city cookie: ${E}`);const L=window.location.pathname.endsWith("team-portal.html")||window.location.pathname.endsWith("members.html"),y={Stuart:{headlineRes:"Keep Your Family Cool in Stuart",headlineCom:"Manage Your Stuart Complex",serving:"Serving Palm City, Stuart & Jensen Beach.",phone:"(772) 521-3568",phoneHref:"tel:7725213568"},"Palm City":{headlineRes:"Keep Your Family Cool in Palm City",headlineCom:"Manage Your Palm City Commercial Properties",serving:"Serving Palm City, Stuart & Hobe Sound.",phone:"(772) 521-3568",phoneHref:"tel:7725213568"},Jupiter:{headlineRes:"Jupiter's Premier AC Repair",headlineCom:"Commercial HVAC in Jupiter & Tequesta",serving:"Serving Jupiter, Tequesta & Hobe Sound.",phone:"(772) 521-3568",phoneHref:"tel:7725213568"},"Port St. Lucie":{headlineRes:"PSL's Certified HVAC Experts",headlineCom:"Rooftop Commercial Units in PSL",serving:"Serving Port St. Lucie, Fort Pierce & Lakewood Park.",phone:"(772) 521-3568",phoneHref:"tel:7725213568"},Default:{headlineRes:"Keep Your Family Cool",headlineCom:"Manage Your Complex",serving:"Serving Stuart, Palm City, Port St. Lucie & the Treasure Coast.",phone:"(772) 521-3568",phoneHref:"tel:7725213568"}}[E];if(!y)return;L||(document.title=`A/C Repair & HVAC Services in ${E==="Default"?"Florida":E+", FL"} | A/C Now LLC`);const k=document.querySelector("h1.visually-hidden");k&&(k.textContent=`A/C Now LLC \u2014 AC Repair & HVAC Service in ${E==="Default"?"Florida":E+", FL"} | Same-Day | 24/7 Emergency`);const R=document.getElementById("res-side-headline");R&&(R.textContent=y.headlineRes);const D=document.getElementById("com-side-headline");D&&(D.textContent=y.headlineCom);const _=document.getElementById("serving-areas-text");if(_&&(_.textContent=y.serving),y.phone!=="(772) 521-3568"){document.querySelectorAll('a[href*="7725213568"]').forEach(O=>{O.href=y.phoneHref,O.textContent.includes("(772) 521-3568")&&(O.textContent=O.textContent.replace("(772) 521-3568",y.phone))});const N=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,!1);let F;for(;F=N.nextNode();)F.nodeValue.includes("(772) 521-3568")&&(F.nodeValue=F.nodeValue.replace("(772) 521-3568",y.phone))}}r();function n(){if(!(localStorage.getItem("acnow_member")==="true"))return;const E=document.querySelector(".header .logo");if(E&&!document.querySelector(".logged-in-badge")){const y=document.createElement("span");y.className="logged-in-badge",y.innerHTML='<span class="pulse-dot"></span>\u2605 Member Active',E.appendChild(y)}const L=document.querySelector(".top-bar-item.highlight");L&&(L.innerHTML='<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Welcome Back, Member | Priority Hotline Active'),document.querySelectorAll(".btn-primary, .sticky-cta-btn").forEach(y=>{y.style.boxShadow="0 0 15px rgba(255, 199, 44, 0.4)",y.style.border="1px solid var(--gold)"})}n();const c=document.querySelector(".header");function d(){window.scrollY>40?c.classList.add("scrolled"):c.classList.remove("scrolled")}c&&(window.addEventListener("scroll",d,{passive:!0}),d());const u=document.querySelectorAll(".reveal");if("IntersectionObserver"in window){const S=new IntersectionObserver((E,L)=>{E.forEach(p=>{if(p.isIntersecting){const y=p.target;requestAnimationFrame(()=>{y.classList.add("animating"),requestAnimationFrame(()=>{y.classList.add("active")})}),y.addEventListener("transitionend",()=>{y.classList.remove("animating")},{once:!0}),L.unobserve(y)}})},{threshold:.1,rootMargin:"0px 0px -40px 0px"});u.forEach(E=>S.observe(E))}else u.forEach(S=>S.classList.add("active"));const a=document.getElementById("primary-nav"),s=document.getElementById("hamburger-btn");if(a&&s){let p=function(){a.classList.remove("active"),s.setAttribute("aria-expanded","false"),s.textContent="\u2630",document.body.style.overflow=""},y=function(){a.classList.add("active"),s.setAttribute("aria-expanded","true"),s.textContent="\u2715",document.body.style.overflow="hidden",E&&setTimeout(()=>E.focus(),50)};var C=p,T=y;const S=a.querySelectorAll("a[href], button"),E=S[0],L=S[S.length-1];s.removeAttribute("onclick"),s.setAttribute("aria-expanded","false"),s.addEventListener("click",k=>{k.stopPropagation(),a.classList.contains("active")?p():y()}),a.addEventListener("click",k=>{k.target.closest(".nav-link")&&p()}),document.addEventListener("click",k=>{a.classList.contains("active")&&!a.contains(k.target)&&!s.contains(k.target)&&p()}),document.addEventListener("keydown",k=>{k.key==="Escape"&&a.classList.contains("active")&&(p(),s.focus())}),a.addEventListener("keydown",k=>{a.classList.contains("active")&&k.key==="Tab"&&(k.shiftKey?(document.activeElement===E||document.activeElement===a)&&(s.focus(),k.preventDefault()):document.activeElement===L&&(s.focus(),k.preventDefault()))}),s.addEventListener("keydown",k=>{k.key==="Tab"&&a.classList.contains("active")&&(k.shiftKey?L&&(L.focus(),k.preventDefault()):E&&(E.focus(),k.preventDefault()))})}}),window.switchInnoTab=function(r,n){const c=r.currentTarget.closest(".innovations-tab-container");if(!c)return;c.querySelectorAll(".inno-tab-btn").forEach(s=>{s.classList.remove("active"),s.setAttribute("aria-selected","false"),s.setAttribute("tabindex","0")}),r.currentTarget.classList.add("active"),r.currentTarget.setAttribute("aria-selected","true"),r.currentTarget.setAttribute("tabindex","0"),c.querySelectorAll(".inno-tab-panel").forEach(s=>s.classList.remove("active"));const a=c.querySelector(`#${n}`);a&&(a.classList.add("active"),a.focus())},window.checkZipAvailability=function(){const r=document.getElementById("zip-input"),n=document.getElementById("zip-result");if(!r||!n)return;const c=r.value.trim();if(!c||!/^\d{5}$/.test(c)){alert("Please enter a valid 5-digit zip code.");return}n.style.display="block";const u=["34952","34953","34957","34981","34982","34983","34984","34986","34987","34994","34995","34996","34997","34990","33458","33469","33477","33478","34945","34946","34947","34950"],a=/^(349\d{2}|334\d{2})$/;u.includes(c)?(n.style.backgroundColor="rgba(11, 122, 83, 0.08)",n.style.border="1px solid rgba(11, 122, 83, 0.2)",n.style.color="#0B7A53",n.innerHTML=`\u{1F7E2} <strong>Service Availability: Green Light!</strong><br>We have active technicians routing in zip code <strong>${c}</strong> today. Next dispatch slot available between 1:00 PM - 3:00 PM. Call <a href="tel:7725213568" style="color: inherit; font-weight: 700;">(772) 521-3568</a> to secure this slot immediately!`):a.test(c)?(n.style.backgroundColor="rgba(148, 82, 3, 0.08)",n.style.border="1px solid rgba(148, 82, 3, 0.2)",n.style.color="#945203",n.innerHTML=`\u{1F7E1} <strong>Service Availability: Limited Routing</strong><br>Zip code <strong>${c}</strong> is outside our core daily route, but we still cover your neighborhood. Call <a href="tel:7725213568" style="color: inherit; font-weight: 700;">(772) 521-3568</a> to coordinate a priority technician slot!`):(n.style.backgroundColor="rgba(194, 42, 54, 0.08)",n.style.border="1px solid rgba(194, 42, 54, 0.2)",n.style.color="#C22A36",n.innerHTML=`\u{1F534} <strong>Service Availability: Out of Service Area</strong><br>Zip code <strong>${c}</strong> is currently outside our service region. We only serve Martin, St. Lucie, and northern Palm Beach counties. If you believe this is in error, call <a href="tel:7725213568" style="color: inherit; font-weight: 700;">(772) 521-3568</a>.`)},window.calculatePoolROI=function(){const r=document.getElementById("pool-gallons"),n=document.getElementById("pool-frequency"),c=document.getElementById("pool-roi-results");if(!r||!n||!c)return;const d=parseInt(r.value)||0,u=parseInt(n.value)||0;if(d<=0||u<=0){alert("Please select valid options.");return}c.style.display="block";const a=82,s=68,C=a-s,T=6,S=.45,E=.15,L=3.5,p=91500,y=.82,D=d/(4.5*7.48)*T*C*24*S*30;let _="",q=0,N=0;d<=12e3?(_="Small Pool / Spa (Class 1)",q=75e3,N=5.8):d<=2e4?(_="Medium Pool (Class 2)",q=11e4,N=6.2):d<=28e3?(_="Large Pool (Class 3)",q=12e4,N=6.4):(_="Estate / Commercial (Class 4)",q=14e4,N=6.5);const F=Math.max(1,N-.073*(80-s)),O=q*Math.max(.1,1-.0117*(80-s)),t=D/(F*3412)*E,l=D/(p*y)*L,g=Math.max(0,l-t),h=g*u,m=document.getElementById("pool-pump-cost"),f=document.getElementById("pool-gas-cost"),v=document.getElementById("pool-monthly-savings"),w=document.getElementById("pool-yearly-savings");m&&(m.textContent=`$${t.toFixed(2)}`),f&&(f.textContent=`$${l.toFixed(2)}`),v&&(v.textContent=`$${g.toFixed(2)}`),w&&(w.textContent=`$${h.toFixed(2)}`);let i=document.getElementById("pool-roi-breakdown");i||(i=document.createElement("div"),i.id="pool-roi-breakdown",i.style.marginTop="20px",i.style.padding="12px",i.style.borderTop="1px solid rgba(255,255,255,0.08)",i.style.fontSize="13px",i.style.color="#94A3B8",i.style.textAlign="center",i.style.lineHeight="1.6",c.appendChild(i)),i.innerHTML=`
+        <span style="color: var(--white); font-weight: 600;">System Recommendation & Climate Profile</span><br>
+        Recommended Unit: <strong>${_}</strong> (Nominal ${q.toLocaleString()} BTU)<br>
+        Est. Operating COP: <strong style="color: #60A5FA;">${F.toFixed(2)}</strong> (vs. 0.82 Gas Heater efficiency)<br>
+        Effective Heating Output: <strong>${Math.round(O).toLocaleString()} BTU/hr</strong> (at ${s}\xB0F Air)<br>
+        <span style="font-size: 11px; color: #64748B; display: block; margin-top: 4px;">*Estimates assume maintaining ${a}\xB0F pool temp during Florida winter (average air temp ${s}\xB0F) with standard cover usage.</span>
+    `},window.switchContactTab=function(r,n){const c=r.currentTarget.closest(".contact-form-panel")||r.currentTarget.closest(".innovations-tab-container");if(!c)return;c.querySelectorAll(".inno-tab-btn").forEach(s=>{s.classList.remove("active"),s.setAttribute("aria-selected","false"),s.setAttribute("tabindex","0")}),r.currentTarget.classList.add("active"),r.currentTarget.setAttribute("aria-selected","true"),r.currentTarget.setAttribute("tabindex","0"),c.querySelectorAll(".inno-tab-panel").forEach(s=>{s.classList.remove("active"),s.style.display="none"});const a=c.querySelector(`#${n}`);a&&(a.classList.add("active"),a.style.display="block",a.focus())},window.runDiagnosticAssessment=function(){const r=document.querySelector('input[name="ac-issue"]:checked');if(!r){alert("Please select an AC issue.");return}const n=r.value,c=document.getElementById("diagnostic-assessment-text"),d=document.getElementById("wizard-pane-1"),u=document.getElementById("wizard-pane-2");if(!c||!d||!u)return;let a="";n==="warm-air"?a="Your system is turning on but not cooling, which typically indicates a refrigerant leak, a failed dual capacitor, or a compressor thermal lockout. We recommend shutting down the thermostat immediately to prevent compressor burn-out.":n==="no-power"?a="Complete power loss often points to a tripped breaker, a clogged condensate drain safety switch, or a blown low-voltage transformer fuse on the control board. A technician will inspect these safety locks.":n==="water-leak"?a="Water leakage indicates a clogged condensate drain line or a rusted primary drain pan. If left unaddressed, this can cause mold or severe ceiling water damage.":n==="loud-noise"&&(a="Loud noises indicate a failing outdoor fan motor, a loose blower assembly belt, or compressor valve damage. Shutting down the unit prevents mechanical component fracture."),c.innerHTML=a,d.style.display="none",u.style.display="block"},window.resetDiagnosticWizard=function(){const r=document.getElementById("wizard-pane-1"),n=document.getElementById("wizard-pane-2"),c=document.getElementById("w-name"),d=document.getElementById("w-phone");c&&(c.value=""),d&&(d.value=""),r&&(r.style.display="block"),n&&(n.style.display="none")};const throttle=(r,n=100)=>{let c;return function(){const d=arguments,u=this;c||(r.apply(u,d),c=!0,setTimeout(()=>c=!1,n))}};document.addEventListener("DOMContentLoaded",()=>{const r=document.querySelector(".header");if(r){const e=()=>{window.scrollY>30?r.classList.add("scrolled"):r.classList.remove("scrolled")};window.addEventListener("scroll",throttle(e,80),{passive:!0}),e()}document.querySelectorAll(".card-3d").forEach(e=>{let t=null;e.addEventListener("mouseenter",()=>{t=e.getBoundingClientRect()}),e.addEventListener("mousemove",o=>{t||(t=e.getBoundingClientRect());const l=o.clientX-t.left,g=o.clientY-t.top,h=t.width/2,m=t.height/2,f=-(g-m)/(m/10),v=(l-h)/(h/10);e.style.setProperty("--rx",f.toFixed(2)),e.style.setProperty("--ry",v.toFixed(2))}),e.addEventListener("mouseleave",()=>{t=null,e.style.setProperty("--rx","0"),e.style.setProperty("--ry","0")})});const c=document.querySelectorAll(".reveal-up, .reveal-scale, .reveal-slide-left, .reveal-slide-right");if("IntersectionObserver"in window){const e=new IntersectionObserver(t=>{t.forEach(o=>{if(o.isIntersecting){const l=o.target;l.classList.add("animating");const g=l.dataset.delay||0;l.style.setProperty("--delay",`${g}ms`),requestAnimationFrame(()=>{l.classList.add("active")});const h=()=>{l.classList.remove("animating"),l.removeEventListener("transitionend",h)};l.addEventListener("transitionend",h),e.unobserve(l)}})},{threshold:.1,rootMargin:"0px 0px -40px 0px"});c.forEach(t=>e.observe(t))}else c.forEach(e=>e.classList.add("active"));const d=()=>{document.querySelectorAll(".innovations-tab-container").forEach(t=>{const o=t.querySelector(".inno-tabs");if(!o)return;let l=o.querySelector(".tab-pill-background");l||(l=document.createElement("div"),l.className="tab-pill-background",o.appendChild(l),o.classList.add("tab-pill-container"));const g=o.querySelectorAll(".inno-tab-btn");g.forEach(m=>{m.classList.add("tab-pill-btn"),m.addEventListener("click",()=>{g.forEach(f=>{f.classList.remove("active"),f.setAttribute("aria-selected","false"),f.setAttribute("tabindex","0")}),m.classList.add("active"),m.setAttribute("aria-selected","true"),m.setAttribute("tabindex","0"),u(m,l,o)})});const h=o.querySelector(".inno-tab-btn.active")||g[0];h&&(h.classList.add("active"),h.setAttribute("aria-selected","true"),h.setAttribute("tabindex","0"),g.forEach(m=>{m!==h&&(m.setAttribute("aria-selected","false"),m.setAttribute("tabindex","0"))}),setTimeout(()=>u(h,l,o),50))})},u=(e,t,o)=>{const l=o.getBoundingClientRect(),g=e.getBoundingClientRect(),h=g.left-l.left,m=g.width;t.style.transform=`translateX(${h}px)`,t.style.width=`${m}px`};d(),window.addEventListener("resize",()=>{document.querySelectorAll(".innovations-tab-container").forEach(t=>{const o=t.querySelector(".inno-tabs"),l=t.querySelector(".tab-pill-background"),g=t.querySelector(".inno-tab-btn.active");o&&l&&g&&u(g,l,o)})}),(()=>{const e=document.querySelectorAll(".ticker-slide"),t=document.getElementById("ticker-prev"),o=document.getElementById("ticker-next");if(e.length<=1||!t||!o)return;let l=0,g=null;const h=w=>{e.forEach(i=>i.classList.remove("active")),w<0?l=e.length-1:w>=e.length?l=0:l=w,e[l].classList.add("active")},m=()=>{h(l+1)},f=()=>{h(l-1)},v=()=>{g&&clearInterval(g),g=setInterval(m,6e3)};o.addEventListener("click",()=>{m(),v()}),t.addEventListener("click",()=>{f(),v()}),v()})(),(()=>{const e=localStorage.getItem("acnow_phase")||"1",t=document.getElementById("ac-chat-fab");if(e!=="2"){t&&(t.style.display="none");return}const o=document.getElementById("ac-chat-widget"),l=document.getElementById("chat-close-btn"),g=document.getElementById("chat-wizard-form"),h=document.getElementById("chat-messages-container"),m=document.getElementById("chat-input-bar"),f=document.getElementById("chat-user-text"),v=document.getElementById("chat-send-btn");if(!t||!o||!l||!g||!h||!m||!f||!v)return;const w="/.netlify/functions/chat-assistant";let i=[],I=null,x=!1,P=!1;const V=3e3,W=A=>{A.button&&A.button!==0||(x=!0,P=!1,t.classList.remove("shake"),I=setTimeout(()=>{x&&(P=!0,t.classList.add("shake"),navigator.vibrate&&navigator.vibrate([100,50,100]),window.ComfortAudio&&typeof window.ComfortAudio.playTick=="function"&&window.ComfortAudio.playTick())},V))},j=A=>{x&&(x=!1,clearTimeout(I),P?(t.classList.remove("shake"),navigator.vibrate&&navigator.vibrate(200),typeof window.showToast=="function"&&window.showToast("Technician ID detected. Redirecting to Staff Portal...","success"),setTimeout(()=>{window.location.href="team-portal.html"},800)):t.classList.remove("shake"))};t.addEventListener("mousedown",W),t.addEventListener("touchstart",W,{passive:!0}),window.addEventListener("mouseup",j),window.addEventListener("touchend",j),t.addEventListener("mouseleave",j),t.addEventListener("click",A=>{if(P){A.preventDefault(),A.stopPropagation(),P=!1;return}o.classList.toggle("chat-hidden"),o.classList.contains("chat-hidden")||(h.scrollTop=h.scrollHeight)}),l.addEventListener("click",()=>{o.classList.add("chat-hidden")}),g.addEventListener("submit",async A=>{A.preventDefault();const B=document.getElementById("chat-w-name").value.trim(),$=document.getElementById("chat-w-city").value,z=document.getElementById("chat-w-issue").value.trim(),G=document.getElementById("chat-w-phone").value.trim(),Y=document.getElementById("chat-w-email").value.trim();if(!B||!$||!z||!G||!Y)return;const X=`${z} [Client Contact - Phone: ${G}, Email: ${Y}]`;H("user",`My name is ${B}. I am in ${$}. Phone: ${G}. Email: ${Y}. Issue: "${z}"`),document.getElementById("chat-wizard-card").remove();const Q=b();try{const J=await fetch(w,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"prequalify",name:B,city:$,issue:X,phone:G,email:Y})});if(M(Q),!J.ok)throw new Error("Failed to contact serverless handler.");const K=await J.json();K.success&&K.briefing?(H("ai",K.briefing),i.push({sender:"user",text:`Name: ${B}, City: ${$}, Phone: ${G}, Email: ${Y}, Issue: ${z}`}),i.push({sender:"ai",text:K.briefing}),m.classList.remove("chat-input-hidden"),f.focus()):H("ai","I've logged your request for the dispatch desk, but hit a slight technical snag. How else can I assist you?")}catch(J){M(Q),console.error(J),H("ai","We encountered a transmission error sending your details to the dispatch system. Please call us directly at (772) 521-3568 so Chris or Sean can book your appointment immediately!")}});async function U(){const A=f.value.trim();if(!A)return;f.value="",H("user",A),i.push({sender:"user",text:A});const B=b();try{const $=await fetch(w,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"chat",messages:i})});if(M(B),!$.ok)throw new Error("Connection failed.");const z=await $.json();z.success&&z.reply?(H("ai",z.reply),i.push({sender:"ai",text:z.reply})):H("ai","I'm having trouble analyzing that message. Please try again or call our hotline.")}catch($){M(B),console.error($),H("ai","I am currently offline. Please call us at (772) 521-3568 for emergency service.")}}v.addEventListener("click",U),f.addEventListener("keypress",A=>{A.key==="Enter"&&U()});function H(A,B){const $=document.createElement("div");$.className=`message ${A}`,$.innerHTML=B.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" style="color:inherit;text-decoration:underline;">$1</a>').replace(/\n/g,"<br>"),h.appendChild($),h.scrollTop=h.scrollHeight}function b(){const A="loader-"+Date.now(),B=document.createElement("div");return B.id=A,B.className="message ai",B.innerHTML=`
                 <div class="typing-dots">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-            `;
-            messagesContainer.appendChild(loaderDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            return loaderId;
-        }
-
-        // Helper: Remove typing indicator
-        function removeLoading(id) {
-            const loader = document.getElementById(id);
-            if (loader) loader.remove();
-        }
-    };
-
-    initializeChatWidget();
-
-    // ==========================================================================
-    // 10. 3D Digital Thermostat Interactive Widget
-    // ==========================================================================
-    const initializeThermostatWidget = () => {
-        let targetTemp = 72;
-        const minTemp = 55;
-        const maxTemp = 85;
-
-        const card = document.getElementById('thermostat-card');
-        const dial = document.getElementById('dial-outer');
-        const dialRing = document.getElementById('dial-ring');
-        const dialTick = document.getElementById('dial-tick');
-        const tempDisplay = document.getElementById('temp-val');
-        const progressBar = document.getElementById('progress-bar');
-        const statusText = document.getElementById('status-text');
-
-        const btnCool = document.getElementById('btn-cool');
-        const btnHeat = document.getElementById('btn-heat');
-        const btnEco = document.getElementById('btn-eco');
-
-        if (!card || !dial || !dialRing || !dialTick || !tempDisplay || !progressBar || !statusText || !btnCool || !btnHeat || !btnEco) {
-            return;
-        }
-
-        let systemMode = 'cool'; // cool, heat, eco
-        let isDragging = false;
-        let centerX, centerY;
-        const strokeCircumference = 2 * Math.PI * 75; // Radius = 75
-
-        function updateUI() {
-            // 1. Update text display
-            tempDisplay.textContent = targetTemp;
-
-            // Update ARIA values
-            dial.setAttribute('aria-valuenow', targetTemp);
-            dial.setAttribute('aria-valuetext', `${targetTemp} degrees Fahrenheit`);
-
-            // 2. Map Temp values to Hue
-            const tempPercent = (targetTemp - minTemp) / (maxTemp - minTemp);
-            let hue = 210 - (tempPercent * 200); // 210 (Cyan) down to 10 (Red)
-            
-            if (systemMode === 'eco') {
-                hue = 135; // Green
-            }
-
-            card.style.setProperty('--temp-glow', `hsla(${hue}, 95%, 50%, 0.15)`);
-            card.style.setProperty('--temp-color', `hsl(${hue}, 100%, 60%)`);
-
-            // 3. Update status HUD text
-            if (systemMode === 'cool') {
-                statusText.textContent = targetTemp < 74 ? 'COOLING SYSTEM ACTIVE' : 'STAGE 1 CLIMATE COMFORT';
-                statusText.style.color = 'hsl(200, 100%, 60%)';
-            } else if (systemMode === 'heat') {
-                statusText.textContent = targetTemp > 68 ? 'HEATING CORE ENGAGED' : 'STANDBY MODE';
-                statusText.style.color = 'hsl(10, 100%, 60%)';
-            } else {
-                statusText.textContent = 'ECO SAVINGS ACTIVE';
-                statusText.style.color = 'hsl(135, 100%, 60%)';
-            }
-
-            // 4. Update SVG progress circle
-            const progressPercent = tempPercent * 0.75; // cap at 75% for bottom cutout gap
-            const strokeOffset = strokeCircumference - (progressPercent * strokeCircumference);
-            progressBar.style.strokeDashoffset = strokeOffset;
-
-            // 5. Rotate indicator notch
-            const tickRotation = -135 + (tempPercent * 270);
-            dialTick.style.transform = `rotate(${tickRotation}deg)`;
-            dialRing.style.transform = `rotate(${tickRotation}deg)`;
-        }
-
-        // Initialize UI State
-        updateUI();
-
-        // Drag handlers
-        function startDrag(e) {
-            isDragging = true;
-            const rect = dial.getBoundingClientRect();
-            centerX = rect.left + rect.width / 2;
-            centerY = rect.top + rect.height / 2;
-            if (e.cancelable && e.type !== 'touchstart') e.preventDefault();
-        }
-
-        function drag(e) {
-            if (!isDragging) return;
-
-            let clientX, clientY;
-            if (e.touches && e.touches[0]) {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            } else {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
-
-            const dx = clientX - centerX;
-            const dy = clientY - centerY;
-            const angleRad = Math.atan2(dy, dx);
-            let angleDeg = angleRad * (180 / Math.PI);
-            
-            let normalizedAngle = angleDeg + 90;
-            if (normalizedAngle < 0) {
-                normalizedAngle += 360;
-            }
-
-            let percentValue = 0;
-            if (normalizedAngle <= 135) {
-                percentValue = (normalizedAngle + 135) / 270;
-            } else if (normalizedAngle >= 225) {
-                percentValue = (normalizedAngle - 225) / 270;
-            } else {
-                percentValue = normalizedAngle > 180 ? 0 : 1;
-            }
-
-            percentValue = Math.max(0, Math.min(1, percentValue));
-            const calculatedTemp = Math.round(minTemp + percentValue * (maxTemp - minTemp));
-            
-            if (calculatedTemp !== targetTemp) {
-                targetTemp = calculatedTemp;
-                updateUI();
-            }
-        }
-
-        function stopDrag() {
-            isDragging = false;
-        }
-
-        // Attach event listeners
-        dial.addEventListener('mousedown', startDrag);
-        window.addEventListener('mousemove', drag);
-        window.addEventListener('mouseup', stopDrag);
-
-        dial.addEventListener('touchstart', startDrag, { passive: true });
-        window.addEventListener('touchmove', drag, { passive: false });
-        window.addEventListener('touchend', stopDrag);
-
-        // Keyboard navigation
-        dial.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
-                e.preventDefault();
-                if (targetTemp < maxTemp) {
-                    targetTemp++;
-                    updateUI();
-                }
-            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
-                e.preventDefault();
-                if (targetTemp > minTemp) {
-                    targetTemp--;
-                    updateUI();
-                }
-            }
-        });
-
-        // Mode switches
-        function setMode(mode) {
-            systemMode = mode;
-            btnCool.classList.remove('active');
-            btnHeat.classList.remove('active');
-            btnEco.classList.remove('active');
-
-            if (mode === 'cool') btnCool.classList.add('active');
-            if (mode === 'heat') btnHeat.classList.add('active');
-            if (mode === 'eco') btnEco.classList.add('active');
-
-            updateUI();
-        }
-
-        btnCool.addEventListener('click', () => setMode('cool'));
-        btnHeat.addEventListener('click', () => setMode('heat'));
-        btnEco.addEventListener('click', () => setMode('eco'));
-
-        // Parallax hover tilt
-        const hoverArea = document.querySelector('.smart-climate-section');
-        if (hoverArea) {
-            hoverArea.addEventListener('mousemove', (e) => {
-                const width = window.innerWidth;
-                const height = window.innerHeight;
-                const mouseX = (e.clientX / width) - 0.5;
-                const mouseY = (e.clientY / height) - 0.5;
+            `,h.appendChild(B),h.scrollTop=h.scrollHeight,A}function M(A){const B=document.getElementById(A);B&&B.remove()}})();const C="/.netlify/functions/submit-lead",T=document.getElementById("hp-general-contact-form");T&&T.addEventListener("submit",e=>{const o=document.getElementById("name").value.trim().split(" "),l=o[0]||"",g=o.slice(1).join(" ")||"Customer",h={fname:l,lname:g,tel:document.getElementById("phone").value.trim(),email:document.getElementById("email").value.trim(),city:document.getElementById("city").value.trim(),message:`[Service Requested: ${document.getElementById("service").value}] ${document.getElementById("message").value.trim()}`,honeypot:document.getElementById("honeypot").value};submitFormWithSync(e,T,h,()=>{alert("Estimate request submitted successfully! Chris or Sean will contact you shortly."),configurePushNotifications()})});const S=document.getElementById("contact-general-form");S&&S.addEventListener("submit",e=>{const o=document.getElementById("fullname_contact").value.trim().split(" "),l=o[0]||"",g=o.slice(1).join(" ")||"Customer",h=S.querySelector("input[name='reserved_appointment_slot']"),m=h?h.value:"None",f=document.getElementById("message").value.trim(),v=m!=="None"&&m!==""?`[Reserved Slot] ${m} | [Message] ${f}`:f,w={fname:l,lname:g,tel:document.getElementById("tel").value.trim(),email:document.getElementById("email").value.trim(),city:document.getElementById("city").value.trim(),message:v,honeypot:document.getElementById("honeypot_1").value};submitFormWithSync(e,S,w,()=>{alert("Your service request has been transmitted. Technicians have been notified."),configurePushNotifications()})});const E=document.getElementById("contact-wizard-form");E&&E.addEventListener("submit",e=>{const t=document.querySelector('input[name="ac-issue"]:checked'),o=t?t.value:"Unspecified",l={"w-name":document.getElementById("w-name").value.trim(),"w-phone":document.getElementById("w-phone").value.trim(),"ac-issue":o,honeypot:document.getElementById("honeypot_2").value};submitFormWithSync(e,E,l,()=>{alert("Priority dispatch secured! A technician will contact you shortly."),typeof window.resetDiagnosticWizard=="function"&&window.resetDiagnosticWizard(),configurePushNotifications()})});const L=document.getElementById("commercial-contact-form");L&&L.addEventListener("submit",e=>{const o=document.getElementById("fullname_service").value.trim().split(" "),l=o[0]||"",g=o.slice(1).join(" ")||"Customer",h={fname:l,lname:g,tel:document.getElementById("phone_service").value.trim(),email:document.getElementById("email_service").value.trim(),city:"Commercial Lead Target",message:`[Company: ${document.getElementById("company_service").value.trim()||"None"}] [Commercial Bid Request] ${document.getElementById("message_service").value.trim()}`,honeypot:document.getElementById("honeypot_service").value};submitFormWithSync(e,L,h,()=>{alert("Estimate request submitted successfully! Chris or Sean will contact you within 15 minutes."),configurePushNotifications()})});const p=document.getElementById("corrosion-lead-form");p&&p.addEventListener("submit",e=>{const o=document.getElementById("lead-name").value.trim().split(" "),l=o[0]||"",g=o.slice(1).join(" ")||"Customer",h={fname:l,lname:g,tel:document.getElementById("lead-phone").value.trim(),email:"info@acnowllc.com",city:document.getElementById("lead-address").value.trim(),message:`[Corrosion Prediction Lead] [Distance to Coast: ${document.getElementById("form-distance").value}] [System Age: ${document.getElementById("lead-age").value}]`,honeypot:""};submitFormWithSync(e,p,h,()=>{alert("Corrosion protection audit requested successfully! Chris or Sean will contact you shortly."),configurePushNotifications()})}),"serviceWorker"in navigator&&(window.addEventListener("load",()=>{if(location.hostname==="localhost"||location.hostname==="127.0.0.1"){console.log("Service Worker disabled on localhost to prevent local caching.");return}navigator.serviceWorker.register("sw.js").then(e=>{console.log("A/C Now Service Worker registered successfully with scope:",e.scope)}).catch(e=>{console.warn("A/C Now Service Worker registration failed:",e),logClientDiagnostic("error","Service worker registration failed",e)})}),navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&(e.data.type==="LEADS_SYNC_COMPLETE"||e.data.type==="SYNC_COMPLETE")){console.log("[PWA Client] Queue item synced:",e.data);const t=e.data.payload&&e.data.payload.fname?` ${e.data.payload.fname}`:"",o=document.createElement("div");o.style.cssText="position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #10B981; color: white; padding: 15px 30px; border-radius: 8px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.2); pointer-events: none;",o.innerHTML=`\u2705 Offline Request${t} submitted successfully!`,document.body.appendChild(o),setTimeout(()=>{o.style.transition="opacity 0.5s ease-out",o.style.opacity="0",setTimeout(()=>o.remove(),500)},5e3)}}),"SyncManager"in window||(window.addEventListener("online",()=>{console.log("[PWA Client] Network re-established. Triggering manual fallback sync..."),y()}),window.addEventListener("load",()=>{navigator.onLine&&y()})));async function y(){const e=indexedDB.open("acnow-offline-db",3);e.onupgradeneeded=t=>{const o=t.target.result;o.objectStoreNames.contains("leads")||o.createObjectStore("leads",{keyPath:"id",autoIncrement:!0}),o.objectStoreNames.contains("logs")||o.createObjectStore("logs",{keyPath:"id",autoIncrement:!0}),o.objectStoreNames.contains("specs")||o.createObjectStore("specs",{keyPath:"id",autoIncrement:!0}),o.objectStoreNames.contains("dead_letter")||o.createObjectStore("dead_letter",{keyPath:"id",autoIncrement:!0}),o.objectStoreNames.contains("diagnostics")||o.createObjectStore("diagnostics",{keyPath:"id",autoIncrement:!0})},e.onsuccess=async t=>{const o=t.target.result;await k(o,"leads","/.netlify/functions/submit-lead",!1),await k(o,"logs","/.netlify/functions/submit-log",!0),await k(o,"specs","/.netlify/functions/submit-specs",!0)}}async function k(e,t,o,l=!1){if(!e.objectStoreNames.contains(t))return;const m=e.transaction(t,"readonly").objectStore(t).getAll();m.onsuccess=async()=>{const f=m.result;if(!(!f||f.length===0)){console.log(`[PWA Client] Fallback manual sync: Found ${f.length} items in ${t}`);for(const v of f){const w={"Content-Type":"application/json"};l&&(w.Authorization="Bearer "+(v.token||""));try{const i=await fetch(o,{method:"POST",headers:w,body:JSON.stringify(v.payload)});let I=i.ok;if(i.ok&&t==="leads")try{I=(await i.json()).success}catch{}if(I)if(e.transaction(t,"readwrite").objectStore(t).delete(v.id),logClientDiagnostic("info",`Fallback manual sync succeeded for ${t} #${v.id}`),t==="leads"){const P=v.payload&&v.payload.fname?` ${v.payload.fname}`:"";alert(`Offline Request${P} transmitted successfully!`)}else navigator.serviceWorker&&navigator.serviceWorker.dispatchEvent(new MessageEvent("message",{data:{type:`${t.toUpperCase()}_SYNC_COMPLETE`,payload:v.payload}}));else if(i.status>=400&&i.status<500&&i.status!==408&&i.status!==429){const x=e.transaction([t,"dead_letter"],"readwrite");x.objectStore(t).delete(v.id),x.objectStore("dead_letter").add({originalStore:t,item:v,error:`Manual Sync HTTP ${i.status}`,timestamp:Date.now()}),logClientDiagnostic("error",`Fallback manual sync rejected with status ${i.status} for ${t} #${v.id}`)}}catch(i){console.warn("[PWA Client] Fallback sync fetch failed:",i)}}}}}let R=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault(),R=e;const t=localStorage.getItem("pwa-install-dismissed"),o=10080*60*1e3;(!t||Date.now()-t>o)&&(console.log("[PWA Client] beforeinstallprompt event captured. Showing custom install prompt."),_())}),window.addEventListener("appinstalled",()=>{console.log("[PWA Client] App installed successfully."),logClientDiagnostic("info","PWA installed successfully on client device.");const e=document.getElementById("pwa-install-banner");e&&e.remove()});function D(){const e=window.navigator.userAgent,t=!!e.match(/iPad/i)||!!e.match(/iPhone/i),o=!!e.match(/WebKit/i)&&!e.match(/CriOS/i),l="standalone"in window.navigator&&window.navigator.standalone;return t&&o&&!l}function _(){if(document.getElementById("pwa-install-banner"))return;const e=document.createElement("div");e.id="pwa-install-banner",e.style.cssText="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #FFFFFF; color: #0A182F; padding: 15px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 1px #0B63E5; display: flex; align-items: center; justify-content: space-between; gap: 15px; width: calc(100% - 40px); max-width: 450px;";const t=D();t?e.innerHTML=`
+                <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                    <img src="/downloaded_images/Logo2.webp" alt="A/C Now Logo" style="width: 40px; height: 40px; border-radius: 6px;">
+                    <div style="flex-grow: 1;">
+                        <h4 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700;">Add to Home Screen</h4>
+                        <p style="margin: 0; font-size: 0.75rem; color: #4A5568;">Tap share icon <span style="font-size: 1rem;">\u{1F4E4}</span> then click "Add to Home Screen" <span style="font-size: 1rem;">\u2795</span> for the offline app.</p>
+                    </div>
+                    <button id="pwa-install-close" style="background: transparent; border: none; color: #718096; font-size: 1.2rem; cursor: pointer; padding: 4px;">\u2715</button>
+                </div>
+            `:e.innerHTML=`
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="/downloaded_images/Logo2.webp" alt="A/C Now Logo" style="width: 40px; height: 40px; border-radius: 6px;">
+                    <div>
+                        <h4 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;">Install A/C Now App</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: #4A5568;">Fast offline requests & priority emergency calling</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button id="pwa-install-close" style="background: transparent; border: none; color: #718096; font-size: 1.2rem; cursor: pointer; padding: 4px;">\u2715</button>
+                    <button id="pwa-install-btn" style="background: #0B63E5; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Install</button>
+                </div>
+            `,document.body.appendChild(e),t||document.getElementById("pwa-install-btn").addEventListener("click",async()=>{if(!R)return;e.style.display="none",R.prompt();const{outcome:o}=await R.userChoice;console.log(`[PWA Client] Install prompt result: ${o}`),R=null,e.remove()}),document.getElementById("pwa-install-close").addEventListener("click",()=>{localStorage.setItem("pwa-install-dismissed",Date.now()),e.remove()})}window.addEventListener("load",()=>{const e=localStorage.getItem("pwa-install-dismissed"),t=10080*60*1e3;D()&&(!e||Date.now()-e>t)&&setTimeout(_,3e3)});const q={ctx:null,isMuted:!0,windNode:null,windFilter:null,windGain:null,windInterval:null,init(){if(this.ctx)return;const e=window.AudioContext||window.webkitAudioContext;e&&(this.ctx=new e,console.log("[Web Audio] ComfortAudio context initialized."))},toggleMute(){this.init(),this.ctx&&this.ctx.state==="suspended"&&this.ctx.resume(),this.isMuted=!this.isMuted;const e=document.getElementById("mute-status-text"),t=document.getElementById("mute-icon");e&&t&&(e.textContent=this.isMuted?"OFF":"ON",t.textContent=this.isMuted?"\u{1F507}":"\u{1F50A}"),console.log(`[Web Audio] Mute toggled: ${this.isMuted}`),this.isMuted?this.stopWind():this.playClick()},playClick(){if(!(this.isMuted||!this.ctx))try{const e=this.ctx.createOscillator(),t=this.ctx.createGain();e.type="sine",e.frequency.setValueAtTime(800,this.ctx.currentTime),e.frequency.exponentialRampToValueAtTime(300,this.ctx.currentTime+.08),t.gain.setValueAtTime(.12,this.ctx.currentTime),t.gain.exponentialRampToValueAtTime(.01,this.ctx.currentTime+.08),e.connect(t),t.connect(this.ctx.destination),e.start(),e.stop(this.ctx.currentTime+.08)}catch(e){console.warn("[Web Audio] Error playing click:",e)}},playTick(){if(!(this.isMuted||!this.ctx))try{const e=this.ctx.createOscillator(),t=this.ctx.createGain();e.type="triangle",e.frequency.setValueAtTime(250,this.ctx.currentTime),e.frequency.exponentialRampToValueAtTime(80,this.ctx.currentTime+.02),t.gain.setValueAtTime(.08,this.ctx.currentTime),t.gain.exponentialRampToValueAtTime(.005,this.ctx.currentTime+.02),e.connect(t),t.connect(this.ctx.destination),e.start(),e.stop(this.ctx.currentTime+.02)}catch(e){console.warn("[Web Audio] Error playing tick:",e)}},startWind(){if(!(this.isMuted||!this.ctx||this.windNode))try{const e=2*this.ctx.sampleRate,t=this.ctx.createBuffer(1,e,this.ctx.sampleRate),o=t.getChannelData(0);for(let h=0;h<e;h++)o[h]=Math.random()*2-1;this.windNode=this.ctx.createBufferSource(),this.windNode.buffer=t,this.windNode.loop=!0,this.windFilter=this.ctx.createBiquadFilter(),this.windFilter.type="lowpass",this.windFilter.frequency.setValueAtTime(300,this.ctx.currentTime),this.windFilter.Q.setValueAtTime(2,this.ctx.currentTime),this.windGain=this.ctx.createGain(),this.windGain.gain.setValueAtTime(0,this.ctx.currentTime),this.windGain.gain.linearRampToValueAtTime(.03,this.ctx.currentTime+.4),this.windNode.connect(this.windFilter),this.windFilter.connect(this.windGain),this.windGain.connect(this.ctx.destination),this.windNode.start();let l=300,g=1;this.windInterval=setInterval(()=>{if(!(!this.ctx||this.isMuted||!this.windFilter)){l+=g*(Math.random()*15+5),l>600&&(g=-1),l<200&&(g=1);try{this.windFilter.frequency.exponentialRampToValueAtTime(l,this.ctx.currentTime+.15)}catch{}}},150),console.log("[Web Audio] Soft breeze synth started.")}catch(e){console.warn("[Web Audio] Wind start error:",e)}},stopWind(){if(this.windNode)try{this.windGain&&this.ctx&&(this.windGain.gain.setValueAtTime(this.windGain.gain.value,this.ctx.currentTime),this.windGain.gain.linearRampToValueAtTime(0,this.ctx.currentTime+.3));const e=this.windNode,t=this.windInterval;this.windNode=null,this.windFilter=null,this.windGain=null,this.windInterval=null,setTimeout(()=>{try{e.stop(),e.disconnect()}catch{}t&&clearInterval(t)},400),console.log("[Web Audio] Soft breeze synth stopped.")}catch(e){console.warn("[Web Audio] Wind stop error:",e)}}};window.ComfortAudio=q,document.addEventListener("click",()=>{q.init()},{once:!0}),document.addEventListener("input",e=>{e.target&&e.target.type==="range"&&q.playTick()});async function N(){const e=document.querySelector(".top-bar-content"),t=document.getElementById("live-aqi-widget"),o=document.cookie.match(/(?:^|; )nf_city=([^;]*)/),l=o?decodeURIComponent(o[1]):"Port St. Lucie",g={"Port St. Lucie":{lat:27.2858,lon:-80.3582,fallbackAqi:42},Stuart:{lat:27.1975,lon:-80.2528,fallbackAqi:35},"Palm City":{lat:27.1698,lon:-80.2684,fallbackAqi:38},Jupiter:{lat:26.9342,lon:-80.0942,fallbackAqi:31}},h=g[l]||g["Port St. Lucie"];let m=h.fallbackAqi,f=!1;try{const x=await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${h.lat}&longitude=${h.lon}&current=us_aqi`,{signal:AbortSignal.timeout(3e3)});if(x.ok){const P=await x.json();P&&P.current&&typeof P.current.us_aqi=="number"&&(m=P.current.us_aqi)}else f=!0}catch{console.warn(`[AQI API] Failed to fetch. Using fallback: ${m}`),f=!0}let v="Good",w="#10B981",i="Ideal air conditions. Low pollen and pollutants.",I="";if(m>50&&m<=100?(v="Moderate",w="#F59E0B",i="Acceptable air quality. Potential irritant for sensitive respiratory systems.",I='<div style="margin-top: 10px; font-size:11.5px; color:#B45309;">\u26A0\uFE0F Moderate AQI: We recommend installing a <strong>Guardian UV air purifier</strong> or booking an duct cleanliness check.</div>'):m>100&&(v="Poor",w="#EF4444",i="High allergen and pollutant count. Indoor filtration recommended.",I='<div style="margin-top: 10px; font-size:11.5px; color:#B91C1C; font-weight:600;">\u{1F6A8} Poor AQI Alert: High allergen count. We highly recommend a <strong>HEPA filtration upgrade</strong> or chemical coil sanitize service.</div>'),e){const x=document.createElement("span");x.className="top-bar-item highlight",x.id="global-aqi-badge",x.style.display="inline-flex",x.style.alignItems="center",x.style.gap="6px",x.innerHTML=`
+                <span class="badge" style="background:${w}; color:#fff;" id="aqi-color-dot">AQI</span> 
+                Live ${l} Air Quality: <strong style="color:${w}; font-weight:700;">${m} (${v})</strong>
+            `,e.appendChild(x)}t&&(t.innerHTML=`
+                <div style="width: 100%;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                        <span style="font-weight:700; color:var(--dark);">${l} Air Index</span>
+                        <span style="background:${w}; color:#fff; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">${v} (${m})</span>
+                    </div>
+                    <div style="font-size:12.5px; color:var(--gray-dark); margin:0; line-height:1.5;">${i} ${f?"(Local seasonal average)":""}</div>
+                    ${I}
+                </div>
+            `)}N();function F(){const e=document.querySelector(".footer-bottom-content div");if(e){const t=document.createElement("span");t.textContent="|",t.style.color="rgba(255,255,255,0.3)",t.style.margin="0 3px",e.appendChild(t);const o=document.createElement("button");o.id="global-mute-toggle",o.style.cssText="background:transparent; border:none; color:inherit; cursor:pointer; font-size:12.5px; display:inline-flex; align-items:center; gap:4px; font-weight:600; text-decoration:underline; padding:0; transition: opacity 0.2s;",o.onmouseover=()=>o.style.opacity="0.8",o.onmouseout=()=>o.style.opacity="1",o.innerHTML='<span id="mute-icon">\u{1F507}</span> Sound: <strong id="mute-status-text">OFF</strong>',o.addEventListener("click",()=>{window.ComfortAudio&&window.ComfortAudio.toggleMute()}),e.appendChild(o)}}F();function O(){const e=document.getElementById("clean-air-canvas");if(!e)return;if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){console.log("[Canvas] Reduced motion active. Particle canvas animation disabled.");return}const t=e.getContext("2d");let o=[];const l=30,g=()=>{const w=e.parentNode.getBoundingClientRect();e.width=w.width,e.height=w.height};g(),window.addEventListener("resize",g);class h{constructor(){this.reset()}reset(){this.x=Math.random()*e.width,this.y=e.height+Math.random()*20,this.size=Math.random()*3.5+1.5,this.speed=Math.random()*.4+.15,this.wobble=Math.random()*.02;const i=["rgba(96, 165, 250, 0.25)","rgba(147, 197, 253, 0.2)","rgba(255, 255, 255, 0.35)","rgba(167, 243, 208, 0.2)"];this.color=i[Math.floor(Math.random()*i.length)]}update(){this.y-=this.speed,this.x+=Math.sin(this.y*this.wobble)*.25,this.y<-10&&this.reset()}draw(){t.beginPath(),t.arc(this.x,this.y,this.size,0,Math.PI*2),t.fillStyle=this.color,t.shadowColor=this.color,t.shadowBlur=4,t.fill()}}for(let w=0;w<l;w++)o.push(new h),o[w].y=Math.random()*e.height;const m=()=>{t.clearRect(0,0,e.width,e.height),t.shadowBlur=0,o.forEach(w=>{w.update(),w.draw()}),requestAnimationFrame(m)};m();let f=null,v=null;e.parentNode.addEventListener("mousemove",w=>{const i=e.getBoundingClientRect();f=w.clientX-i.left,v=w.clientY-i.top,o.forEach(I=>{const x=I.x-f,P=I.y-v;if(Math.sqrt(x*x+P*P)<45){const W=Math.atan2(P,x);I.x+=Math.cos(W)*3,I.y+=Math.sin(W)*1.5}})}),e.parentNode.addEventListener("mouseleave",()=>{f=null,v=null})}O()});let dispatchSimInterval=null;window.startDispatchSimulation=function(){const r=document.getElementById("dispatch-van-marker"),n=document.getElementById("dispatch-status"),c=document.getElementById("dispatch-eta");if(!r||!n||!c)return;dispatchSimInterval&&clearInterval(dispatchSimInterval);const d=[{x:30,y:50},{x:100,y:50},{x:100,y:150},{x:300,y:150},{x:300,y:80},{x:350,y:80}];let u=0,a=0;const s=.05;dispatchSimInterval=setInterval(()=>{if(u>=d.length-1){clearInterval(dispatchSimInterval),n.textContent="VAN ARRIVED",n.style.color="#10B981",c.textContent="0 Mins",typeof triggerSound=="function"&&triggerSound("success");return}const C=d[u],T=d[u+1],S=C.x+(T.x-C.x)*a,E=C.y+(T.y-C.y)*a;r.setAttribute("transform",`translate(${S}, ${E})`),a+=s,a>=1&&(a=0,u++);const L=d.length-1,p=(u+a)/L,y=Math.ceil(12*(1-p));c.textContent=`${y} Mins`,p<.2?(n.textContent="VAN DEPARTED",n.style.color="#60A5FA"):p<.5?(n.textContent="ON NW ST. LUCIE BLVD",n.style.color="#60A5FA"):p<.75?(n.textContent="CROSSING SW BAYSHORE",n.style.color="#FBBF24"):(n.textContent="ENTERING STREET",n.style.color="#FBBF24"),Math.random()<.1&&typeof triggerSound=="function"&&triggerSound("tick")},150)},window.sendSimulatedGateCode=function(){const r=prompt("Enter gate entry code to transmit to service van:","4821");r&&(alert(`Transmitted entry code: "${r}" to dispatch co-pilot dashboard!`),typeof triggerSound=="function"&&triggerSound("success"))},window.verifyVeteranStatus=function(){const r=document.getElementById("vet-id").value,n=document.getElementById("vet-input-fields"),c=document.getElementById("vet-success-banner");if(!r){alert("Please enter your Service or Veteran ID card number.");return}localStorage.setItem("acnow_military_verified","true"),n&&(n.style.display="none"),c&&(c.style.display="block"),typeof triggerSound=="function"&&triggerSound("success"),alert("Veteran credentials verified! 5% discount checkout code applied.")},window.toggleBillingPeriod=function(r){const n=document.querySelectorAll(".pricing-tier-card:nth-child(1) .price-num, .tier-card:nth-child(1) .price-num"),c=document.querySelectorAll(".pricing-tier-card:nth-child(1) .price-period, .tier-card:nth-child(1) .price-period"),d=document.querySelectorAll("#btn-preferred-tier, .tier-card:nth-child(1) .btn"),u=document.querySelectorAll(".pricing-tier-card:nth-child(2) .price-num, .tier-card:nth-child(2) .price-num"),a=document.querySelectorAll(".pricing-tier-card:nth-child(2) .price-period, .tier-card:nth-child(2) .price-period"),s=document.querySelectorAll("#btn-comfort-tier, .tier-card:nth-child(2) .btn"),C=document.querySelectorAll(".pricing-tier-card:nth-child(3) .price-num, .tier-card:nth-child(3) .price-num"),T=document.querySelectorAll(".pricing-tier-card:nth-child(3) .price-period, .tier-card:nth-child(3) .price-period"),S=document.querySelectorAll("#btn-elite-tier, .tier-card:nth-child(3) .btn"),E=document.getElementById("toggle-label-monthly"),L=document.getElementById("toggle-label-yearly");r?(L&&L.classList.add("active"),E&&E.classList.remove("active"),n.forEach(p=>p.textContent="$149.50"),c.forEach(p=>p.textContent="/year"),d.forEach(p=>p.setAttribute("href","contact.html?plan=preferred_annual")),u.forEach(p=>p.textContent="$199.50"),a.forEach(p=>p.textContent="/year"),s.forEach(p=>p.setAttribute("href","contact.html?plan=comfort_annual")),C.forEach(p=>p.textContent="$299.50"),T.forEach(p=>p.textContent="/year"),S.forEach(p=>p.setAttribute("href","contact.html?plan=elite_annual"))):(E&&E.classList.add("active"),L&&L.classList.remove("active"),n.forEach(p=>p.textContent="$14.95"),c.forEach(p=>p.textContent="/mo"),d.forEach(p=>p.setAttribute("href","contact.html?plan=preferred")),u.forEach(p=>p.textContent="$19.95"),a.forEach(p=>p.textContent="/mo"),s.forEach(p=>p.setAttribute("href","contact.html?plan=comfort")),C.forEach(p=>p.textContent="$29.95"),T.forEach(p=>p.textContent="/mo"),S.forEach(p=>p.setAttribute("href","contact.html?plan=elite")))};function initFooterLogoCollisionObserver(){const r=document.querySelector(".header .logo-img")||document.querySelector(".header .logo"),n=document.querySelector(".footer-logo"),c=document.querySelector("footer");if(!r||!n||!c)return;let d=!1;const u=()=>{if(!d)return;const s=r.getBoundingClientRect();c.getBoundingClientRect().top<=s.bottom?(n.style.opacity="0",n.style.visibility="hidden",n.style.transition="opacity 0.3s ease, visibility 0.3s ease"):(n.style.opacity="1",n.style.visibility="visible",n.style.transition="opacity 0.3s ease, visibility 0.3s ease")};new IntersectionObserver(s=>{s.forEach(C=>{d=C.isIntersecting,d?u():(n.style.opacity="1",n.style.visibility="visible")})},{rootMargin:"100px 0px 0px 0px"}).observe(c),window.addEventListener("scroll",throttle(u,80),{passive:!0}),window.addEventListener("resize",throttle(u,100),{passive:!0})}document.addEventListener("DOMContentLoaded",initFooterLogoCollisionObserver);function initPremiumUXFeatures(){const r=document.createElement("div");r.id="scroll-progress-bar",r.style.position="fixed",r.style.top="0",r.style.left="0",r.style.height="3px",r.style.background="linear-gradient(to right, var(--primary) 0%, var(--gold) 100%)",r.style.zIndex="99999",r.style.width="0%",r.style.transition="width 0.1s ease-out",document.body.appendChild(r),window.addEventListener("scroll",throttle(()=>{const u=document.body.scrollTop||document.documentElement.scrollTop,a=document.documentElement.scrollHeight-document.documentElement.clientHeight,s=a>0?u/a*100:0;r.style.width=s+"%"},50),{passive:!0});const n=document.createElement("button");n.id="back-to-top-btn",n.setAttribute("aria-label","Scroll back to top"),n.innerHTML="\u25B2",n.style.position="fixed",n.style.bottom="25px";const c=localStorage.getItem("acnow_phase")||"1";n.style.right=c==="2"?"95px":"25px",n.style.width="48px",n.style.height="48px",n.style.borderRadius="50%",n.style.border="1px solid rgba(255, 255, 255, 0.25)",n.style.background="rgba(10, 24, 47, 0.85)",n.style.color="var(--white)",n.style.fontSize="16px",n.style.cursor="pointer",n.style.zIndex="9999",n.style.display="none",n.style.alignItems="center",n.style.justifyContent="center",n.style.boxShadow="0 10px 25px rgba(0,0,0,0.15)",n.style.backdropFilter="blur(8px)",n.style.webkitBackdropFilter="blur(8px)",n.style.transition="opacity 0.3s, transform 0.3s, background-color 0.3s",n.addEventListener("mouseenter",()=>{n.style.backgroundColor="var(--primary)",n.style.transform="scale(1.1) translateY(-2px)",n.style.boxShadow="0 12px 30px rgba(11, 99, 229, 0.4)"}),n.addEventListener("mouseleave",()=>{n.style.backgroundColor="rgba(10, 24, 47, 0.85)",n.style.transform="scale(1) translateY(0)",n.style.boxShadow="0 10px 25px rgba(0,0,0,0.15)"}),document.body.appendChild(n);const d=()=>{window.scrollY>300?n.style.display==="none"&&(n.style.display="flex",n.style.opacity="0",setTimeout(()=>{n.style.opacity="1"},10)):n.style.display==="flex"&&(n.style.opacity="0",setTimeout(()=>{window.scrollY<=300&&(n.style.display="none")},300))};window.addEventListener("scroll",throttle(d,150),{passive:!0}),window.addEventListener("storage",u=>{u.key==="acnow_phase"&&(n.style.right=u.newValue==="2"?"95px":"25px")}),n.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})}),d()}document.addEventListener("DOMContentLoaded",initPremiumUXFeatures),(function(){function r(){if(document.getElementById("acnow-dev-bar"))return;const n=localStorage.getItem("acnow_phase")||"1",c=localStorage.getItem("acnow_dev_mode")==="true";let d={};try{d=JSON.parse(localStorage.getItem("acnow_review_checklist"))||{}}catch{d={}}let u={};try{u=JSON.parse(localStorage.getItem("acnow_page_reviews"))||{}}catch{u={}}const a=[{title:"Core Navigation (Public Funnel)",items:[{name:"A/C Now Homepage",url:"index.html",phase:"1",desc:"Landing page with split residential/commercial hero and quick diagnostics."},{name:"Services Overview",url:"services.html",phase:"1",desc:"Displays all heating, cooling, and air quality capabilities at a glance."},{name:"About Our Team",url:"about.html",phase:"1",desc:"Brand storytelling, technician credentials, core values, and mascot billboards."},{name:"Book Service",url:"contact.html",phase:"1",desc:"High-conversion booking portal with live local air index feedback."}]},{title:"Residential Comfort (Specialized)",items:[{name:"A/C Repair",url:"ac-repair.html",phase:"1",desc:"Booking specialized repair diagnostics for Florida heat."},{name:"A/C Installation",url:"ac-installation.html",phase:"1",desc:"Modern system replacements, SEER ratings, and rebate highlight values."},{name:"A/C Maintenance",url:"ac-maintenance.html",phase:"1",desc:"Preventative tune-ups, filter servicing, and system longevity audits."}]},{title:"Specialized Heating & Cooling",items:[{name:"Commercial & Towers",url:"commercial.html",phase:"1",desc:"Heavy equipment, complex cooling, and priority contract management."},{name:"Pool Heat Pumps",url:"pool-heating.html",phase:"1",desc:"Extends swimming season using energy-efficient pool pump calculations."}]},{title:"Interactive Diagnostics (Phase 1 Tools)",items:[{name:"DIY Troubleshooting Wizard",url:"diagnose.html",phase:"1",desc:"Wizard guiding customers to fix issues before booking a tech."},{name:"HVAC System Configurator",url:"configurator.html",phase:"1",desc:"Custom system recommendations based on square footage and target SEER."},{name:"Lifespan & Energy Planner",url:"planner.html",phase:"1",desc:"Calculator tracking system degradation and utility bill projections."},{name:"Storm & Hurricane Prep",url:"storm-prep.html",phase:"1",desc:"Step-by-step checklist to protect HVAC equipment during storms."}]},{title:"Local Service Directory",items:[{name:"Service Areas List",url:"areas.html",phase:"1",desc:"Martin, Palm Beach, and St. Lucie counties directory."},{name:"Directions & Maps",url:"directions.html",phase:"1",desc:"Driving routes, contact details, and location map directory."},{name:"Stuart Regional Hub",url:"hvac-services-stuart.html",phase:"1",desc:"Localized landing page for Stuart, FL."},{name:"Palm City Regional Hub",url:"hvac-services-palm-city.html",phase:"1",desc:"Localized landing page for Palm City, FL."}]},{title:"Customer Account Portal",items:[{name:"Members Area",url:"members.html",phase:"2",desc:"Marketing-free account space for subscription updates and booking history."}]},{title:"Staff Tactical Field Console",items:[{name:"Staff Command Console",url:"team-portal.html",phase:"2",desc:"Secure PIN-guarded terminal for dispatch lists and system logs."},{name:"Coil Corrosion Map",url:"corrosion-predictor.html",phase:"2",desc:"WebGL visualizer mapping salt spray corrosion risks by Florida zip codes."},{name:"3D Airflow Simulator",url:"3d-airflow.html",phase:"2",desc:"Three.js dynamic model simulating room layout ventilation paths."}]},{title:"Compliance & Legal Pages",items:[{name:"Privacy Policy",url:"privacy.html",phase:"1",desc:"Customer privacy guarantees."},{name:"Accessibility Statement",url:"accessibility.html",phase:"1",desc:"Compliance details for ADA accessibility guidelines."},{name:"404 Page Not Found",url:"404.html",phase:"1",desc:"Custom error redirection page."}]}],s=document.createElement("div");s.id="acnow-dev-bar";let C=0,T=0;a.forEach(e=>{e.items.forEach(t=>{C++,d[t.url]&&T++})});const S=C>0?Math.round(T/C*100):0,E=parseInt(localStorage.getItem("acnow_dev_active_category")||"0",10);let L="";const p=window.location.pathname.substring(window.location.pathname.lastIndexOf("/")+1)||"index.html";a.forEach((e,t)=>{let o="";e.items.forEach(m=>{const f=d[m.url]?"checked":"",v=m.phase==="1"?"p1":"p2",w=m.phase==="1"?"P1":"P2",i=m.phase==="2"?"phase-2-only":"",I=u[m.url]||{vote:null,comment:""},x=I.vote==="like"?"active liked":"",P=I.vote==="dislike"?"active disliked":"",V=I.comment?"has-comment":"",W=I.comment?'style="display: block;"':"";o+=`
+                    <li class="checklist-item ${i}" data-page-url="${m.url}">
+                        <div class="checklist-top-row">
+                            <div class="left-side">
+                                <input type="checkbox" data-url="${m.url}" ${f}>
+                                <a href="${m.url}">${m.phase==="2"?"\u{1F680} ":""}${m.name}</a>
+                            </div>
+                            <span class="phase-tag ${v}">${w}</span>
+                        </div>
+                        <div class="checklist-desc">${m.desc}</div>
+                        <div class="feedback-action-row">
+                            <div class="voting-buttons">
+                                <button class="vote-btn ${x}" data-vote-val="like">\u{1F44D} Like</button>
+                                <button class="vote-btn ${P}" data-vote-val="dislike">\u{1F44E} Dislike</button>
+                            </div>
+                            <button class="comment-toggle-btn ${V}">
+                                \u{1F4AC} Notes
+                            </button>
+                        </div>
+                        <div class="inline-comment-box" ${W}>
+                            <textarea placeholder="Write feedback notes...">${I.comment||""}</textarea>
+                        </div>
+                    </li>
+                `});const l=t===E?"active":"",g=e.items.every(m=>m.phase==="2");L+=`
+                <div class="accordion-card ${l} ${g?"phase-2-only":""}" data-card-index="${t}">
+                    <div class="accordion-header">
+                        ${g?"\u2728 ":""}${e.title}
+                        <span class="arrow">&#9656;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="checklist-list">
+                            ${o}
+                        </ul>
+                    </div>
+                </div>
+            `});let y="Stuart";const k=document.cookie.match(/(?:^|; )nf_city=([^;]*)/);k&&(y=decodeURIComponent(k[1])),s.innerHTML=`
+            <!-- Collapsed Row (Always visible at the top of the bar) -->
+            <div class="bar-collapsed-header">
+                <div class="bar-left">
+                    <span class="bar-title">\u{1F6E0}\uFE0F Review Console</span>
+                    <div class="progress-container">
+                        <span class="progress-text" id="bar-progress-text">${T} of ${C} reviewed (${S}%)</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="bar-progress-bar" style="width: ${S}%;"></div>
+                        </div>
+                    </div>
+                </div>
                 
-                const rotateX = -mouseY * 25;
-                const rotateY = mouseX * 25;
+                <div class="bar-center">
+                    <button class="quick-btn ${c&&n==="1"?"active":""}" id="quick-btn-p1">Phase 1 (Production)</button>
+                    <button class="quick-btn ${c&&n==="2"?"active":""}" id="quick-btn-p2">Phase 2 (All Features)</button>
+                </div>
                 
-                card.style.transform = `rotateX(${12 + rotateX}deg) rotateY(${-8 + rotateY}deg)`;
-            });
+                <div class="bar-right">
+                    <button class="action-btn secondary" id="btn-export-quick">\u{1F4CB} Export Summary</button>
+                    <button class="action-btn primary" id="btn-toggle-expand">\u25B2 Expand Console</button>
+                </div>
+            </div>
 
-            hoverArea.addEventListener('mouseleave', () => {
-                card.style.transform = 'rotateX(12deg) rotateY(-8deg)';
-            });
-        }
-    };
+            <!-- Expanded Panel Grid -->
+            <div class="bar-expanded-grid">
+                <!-- Mobile Tab Switcher Navigation -->
+                <div class="bar-mobile-tabs">
+                    <button class="mobile-tab-btn" data-target="settings">\u2699\uFE0F Config</button>
+                    <button class="mobile-tab-btn active" data-target="checklist">\u{1F4CB} Checklist</button>
+                    <button class="mobile-tab-btn" data-target="feedback">\u{1F4AC} Export</button>
+                </div>
 
-    initializeThermostatWidget();
+                <!-- Column 1: Settings -->
+                <div class="expanded-col setting-panel col-settings">
+                    <div class="col-title">Deployment Settings</div>
+                    <label>Geotargeting Simulator</label>
+                    <div class="city-grid">
+                        <button class="city-btn ${y==="Stuart"?"active":""}" data-city="Stuart">Stuart</button>
+                        <button class="city-btn ${y==="Palm City"?"active":""}" data-city="Palm City">Palm City</button>
+                        <button class="city-btn ${y==="Jupiter"?"active":""}" data-city="Jupiter">Jupiter</button>
+                        <button class="city-btn ${y==="Port St. Lucie"?"active":""}" data-city="Port St. Lucie">PSL</button>
+                    </div>
+                    <div style="margin-top: auto; padding-top: 15px;">
+                        <button class="reset-guest-btn" id="btn-reset-public-bottom">Reset to Guest Mode</button>
+                    </div>
+                </div>
 
-    // ==========================================================================
-    // 11. Smart Climate Tab Switcher (Lazy Loading WebGL iframe)
-    // ==========================================================================
-    const initializeSmartClimateTabs = () => {
-        const tabBtns = document.querySelectorAll(".smart-tab-btn");
-        const panelThermostat = document.getElementById("panel-thermostat");
-        const panelAirflow = document.getElementById("panel-airflow");
-        const airflowPlaceholder = document.getElementById("airflow-iframe-placeholder");
+                <!-- Column 2: Accordion site checklist -->
+                <div class="expanded-col col-checklist" style="flex:1;">
+                    <div class="col-title">Exhaustive Page Checklist</div>
+                    <div class="checklist-scroll-area" id="drawer-scroller">
+                        <div class="accordion-group">
+                            ${L}
+                        </div>
+                    </div>
+                </div>
 
-        if (tabBtns.length === 0 || !panelThermostat || !panelAirflow) return;
+                <!-- Column 3: Summary details / Report Feedback info -->
+                <div class="expanded-col col-feedback" style="justify-content: space-between;">
+                    <div>
+                        <div class="col-title">Console Feedback</div>
+                        <div class="export-panel-desc">
+                            Review pages on this screen and use \u{1F44D}/\u{1F44E} to recommend additions or removals. Type inline notes under any page to report adjustments.
+                        </div>
+                        <button class="export-btn-large" id="btn-export-feedback-bottom">\u{1F4CB} Export Review Summary</button>
+                    </div>
+                    <div class="export-debug-info">
+                        <strong>Developer Email:</strong> eleversity@me.com<br>
+                        <strong>Phase Setting:</strong> Phase ${n}<br>
+                        <strong>Active City:</strong> ${y}
+                    </div>
+                </div>
+            </div>
+        `,document.body.appendChild(s);const R=s.querySelector("#drawer-scroller"),D=s.querySelector("#btn-toggle-expand");if(localStorage.getItem("acnow_dev_drawer_open")==="true"){s.classList.add("expanded"),document.body.classList.add("acnow-drawer-open"),D.innerHTML="\u25BC Collapse Console";const e=parseInt(localStorage.getItem("acnow_dev_drawer_scroll")||"0",10);e>0&&setTimeout(()=>R.scrollTop=e,50)}R.addEventListener("scroll",function(){localStorage.setItem("acnow_dev_drawer_scroll",this.scrollTop.toString())}),D.addEventListener("click",function(){s.classList.contains("expanded")?(s.classList.remove("expanded"),document.body.classList.remove("acnow-drawer-open"),this.innerHTML="\u25B2 Expand Console",localStorage.setItem("acnow_dev_drawer_open","false")):(s.classList.add("expanded"),document.body.classList.add("acnow-drawer-open"),this.innerHTML="\u25BC Collapse Console",localStorage.setItem("acnow_dev_drawer_open","true"))});const _=s.querySelectorAll(".mobile-tab-btn"),q={settings:s.querySelector(".col-settings"),checklist:s.querySelector(".col-checklist"),feedback:s.querySelector(".col-feedback")};_.forEach(e=>{e.addEventListener("click",function(){_.forEach(o=>o.classList.remove("active")),this.classList.add("active");const t=this.getAttribute("data-target");Object.keys(q).forEach(o=>{q[o]&&(o===t?q[o].classList.add("active-tab"):q[o].classList.remove("active-tab"))}),localStorage.setItem("acnow_dev_mobile_tab",t)})});const N=localStorage.getItem("acnow_dev_mobile_tab")||"checklist",F=s.querySelector(`.mobile-tab-btn[data-target="${N}"]`);F&&F.click(),s.querySelectorAll(".accordion-header").forEach(e=>{e.addEventListener("click",function(){const t=this.parentElement,o=parseInt(t.getAttribute("data-card-index"),10),l=t.classList.contains("active");s.querySelectorAll(".accordion-card").forEach(g=>g.classList.remove("active")),l?localStorage.setItem("acnow_dev_active_category","-1"):(t.classList.add("active"),localStorage.setItem("acnow_dev_active_category",o.toString()))})}),s.querySelector("#quick-btn-p1").addEventListener("click",function(){localStorage.setItem("acnow_dev_mode","true"),localStorage.setItem("acnow_phase","1"),location.reload()}),s.querySelector("#quick-btn-p2").addEventListener("click",function(){localStorage.setItem("acnow_dev_mode","true"),localStorage.setItem("acnow_phase","2"),location.reload()}),s.querySelector("#btn-reset-public-bottom").addEventListener("click",function(){localStorage.removeItem("acnow_dev_mode"),localStorage.removeItem("acnow_phase"),location.reload()}),s.querySelectorAll("[data-city]").forEach(e=>{e.addEventListener("click",function(){const t=this.getAttribute("data-city");document.cookie=`nf_city=${encodeURIComponent(t)}; path=/; max-age=2592000; SameSite=Lax`,location.reload()})}),s.querySelectorAll('.checklist-list input[type="checkbox"]').forEach(e=>{e.addEventListener("change",function(){const t=this.getAttribute("data-url");d[t]=this.checked,localStorage.setItem("acnow_review_checklist",JSON.stringify(d));let o=0;s.querySelectorAll('.checklist-list input[type="checkbox"]').forEach(g=>{g.checked&&o++});const l=Math.round(o/C*100);s.querySelector("#bar-progress-text").textContent=`${o} of ${C} reviewed (${l}%)`,s.querySelector("#bar-progress-bar").style.width=`${l}%`})}),s.querySelectorAll(".checklist-item a").forEach(e=>{e.addEventListener("click",function(t){const o=this.getAttribute("href");let l="1";a.forEach(g=>{const h=g.items.find(m=>m.url===o);h&&(l=h.phase)}),l==="2"&&localStorage.getItem("acnow_phase")!=="2"&&(localStorage.setItem("acnow_dev_mode","true"),localStorage.setItem("acnow_phase","2"))})}),s.querySelectorAll(".vote-btn").forEach(e=>{e.addEventListener("click",function(){const o=this.closest(".checklist-item").getAttribute("data-page-url"),l=this.getAttribute("data-vote-val");u[o]||(u[o]={vote:null,comment:""}),this.parentElement.querySelector(`.vote-btn:not([data-vote-val="${l}"])`).classList.remove("active","liked","disliked"),this.classList.contains("active")?(this.classList.remove("active","liked","disliked"),u[o].vote=null):(this.classList.add("active"),l==="like"?this.classList.add("liked"):this.classList.add("disliked"),u[o].vote=l),localStorage.setItem("acnow_page_reviews",JSON.stringify(u))})}),s.querySelectorAll(".comment-toggle-btn").forEach(e=>{e.addEventListener("click",function(){const o=this.closest(".checklist-item").querySelector(".inline-comment-box"),l=o.style.display==="block";o.style.display=l?"none":"block"})}),s.querySelectorAll(".inline-comment-box textarea").forEach(e=>{e.addEventListener("input",function(){const t=this.closest(".checklist-item"),o=t.getAttribute("data-page-url"),l=t.querySelector(".comment-toggle-btn");u[o]||(u[o]={vote:null,comment:""}),u[o].comment=this.value,localStorage.setItem("acnow_page_reviews",JSON.stringify(u)),this.value.trim()?l.classList.add("has-comment"):l.classList.remove("has-comment")})});const O=function(){let e="Desktop";const t=window.innerWidth;t<600?e="Mobile":t<992&&(e="Tablet");let o="Other";const l=navigator.userAgent;/iPhone|iPad|iPod|Macintosh|MacIntel/i.test(l)?o="Apple":/Android/i.test(l)&&(o="Android");let g=[],h=[],m=[],f=[],v=0;a.forEach(b=>{b.items.forEach(M=>{const A=u[M.url]||{vote:null,comment:""},B=d[M.url];B&&v++;const $={name:M.name,url:M.url,category:b.title,checked:B,vote:A.vote,comment:A.comment.trim()};A.vote==="like"?g.push($):A.vote==="dislike"?h.push($):B?m.push($):f.push($)})});const w=C>0?Math.round(v/C*100):0;let i=`==================================================
+\u{1F6E0}\uFE0F A/C NOW LLC SITE REVIEW - FEEDBACK SUMMARY
+Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
+==================================================
 
-        tabBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const targetTab = btn.getAttribute("data-tab");
+`;if(i+=`\u{1F4CA} EXECUTIVE METRICS:
+`,i+=`  \u2022 Review Progress: ${v} of ${C} pages reviewed (${w}%)
+`,i+=`  \u2022 \u{1F44D} Approved / Keep: ${g.length}
+`,i+=`  \u2022 \u274C Disliked / Remove: ${h.length}
+`,i+=`  \u2022 \u23F3 Pending Review: ${f.length} pages
 
-                // Toggle active button states
-                tabBtns.forEach(b => {
-                    b.classList.remove("active");
-                    b.style.backgroundColor = "transparent";
-                    b.style.color = "var(--gray-dark)";
-                });
-                btn.classList.add("active");
-                btn.style.backgroundColor = "var(--primary)";
-                btn.style.color = "var(--white)";
+`,i+=`==================================================
+`,i+=`\u274C DISLIKED / REQUEST TO REMOVE (${h.length})
+`,i+=`==================================================
+`,h.length===0?i+=`(No items voted for removal yet)
 
-                // Switch panels
-                if (targetTab === "thermostat") {
-                    panelThermostat.style.display = "flex";
-                    panelAirflow.style.display = "none";
-                } else if (targetTab === "airflow") {
-                    panelThermostat.style.display = "none";
-                    panelAirflow.style.display = "flex";
+`:h.forEach(b=>{i+=`\u2022 ${b.name} (${b.url})
+`,i+=`  Category: ${b.category}
+`,i+=`  Review Status: ${b.checked?"\u2713 Checked":"\u2610 Unchecked"}
+`,b.comment&&(i+=`  \u{1F4AC} Feedback: "${b.comment}"
+`),i+=`
+`}),i+=`==================================================
+`,i+=`\u{1F44D} APPROVED / KEEP (${g.length})
+`,i+=`==================================================
+`,g.length===0?i+=`(No approved items rated yet)
 
-                    // Lazy load the WebGL Three.js iframe only when requested
-                    if (airflowPlaceholder) {
-                        const iframe = document.createElement("iframe");
-                        iframe.src = "3d-airflow.html";
-                        iframe.style.width = "100%";
-                        iframe.style.height = "100%";
-                        iframe.style.border = "none";
-                        iframe.setAttribute("title", "3D Thermodynamic Airflow Map");
-                        airflowPlaceholder.replaceWith(iframe);
-                    }
-                }
-            });
-        });
-    initializeSmartClimateTabs();
+`:g.forEach(b=>{i+=`\u2022 ${b.name} (${b.url})
+`,i+=`  Category: ${b.category}
+`,i+=`  Review Status: ${b.checked?"\u2713 Checked":"\u2610 Unchecked"}
+`,b.comment&&(i+=`  \u{1F4AC} Feedback: "${b.comment}"
+`),i+=`
+`}),i+=`==================================================
+`,i+=`\u{1F4DD} REVIEWED - NEUTRAL / NO VOTE (${m.length})
+`,i+=`==================================================
+`,m.length===0?i+=`(No neutral reviewed pages)
 
-    // ==========================================================================
-    // 12. Progressive Web Share API (Quotes & Calibration Sharing)
-    // ==========================================================================
-    const initializeShareButtons = () => {
-        const shareSeerBtn = document.querySelector(".share-btn-seer");
-        const shareClubBtn = document.querySelector(".share-btn-club");
+`:m.forEach(b=>{i+=`\u2022 ${b.name} (${b.url})
+`,i+=`  Category: ${b.category}
+`,b.comment&&(i+=`  \u{1F4AC} Feedback: "${b.comment}"
+`),i+=`
+`}),i+=`==================================================
+`,i+=`\u23F3 PENDING REVIEW (${f.length})
+`,i+=`==================================================
+`,f.length===0)i+=`(All pages reviewed!)
 
-        const shareData = (title, text, url) => {
-            if (navigator.share) {
-                navigator.share({ title, text, url })
-                    .then(() => console.log("Successful share"))
-                    .catch((error) => console.log("Error sharing:", error));
-            } else {
-                // Clipboard fallback + toast notification
-                navigator.clipboard.writeText(`${text} Learn more: ${url}`)
-                    .then(() => {
-                        showShareToast("Link copied to clipboard!");
-                    })
-                    .catch(() => {
-                        // SMS fallback
-                        const smsBody = encodeURIComponent(`${text} ${url}`);
-                        window.location.href = `sms:?body=${smsBody}`;
-                    });
-            }
-        };
+`;else{let b="";f.forEach(M=>{M.category!==b&&(b=M.category,i+=`
+[${b}]
+`),i+=`  - ${M.name} (${M.url})
+`})}i+=`
 
-        const showShareToast = (message) => {
-            const toast = document.createElement("div");
-            toast.textContent = message;
-            toast.style.position = "fixed";
-            toast.style.bottom = "80px";
-            toast.style.left = "50%";
-            toast.style.transform = "translateX(-50%)";
-            toast.style.background = "var(--dark)";
-            toast.style.border = "1px solid rgba(255,255,255,0.1)";
-            toast.style.color = "var(--white)";
-            toast.style.padding = "12px 24px";
-            toast.style.borderRadius = "12px";
-            toast.style.fontSize = "13px";
-            toast.style.fontFamily = "var(--font-heading)";
-            toast.style.zIndex = "1000";
-            toast.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
-            toast.style.opacity = "0";
-            toast.style.transition = "opacity 0.3s ease";
-            
-            document.body.appendChild(toast);
-            setTimeout(() => toast.style.opacity = "1", 10);
-            
-            setTimeout(() => {
-                toast.style.opacity = "0";
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        };
-
-        if (shareSeerBtn) {
-            shareSeerBtn.addEventListener("click", () => {
-                const text = "I just calculated that upgrading my home air conditioner unit can reduce my cooling bill by over 40%! Check out A/C Now LLC on the Treasure Coast.";
-                shareData("A/C Now Energy Savings Calc", text, window.location.origin);
-            });
-        }
-
-        if (shareClubBtn) {
-            shareClubBtn.addEventListener("click", () => {
-                const text = "Check out the A/C Now LLC service club! Covers regular cleanings, waives diagnostic fees, and gives priority scheduling during summer peaks.";
-                shareData("A/C Now Service Club Membership", text, window.location.origin);
-            });
-        }
-    };
-
-    initializeShareButtons();
-
-    // Register Service Worker for PWA Offline capability
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-                .then(registration => {
-                    console.log('A/C Now Service Worker registered successfully with scope:', registration.scope);
-                })
-                .catch(err => {
-                    console.warn('A/C Now Service Worker registration failed:', err);
-                });
-        });
-    }
-});
-
-
-
-
-
-
-
+==================================================
+`,i+=`TECHNICAL DIAGNOSTICS:
+`,i+=`  \u2022 Active Phase Setting: Phase ${localStorage.getItem("acnow_phase")||"1"}
+`,i+=`  \u2022 Simulated Location: ${y}
+`,i+=`  \u2022 View Mode: ${e} (${t}px)
+`,i+=`  \u2022 Device Type: ${o}
+`,i+=`  \u2022 Browser User Agent: ${navigator.userAgent}
+`,i+="==================================================";const I=document.createElement("div");I.id="acnow-dev-modal-overlay";const x=document.createElement("div");x.id="acnow-dev-modal",x.innerHTML=`
+                <h4>\u{1F4CB} Consolidated Review Feedback</h4>
+                <p>Here is your aggregated page checklist ratings, comments, and recommendations. You can copy it to send over messages, or email the report directly to the developer.</p>
+                <textarea id="modal-textarea" readonly>${i.replace(/\\n/g,`
+`)}</textarea>
+                <div class="modal-btn-row">
+                    <button class="modal-btn primary" id="modal-btn-copy">Copy to Clipboard</button>
+                    <button class="modal-btn email" id="modal-btn-email">Email Report to Developer</button>
+                    <button class="modal-btn cancel" id="modal-btn-close">Close</button>
+                </div>
+            `,I.appendChild(x),document.body.appendChild(I),document.body.style.overflow="hidden";const P=()=>{document.body.contains(I)&&document.body.removeChild(I),document.body.style.overflow="",document.removeEventListener("keydown",V),document.removeEventListener("keydown",H)},V=b=>{b.key==="Escape"&&P()};document.addEventListener("keydown",V);const W=x.querySelectorAll("button, textarea"),j=W[0],U=W[W.length-1];j&&setTimeout(()=>j.focus(),50);const H=b=>{b.key==="Tab"&&(b.shiftKey?document.activeElement===j&&(U.focus(),b.preventDefault()):document.activeElement===U&&(j.focus(),b.preventDefault()))};document.addEventListener("keydown",H),x.querySelector("#modal-btn-close").addEventListener("click",P),I.addEventListener("click",function(b){b.target===I&&P()}),x.querySelector("#modal-btn-copy").addEventListener("click",function(){x.querySelector("#modal-textarea").select(),document.execCommand("copy"),this.innerHTML="\u2713 Copied!",this.style.background="#0b9e8a",setTimeout(()=>{this.innerHTML="Copy to Clipboard",this.style.background=""},2e3)}),x.querySelector("#modal-btn-email").addEventListener("click",function(){const A=`mailto:${encodeURIComponent("eleversity@me.com")}?subject=${encodeURIComponent("[A/C Now Review] Full Site Review Feedback Report")}&body=${encodeURIComponent(i.replace(/\\n/g,`
+`))}`;window.location.href=A})};s.querySelector("#btn-export-quick").addEventListener("click",O),s.querySelector("#btn-export-feedback-bottom").addEventListener("click",O)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",r):r()})(),document.addEventListener("mouseover",r=>{const n=r.target.closest("a");if(n&&n.href&&n.origin===window.location.origin){const c=n.pathname;if(!c.includes("members")&&!c.includes("team-portal")&&!c.includes("3d-airflow")&&!c.includes("corrosion-predictor")&&!c.endsWith(".pdf")&&!document.querySelector(`link[href="${n.href}"]`)){const d=document.createElement("link");d.rel="prefetch",d.href=n.href,document.head.appendChild(d)}}},{passive:!0});

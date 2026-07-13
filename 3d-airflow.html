@@ -1,14 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="phase-1">
 <head>
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+
+            // bfcache breakout safety guard
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            });
+        })();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Thermodynamic Airflow Simulation | A/C Now LLC</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#0B63E5">
+    <title>3D Comfort Diagnostics & Airflow Workspace | A/C Now LLC</title>
+    
+    <!-- Load premium outfit and inter typography from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            const div = document.createElement('div');
+            div.style.position = 'absolute';
+            div.style.top = '10px';
+            div.style.left = '10px';
+            div.style.background = 'rgba(255, 0, 0, 0.9)';
+            div.style.color = 'white';
+            div.style.padding = '15px';
+            div.style.zIndex = '99999';
+            div.style.fontFamily = 'monospace';
+            div.style.whiteSpace = 'pre-wrap';
+            div.style.fontSize = '13px';
+            div.style.maxWidth = '90vw';
+            div.style.border = '2px solid white';
+            div.style.borderRadius = '8px';
+            div.innerHTML = `<strong>JS Error:</strong> ${message}<br><br>Line: ${lineno}:${colno}<br>Source: ${source}`;
+            document.body.appendChild(div);
+            return false;
+        };
+        window.addEventListener('unhandledrejection', function(event) {
+            const div = document.createElement('div');
+            div.style.position = 'absolute';
+            div.style.top = '100px';
+            div.style.left = '10px';
+            div.style.background = 'rgba(255, 100, 0, 0.9)';
+            div.style.color = 'white';
+            div.style.padding = '15px';
+            div.style.zIndex = '99999';
+            div.style.fontFamily = 'monospace';
+            div.style.whiteSpace = 'pre-wrap';
+            div.style.fontSize = '13px';
+            div.style.maxWidth = '90vw';
+            div.style.border = '2px solid white';
+            div.style.borderRadius = '8px';
+            div.innerHTML = `<strong>Promise Rejection:</strong> ${event.reason}`;
+            document.body.appendChild(div);
+        });
+    </script>
     <style>
         :root {
             --dark: #0a182f;
             --blue-glow: rgba(0, 242, 254, 0.4);
             --red-glow: rgba(255, 75, 43, 0.4);
+            --gold: #ff9f0a;
+            --blue-neon: #00f2fe;
             --font-stack: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
@@ -23,71 +116,844 @@
             height: 100vh;
         }
 
-        /* Glassmorphic UI overlays */
-        .ui-container {
+        /* Top Navigation Header */
+        .top-nav-bar {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            z-index: 10;
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(10, 24, 47, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            box-sizing: border-box;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 16px;
-            width: 250px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            pointer-events: auto;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        h1 {
-            font-size: 15px;
-            font-weight: 700;
-            margin: 0 0 6px 0;
+        .nav-logo {
+            height: 36px;
+            width: 36px;
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p {
+        .logo-sub {
+            font-size: 10px;
+            color: #94a3b8;
+            vertical-align: super;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .phone-cta {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ff9f0a;
+            text-decoration: none;
+            background: rgba(255, 159, 10, 0.1);
+            border: 1px solid rgba(255, 159, 10, 0.3);
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(255, 159, 10, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .phone-cta:hover {
+            background: rgba(255, 159, 10, 0.2);
+            border-color: #ff9f0a;
+            box-shadow: 0 0 15px rgba(255, 159, 10, 0.2);
+        }
+
+        .back-link {
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #00f2fe;
+        }
+
+        /* Dedicated onboarding welcome modal layout */
+        .welcome-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 24, 47, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+        }
+
+        .welcome-modal-card {
+            background: rgba(10, 24, 47, 0.8);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            border-radius: 24px;
+            padding: 40px;
+            width: 560px;
+            max-width: 90vw;
+            box-shadow: 0 25px 80px rgba(0, 242, 254, 0.15);
+            box-sizing: border-box;
+        }
+
+        .welcome-title-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-emoji {
+            font-size: 40px;
+        }
+
+        .welcome-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-subtitle {
+            margin: 4px 0 0 0;
+            font-size: 12px;
+            color: #00f2fe;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .welcome-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin: 0 0 25px 0;
+        }
+
+        .welcome-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .welcome-feature-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .welcome-feature-icon {
+            font-size: 22px;
+            margin-top: 2px;
+        }
+
+        .welcome-feature-title {
+            font-size: 15px;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .welcome-feature-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.45;
+        }
+
+        .welcome-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff9f0a 0%, #ff7b00 100%);
+            border: none;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 800;
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 20px rgba(255, 159, 10, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 25px rgba(255, 159, 10, 0.45);
+        }
+
+        /* Glassmorphic UI overlays */
+        .ui-container {
+            position: absolute;
+            top: 75px;
+            left: 15px;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            width: 330px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+            pointer-events: auto;
+        }
+
+        /* Floating Booking Panel */
+        .booking-card {
+            position: absolute;
+            top: 75px;
+            right: 15px;
+            width: 320px;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .booking-badge {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #0B7A53;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+        }
+
+        .booking-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff9f0a 0%, #ff7b00 100%);
+            border: none;
+            color: #ffffff;
             font-size: 11px;
+            font-weight: 800;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 159, 10, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            margin-top: 15px;
+            box-sizing: border-box;
+        }
+
+        .booking-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 159, 10, 0.4);
+        }
+
+        /* Testimonial Widget */
+        .testimonial-widget {
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 15px;
+        }
+
+        .stars {
+            color: #945203;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .test-text {
+            font-size: 10.5px;
+            font-style: italic;
+            color: #e2e8f0;
             line-height: 1.4;
-            color: #b0c4de;
-            margin: 0 0 12px 0;
+            margin: 0;
+        }
+
+        .test-author {
+            font-size: 9px;
+            color: #94a3b8;
+            margin-top: 4px;
+            font-weight: 600;
+            display: block;
+        }
+
+        /* Floating Promo Offer Card at the bottom left */
+        .promo-card {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            width: 320px;
+            z-index: 10;
+            pointer-events: auto;
+            background: rgba(10, 24, 47, 0.85);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-sizing: border-box;
+        }
+
+        .promo-icon {
+            font-size: 24px;
+        }
+
+        .promo-content h4 {
+            margin: 0 0 2px 0;
+            font-size: 11px;
+            color: #00f2fe;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .promo-content p {
+            margin: 0;
+            font-size: 10px;
+            color: #94a3b8;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 16px;
+            font-weight: 800;
+            margin: 0 0 4px 0;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.desc {
+            font-size: 11.5px;
+            line-height: 1.45;
+            color: #94a3b8;
+            margin: 0 0 15px 0;
+        }
+
+        /* Value Proposition Card */
+        .value-prop-card {
+            background: rgba(0, 242, 254, 0.04);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .value-prop-card h3 {
+            margin: 0 0 4px 0;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: var(--blue-neon);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .value-prop-card p {
+            margin: 0 0 6px 0;
+            font-size: 10.5px;
+            color: #cbd5e1;
+            line-height: 1.35;
+        }
+
+        .value-prop-card ul {
+            margin: 0;
+            padding-left: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .value-prop-card li {
+            font-size: 10px;
+            color: #94a3b8;
+            line-height: 1.3;
+        }
+
+        /* Diagnostic Wizard styles */
+        .symptom-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .symptom-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .symptom-btn:hover {
+            background: rgba(0, 242, 254, 0.08);
+            border-color: var(--blue-neon);
+            transform: translateY(-1px);
+        }
+
+        .symptom-icon {
+            font-size: 24px;
+        }
+
+        .symptom-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .symptom-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .symptom-desc {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 2px;
+            line-height: 1.3;
+        }
+
+        .wiz-step {
+            display: none;
+        }
+
+        .wiz-step.active {
+            display: block;
+        }
+
+        .wizard-instruction {
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 11px;
+            color: #e2e8f0;
+            line-height: 1.45;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .wizard-objectives {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .objective-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        .objective-item.complete {
+            color: #0B7A53;
+        }
+
+        .obj-check {
+            font-size: 12px;
+        }
+
+        .success-banner {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #0B7A53;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .advanced-toggle-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 15px;
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .advanced-toggle-btn:hover {
+            color: var(--blue-neon);
+        }
+
+        /* Navigation Tabs Menu */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            gap: 5px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 8px 6px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn.active {
+            color: var(--blue-neon);
+            border-bottom-color: var(--blue-neon);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Controls styling */
+        .control-group {
+            margin-bottom: 14px;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #cbd5e1;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .control-val {
+            color: var(--blue-neon);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--blue-neon);
+            box-shadow: 0 0 8px var(--blue-neon);
+            cursor: pointer;
+        }
+
+        /* Room selector button group */
+        .room-selector-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .room-sel-btn {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #cbd5e1;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .room-sel-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--blue-neon);
+        }
+
+        .room-sel-btn.active {
+            background: rgba(0, 242, 254, 0.15);
+            border-color: var(--blue-neon);
+            color: #ffffff;
+        }
+
+        /* Layout Grid Options */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .layout-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .layout-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .layout-btn.active {
+            background: rgba(0, 242, 254, 0.15);
+            border-color: var(--blue-neon);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
+        }
+
+        .layout-sub {
+            font-size: 9px;
+            color: #94a3b8;
+            font-weight: normal;
+        }
+
+        /* Switch toggles */
+        .switch-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .switch-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 38px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider-round {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.15);
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider-round:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider-round {
+            background-color: var(--blue-neon);
+        }
+
+        input:checked + .slider-round:before {
+            transform: translateX(18px);
+        }
+
+        /* Static pressure indicator bar */
+        .pressure-indicator {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .pressure-bar {
+            height: 100%;
+            background: var(--blue-neon);
+            transition: width 0.4s ease, background 0.4s ease;
+        }
+
+        /* Comfort HUD Elements */
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .score-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .score-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #00f2fe;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+        }
+
+        .comfort-recommendation {
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 10.5px;
+            color: #94a3b8;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        .zone-telemetry {
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .zone-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .zone-temp {
+            font-weight: 700;
+            color: #00f2fe;
+            text-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
+        }
+
+        /* Legend Card */
+        .legend-card {
+            background: rgba(10, 24, 47, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px;
+            width: fit-content;
+            pointer-events: auto;
         }
 
         .legend {
             display: flex;
-            flex-direction: column;
-            gap: 6px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 10px;
+            gap: 12px;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            font-size: 10.5px;
-            color: #e2e8f0;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .legend-color {
-            width: 10px;
-            height: 10px;
-            border-radius: 2px;
-            margin-right: 6px;
-            box-shadow: 0 0 6px currentColor;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
         }
 
-        .color-red { background-color: #ff4b2b; color: var(--red-glow); }
-        .color-purple { background-color: #a18cd1; color: rgba(161, 140, 209, 0.4); }
-        .color-blue { background-color: #00f2fe; color: var(--blue-glow); }
+        .color-red { background-color: #ff4b2b; box-shadow: 0 0 6px #ff4b2b; }
+        .color-purple { background-color: #a18cd1; box-shadow: 0 0 6px #a18cd1; }
+        .color-blue { background-color: #00c6ff; box-shadow: 0 0 6px #00c6ff; }
 
+        /* General UI overlays */
         .controls-hint {
             position: absolute;
             bottom: 15px;
@@ -117,7 +983,7 @@
 
         .hud-status {
             position: absolute;
-            top: 15px;
+            top: 75px;
             right: 15px;
             z-index: 10;
             display: flex;
@@ -143,6 +1009,102 @@
             animation: pulse 2s infinite ease-in-out;
         }
 
+        /* Dynamic Educational Alert Toast */
+        .toast-notification {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            background: rgba(239, 68, 68, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            color: #fca5a5;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            z-index: 1000;
+            pointer-events: auto;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Media Queries for full mobile responsiveness */
+        @media (max-width: 1024px) {
+            .booking-card {
+                position: relative;
+                top: 0;
+                right: 0;
+                width: 100%;
+                margin-top: 15px;
+            }
+            .ui-container {
+                width: 320px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+            }
+            #webgl-canvas {
+                position: fixed;
+                height: 100vh;
+            }
+            .top-nav-bar {
+                position: sticky;
+            }
+            .ui-container {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 15px;
+                box-sizing: border-box;
+                pointer-events: auto;
+            }
+            .card {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .booking-card {
+                position: relative;
+                top: 0;
+                right: 0;
+                width: 100%;
+                box-sizing: border-box;
+                margin-top: 0;
+            }
+            .promo-card {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                box-sizing: border-box;
+                margin-top: 15px;
+                border-radius: 12px;
+            }
+            .controls-hint {
+                display: none;
+            }
+            .toast-notification {
+                width: 90%;
+                box-sizing: border-box;
+                bottom: 20px;
+                text-align: center;
+                border-radius: 12px;
+            }
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 0.8; }
             50% { opacity: 1; }
@@ -150,84 +1112,739 @@
     </style>
 </head>
 <body>
-    <div class="ui-container">
-        <div class="card">
-            <h1>Airflow Circulation Map</h1>
-            <p>Interactive 3D model. Warm return air (red) is cooled (purple) and redistributed as chilled supply air (blue) to living zones.</p>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- Welcome Info Modal -->
+    <div id="welcome-modal" class="welcome-modal-overlay">
+        <div class="welcome-modal-card">
+            <div class="welcome-title-row">
+                <span class="welcome-emoji">🏠</span>
+                <div>
+                    <h2 class="welcome-title">Airflow Balancing Simulator</h2>
+                    <p class="welcome-subtitle">Homeowner Diagnostic Sandbox</p>
+                </div>
+            </div>
+            <p class="welcome-desc">
+                Ever wonder why some rooms in your house are freezing while others are boiling hot? This interactive simulator models the physics of air distribution inside home ducts.
+            </p>
+            <div class="welcome-features">
+                <div class="welcome-feature-item">
+                    <span class="welcome-feature-icon">🔄</span>
+                    <div>
+                        <div class="welcome-feature-title">Inspect Duct Routing</div>
+                        <div class="welcome-feature-desc">Drag the background to rotate the 3D model and trace where supply ducts run.</div>
+                    </div>
+                </div>
+                <div class="welcome-feature-item">
+                    <span class="welcome-feature-icon">🎯</span>
+                    <div>
+                        <div class="welcome-feature-title">Solve Hot & Cold Spots</div>
+                        <div class="welcome-feature-desc">Select a scenario in the panel and drag floor registers close to window heat loads.</div>
+                    </div>
+                </div>
+                <div class="welcome-feature-item">
+                    <span class="welcome-feature-icon">⚠️</span>
+                    <div>
+                        <div class="welcome-feature-title">Protect Blower Health</div>
+                        <div class="welcome-feature-desc">Learn how closing too many vents creates backpressure, straining your fan and inflating bills.</div>
+                    </div>
+                </div>
+            </div>
+            <button class="welcome-btn" onclick="closeWelcomeModal()">Start Balancing Simulator</button>
+        </div>
+    </div>
+
+    <!-- Top Nav Header -->
+    <header class="top-nav-bar">
+        <div class="logo-container">
+            <img src="downloaded_images/mascot-logo.svg" alt="A/C Now Logo" class="nav-logo" width="40" height="40">
+            <span class="logo-text">A/C Now <span class="logo-sub">LLC</span></span>
+        </div>
+        <div class="header-right">
+            <a href="tel:8662266935" class="phone-cta">📞 (866) AC-NOW-FL</a>
+            <a href="index.html" class="back-link">Back to Home</a>
+        </div>
+    </header>
+
+    <div class="ui-container" id="main-content">
+        <!-- Main Controls Panel / Diagnostic Wizard -->
+        <div class="card" id="wizard-panel">
+            <div class="value-prop-card">
+                <h3>Solve Hot & Cold Rooms</h3>
+                <p>Use this simulator to diagnose airflow issues in your home. You will learn:</p>
+                <ul>
+                    <li>🎯 How vent placement redirects cooling to solar hotspots.</li>
+                    <li>⚠️ Why shutting registers increases backpressure and utility bills.</li>
+                    <li>🔧 When to use manual balancing vs. automated zoning.</li>
+                </ul>
+            </div>
+
+            <h1 id="wiz-title" style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Easy Airflow Game</h1>
+            <p class="desc" id="wiz-subtitle" style="font-size: 13px; line-height: 1.5; color: #cbd5e1; margin-bottom: 20px;">
+                Can you balance the airflow in this house? Choose a room to fix below:
+            </p>
             
+            <!-- Step 1: Scenario Selector -->
+            <div id="wiz-step-1" class="wiz-step active">
+                <div class="symptom-list" style="gap: 12px;">
+                    <button class="symptom-btn" style="padding: 16px; border-radius: 16px; border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);" onclick="startWizardScenario('bedroom_hot')">
+                        <span class="symptom-icon" style="font-size: 32px;">🥵</span>
+                        <div class="symptom-meta">
+                            <div class="symptom-title" style="font-size: 14px; font-weight: 800; color: #ffffff;">Fix the Hot Bedroom</div>
+                            <div class="symptom-desc" style="font-size: 11px; color: #fca5a5; margin-top: 4px;">Make the hot orange room cool again.</div>
+                        </div>
+                    </button>
+                    <button class="symptom-btn" style="padding: 16px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.05);" onclick="startWizardScenario('living_cold')">
+                        <span class="symptom-icon" style="font-size: 32px;">🥶</span>
+                        <div class="symptom-meta">
+                            <div class="symptom-title" style="font-size: 14px; font-weight: 800; color: #ffffff;">Fix the Cold Living Room</div>
+                            <div class="symptom-desc" style="font-size: 11px; color: #bae6fd; margin-top: 4px;">Balance flow in the freezing blue room.</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Interactive Troubleshooting -->
+            <div id="wiz-step-2" class="wiz-step">
+                <div class="wizard-instruction" id="wiz-instruction" style="font-size: 13px; line-height: 1.5; padding: 14px; border-radius: 10px; background: rgba(0, 242, 254, 0.05); border-color: rgba(0,242,254,0.3); margin-bottom: 20px;">
+                    Follow the steps below to cool down the hotspot.
+                </div>
+                
+                <div class="wizard-objectives" style="gap: 12px; margin-bottom: 20px;">
+                    <div class="objective-item" id="obj-damper" style="font-size: 13px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 10px;">
+                        <span class="obj-check" style="font-size: 18px;">⬜</span>
+                        <span class="obj-text">Step 1: Turn ON the Vent Switch</span>
+                    </div>
+                    <div class="objective-item" id="obj-drag" style="font-size: 13px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 10px;">
+                        <span class="obj-check" style="font-size: 18px;">⬜</span>
+                        <span class="obj-text">Step 2: Drag the glowing ring close to the hot window</span>
+                    </div>
+                </div>
+
+                <div class="wizard-stats" style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div class="score-row" style="margin-bottom: 10px;">
+                        <span class="score-label" style="font-size: 12px; font-weight: 800; color: #94a3b8;">Home Comfort Score</span>
+                        <span class="score-number" id="wiz-comfort-score" style="font-size: 32px; font-weight: 800; color: #00f2fe;">60%</span>
+                    </div>
+                    <div class="zone-telemetry" style="margin-top: 5px; border-top: none; padding-top: 0; gap: 6px;">
+                        <div class="zone-row" style="font-size: 12px; font-weight: 600;">
+                            <span>Living Room Temp</span>
+                            <span class="zone-temp" id="wiz-temp-a" style="color: #00f2fe;">72°F</span>
+                        </div>
+                        <div class="zone-row" style="font-size: 12px; font-weight: 600;">
+                            <span>Bedroom Temp</span>
+                            <span class="zone-temp" id="wiz-temp-b" style="color: #ff9f0a;">80°F</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Resolution & Conversion Call to Action -->
+            <div id="wiz-step-3" class="wiz-step">
+                <div class="success-banner" style="font-size: 15px; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
+                    🎉 You Did It! Room is Balanced!
+                </div>
+                <p class="desc" id="wiz-resolution-text" style="font-size: 13px; line-height: 1.6; color: #cbd5e1; margin-bottom: 20px;">
+                    You moved the register to cool down the hot spots! However, closing manual dampers strains your system. An automated zoning upgrade can keep your house perfectly balanced without any manual effort.
+                </p>
+                <a href="contact.html" class="booking-btn" style="font-size: 13px; padding: 15px; border-radius: 10px;">Book Free Airflow Audit</a>
+                <button class="booking-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; margin-top: 8px; font-size: 12px; padding: 12px;" onclick="resetWizard()">Play Another Level</button>
+            </div>
+
+            <!-- Advanced Manual Control Panel Content (hidden by default) -->
+            <div id="manual-controls-content" style="display: none;">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab(event, 'tab-zoning')">Zoning & Dampers</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab-comfort')">Comfort HUD</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab-layout')">Layouts</button>
+                </div>
+
+                <!-- Tab 1: Zoning & Dampers -->
+                <div id="tab-zoning" class="tab-content active">
+                    <div class="control-group">
+                        <label class="control-label">
+                            <span>Blower Flow Rate</span>
+                            <span class="control-val" id="cfm-val">1200 CFM</span>
+                        </label>
+                        <input type="range" id="cfm-range" min="400" max="2000" step="100" value="1200" oninput="updateCFM(this.value)">
+                    </div>
+
+                    <div class="zoning-dampers">
+                        <div class="switch-group">
+                            <span class="switch-label">Zone A Damper (Living Room)</span>
+                            <label class="switch">
+                                <input type="checkbox" id="damper-a" checked onchange="toggleDamper('a', this.checked)">
+                                <span class="slider-round"></span>
+                            </label>
+                        </div>
+                        <div class="switch-group">
+                            <span class="switch-label">Zone B Damper (Bedroom)</span>
+                            <label class="switch">
+                                <input type="checkbox" id="damper-b" checked onchange="toggleDamper('b', this.checked)">
+                                <span class="slider-round"></span>
+                            </label>
+                        </div>
+                        <div class="switch-group">
+                            <span class="switch-label">Zone C Damper (Kitchen)</span>
+                            <label class="switch">
+                                <input type="checkbox" id="damper-c" checked onchange="toggleDamper('c', this.checked)">
+                                <span class="slider-round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="margin-top: 15px;">
+                        <label class="control-label">
+                            <span>System Static Pressure</span>
+                            <span class="control-val" id="pressure-val">0.50 in. wg</span>
+                        </label>
+                        <div class="pressure-indicator">
+                            <div class="pressure-bar" id="pressure-bar" style="width: 20%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Room resizing selectors -->
+                    <div class="control-group" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px;">
+                        <label class="control-label">
+                            <span>Select Room to Resize</span>
+                        </label>
+                        <div class="room-selector-group">
+                            <button class="room-sel-btn active" id="sel-room-a" onclick="selectRoomForResize(0)">Room A</button>
+                            <button class="room-sel-btn" id="sel-room-b" onclick="selectRoomForResize(1)">Room B</button>
+                            <button class="room-sel-btn" id="sel-room-c" onclick="selectRoomForResize(2)">Room C</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">
+                            <span>Room Width (ft)</span>
+                            <span class="control-val" id="width-val">12 ft</span>
+                        </label>
+                        <input type="range" id="width-range" min="6" max="18" step="1" value="12" oninput="updateRoomWidth(this.value)">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">
+                            <span>Room Length (ft)</span>
+                            <span class="control-val" id="length-val">12 ft</span>
+                        </label>
+                        <input type="range" id="length-range" min="6" max="18" step="1" value="12" oninput="updateRoomLength(this.value)">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">
+                            <span>Room Height (ft)</span>
+                            <span class="control-val" id="height-val">8 ft</span>
+                        </label>
+                        <input type="range" id="height-range" min="6" max="14" step="1" value="8" oninput="updateRoomHeight(this.value)">
+                    </div>
+                </div>
+
+                <!-- Tab 2: Comfort Score HUD -->
+                <div id="tab-comfort" class="tab-content">
+                    <div class="score-row">
+                        <span class="score-label">Comfort Balance</span>
+                        <span class="score-number" id="comfort-score-val">76%</span>
+                    </div>
+                    
+                    <div class="zone-telemetry">
+                        <div class="zone-row">
+                            <span>Zone A: Living Room</span>
+                            <span class="zone-temp" id="temp-zone-a">78°F</span>
+                        </div>
+                        <div class="zone-row">
+                            <span>Zone B: Bedroom</span>
+                            <span class="zone-temp" id="temp-zone-b">76°F</span>
+                        </div>
+                        <div class="zone-row">
+                            <span>Zone C: Kitchen</span>
+                            <span class="zone-temp" id="temp-zone-c">74°F</span>
+                        </div>
+                    </div>
+
+                    <div class="comfort-recommendation" id="comfort-reco">
+                        Drag the floor registers closer to the red window hotspots to balance the cooling load.
+                    </div>
+                </div>
+
+                <!-- Tab 3: Layout Options -->
+                <div id="tab-layout" class="tab-content">
+                    <div class="layout-grid">
+                        <button class="layout-btn active" id="layout-residential" onclick="switchLayout('standard')">
+                            <div>
+                                <div>Residential Single Zone</div>
+                                <div class="layout-sub">Standard split-system setup</div>
+                            </div>
+                            <span>🏠</span>
+                        </button>
+                        <button class="layout-btn" id="layout-commercial" onclick="switchLayout('commercial')">
+                            <div>
+                                <div>Commercial Multi-Zone</div>
+                                <div class="layout-sub">6-duct star redistribution</div>
+                            </div>
+                            <span>🏢</span>
+                        </button>
+                        <button class="layout-btn" id="layout-twostory" onclick="switchLayout('twostory')">
+                            <div>
+                                <div>Multi-Story Layout</div>
+                                <div class="layout-sub">Duplex airflow balance</div>
+                            </div>
+                            <span>🛗</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Manual Switch button -->
+            <button class="advanced-toggle-btn" id="adv-toggle-btn" onclick="toggleAdvancedMode()">Switch to Advanced System Controls</button>
+        </div>
+
+        <!-- Floating Legend -->
+        <div class="legend-card">
             <div class="legend">
                 <div class="legend-item">
                     <span class="legend-color color-red"></span>
-                    <span>78°F Return Air</span>
+                    <span id="legend-red">78°F Return</span>
                 </div>
                 <div class="legend-item">
                     <span class="legend-color color-purple"></span>
-                    <span>Evaporator Cooling</span>
+                    <span>Evap Coil</span>
                 </div>
                 <div class="legend-item">
                     <span class="legend-color color-blue"></span>
-                    <span>55°F Supply Flow</span>
+                    <span id="legend-blue">50°F Supply</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="hud-status">
-        <div class="badge active">● SIMULATION ACTIVE</div>
+    <!-- Floating Booking Panel (Right) -->
+    <div class="card booking-card">
+        <span class="booking-badge">🟢 Same-Day Slots Open</span>
+        <h1>Schedule Comfort Audit</h1>
+        <p class="desc" style="margin-bottom: 12px;">Uneven temperatures? Our NATE-certified technicians specialize in system balancing, coil cleaning, and zoning.</p>
+        
+        <a href="contact.html" class="booking-btn">Book Airflow Audit Online</a>
+        <a href="tel:8662266935" class="booking-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; margin-top: 8px;">Call (866) AC-NOW-FL</a>
+        
+        <!-- Trust Trigger Reviews -->
+        <div class="testimonial-widget">
+            <div class="stars">★★★★★</div>
+            <p class="test-text">"Chris and Sean fixed the drafty, hot spots in our master bedroom. Immediate relief! Highly recommend."</p>
+            <span class="test-author">— Sarah M., Stuart, FL</span>
+        </div>
     </div>
 
-    <div class="controls-hint">Drag to rotate • Pinch to zoom</div>
+    <!-- Floating Promotional Offer (Bottom Left) -->
+    <div class="promo-card">
+        <span class="promo-icon">🎁</span>
+        <div class="promo-content">
+            <h4>Summer Diagnostic Special</h4>
+            <p>Get a **Free 3D Airflow & Balance Consultation** included with any A/C tune-up or repair this month.</p>
+        </div>
+    </div>
+
+    <!-- Dynamic Educational Alert Toast -->
+    <div id="edu-toast" class="toast-notification">
+        <span>⚠️</span>
+        <span><strong>Static Pressure Alert:</strong> Closing dampers increases backpressure. Avoid shutting more than 1 zone!</span>
+    </div>
+
+    <!-- HUD Status Indicators -->
+    <div class="hud-status">
+        <div class="badge active" id="hud-badge">● CFM OK • BALANCED</div>
+    </div>
+
+    <div class="controls-hint">Drag blue floor registers to move them • Left-click background and drag to rotate view</div>
     <canvas id="webgl-canvas"></canvas>
 
-    <script type="module">
-        import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
-        import { OrbitControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+    <script src="three.min.js"></script>
+    <script src="OrbitControls.js"></script>
 
+    <script>
+        const OrbitControls = THREE.OrbitControls;
         const canvas = document.getElementById('webgl-canvas');
         let scene, camera, renderer, controls;
         let particles, particleProgress = [];
-        let houseShell, ducts = [];
+        let ducts = [];
+        let hvacFan, evaporatorCoilMesh;
         let lastTime = 0;
+        
+        // Simulation States
+        let currentLayout = 'standard';
+        let flowSpeed = 0.08;
+        let fanSpeedRotationVal = 1.5;
+        let returnAirTemp = 78;
+        let coilTemp = 50;
+        let obstacleInterference = true;
+        
+        let registers = [];
+        let draggableObjects = [];
+        let dampers = { a: true, b: true, c: true };
+        let roomTemps = [72.0, 72.0, 72.0]; // Balance default
 
-        const PARTICLE_COUNT = 1000;
-        const FLOW_SPEED = 0.08;
+        // Room Dimensions & Layouts
+        let roomDimensions = [
+            { width: 12, length: 12, height: 8, x: -12, z: 2 }, // Room A (Living Room)
+            { width: 12, length: 12, height: 8, x: 0, z: -4 },  // Room B (Bedroom)
+            { width: 12, length: 12, height: 8, x: 12, z: 4 }   // Room C (Kitchen)
+        ];
+        let roomMeshes = [];
+        let roomEdges = [];
+        let activeRoomResizeIndex = 0; // Selected index for resizing controls
 
-        const returnAirPath = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(-15, -4, 10),
-            new THREE.Vector3(-10, -3, 8),
-            new THREE.Vector3(-4, -1, 4),
-            new THREE.Vector3(0, 0, 0)
-        ]);
+        // Hotspots (Sunny window loads)
+        let hotspot1, hotspot2;
 
-        const supplyZoneAPath = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(2, 4, -2),
-            new THREE.Vector3(6, 4, -4),
-            new THREE.Vector3(12, 3, -8)
-        ]);
+        // Onboarding / Guide Line elements
+        let guideLineMesh = null;
 
-        const supplyZoneBPath = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(-2, 4, -1),
-            new THREE.Vector3(-8, 4, 2),
-            new THREE.Vector3(-14, 3, 4)
-        ]);
+        // Smooth opacity transition variables
+        let targetOpacity = 0.85;
+        let currentOpacity = 0.85;
+        let onFadeOutComplete = null;
 
-        const supplyZoneCPath = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(1, 4, 3),
-            new THREE.Vector3(8, 4, 6),
-            new THREE.Vector3(14, 3, 8)
-        ]);
+        // Custom pointer drag variables
+        let isDragging = false;
+        let draggedGroup = null;
+        const dragPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 5.4);
+        const dragOffset = new THREE.Vector3();
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
 
-        const curves = [returnAirPath, supplyZoneAPath, supplyZoneBPath, supplyZoneCPath];
+        // Vector3 allocations pooling
+        const tempPoint = new THREE.Vector3();
 
+        const PARTICLE_COUNT = 1500;
+        let curves = [];
+
+        // Welcome Modal closer
+        function closeWelcomeModal() {
+            const modal = document.getElementById('welcome-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            document.removeEventListener("keydown", modalFocusTrap);
+        }
+
+        function modalFocusTrap(e) {
+            const modal = document.getElementById('welcome-modal');
+            if (modal && modal.style.display !== 'none') {
+                if (e.key === "Tab") {
+                    e.preventDefault();
+                    const btn = modal.querySelector(".welcome-btn");
+                    if (btn) btn.focus();
+                } else if (e.key === "Escape") {
+                    closeWelcomeModal();
+                }
+            }
+        }
+
+        // Focus welcome button on load and trap focus
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById('welcome-modal');
+            if (modal && modal.style.display !== 'none') {
+                const btn = modal.querySelector(".welcome-btn");
+                if (btn) setTimeout(() => btn.focus(), 100);
+                document.addEventListener("keydown", modalFocusTrap);
+            }
+        });
+
+        // Tab Switching Logic
+        function switchTab(evt, tabId) {
+            const contents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+            const tablinks = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove('active');
+            }
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // CFM Fan Speed Control
+        function updateCFM(val) {
+            document.getElementById('cfm-val').innerText = val + ' CFM';
+            const ratio = val / 1200;
+            flowSpeed = 0.08 * ratio;
+            fanSpeedRotationVal = 1.5 * ratio;
+        }
+
+        // Damper Toggles (Zoning Solver)
+        function toggleDamper(zone, checked) {
+            dampers[zone] = checked;
+            
+            const activeCount = (dampers.a ? 1 : 0) + (dampers.b ? 1 : 0) + (dampers.c ? 1 : 0);
+            
+            // Calculate System Static Pressure based on restriction
+            let pressureVal = 0.5;
+            if (activeCount === 2) pressureVal = 0.75;
+            else if (activeCount === 1) pressureVal = 1.4;
+            else if (activeCount === 0) pressureVal = 2.5;
+            
+            document.getElementById('pressure-val').innerText = pressureVal.toFixed(2) + ' in. wg';
+            
+            const bar = document.getElementById('pressure-bar');
+            bar.style.width = (pressureVal / 2.5 * 100) + '%';
+            if (pressureVal >= 1.4) {
+                bar.style.background = '#C22A36';
+            } else if (pressureVal >= 0.75) {
+                bar.style.background = '#ff9f0a';
+            } else {
+                bar.style.background = '#00f2fe';
+            }
+
+            const badge = document.getElementById('hud-badge');
+            if (activeCount === 0) {
+                badge.innerText = '⚠️ CRITICAL PRESSURE';
+                badge.style.color = '#C22A36';
+                badge.style.borderColor = '#C22A36';
+            } else if (activeCount === 1) {
+                badge.innerText = '● CFM HIGH • BACKPRESSURE';
+                badge.style.color = '#ff9f0a';
+                badge.style.borderColor = '#ff9f0a';
+            } else {
+                badge.innerText = '● CFM OK • BALANCED';
+                badge.style.color = '#00f2fe';
+                badge.style.borderColor = '#00f2fe';
+            }
+
+            // Trigger warnings if static pressure spikes
+            const toast = document.getElementById('edu-toast');
+            if (activeCount <= 1 && toast) {
+                toast.classList.add('show');
+            } else if (toast) {
+                toast.classList.remove('show');
+            }
+
+            // Redraw room overlays when dampers change to toggle visibility
+            buildRoomsGeometry();
+        }
+
+        // Room sizing controller logic
+        function selectRoomForResize(index) {
+            activeRoomResizeIndex = index;
+            
+            document.getElementById('sel-room-a').classList.remove('active');
+            document.getElementById('sel-room-b').classList.remove('active');
+            document.getElementById('sel-room-c').classList.remove('active');
+            
+            if (index === 0) document.getElementById('sel-room-a').classList.add('active');
+            else if (index === 1) document.getElementById('sel-room-b').classList.add('active');
+            else if (index === 2) document.getElementById('sel-room-c').classList.add('active');
+
+            const room = roomDimensions[index];
+            document.getElementById('width-range').value = room.width;
+            document.getElementById('width-val').innerText = room.width + ' ft';
+            
+            document.getElementById('length-range').value = room.length;
+            document.getElementById('length-val').innerText = room.length + ' ft';
+            
+            document.getElementById('height-range').value = room.height;
+            document.getElementById('height-val').innerText = room.height + ' ft';
+        }
+
+        function updateRoomWidth(val) {
+            val = parseInt(val);
+            roomDimensions[activeRoomResizeIndex].width = val;
+            document.getElementById('width-val').innerText = val + ' ft';
+            buildRoomsGeometry();
+            clampRegisterToRoom(activeRoomResizeIndex + 1);
+        }
+
+        function updateRoomLength(val) {
+            val = parseInt(val);
+            roomDimensions[activeRoomResizeIndex].length = val;
+            document.getElementById('length-val').innerText = val + ' ft';
+            buildRoomsGeometry();
+            clampRegisterToRoom(activeRoomResizeIndex + 1);
+        }
+
+        function updateRoomHeight(val) {
+            val = parseInt(val);
+            roomDimensions[activeRoomResizeIndex].height = val;
+            document.getElementById('height-val').innerText = val + ' ft';
+            buildRoomsGeometry();
+            clampRegisterToRoom(activeRoomResizeIndex + 1);
+        }
+
+        function clampRegisterToRoom(index) {
+            const reg = registers[index - 1];
+            const room = roomDimensions[index - 1];
+            if (reg && room) {
+                // Keep registers clamped to the floor within resized room limits
+                reg.position.x = Math.max(room.x - room.width / 2 + 1.2, Math.min(room.x + room.width / 2 - 1.2, reg.position.x));
+                reg.position.z = Math.max(room.z - room.length / 2 + 1.2, Math.min(room.z + room.length / 2 - 1.2, reg.position.z));
+                reg.position.y = -5.4;
+                updateCurveForRegister(index, reg.position);
+            }
+        }
+
+        // Dynamically rebuild curve and duct segment on-the-fly when dragged
+        function updateCurveForRegister(index, position) {
+            if (index === 1) {
+                curves[1] = new THREE.CatmullRomCurve3([
+                    new THREE.Vector3(0, 1.5, 0),
+                    new THREE.Vector3(-4, 4, 1),
+                    new THREE.Vector3(-8, 4, 2),
+                    position.clone()
+                ]);
+            } else if (index === 2) {
+                curves[2] = new THREE.CatmullRomCurve3([
+                    new THREE.Vector3(0, 1.5, 0),
+                    new THREE.Vector3(0, 4, -2),
+                    new THREE.Vector3(0, 4, -3),
+                    position.clone()
+                ]);
+            } else if (index === 3) {
+                curves[3] = new THREE.CatmullRomCurve3([
+                    new THREE.Vector3(0, 1.5, 0),
+                    new THREE.Vector3(4, 4, 2),
+                    new THREE.Vector3(8, 4, 3),
+                    position.clone()
+                ]);
+            }
+
+            // Rebuild single wireframe tube segment instantly
+            if (ducts[index]) {
+                scene.remove(ducts[index]);
+                disposeHierarchy(ducts[index]);
+            }
+            const tubeGeo = new THREE.TubeGeometry(curves[index], 48, 0.6, 8, false);
+            const tubeMat = new THREE.MeshBasicMaterial({
+                color: 0x00f2fe,
+                transparent: true,
+                opacity: 0.1,
+                wireframe: true
+            });
+            const tube = new THREE.Mesh(tubeGeo, tubeMat);
+            scene.add(tube);
+            ducts[index] = tube;
+        }
+
+        // Setup curves based on layout type
+        function setCurvesForLayout() {
+            if (currentLayout === 'standard') {
+                curves = [
+                    new THREE.CatmullRomCurve3([
+                        new THREE.Vector3(-10, -4, 5),
+                        new THREE.Vector3(-6, -3, 3),
+                        new THREE.Vector3(0, -1.5, 0)
+                    ]),
+                    new THREE.CatmullRomCurve3([
+                        new THREE.Vector3(0, 1.5, 0),
+                        new THREE.Vector3(-4, 4, 1),
+                        new THREE.Vector3(-8, 4, 2),
+                        new THREE.Vector3(-12, -5.4, 2) // Ends at Register 1 (Room A)
+                    ]),
+                    new THREE.CatmullRomCurve3([
+                        new THREE.Vector3(0, 1.5, 0),
+                        new THREE.Vector3(0, 4, -2),
+                        new THREE.Vector3(0, 4, -3),
+                        new THREE.Vector3(0, -5.4, -4) // Ends at Register 2 (Room B)
+                    ]),
+                    new THREE.CatmullRomCurve3([
+                        new THREE.Vector3(0, 1.5, 0),
+                        new THREE.Vector3(4, 4, 2),
+                        new THREE.Vector3(8, 4, 3),
+                        new THREE.Vector3(12, -5.4, 4) // Ends at Register 3 (Room C)
+                    ])
+                ];
+            } else if (currentLayout === 'commercial') {
+                curves = [
+                    new THREE.CatmullRomCurve3([
+                        new THREE.Vector3(-10, -4, -5),
+                        new THREE.Vector3(-5, -2, -2),
+                        new THREE.Vector3(0, -1.5, 0)
+                    ]),
+                    new THREE.CatmullRomCurve3([new THREE.Vector3(0, 1.5, 0), new THREE.Vector3(-6, 4, 2), new THREE.Vector3(-12, -5.4, 2)]),
+                    new THREE.CatmullRomCurve3([new THREE.Vector3(0, 1.5, 0), new THREE.Vector3(0, 4, -2), new THREE.Vector3(0, -5.4, -4)]),
+                    new THREE.CatmullRomCurve3([new THREE.Vector3(0, 1.5, 0), new THREE.Vector3(6, 4, 2), new THREE.Vector3(12, -5.4, 4)])
+                ];
+            } else if (currentLayout === 'twostory') {
+                curves = [
+                    new THREE.CatmullRomCurve3([
+                        new THREE.Vector3(-10, -4, 2),
+                        new THREE.Vector3(-5, -2, 1),
+                        new THREE.Vector3(0, -1.5, 0)
+                    ]),
+                    new THREE.CatmullRomCurve3([new THREE.Vector3(0, 1.5, 0), new THREE.Vector3(-6, 2, 2), new THREE.Vector3(-12, -5.4, 2)]),
+                    new THREE.CatmullRomCurve3([new THREE.Vector3(0, 1.5, 0), new THREE.Vector3(0, 2, -2), new THREE.Vector3(0, -5.4, -4)]),
+                    new THREE.CatmullRomCurve3([new THREE.Vector3(0, 1.5, 0), new THREE.Vector3(6, 6, 2), new THREE.Vector3(12, -5.4, 4)])
+                ];
+            }
+        }
+
+        // Switch System Layout
+        function switchLayout(layoutName) {
+            targetOpacity = 0.0;
+            onFadeOutComplete = function() {
+                currentLayout = layoutName;
+                
+                document.getElementById('layout-residential').classList.remove('active');
+                document.getElementById('layout-commercial').classList.remove('active');
+                document.getElementById('layout-twostory').classList.remove('active');
+                
+                if (layoutName === 'standard') document.getElementById('layout-residential').classList.add('active');
+                else if (layoutName === 'commercial') document.getElementById('layout-commercial').classList.add('active');
+                else if (layoutName === 'twostory') document.getElementById('layout-twostory').classList.add('active');
+
+                ducts.forEach(duct => {
+                    scene.remove(duct);
+                    disposeHierarchy(duct);
+                });
+                ducts = [];
+
+                if (particles) {
+                    scene.remove(particles);
+                    disposeHierarchy(particles);
+                }
+
+                setCurvesForLayout();
+                buildDuctTubes();
+
+                registers.forEach((reg, index) => {
+                    const curve = curves[index + 1];
+                    if (curve) {
+                        const endPoint = curve.getPointAt(1.0);
+                        reg.position.copy(endPoint);
+                    }
+                });
+
+                initParticles();
+                targetOpacity = 0.85;
+            };
+        }
+
+        // GPU Memory Leak Cleanup Helpers
+        function disposeMesh(mesh) {
+            if (!mesh) return;
+            if (mesh.geometry) mesh.geometry.dispose();
+            if (mesh.material) {
+                if (Array.isArray(mesh.material)) {
+                    mesh.material.forEach(mat => mat.dispose());
+                } else {
+                    mesh.material.dispose();
+                }
+            }
+        }
+
+        function disposeHierarchy(obj) {
+            obj.traverse(child => {
+                if (child.isMesh || child.isPoints || child.isLineSegments) {
+                    disposeMesh(child);
+                }
+            });
+        }
+
+        // Initialize three scene
         function init() {
             scene = new THREE.Scene();
             scene.fog = new THREE.FogExp2(0x0a182f, 0.015);
 
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-            camera.position.set(25, 18, 38);
+            camera.position.set(28, 20, 42);
 
             renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -240,82 +1857,237 @@
             controls.minDistance = 15;
             controls.maxDistance = 100;
 
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
             scene.add(ambientLight);
 
-            const directionalLight1 = new THREE.DirectionalLight(0x00f2fe, 0.8);
-            directionalLight1.position.set(20, 40, 20);
+            const directionalLight1 = new THREE.DirectionalLight(0x00f2fe, 0.85);
+            directionalLight1.position.set(25, 45, 25);
             scene.add(directionalLight1);
 
-            const directionalLight2 = new THREE.DirectionalLight(0xff4b2b, 0.4);
-            directionalLight2.position.set(-20, 20, -20);
+            const directionalLight2 = new THREE.DirectionalLight(0xff4b2b, 0.35);
+            directionalLight2.position.set(-25, 25, -25);
             scene.add(directionalLight2);
 
+            // Initialize configurations
+            setCurvesForLayout();
             buildHouseGeometry();
+            buildRoomsGeometry();
             buildDuctTubes();
+            spawnRegisters();
+            spawnHotspots();
             initParticles();
+
+            // Bind custom pointer events for stable horizontal dragging
+            renderer.domElement.addEventListener('pointerdown', onPointerDown);
+            renderer.domElement.addEventListener('pointermove', onPointerMove);
+            window.addEventListener('pointerup', onPointerUp);
 
             window.addEventListener('resize', onWindowResize);
             requestAnimationFrame(animate);
         }
 
+        // Custom Raycast DragControls with boundaries clamping constraints
+        function onPointerDown(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(draggableObjects, true);
+            
+            if (intersects.length > 0) {
+                let parent = intersects[0].object.parent;
+                while (parent && parent !== scene && parent.parent !== scene) {
+                    parent = parent.parent;
+                }
+                
+                if (parent && parent.name && parent.name.startsWith('register_')) {
+                    isDragging = true;
+                    draggedGroup = parent;
+                    controls.enabled = false; // Stop camera rotation
+                    renderer.domElement.style.cursor = 'grabbing';
+                    
+                    const planeY = draggedGroup.position.y;
+                    dragPlane.constant = -planeY;
+                    
+                    const intersection = new THREE.Vector3();
+                    if (raycaster.ray.intersectPlane(dragPlane, intersection)) {
+                        dragOffset.copy(intersection).sub(draggedGroup.position);
+                    }
+                }
+            }
+        }
+
+        function onPointerMove(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            if (isDragging && draggedGroup) {
+                raycaster.setFromCamera(mouse, camera);
+                const intersection = new THREE.Vector3();
+                if (raycaster.ray.intersectPlane(dragPlane, intersection)) {
+                    const newPos = intersection.sub(dragOffset);
+                    const regIndex = parseInt(draggedGroup.name.split('_')[1]);
+                    const room = roomDimensions[regIndex - 1];
+                    
+                    if (room) {
+                        // Clamp dragging coordinates within the boundaries of its customized Room!
+                        draggedGroup.position.x = Math.max(room.x - room.width / 2 + 1.2, Math.min(room.x + room.width / 2 - 1.2, newPos.x));
+                        draggedGroup.position.z = Math.max(room.z - room.length / 2 + 1.2, Math.min(room.z + room.length / 2 - 1.2, newPos.z));
+                    }
+                    
+                    // Rebuild spline dynamically during drag
+                    updateCurveForRegister(regIndex, draggedGroup.position);
+                }
+            } else {
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(draggableObjects, true);
+                if (intersects.length > 0) {
+                    renderer.domElement.style.cursor = 'grab';
+                } else {
+                    renderer.domElement.style.cursor = 'default';
+                }
+            }
+        }
+
+        function onPointerUp() {
+            if (isDragging) {
+                isDragging = false;
+                draggedGroup = null;
+                controls.enabled = true; // Resume camera orbit navigation
+                renderer.domElement.style.cursor = 'default';
+            }
+        }
+
+        // Draw structural blueprints
         function buildHouseGeometry() {
             const houseGroup = new THREE.Group();
 
-            const outerGeo = new THREE.BoxGeometry(36, 16, 26);
-            const outerMat = new THREE.MeshStandardMaterial({
-                color: 0x2e4057,
-                roughness: 0.1,
-                metalness: 0.8,
-                transparent: true,
-                opacity: 0.08,
-                side: THREE.DoubleSide
-            });
-            const outerMesh = new THREE.Mesh(outerGeo, outerMat);
-            outerMesh.position.y = 2.5;
-            houseGroup.add(outerMesh);
-
-            const edges = new THREE.EdgesGeometry(outerGeo);
-            const lineMat = new THREE.LineBasicMaterial({ color: 0x4a6fa5, transparent: true, opacity: 0.25 });
-            const line = new THREE.LineSegments(edges, lineMat);
-            line.position.y = 2.5;
-            houseGroup.add(line);
-
-            const gridHelper = new THREE.GridHelper(100, 50, 0x4a6fa5, 0x1d2d44);
-            gridHelper.position.y = -5.5;
+            // Grid helper
+            const gridHelper = new THREE.GridHelper(120, 60, 0x4d82b8, 0x1d2d44);
+            gridHelper.position.y = -6.5;
             houseGroup.add(gridHelper);
 
-            const ahGeo = new THREE.BoxGeometry(4, 8, 3.5);
-            const ahMat = new THREE.MeshStandardMaterial({
-                color: 0x2d3748,
-                roughness: 0.4,
-                metalness: 0.9,
-                transparent: true,
-                opacity: 0.85
-            });
-            const airHandler = new THREE.Mesh(ahGeo, ahMat);
-            airHandler.position.set(0, -1.5, 0);
-            houseGroup.add(airHandler);
+            // Detailed Air Handler Unit Group (placed in center of layout)
+            const ahGroup = new THREE.Group();
+            ahGroup.position.set(0, -2, 0);
 
-            const coilGeo = new THREE.BoxGeometry(3.9, 2, 3.4);
+            // Metallic casing
+            const casingGeo = new THREE.BoxGeometry(5.2, 9, 4.5);
+            const casingMat = new THREE.MeshStandardMaterial({
+                color: 0x1e293b,
+                roughness: 0.35,
+                metalness: 0.85,
+                transparent: true,
+                opacity: 0.75
+            });
+            const casing = new THREE.Mesh(casingGeo, casingMat);
+            ahGroup.add(casing);
+
+            const casingEdges = new THREE.EdgesGeometry(casingGeo);
+            const casingLine = new THREE.LineSegments(casingEdges, new THREE.LineBasicMaterial({ color: 0x38bdf8, opacity: 0.6 }));
+            ahGroup.add(casingLine);
+
+            // Internal Evaporator Coil (Cooling Fins)
+            const coilGeo = new THREE.BoxGeometry(4.8, 2.5, 4);
             const coilMat = new THREE.MeshBasicMaterial({
-                color: 0xa18cd1,
+                color: 0x9f7aea,
                 wireframe: true,
                 transparent: true,
-                opacity: 0.6
+                opacity: 0.5
             });
-            const coil = new THREE.Mesh(coilGeo, coilMat);
-            coil.position.set(0, -1.5, 0);
-            houseGroup.add(coil);
+            const coilMesh = new THREE.Mesh(coilGeo, coilMat);
+            coilMesh.position.y = 1.8;
+            ahGroup.add(coilMesh);
+            evaporatorCoilMesh = coilMesh;
 
+            // Blower fan
+            const fanAssembly = new THREE.Group();
+            fanAssembly.position.set(0, -1.8, 0);
+
+            const hubGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.6, 12);
+            const hubMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.9 });
+            const hub = new THREE.Mesh(hubGeo, hubMat);
+            hub.rotation.x = Math.PI / 2;
+            fanAssembly.add(hub);
+
+            const bladeGeo = new THREE.BoxGeometry(2.2, 0.06, 0.5);
+            const bladeMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.8, metalness: 0.8, roughness: 0.2 });
+            for (let b = 0; b < 4; b++) {
+                const blade = new THREE.Mesh(bladeGeo, bladeMat);
+                blade.rotation.y = (b * Math.PI) / 2;
+                blade.rotation.x = 0.28;
+                fanAssembly.add(blade);
+            }
+
+            ahGroup.add(fanAssembly);
+            hvacFan = fanAssembly;
+
+            const lightGeo = new THREE.SphereGeometry(0.12, 8, 8);
+            const lightMat = new THREE.MeshBasicMaterial({ color: 0x00f2fe });
+            const indicatorLight = new THREE.Mesh(lightGeo, lightMat);
+            indicatorLight.position.set(0, 4, 2.3);
+            ahGroup.add(indicatorLight);
+
+            houseGroup.add(ahGroup);
             scene.add(houseGroup);
             houseShell = houseGroup;
         }
 
+        // Draw visible interior/perimeter walls of rooms dynamically
+        function buildRoomsGeometry() {
+            roomMeshes.forEach(mesh => {
+                scene.remove(mesh);
+                disposeHierarchy(mesh);
+            });
+            roomMeshes = [];
+
+            roomEdges.forEach(edge => {
+                scene.remove(edge);
+                disposeHierarchy(edge);
+            });
+            roomEdges = [];
+
+            roomDimensions.forEach((room, index) => {
+                let isActive = true;
+                if (index === 0 && !dampers.a) isActive = false;
+                if (index === 1 && !dampers.b) isActive = false;
+                if (index === 2 && !dampers.c) isActive = false;
+
+                if (!isActive) return;
+
+                const geo = new THREE.BoxGeometry(room.width, room.height, room.length);
+                const mat = new THREE.MeshStandardMaterial({
+                    color: index === 0 ? 0x00f2fe : (index === 1 ? 0xff9f0a : 0x10b981),
+                    roughness: 0.1,
+                    metalness: 0.9,
+                    transparent: true,
+                    opacity: 0.04,
+                    side: THREE.DoubleSide
+                });
+                const mesh = new THREE.Mesh(geo, mat);
+                const y = -5.5 + room.height / 2;
+                mesh.position.set(room.x, y, room.z);
+                scene.add(mesh);
+                roomMeshes.push(mesh);
+
+                const edgeGeo = new THREE.EdgesGeometry(geo);
+                const edgeMat = new THREE.LineBasicMaterial({
+                    color: index === 0 ? 0x00f2fe : (index === 1 ? 0xff9f0a : 0x10b981),
+                    transparent: true,
+                    opacity: 0.4
+                });
+                const line = new THREE.LineSegments(edgeGeo, edgeMat);
+                line.position.copy(mesh.position);
+                scene.add(line);
+                roomEdges.push(line);
+            });
+        }
+
+        // Draw glowing wireframe duct tubes
         function buildDuctTubes() {
             curves.forEach((curve, index) => {
-                const tubeGeo = new THREE.TubeGeometry(curve, 32, 0.5, 8, false);
-                const tubeMat = new THREE.MeshStandardMaterial({
+                const tubeGeo = new THREE.TubeGeometry(curve, 48, 0.6, 8, false);
+                const tubeMat = new THREE.MeshBasicMaterial({
                     color: index === 0 ? 0xff4b2b : 0x00f2fe,
                     transparent: true,
                     opacity: 0.1,
@@ -327,10 +2099,114 @@
             });
         }
 
+        // Create supply registers
+        function spawnRegisters() {
+            const reg1Group = createRegisterMesh('Living Room Vent', 0x00f2fe);
+            reg1Group.position.set(-12, -5.4, 2);
+            reg1Group.name = 'register_1';
+            scene.add(reg1Group);
+            draggableObjects.push(reg1Group.children[0]); // register grilles for drag raycasting
+            
+            const reg2Group = createRegisterMesh('Bedroom Vent', 0x00f2fe);
+            reg2Group.position.set(0, -5.4, -4);
+            reg2Group.name = 'register_2';
+            scene.add(reg2Group);
+            draggableObjects.push(reg2Group.children[0]);
+            
+            const reg3Group = createRegisterMesh('Kitchen Vent', 0x00f2fe);
+            reg3Group.position.set(12, -5.4, 4);
+            reg3Group.name = 'register_3';
+            scene.add(reg3Group);
+            draggableObjects.push(reg3Group.children[0]);
+
+            registers = [reg1Group, reg2Group, reg3Group];
+        }
+
+        function createRegisterMesh(label, color) {
+            const group = new THREE.Group();
+            
+            const grilleGeo = new THREE.BoxGeometry(2.0, 0.1, 2.0);
+            const grilleMat = new THREE.MeshStandardMaterial({
+                color: 0x334155,
+                roughness: 0.7,
+                metalness: 0.6
+            });
+            const grille = new THREE.Mesh(grilleGeo, grilleMat);
+            group.add(grille);
+            
+            const ringGeo = new THREE.RingGeometry(1.1, 1.25, 32);
+            const ringMat = new THREE.MeshBasicMaterial({
+                color: color,
+                side: THREE.DoubleSide
+            });
+            const ring = new THREE.Mesh(ringGeo, ringMat);
+            ring.rotation.x = Math.PI / 2;
+            ring.position.y = 0.06;
+            group.add(ring);
+            
+            return group;
+        }
+
+        // Spawn hotspots inside room volumes
+        function spawnHotspots() {
+            const hotspotGeo = new THREE.SphereGeometry(1.6, 16, 16);
+            const hotspotMat = new THREE.MeshBasicMaterial({
+                color: 0xff4b2b,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.6
+            });
+            
+            // Hotspot 1: Living Room Load center
+            hotspot1 = new THREE.Mesh(hotspotGeo, hotspotMat);
+            hotspot1.position.set(-12, -4.5, 2);
+            scene.add(hotspot1);
+
+            // Hotspot 2: Bedroom Load center
+            hotspot2 = new THREE.Mesh(hotspotGeo, hotspotMat.clone());
+            hotspot2.position.set(0, -4.5, -4);
+            scene.add(hotspot2);
+        }
+
+        // Onboarding visual guiding lines mapping
+        function updateGuideLine(registerPos, targetPos, isActive) {
+            if (guideLineMesh) {
+                scene.remove(guideLineMesh);
+                disposeHierarchy(guideLineMesh);
+                guideLineMesh = null;
+            }
+
+            if (!isActive || !registerPos || !targetPos) return;
+
+            const points = [
+                registerPos.clone().add(new THREE.Vector3(0, 0.1, 0)),
+                targetPos.clone().add(new THREE.Vector3(0, 0.1, 0))
+            ];
+            
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const distance = registerPos.distanceTo(targetPos);
+            const isNear = distance < 5.0;
+
+            const material = new THREE.LineDashedMaterial({
+                color: isNear ? 0x10b981 : 0xff9f0a,
+                linewidth: 3,
+                scale: 1,
+                dashSize: 0.6,
+                gapSize: 0.4
+            });
+
+            guideLineMesh = new THREE.Line(geometry, material);
+            guideLineMesh.computeLineDistances(); // Required for dashed lines
+            scene.add(guideLineMesh);
+        }
+
+        // Populate air particles
         function initParticles() {
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(PARTICLE_COUNT * 3);
             const colors = new Float32Array(PARTICLE_COUNT * 3);
+
+            particleProgress = [];
 
             for (let i = 0; i < PARTICLE_COUNT; i++) {
                 const curveIndex = Math.floor(Math.random() * curves.length);
@@ -341,13 +2217,14 @@
                     progress: progress
                 });
 
-                const point = curves[curveIndex].getPointAt(progress);
+                curves[curveIndex].getPointAt(progress, tempPoint);
+                
                 const randomOffset = new THREE.Vector3(
-                    (Math.random() - 0.5) * 0.6,
-                    (Math.random() - 0.5) * 0.6,
-                    (Math.random() - 0.5) * 0.6
+                    (Math.random() - 0.5) * 0.5,
+                    (Math.random() - 0.5) * 0.5,
+                    (Math.random() - 0.5) * 0.5
                 );
-                const finalPos = point.add(randomOffset);
+                const finalPos = tempPoint.clone().add(randomOffset);
 
                 positions[i * 3] = finalPos.x;
                 positions[i * 3 + 1] = finalPos.y;
@@ -364,13 +2241,13 @@
 
             const texture = createParticleTexture();
             const material = new THREE.PointsMaterial({
-                size: 0.6,
+                size: 0.7,
                 map: texture,
                 vertexColors: true,
                 transparent: true,
                 blending: THREE.AdditiveBlending,
                 depthWrite: false,
-                opacity: 0.8
+                opacity: 0.85
             });
 
             particles = new THREE.Points(geometry, material);
@@ -392,16 +2269,156 @@
             return new THREE.CanvasTexture(canvas);
         }
 
+        // Translate temperatures to dynamic particle colors
         function getAirflowColor(curveIndex, progress) {
             const color = new THREE.Color();
+            const redWarmth = new THREE.Color().setHSL(0.02 * (90 - returnAirTemp) / 20, 1.0, 0.5);
+            const blueCold = new THREE.Color().setHSL(0.55 + 0.1 * (coilTemp - 35) / 25, 1.0, 0.5);
+            const purpleCoil = new THREE.Color(0x9f7aea);
+
             if (curveIndex === 0) {
-                color.lerpColors(new THREE.Color(0xff4b2b), new THREE.Color(0xa18cd1), progress);
+                color.lerpColors(redWarmth, purpleCoil, progress);
             } else {
-                color.lerpColors(new THREE.Color(0x00c6ff), new THREE.Color(0x0072ff), progress);
+                color.lerpColors(blueCold, new THREE.Color(0x0072ff), progress);
             }
             return color;
         }
 
+        // Recompute colors for active particles
+        function recalculateParticleColors() {
+            if (particles) {
+                const colors = particles.geometry.attributes.color.array;
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    const data = particleProgress[i];
+                    const col = getAirflowColor(data.curveIndex, data.progress);
+                    colors[i * 3] = col.r;
+                    colors[i * 3 + 1] = col.g;
+                    colors[i * 3 + 2] = col.b;
+                }
+                particles.geometry.attributes.color.needsUpdate = true;
+            }
+        }
+
+        // Diagnostic Wizard Logic
+        let activeScenario = null;
+        let currentStep = 1;
+        let advancedMode = false;
+
+        function toggleAdvancedMode() {
+            advancedMode = !advancedMode;
+            
+            const wizSteps = document.querySelectorAll('.wiz-step');
+            wizSteps.forEach(step => step.classList.remove('active'));
+            
+            const advancedContent = document.getElementById('manual-controls-content');
+            const wizardTitle = document.getElementById('wiz-title');
+            const wizardSubtitle = document.getElementById('wiz-subtitle');
+            
+            if (advancedMode) {
+                advancedContent.style.display = 'block';
+                wizardTitle.innerText = "System Architect Controls";
+                wizardSubtitle.innerText = "Manually configure duct sizes, layouts, and system balance details.";
+                document.getElementById('adv-toggle-btn').innerText = "Back to Diagnostic Wizard";
+            } else {
+                advancedContent.style.display = 'none';
+                wizardTitle.innerText = "Easy Airflow Game";
+                wizardSubtitle.innerText = "Can you balance the airflow in this house? Choose a room to fix below:";
+                document.getElementById('adv-toggle-btn').innerText = "Switch to Advanced System Controls";
+                showWizardStep(currentStep);
+            }
+        }
+
+        function showWizardStep(step) {
+            currentStep = step;
+            const wizSteps = document.querySelectorAll('.wiz-step');
+            wizSteps.forEach(st => st.classList.remove('active'));
+            document.getElementById('wiz-step-' + step).classList.add('active');
+        }
+
+        function startWizardScenario(scenario) {
+            activeScenario = scenario;
+            showWizardStep(2);
+            
+            const inst = document.getElementById('wiz-instruction');
+            const objDamper = document.getElementById('obj-damper');
+            const objDrag = document.getElementById('obj-drag');
+
+            objDamper.classList.remove('complete');
+            objDamper.querySelector('.obj-check').innerText = "⬜";
+            objDrag.classList.remove('complete');
+            objDrag.querySelector('.obj-check').innerText = "⬜";
+            
+            if (scenario === 'bedroom_hot') {
+                roomTemps = [72.0, 80.0, 72.0];
+                hotspot2.position.set(4.5, -4.5, -5); // Shift hotspot far away
+                hotspot2.scale.setScalar(1.5);
+                hotspot2.material.color.setHex(0xff4b2b);
+                
+                dampers.b = false;
+                document.getElementById('damper-b').checked = false;
+                toggleDamper('b', false);
+                
+                inst.innerHTML = `<strong>Goal: Cool down the Bedroom.</strong> <br><br>Follow the two simple steps below to bring cold air back into the room.`;
+                
+                objDamper.querySelector('.obj-text').innerText = "Step 1: Turn ON the Zone B Vent switch";
+                objDrag.querySelector('.obj-text').innerText = "Step 2: Drag the blue vent circle closer to the hot window";
+            } 
+            else if (scenario === 'living_cold') {
+                roomTemps = [80.0, 72.0, 72.0];
+                hotspot1.position.set(-8.5, -4.5, -3);
+                hotspot1.scale.setScalar(1.5);
+                hotspot1.material.color.setHex(0xff4b2b);
+                
+                dampers.a = false;
+                document.getElementById('damper-a').checked = false;
+                toggleDamper('a', false);
+                
+                inst.innerHTML = `<strong>Goal: Cool down the Living Room.</strong> <br><br>Follow the two simple steps below to restore cooling balance.`;
+                
+                objDamper.querySelector('.obj-text').innerText = "Step 1: Turn ON the Zone A Vent switch";
+                objDrag.querySelector('.obj-text').innerText = "Step 2: Drag the blue vent circle closer to the hot window";
+            } 
+            else if (scenario === 'high_pressure') {
+                roomTemps = [78.0, 78.0, 78.0];
+                
+                dampers.a = false;
+                dampers.b = false;
+                dampers.c = false;
+                document.getElementById('damper-a').checked = false;
+                document.getElementById('damper-b').checked = false;
+                document.getElementById('damper-c').checked = false;
+                toggleDamper('a', false);
+                toggleDamper('b', false);
+                toggleDamper('c', false);
+                
+                inst.innerHTML = `<strong>Goal: Release High System Strain.</strong> All vents are closed, blocking airflow.`;
+                
+                objDamper.querySelector('.obj-text').innerText = "Step 1: Turn ON all three vent switches";
+                objDrag.querySelector('.obj-text').innerText = "Step 2: Bring the system back to Balanced status";
+            }
+        }
+
+        function resetWizard() {
+            activeScenario = null;
+            roomTemps = [72.0, 72.0, 72.0];
+            
+            dampers.a = true;
+            dampers.b = true;
+            dampers.c = true;
+            document.getElementById('damper-a').checked = true;
+            document.getElementById('damper-b').checked = true;
+            document.getElementById('damper-c').checked = true;
+            toggleDamper('a', true);
+            toggleDamper('b', true);
+            toggleDamper('c', true);
+            
+            showWizardStep(1);
+
+            // Clear guide line mesh
+            updateGuideLine(null, null, false);
+        }
+
+        // Core animation frames loop
         function animate(timestamp) {
             requestAnimationFrame(animate);
 
@@ -409,42 +2426,239 @@
             lastTime = timestamp;
             const dt = Math.min(delta, 0.1);
 
+            // Damper solver configurations
+            const activeCount = (dampers.a ? 1 : 0) + (dampers.b ? 1 : 0) + (dampers.c ? 1 : 0);
+            let velocityMultiplier = 1.0;
+            if (activeCount === 2) velocityMultiplier = 1.5;
+            else if (activeCount === 1) velocityMultiplier = 2.5;
+            else if (activeCount === 0) velocityMultiplier = 0.0;
+
+            // Blower fan rotation speed
+            if (hvacFan) {
+                if (activeCount > 0) {
+                    hvacFan.rotation.y += fanSpeedRotationVal * velocityMultiplier * dt * 8;
+                    hvacFan.position.set(0, -1.8, 0); // Reset position
+                } else {
+                    hvacFan.position.x = (Math.random() - 0.5) * 0.08;
+                    hvacFan.position.z = (Math.random() - 0.5) * 0.08;
+                }
+            }
+
+            if (evaporatorCoilMesh) {
+                evaporatorCoilMesh.material.opacity = 0.4 + Math.sin(timestamp * 0.003) * 0.15;
+            }
+
+            // Smoothly interpolate layout transition opacities
+            if (particles && Math.abs(currentOpacity - targetOpacity) > 0.01) {
+                currentOpacity += (targetOpacity - currentOpacity) * dt * 10;
+                particles.material.opacity = currentOpacity;
+                
+                if (currentOpacity < 0.05 && onFadeOutComplete) {
+                    onFadeOutComplete();
+                    onFadeOutComplete = null;
+                }
+            }
+
+            // Update physical register rings opacity based on damper settings
+            if (registers[0]) registers[0].children[1].material.opacity = dampers.a ? 0.8 : 0.05;
+            if (registers[1]) registers[1].children[1].material.opacity = dampers.b ? 0.8 : 0.05;
+            if (registers[2]) registers[2].children[1].material.opacity = dampers.c ? 0.8 : 0.05;
+
+            // Update duct geometries opacities to visually represent closed dampers
+            if (ducts[1]) ducts[1].material.opacity = dampers.a ? 0.1 : 0.02;
+            if (ducts[2]) ducts[2].material.opacity = dampers.b ? 0.1 : 0.02;
+            if (ducts[3]) ducts[3].material.opacity = dampers.c ? 0.1 : 0.02;
+
+            // Thermodynamic Room Comfort Solvers (Distance to Solar hotspots)
+            if (registers[0] && hotspot1) {
+                const d1 = registers[0].position.distanceTo(hotspot1.position);
+                const isReg1Cooling = (d1 < 5.0 && dampers.a && activeCount > 0);
+
+                if (isReg1Cooling) {
+                    roomTemps[0] = Math.max(72.0, roomTemps[0] - dt * 0.8);
+                    hotspot1.scale.setScalar(Math.max(0.4, hotspot1.scale.x - dt * 0.4));
+                    hotspot1.material.color.setHex(0x00f2fe); // Cool blue
+                } else {
+                    if (!dampers.a || (activeScenario === 'living_cold' && d1 >= 5.0)) {
+                        roomTemps[0] = Math.min(80.0, roomTemps[0] + dt * 0.3);
+                        hotspot1.scale.setScalar(Math.min(1.4, hotspot1.scale.x + dt * 0.2));
+                        hotspot1.material.color.setHex(0xff4b2b); // Hot red
+                    } else {
+                        roomTemps[0] = Math.max(72.0, roomTemps[0] - dt * 0.2);
+                        hotspot1.scale.setScalar(Math.max(0.6, hotspot1.scale.x - dt * 0.2));
+                        hotspot1.material.color.setHex(0x00f2fe);
+                    }
+                }
+            }
+
+            if (registers[1] && hotspot2) {
+                const d2 = registers[1].position.distanceTo(hotspot2.position);
+                const isReg2Cooling = (d2 < 5.0 && dampers.b && activeCount > 0);
+
+                if (isReg2Cooling) {
+                    roomTemps[1] = Math.max(72.0, roomTemps[1] - dt * 0.8);
+                    hotspot2.scale.setScalar(Math.max(0.4, hotspot2.scale.x - dt * 0.4));
+                    hotspot2.material.color.setHex(0x00f2fe);
+                } else {
+                    if (!dampers.b || (activeScenario === 'bedroom_hot' && d2 >= 5.0)) {
+                        roomTemps[1] = Math.min(80.0, roomTemps[1] + dt * 0.3);
+                        hotspot2.scale.setScalar(Math.min(1.4, hotspot2.scale.x + dt * 0.2));
+                        hotspot2.material.color.setHex(0xff4b2b);
+                    } else {
+                        roomTemps[1] = Math.max(72.0, roomTemps[1] - dt * 0.2);
+                        hotspot2.scale.setScalar(Math.max(0.6, hotspot2.scale.x - dt * 0.2));
+                        hotspot2.material.color.setHex(0x00f2fe);
+                    }
+                }
+            }
+
+            // Zone C (Kitchen) holds cool if its damper is open
+            if (registers[2]) {
+                if (dampers.c && activeCount > 0) {
+                    roomTemps[2] = Math.max(72.0, roomTemps[2] - dt * 0.4);
+                } else {
+                    roomTemps[2] = Math.min(76.0, roomTemps[2] + dt * 0.2);
+                }
+            }
+
+            // Sync HTML Comfort values
+            document.getElementById('temp-zone-a').innerText = Math.round(roomTemps[0]) + '°F';
+            document.getElementById('temp-zone-b').innerText = Math.round(roomTemps[1]) + '°F';
+            document.getElementById('temp-zone-c').innerText = Math.round(roomTemps[2]) + '°F';
+
+            const targetTemp = 72.0;
+            const devA = Math.abs(roomTemps[0] - targetTemp);
+            const devB = Math.abs(roomTemps[1] - targetTemp);
+            const devC = Math.abs(roomTemps[2] - targetTemp);
+            const comfortScore = Math.max(0, Math.min(100, Math.round(100 - (devA + devB + devC) * 5)));
+            document.getElementById('comfort-score-val').innerText = comfortScore + '%';
+
+            // Dynamic recommendations mapping based on score
+            const reco = document.getElementById('comfort-reco');
+            if (comfortScore < 60) {
+                reco.innerHTML = `⚠️ <strong>Critical Imbalance:</strong> High temperature splits detected. Your system is fighting itself. Request a professional balance audit.`;
+                reco.style.color = '#C22A36';
+                reco.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+            } else if (comfortScore < 90) {
+                reco.innerHTML = `⚠️ <strong>Moderate Discomfort:</strong> Drag supply registers closer to the red window hotspots to balance the cooling load.`;
+                reco.style.color = '#ff9f0a';
+                reco.style.borderColor = 'rgba(255, 159, 10, 0.3)';
+            } else {
+                reco.innerHTML = `🟢 <strong>Balanced Oasis:</strong> Excellent comfort balance achieved! Lock in seasonal tune-ups to maintain efficiency.`;
+                reco.style.color = '#0B7A53';
+                reco.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+            }
+
+            // Monitor wizard objective states in real-time
+            if (activeScenario && currentStep === 2) {
+                const objDamper = document.getElementById('obj-damper');
+                const objDrag = document.getElementById('obj-drag');
+                
+                if (activeScenario === 'bedroom_hot') {
+                    // Update glowing guide line pointing directly from register to window target
+                    updateGuideLine(registers[1].position, hotspot2.position, true);
+
+                    if (dampers.b) {
+                        objDamper.classList.add('complete');
+                        objDamper.querySelector('.obj-check').innerText = "✅";
+                        document.getElementById('wiz-instruction').innerHTML = `<strong>Step 2:</strong> Air is flowing! Now drag the glowing blue Bedroom register vent (middle room) close to the red window hotspot.`;
+                    }
+                    
+                    const regB = registers[1];
+                    const dist = regB ? regB.position.distanceTo(hotspot2.position) : 999;
+                    if (dist < 5.0 && dampers.b) {
+                        objDrag.classList.add('complete');
+                        objDrag.querySelector('.obj-check').innerText = "✅";
+                        
+                        setTimeout(() => {
+                            showWizardStep(3);
+                            document.getElementById('wiz-resolution-text').innerHTML = `<strong>Bedroom Balanced Successfully!</strong> By placing the register directly under the sun-baked window, room temperature fell to 72°F. However, manually adjusting dampers shifts backpressure inside ducts. Our NATE-certified technicians specialize in automated zoning system retrofits that do this dynamically without risking blower failure.`;
+                        }, 1200);
+                    }
+                } 
+                else if (activeScenario === 'living_cold') {
+                    updateGuideLine(registers[0].position, hotspot1.position, true);
+
+                    if (dampers.a) {
+                        objDamper.classList.add('complete');
+                        objDamper.querySelector('.obj-check').innerText = "✅";
+                        document.getElementById('wiz-instruction').innerHTML = `<strong>Step 2:</strong> Drag the blue Living Room register vent (left side room) close to the red window hotspot.`;
+                    }
+                    const regA = registers[0];
+                    const dist = regA ? regA.position.distanceTo(hotspot1.position) : 999;
+                    if (dist < 5.0 && dampers.a) {
+                        objDrag.classList.add('complete');
+                        objDrag.querySelector('.obj-check').innerText = "✅";
+                        setTimeout(() => {
+                            showWizardStep(3);
+                            document.getElementById('wiz-resolution-text').innerHTML = `<strong>Living Room Balanced!</strong> Living Room cold spot mitigated. Request a free site balance inspection to check your damper actuator valves.`;
+                        }, 1200);
+                    }
+                } 
+                else if (activeScenario === 'high_pressure') {
+                    if (activeCount >= 2) {
+                        objDamper.classList.add('complete');
+                        objDamper.querySelector('.obj-check').innerText = "✅";
+                        document.getElementById('wiz-instruction').innerHTML = `<strong>Step 2:</strong> System pressure released. Keep all three zone dampers open to restore system health.`;
+                    }
+                    if (activeCount === 3) {
+                        objDrag.classList.add('complete');
+                        objDrag.querySelector('.obj-check').innerText = "✅";
+                        setTimeout(() => {
+                            showWizardStep(3);
+                            document.getElementById('wiz-resolution-text').innerHTML = `<strong>Static Pressure Released!</strong> Restricting airflow strains blower coils and leads to frozen coils or system failures. Keep at least 70% of registers open for optimal system health.`;
+                        }, 1200);
+                    }
+                }
+
+                document.getElementById('wiz-comfort-score').innerText = comfortScore + '%';
+                document.getElementById('wiz-temp-a').innerText = Math.round(roomTemps[0]) + '°F';
+                document.getElementById('wiz-temp-b').innerText = Math.round(roomTemps[1]) + '°F';
+            }
+
+            // Particle flow animation
             if (particles) {
                 const positions = particles.geometry.attributes.position.array;
-                const colors = particles.geometry.attributes.color.array;
 
                 for (let i = 0; i < PARTICLE_COUNT; i++) {
                     const data = particleProgress[i];
-                    data.progress += FLOW_SPEED * dt;
+                    
+                    let isVisible = true;
+                    if (data.curveIndex === 1 && !dampers.a) isVisible = false;
+                    if (data.curveIndex === 2 && !dampers.b) isVisible = false;
+                    if (data.curveIndex === 3 && !dampers.c) isVisible = false;
+
+                    if (!isVisible) {
+                        positions[i * 3] = 9999;
+                        positions[i * 3 + 1] = 9999;
+                        positions[i * 3 + 2] = 9999;
+                        continue;
+                    }
+
+                    data.progress += flowSpeed * velocityMultiplier * dt;
 
                     if (data.progress > 1.0) {
                         data.progress = 0.0;
                     }
 
                     const curve = curves[data.curveIndex];
-                    const point = curve.getPointAt(data.progress);
+                    curve.getPointAt(data.progress, tempPoint);
 
-                    const seed = i * 0.1;
-                    const noiseX = Math.sin(seed + timestamp * 0.002) * 0.2;
-                    const noiseY = Math.cos(seed * 0.7 + timestamp * 0.003) * 0.2;
-                    const noiseZ = Math.sin(seed * 1.3 + timestamp * 0.001) * 0.2;
+                    const seed = i * 0.08;
+                    const noiseX = Math.sin(seed + timestamp * 0.002) * 0.22;
+                    const noiseY = Math.cos(seed * 0.75 + timestamp * 0.0035) * 0.18;
+                    const noiseZ = Math.sin(seed * 1.25 + timestamp * 0.0015) * 0.22;
 
-                    positions[i * 3] = point.x + noiseX;
-                    positions[i * 3 + 1] = point.y + noiseY;
-                    positions[i * 3 + 2] = point.z + noiseZ;
-
-                    const col = getAirflowColor(data.curveIndex, data.progress);
-                    colors[i * 3] = col.r;
-                    colors[i * 3 + 1] = col.g;
-                    colors[i * 3 + 2] = col.b;
+                    positions[i * 3] = tempPoint.x + noiseX;
+                    positions[i * 3 + 1] = tempPoint.y + noiseY;
+                    positions[i * 3 + 2] = tempPoint.z + noiseZ;
                 }
 
                 particles.geometry.attributes.position.needsUpdate = true;
-                particles.geometry.attributes.color.needsUpdate = true;
             }
 
             if (houseShell) {
-                houseShell.rotation.y = Math.sin(timestamp * 0.0001) * 0.05;
+                houseShell.rotation.y = Math.sin(timestamp * 0.0001) * 0.03;
             }
 
             controls.update();

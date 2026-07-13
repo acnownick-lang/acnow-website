@@ -21,6 +21,10 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /pool-heating/ /pool-heating.html 301
 /hvac-services-palm-city/ /hvac-services-palm-city.html 301
 /hvac-services-stuart/    /hvac-services-stuart.html    301
+/privacy                  /privacy.html                 301
+/privacy/                 /privacy.html                 301
+/accessibility            /accessibility.html           301
+/accessibility/           /accessibility.html           301
 
 # SPA fallback — serve index.html for any unmatched route (404 handled separately)
 # /*  /index.html  200   ← only enable if you ever convert to a SPA framework

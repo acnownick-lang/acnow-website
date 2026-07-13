@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" class="phase-1">
+<head>
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Offline | A/C Now LLC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0B63E5;
+            --primary-hover: #084fc2;
+            --secondary: #E63946;
+            --dark: #0A182F;
+            --light: #F6F8FC;
+            --text: #2D3748;
+            --white: #FFFFFF;
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark); /* Changed to fit main brand dark theme */
+            color: #E2E8F0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            background: #111e35;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-top: 5px solid var(--primary);
+        }
+        .logo-img {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .offline-icon {
+            font-size: 3.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #A0AEC0;
+            margin-bottom: 25px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 14px 28px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+        .btn-tel {
+            background-color: #2D3748;
+        }
+        .btn-tel:hover {
+            background-color: #1A202C;
+        }
+        .sync-box {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: left;
+            display: none;
+        }
+        .sync-box h3 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+        }
+        .sync-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sync-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 15px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary);
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: #CBD5E0;
+            line-height: 1.4;
+        }
+        .troubleshoot-box {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            text-align: left;
+        }
+        .troubleshoot-box h3 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+        details {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 12px;
+        }
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: #FFFFFF;
+            font-size: 0.9rem;
+        }
+        details p {
+            margin: 8px 0 0 0;
+            font-size: 0.85rem;
+            color: #A0AEC0;
+            line-height: 1.5;
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
+</head>
+<body>
+    <div class="container">
+        <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+        <div class="offline-icon">📶🚫</div>
+        <h1>Connection Lost</h1>
+        <p>You are currently offline. A/C failures are urgent, and we are still here to help! Call Chris or Sean directly for immediate dispatches.</p>
+        
+        <a href="tel:7725213568" class="btn btn-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.1em;height:1.1em;margin-right:6px;vertical-align:-2px;display:inline-block;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call (772) 521-3568</a>
+        <button id="retry-btn" onclick="checkConnectivity()" class="btn">Retry Connection</button>
+
+        <div id="sync-container" class="sync-box">
+            <h3>Pending Offline Operations</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 12px; color:#A0AEC0;">The following items will synchronize as soon as you connect:</p>
+            <ul id="sync-list" class="sync-list"></ul>
+        </div>
+
+        <div class="troubleshoot-box">
+            <h3>AC Self-Help Troubleshooting</h3>
+            <details>
+                <summary>❄️ AC is blowing warm air</summary>
+                <p>Check if the outdoor unit is running. Verify that your air filter is not clogged (restricting airflow). Ensure the thermostat is set to "Cool" and the fan is on "Auto" rather than "On".</p>
+            </details>
+            <details>
+                <summary>💧 Indoor unit is leaking water</summary>
+                <p>Turn the air conditioner off immediately to prevent ceiling and floor damage. A leak typically means a clogged condensate drain line. Call us to flush it safely.</p>
+            </details>
+            <details>
+                <summary>⚡ Unit has absolutely no power</summary>
+                <p>Check your home's main electrical panel and the outdoor AC disconnect box for tripped circuit breakers. Switch them fully OFF, then back ON to reset.</p>
+            </details>
+        </div>
+
+        <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; color: #718096; text-align: center;">
+            &copy; 2026 A/C Now LLC. Florida License #CAC1820542
+        </div>
+    </div>
+
+    <script>
+        async function checkConnectivity() {
+            const btn = document.getElementById('retry-btn');
+            btn.textContent = 'Checking...';
+            btn.disabled = true;
+            try {
+                // Fetch request with a cache-busting query parameter to test actual connectivity
+                await fetch('/downloaded_images/Logo2.webp?cb=' + Date.now(), { method: 'HEAD' });
+                window.location.reload();
+            } catch (e) {
+                alert('Device is still offline. Please check your connection or call the office.');
+                btn.textContent = 'Retry Connection';
+                btn.disabled = false;
+            }
+        }
+
+        // Open unified version 3 database to check logs
+        const request = indexedDB.open('acnow-offline-db', 3);
+        
+        request.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains('leads')) db.createObjectStore('leads', { keyPath: 'id', autoIncrement: true });
+            if (!db.objectStoreNames.contains('logs')) db.createObjectStore('logs', { keyPath: 'id', autoIncrement: true });
+            if (!db.objectStoreNames.contains('specs')) db.createObjectStore('specs', { keyPath: 'id', autoIncrement: true });
+            if (!db.objectStoreNames.contains('dead_letter')) db.createObjectStore('dead_letter', { keyPath: 'id', autoIncrement: true });
+            if (!db.objectStoreNames.contains('diagnostics')) db.createObjectStore('diagnostics', { keyPath: 'id', autoIncrement: true });
+        };
+
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            loadPendingRequests(db);
+        };
+
+        function loadPendingRequests(db) {
+            const stores = ['leads', 'logs', 'specs', 'dead_letter'];
+            const promises = stores.map(storeName => {
+                return new Promise((resolve) => {
+                    if (!db.objectStoreNames.contains(storeName)) {
+                        resolve({ store: storeName, items: [] });
+                        return;
+                    }
+                    const tx = db.transaction(storeName, 'readonly');
+                    const store = tx.objectStore(storeName);
+                    const req = store.getAll();
+                    req.onsuccess = () => resolve({ store: storeName, items: req.result });
+                    req.onerror = () => resolve({ store: storeName, items: [] });
+                });
+            });
+
+            Promise.all(promises).then(results => {
+                const list = document.getElementById('sync-list');
+                list.innerHTML = '';
+                let totalPending = 0;
+
+                results.forEach(({ store, items }) => {
+                    if (!items || items.length === 0) return;
+                    totalPending += items.length;
+
+                    items.forEach(item => {
+                        const li = document.createElement('li');
+                        li.className = 'sync-item';
+                        
+                        const timeString = new Date(item.timestamp || item.item?.timestamp || Date.now()).toLocaleTimeString();
+                        
+                        if (store === 'dead_letter') {
+                            li.style.borderLeft = '3px solid var(--secondary)';
+                            li.style.background = 'rgba(230, 57, 70, 0.05)';
+                            const label = item.item?.payload?.fname ? `${item.item.payload.fname}'s Request` : `${item.originalStore} update`;
+                            li.innerHTML = `⚠️ <strong>[Failed]</strong> [${timeString}] ${label} - Error: ${item.error}. <span style="font-size: 0.8rem; color: #60a5fa; cursor: pointer; text-decoration: underline;" onclick="retryDeadLetter(${item.id})">Retry Send</span>`;
+                        } else {
+                            const label = item.payload?.fname ? `${item.payload.fname}'s Request` : `${store} update`;
+                            li.textContent = `⏳ [Pending] [${timeString}] ${label} - Waiting for connection (Retries: ${item.retries || 0})`;
+                        }
+                        list.appendChild(li);
+                    });
+                });
+
+                if (totalPending > 0) {
+                    document.getElementById('sync-container').style.display = 'block';
+                }
+            });
+        }
+
+        window.retryDeadLetter = function(id) {
+            const req = indexedDB.open('acnow-offline-db', 3);
+            req.onsuccess = (e) => {
+                const db = e.target.result;
+                const tx = db.transaction('dead_letter', 'readwrite');
+                const dlStore = tx.objectStore('dead_letter');
+                const getReq = dlStore.get(id);
+                
+                getReq.onsuccess = () => {
+                    const data = getReq.result;
+                    if (!data) return;
+                    
+                    const originalStore = data.originalStore;
+                    const itemToRestore = {
+                        ...data.item,
+                        retries: 0,
+                        lastError: null
+                    };
+
+                    const delTx = db.transaction(['dead_letter', originalStore], 'readwrite');
+                    delTx.objectStore('dead_letter').delete(id);
+                    delTx.objectStore(originalStore).add(itemToRestore);
+
+                    delTx.oncomplete = () => {
+                        alert('Restored item back to queue. Reloading...');
+                        location.reload();
+                    };
+                };
+            };
+        };
+    </script>
+</body>
+</html>

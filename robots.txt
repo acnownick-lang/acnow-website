@@ -1,8 +1,12 @@
 User-agent: *
 Allow: /
 
-# Block any admin/draft paths if added later
-# Disallow: /draft/
-# Disallow: /admin/
+# Block internal utility pages
+Disallow: /offline.html
+Disallow: /dev-dashboard.html
+Disallow: /members.html
+Disallow: /team-portal.html
+Disallow: /3d-airflow.html
+Disallow: /corrosion-predictor.html
 
-Sitemap: https://acnowllc.netlify.app/sitemap.xml
+Sitemap: https://acnowllc.com/sitemap.xml

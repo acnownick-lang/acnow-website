@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="phase-1">
+<head>
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Same-Day AC Repair Services | Port St. Lucie, FL | A/C Now LLC</title>
+    <meta name="description" content="Fast, 24/7 emergency AC repair in Port St. Lucie, Stuart, Palm City, and Jupiter, FL. Licensed, veteran-owned HVAC diagnostics for Carrier, Trane, and all major brands.">
+    <link rel="canonical" href="https://acnowllc.com/ac-repair.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://acnowllc.com/ac-repair.html">
+    <meta property="og:title" content="24/7 Same-Day AC Repair &amp; Diagnostics | A/C Now LLC">
+    <meta property="og:description" content="Losing cooling? A/C Now LLC provides veteran-owned, same-day AC repair in Port St. Lucie, Stuart, Palm City, and Jupiter, FL. Reliable, flat-rate pricing.">
+    <meta property="og:image" content="https://acnowllc.com/downloaded_images/mascot-logo.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+    </noscript>
+    <link rel="stylesheet" href="redesign.css?v=101">
+    <!-- HVACBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HVACBusiness",
+      "name": "A/C Now LLC",
+      "@id": "https://acnowllc.com/#hvacbusiness",
+      "url": "https://acnowllc.com/",
+      "image": "https://acnowllc.com/downloaded_images/mascot-logo.svg",
+      "telephone": "(772) 521-3568",
+      "email": "info@acnowllc.com",
+      "priceRange": "$$",
+      "description": "A/C Now LLC is a veteran-owned, licensed HVAC contractor specializing in same-day AC repair and diagnostics across Martin and St. Lucie counties. License #CAC1820542.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
+        "addressLocality": "Port St. Lucie",
+        "addressRegion": "FL",
+        "postalCode": "34986",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 27.3138016,
+        "longitude": -80.3954409
+      }
+    }
+    </script>
+    <link rel="preload" as="image" href="downloaded_images/pillar_repair_bg.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="downloaded_images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
+    <style>
+        :root {
+            --primary: #0B63E5;
+            --secondary: #E63946;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);
+        }
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+            border: none !important;
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
+</head>
+<body>
+    <!-- Skip Navigation Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span class="top-bar-item">
+                <!-- WCAG 1.1.1: Decorative SVG must be aria-hidden -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-link">
+                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            </a>
+            <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+                                    <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="ac-installation.html" class="nav-link">AC Installation</a>
+                <a href="ac-repair.html" class="nav-link active">AC Repair</a>
+                <a href="ac-maintenance.html" class="nav-link">AC Maintenance</a>
+                <a href="commercial.html" class="nav-link">Commercial</a>
+                <a href="pool-heating.html" class="nav-link">Pool Heating</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" onclick="return false;">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="diagnose.html" class="">DIY Troubleshooter</a>
+                        <a href="planner.html" class="">AC Lifespan Planner</a>
+                        <a href="configurator.html" class="">Build HVAC System</a>
+                        <a href="corrosion-predictor.html" class="phase-2-only">Coil Corrosion Map</a>
+                        <a href="storm-prep.html" class="">Storm Prep Checklist</a>
+                        <a href="3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
+                    </div>
+                </div>
+                <a href="members.html" class="nav-link phase-2-only">Members Area</a>
+            </nav>
+            <a href="contact.html" class="btn btn-primary nav-cta">Get Free Estimate</a>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Subpage Banner -->
+        <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('downloaded_images/pillar_repair_bg.webp'); min-height: 40vh; padding: 80px 0;">
+            <div class="container">
+                <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
+                    <span class="hero-subtitle">24/7 EMERGENCY DIAGNOSTICS</span>
+                    <h1 class="hero-title" style="font-size: 48px; margin-bottom: 12px;">AC Repair &amp; Troubleshooting</h1>
+                    <p class="hero-text" style="margin-bottom: 0;">Losing cooling? Our licensed, veteran-owned team provides reliable, same-day repairs with military-grade precision.</p>
+                    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:28px;">
+                        <a href="tel:7725213568" class="btn btn-primary btn-large" style="background: var(--primary);"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call (772) 521-3568</a>
+                        <a href="contact.html" class="btn btn-secondary btn-large">Book Service Online</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Highlights -->
+        <section style="background: var(--dark); padding: 16px 0;">
+            <div class="container">
+                <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; align-items:center;">
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> $95 Diagnostic Dispatch</span>
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(11,99,229,0.35); border:1px solid rgba(11,99,229,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Same-Day Route Priority</span>
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(230,57,70,0.35); border:1px solid rgba(230,57,70,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 2 22 22 22"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Transparent Flat Rates</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Body Details -->
+        <section class="reveal" style="background-color: var(--white); padding: 140px 0 90px; scroll-margin-top: 110px;">
+            <div class="container">
+                <div class="about-grid grid-about" style="margin-bottom: 90px;">
+                    <div>
+                        <span class="section-tag">24/7 DISPATCH</span>
+                        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 16px;">Fast Diagnostic &amp; System Restorations</h2>
+                        <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">
+                            Losing cooling in the Florida summer heat is more than uncomfortable—it is an emergency. Our licensed and veteran technicians arrive with stocked service trucks, prepared to quickly identify faults on contactors, fan motors, evaporators, and compressors. We provide honest, flat-rate quotes prior to executing any repairs.
+                        </p>
+                        <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">
+                            Before scheduling a truck roll, you can run our interactive DIY troubleshooter to see if the issue is a simple thermostat configuration error or a clogged filter.
+                        </p>
+                        <div style="margin-top: 30px;">
+                            <a href="diagnose.html" class="btn btn-primary">Try Our DIY Troubleshooter</a>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="downloaded_images/repair_premium.webp" alt="Same-Day AC Repair" class="about-main-img" loading="lazy" width="600" height="450" style="border: 1px solid var(--gray-light); border-radius: 8px;">
+                    </div>
+                </div>
+
+                <!-- Common Issues Grid -->
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <span class="section-tag">COMMON CAUSES</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--dark);">What's Wrong with My AC?</h2>
+                </div>
+                <div class="features-grid" style="margin-bottom: 90px;">
+                    <div class="feature-card card-3d reveal-up" data-delay="0">
+                        <div style="font-size: 36px; color: var(--primary); margin-bottom: 16px; font-weight: 800;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 20px; margin-bottom: 12px; font-weight: 800; color: var(--dark);">Failed Capacitor</h3>
+                        <p style="font-size: 14.5px; color: var(--gray-dark); line-height: 1.6;">If your outdoor fan hums but doesn't spin, the start/run capacitor has likely failed due to high operating heat limits.</p>
+                    </div>
+                    <div class="feature-card card-3d reveal-up" data-delay="150">
+                        <div style="font-size: 36px; color: var(--primary); margin-bottom: 16px; font-weight: 800;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 20px; margin-bottom: 12px; font-weight: 800; color: var(--dark);">Low Refrigerant</h3>
+                        <p style="font-size: 14.5px; color: var(--gray-dark); line-height: 1.6;">If your lineset is freezing or the unit runs non-stop without cooling, a refrigerant leak is likely choking the system flow.</p>
+                    </div>
+                    <div class="feature-card card-3d reveal-up" data-delay="300">
+                        <div style="font-size: 36px; color: var(--primary); margin-bottom: 16px; font-weight: 800;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;"><path d="M23 12a11 11 0 0 1-22 0 11 11 0 0 1 22 0z"/><path d="M12 12m-3 0a3 3 0 1 0 6 0 3 3 0 1 0-6 0"/></svg></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 20px; margin-bottom: 12px; font-weight: 800; color: var(--dark);">Clogged Drain Line</h3>
+                        <p style="font-size: 14.5px; color: var(--gray-dark); line-height: 1.6;">Condensate lines clog with algae over time, triggering the emergency float safety switch to shut down all system power.</p>
+                    </div>
+                </div>
+
+                <!-- Call to Action Form -->
+                <div class="about-grid grid-about" style="background: var(--dark); padding: 50px; border-radius: 12px; color: white;">
+                    <div>
+                        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: white; margin-bottom: 16px;">Schedule Same-Day Repair Service</h2>
+                        <p style="color: rgba(255,255,255,0.8); margin-bottom: 24px; line-height: 1.7;">
+                            AC blowing warm air? Condenser unit won't start? Request emergency dispatch now. Our veteran-led crew handles diagnostic service calls fast.
+                        </p>
+                        <div style="font-size: 14px; color: var(--gold); font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Certified &amp; Bonded Technicians
+                        </div>
+                    </div>
+                    <div>
+                        <form name="repair-request" method="POST" data-netlify="true" class="contact-form" style="display:flex; flex-direction:column; gap:16px;">
+                            <input autocomplete="name" type="hidden" name="form-name" value="repair-request">
+                            <div>
+                                <label for="name" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Full Name</label>
+                                <input autocomplete="name" type="text" id="name" name="name" required placeholder="Jane Doe" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;">
+                            </div>
+                            <div>
+                                <label for="phone" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Phone Number</label>
+                                <input autocomplete="tel" type="tel" id="phone" name="phone" required placeholder="(772) 521-3568" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;">
+                            </div>
+                            <div>
+                                <label for="issue-description" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Describe the issue</label>
+                                <textarea id="issue-description" name="issue-description" required rows="3" placeholder="Blowing warm air / Fan not spinning / Leaking water..." style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white; font-family:inherit;"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 10px; font-weight: 700; width: 100%;">Dispatch Same-Day Repair</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="downloaded_images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
+                    <strong>A/C Now LLC</strong><br>
+                    <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
+                    Port St. Lucie, FL 34986<br>
+                    <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
+                </address>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Our Services</div>
+                <a href="ac-repair.html">AC Repair</a>
+                <a href="ac-installation.html">AC Installation</a>
+                <a href="ac-maintenance.html">Maintenance</a>
+                <a href="commercial.html">Commercial</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Quick Links</div>
+                <a href="about.html">About Us</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="diagnose.html">DIY Troubleshooter</a>
+                <a href="planner.html">AC Lifespan Planner</a>
+                <a href="configurator.html">Build HVAC System</a>
+                <a href="storm-prep.html">Storm Prep Checklist</a>
+                <a href="areas.html">Service Areas</a>
+                <a href="members.html" class="phase-2-only">Members Area</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Service Cities</div>
+                <a href="index.html">Port St. Lucie</a>
+                <a href="hvac-services-palm-city.html">Palm City</a>
+                <a href="hvac-services-stuart.html">Stuart</a>
+                <a href="areas.html">All Service Areas</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>&copy; 2026 A/C Now LLC. All rights reserved. Licensed & Insured. Florida License #CAC1820542</p>
+                <div style="font-size: 12.5px; display: flex; gap: 15px;">
+                    <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js?v=101" defer></script>
+    <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
+        <a href="tel:+17725213568" class="sticky-cta-btn phone-btn" aria-label="Call A/C Now LLC at (772) 521-3568"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> Call Now</a>
+        <a href="contact.html" class="sticky-cta-btn book-btn" aria-label="Book HVAC service online"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Book Online</a>
+    </div>
+</body>
+</html>

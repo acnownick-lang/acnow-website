@@ -1,16 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="phase-1">
 <head>
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
+    <script>
+    window.__errors = [];
+    window.__consoleLogs = [];
+    window.onerror = function(msg, url, line, col, error) {
+        window.__errors.push({msg: msg, url: url, line: line, col: col, error: error ? error.stack : null});
+    };
+    const orgLog = console.log;
+    const orgWarn = console.warn;
+    const orgError = console.error;
+    console.log = function(...args) {
+        window.__consoleLogs.push({type: 'log', text: args.join(' ')});
+        orgLog.apply(console, args);
+    };
+    console.warn = function(...args) {
+        window.__consoleLogs.push({type: 'warn', text: args.join(' ')});
+        orgWarn.apply(console, args);
+    };
+    console.error = function(...args) {
+        window.__consoleLogs.push({type: 'error', text: args.join(' ')});
+        orgError.apply(console, args);
+    };
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us Today | A/C Now LLC | 24/7 HVAC Emergency Services</title>
     <meta name="description" content="Get in touch with A/C Now LLC for reliable 24/7 air conditioning repair, system replacements and maintenance. Phone: (772) 521-3568.">
-    <link rel="canonical" href="https://acnowllc.netlify.app/contact.html">
+    <link rel="canonical" href="https://acnowllc.com/contact.html">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://acnowllc.netlify.app/contact.html">
+    <meta property="og:url" content="https://acnowllc.com/contact.html">
     <meta property="og:title" content="Contact Us Today | A/C Now LLC | 24/7 HVAC Emergency Services">
     <meta property="og:description" content="Get in touch with A/C Now LLC for reliable 24/7 air conditioning repair, system replacements and maintenance. Phone: (772) 521-3568.">
-    <meta property="og:image" content="https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png">
+    <meta property="og:image" content="https://acnowllc.com/downloaded_images/mascot-logo.svg">
     <!-- Google Fonts: Non-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,10 +82,10 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="redesign.css">
+    <link rel="stylesheet" href="redesign.css?v=101">
     <!-- LCP Preload -->
-    <link rel="preload" as="image" href="downloaded_images/banner-contact.jpg" fetchpriority="high">
-    <link rel="preload" as="image" href="downloaded_images/mascot-logo-transparent.png">
+    <link rel="preload" as="image" href="downloaded_images/banner-contact.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="downloaded_images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
 
                         <!-- Google LocalBusiness Schema Markup -->
     <script type="application/ld+json">
@@ -32,9 +93,9 @@
       "@context": "https://schema.org",
       "@type": "HVACBusiness",
       "name": "A/C Now LLC",
-      "@id": "https://acnowllc.netlify.app/#hvacbusiness",
-      "url": "https://acnowllc.netlify.app/",
-      "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
+      "@id": "https://acnowllc.com/#hvacbusiness",
+      "url": "https://acnowllc.com/",
+      "image": "https://acnowllc.com/downloaded_images/mascot-logo.svg",
       "telephone": "(772) 521-3568",
       "email": "info@acnowllc.com",
       "priceRange": "$$",
@@ -125,6 +186,9 @@
             border: none !important;
         }
     </style>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
 </head>
 <body>
     <!-- WCAG 2.4.1: Skip Navigation Link -->
@@ -134,11 +198,9 @@
     <div class="top-bar">
         <div class="container top-bar-content">
             <span class="top-bar-item">
+                <!-- WCAG 1.1.1: Decorative SVG must be aria-hidden -->
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
-            </span>
-            <span class="top-bar-item highlight">
-                <span class="badge">PROMO</span> Are you a new customer? Save 10% on your first repair service!
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
             </span>
         </div>
     </div>
@@ -149,19 +211,27 @@
             <a href="index.html" class="logo-link">
                 <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
             </a>
-            <button class="mobile-nav-toggle"
-                    id="hamburger-btn"
-                    aria-label="Open navigation menu"
-                    aria-expanded="false"
-                    aria-controls="primary-nav">☰</button>
-            <nav class="nav" id="primary-nav" aria-label="Primary navigation">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="services.html" class="nav-link">HVAC Services</a>
-                <a href="pool-heating.html" class="nav-link">Pool Heating</a>
+            <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+                                    <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="ac-installation.html" class="nav-link">AC Installation</a>
+                <a href="ac-repair.html" class="nav-link">AC Repair</a>
+                <a href="ac-maintenance.html" class="nav-link">AC Maintenance</a>
                 <a href="commercial.html" class="nav-link">Commercial</a>
-                <a href="areas.html" class="nav-link">Service Area</a>
-                <a href="about.html" class="nav-link">About Us</a>
-                <a href="contact.html" class="nav-link active" aria-current="page">Contact</a></nav>
+                <a href="pool-heating.html" class="nav-link">Pool Heating</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" onclick="return false;">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="diagnose.html" class="">DIY Troubleshooter</a>
+                        <a href="planner.html" class="">AC Lifespan Planner</a>
+                        <a href="configurator.html" class="">Build HVAC System</a>
+                        <a href="corrosion-predictor.html" class="phase-2-only">Coil Corrosion Map</a>
+                        <a href="storm-prep.html" class="">Storm Prep Checklist</a>
+                        <a href="3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
+                    </div>
+                </div>
+                <a href="members.html" class="nav-link phase-2-only">Members Area</a>
+            </nav>
             <a href="contact.html" class="btn btn-primary nav-cta">Get Free Estimate</a>
         </div>
     </header>
@@ -169,7 +239,7 @@
 
 
     <!-- Subpage Banner -->
-    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.9) 0%, rgba(10, 24, 47, 0.85) 100%), url('downloaded_images/banner-contact.jpg'); min-height: 40vh; padding: 80px 0;">
+    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('downloaded_images/banner-contact.webp'); min-height: 40vh; padding: 80px 0;">
         <div class="container">
             <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
                 <span class="hero-subtitle">GET IN TOUCH</span>
@@ -180,7 +250,7 @@
     </section>
 
     <!-- Contact & Form Section -->
-    <section class="reveal contact-section" style="background-color: var(--white); padding: 90px 0;">
+    <section class="reveal contact-section" id="contact" style="background-color: var(--white); padding: 140px 0 90px; scroll-margin-top: 110px;">
         <div class="container contact-container grid-contact">
             <div class="contact-info-panel">
                 <span class="section-tag">24/7 SUPPORT CHANNELS</span>
@@ -189,7 +259,7 @@
                 
                 <div class="contact-channels">
                     <div class="contact-channel">
-                        <span class="channel-icon" aria-hidden="true">📞</span>
+                        <span class="channel-icon" aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
                         <div>
                             <strong>Primary Line (Call/Text)</strong>
                             <p style="font-size: 16px; font-weight: 700; color: var(--primary);"><a href="tel:+17725213568" class="phone-link" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></p>
@@ -203,7 +273,7 @@
                         </div>
                     </div>
                     <div class="contact-channel">
-                        <span class="channel-icon">⏰</span>
+                        <span class="channel-icon"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
                         <div>
                             <strong>Office Operating Hours</strong>
                             <p style="font-size: 14px; color: var(--gray-dark);">Monday - Saturday: 8:00 AM - 6:00 PM<br>Emergency Callouts: 24 Hours / 7 Days</p>
@@ -213,61 +283,75 @@
             </div>
 
                         <div class="contact-form-panel">
-                <!-- Innovations Tab Headers -->
-                <div class="innovations-tab-container" style="margin-bottom: 25px;">
-                    <!-- WCAG 4.1.2: Contact form tabs with ARIA tab roles -->
-                <div class="inno-tab-headers" style="display: flex; border-bottom: 2px solid var(--gray-light); margin-bottom: 20px;" role="tablist" aria-label="Contact form options">
+                <!-- WCAG 4.1.2: Contact form tabs with ARIA tab roles -->
+                <div class="inno-tab-headers" style="display: flex; border-bottom: 2px solid var(--gray-light); margin-bottom: 25px; overflow-x: auto; gap: 5px;" role="tablist" aria-label="Contact form options">
                     <button onclick="switchContactTab(event, 'general-message-tab')"
                             class="inno-tab-btn active"
                             role="tab"
                             id="tab-general"
                             aria-selected="true"
                             aria-controls="general-message-tab"
-                            style="flex: 1; padding: 12px; border: none; background: transparent; font-family: var(--font-heading); font-weight: 700; color: var(--gray-dark); border-bottom: 2px solid transparent; cursor: pointer; transition: var(--transition);">General Request</button>
+                            style="flex: 1; padding: 12px 15px; border: none; font-family: var(--font-heading); font-weight: 700; cursor: pointer; transition: var(--transition); min-width: 120px; white-space: nowrap;">General Request</button>
                     <button onclick="switchContactTab(event, 'diagnostic-wizard-tab')"
                             class="inno-tab-btn"
                             role="tab"
                             id="tab-diagnostic"
                             aria-selected="false"
                             aria-controls="diagnostic-wizard-tab"
-                            style="flex: 1; padding: 12px; border: none; background: transparent; font-family: var(--font-heading); font-weight: 700; color: var(--gray-dark); border-bottom: 2px solid transparent; cursor: pointer; transition: var(--transition);">AC Troubleshooter</button>
+                            style="flex: 1; padding: 12px 15px; border: none; font-family: var(--font-heading); font-weight: 700; cursor: pointer; transition: var(--transition); min-width: 120px; white-space: nowrap;">AC Troubleshooter</button>
+                    <button onclick="switchContactTab(event, 'dispatch-tracker-tab')"
+                            class="inno-tab-btn"
+                            role="tab"
+                            id="tab-dispatch"
+                            aria-selected="false"
+                            aria-controls="dispatch-tracker-tab"
+                            style="flex: 1; padding: 12px 15px; border: none; font-family: var(--font-heading); font-weight: 700; cursor: pointer; transition: var(--transition); min-width: 120px; white-space: nowrap;">Dispatch Map</button>
+                    <button onclick="switchContactTab(event, 'veteran-verify-tab')"
+                            class="inno-tab-btn"
+                            role="tab"
+                            id="tab-veteran"
+                            aria-selected="false"
+                            aria-controls="veteran-verify-tab"
+                            style="flex: 1; padding: 12px 15px; border: none; font-family: var(--font-heading); font-weight: 700; cursor: pointer; transition: var(--transition); min-width: 120px; white-space: nowrap;">Veteran Gate</button>
                 </div>
                     
                     <!-- Tab Panel 1: General Message Form -->
                     <div id="general-message-tab" class="inno-tab-panel active"
                          role="tabpanel" aria-labelledby="tab-general" tabindex="0">
-                        <form class="contact-form" method="POST" onsubmit="event.preventDefault(); alert('Estimate request submitted successfully! Chris or Sean will contact you shortly.');">
-                <div style="display:none;"><label for="honeypot_1">Leave this field blank</label><input type="text" id="honeypot_1" name="honeypot"></div>
+                        <form id="contact-general-form" class="contact-form" method="POST">
+                <div style="display:none;"><label for="honeypot_1">Leave this field blank</label><input autocomplete="name" type="text" id="honeypot_1" name="honeypot"></div>
 
-                            <div class="form-row grid-2-col">
+                            <div class="form-row">
                                 <div class="form-group">
-                                    <label for="fname">First Name</label>
-                                    <input type="text" id="fname" placeholder="Chris" required  name="fname">
-                                </div>
-                                <div class="form-group">
-                                    <label for="lname">Last Name</label>
-                                    <input type="text" id="lname" placeholder="Evans" required  name="lname">
+                                    <label for="fullname_contact">First & Last Name</label>
+                                    <input autocomplete="name" type="text" id="fullname_contact" placeholder="John Doe" required name="fullname">
                                 </div>
                             </div>
                             <div class="form-row grid-2-col">
                                 <div class="form-group">
                                     <label for="tel">Phone Number</label>
-                                    <input type="tel" id="tel" placeholder="(772) 555-0199" required  name="tel">
+                                    <input autocomplete="tel" type="tel" id="tel" placeholder="(772) 521-3568" required  name="tel">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email Address</label>
-                                    <input type="email" id="email" placeholder="chris@example.com" required  name="email">
+                                    <input autocomplete="email" type="email" id="email" placeholder="chris@example.com" required  name="email">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="city">Your Florida City</label>
-                                <input type="text" id="city" placeholder="Port St. Lucie" required  name="city">
+                                <input autocomplete="name" type="text" id="city" placeholder="Port St. Lucie" required  name="city">
                             </div>
                             <div class="form-group">
-                                <label for="message">How can we assist you?</label>
-                                <textarea id="message" rows="4" placeholder="Describe the cooling or heating issues you're experiencing..." required  name="message"></textarea>
+                                <label for="message">How can we assist you? (Optional)</label>
+                                <textarea id="message" rows="4" placeholder="Briefly describe your cooling or heating needs (e.g. AC repair, system replacement, preventative maintenance)..." name="message"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-full">Submit Service Request</button>
+                            <div class="form-group" style="margin-bottom:20px;">
+                                <div id="dispatch-calendar-container"></div>
+                            </div>
+                             <p style="font-size: 11px; color: var(--gray-dark); margin: 15px 0 20px 0; line-height: 1.5; text-align: left;">
+                                 By submitting, you consent to receive calls and text messages (SMS/MMS) from A/C Now LLC at the number provided, including automated, pre-recorded, and promotional messages. Consent is not a condition of purchase. Message and data rates may apply. Message frequency varies. Reply STOP to cancel or HELP for help. View our <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>.
+                             </p>
+                            <button type="submit" class="btn btn-primary btn-full">Get My Free Quote</button>
                         </form>
                     </div>
                     
@@ -278,16 +362,16 @@
                             <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 12px;">What is your AC system doing?</h3>
                             <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
                                 <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--gray-light); border-radius: 6px; cursor: pointer;">
-                                    <input type="radio" name="ac-issue" value="warm-air" checked> Unit turns on, but blowing warm air
+                                    <input autocomplete="name" type="radio" name="ac-issue" value="warm-air" checked> Unit turns on, but blowing warm air
                                 </label>
                                 <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--gray-light); border-radius: 6px; cursor: pointer;">
-                                    <input type="radio" name="ac-issue" value="no-power"> Unit won't turn on at all (no power/blower)
+                                    <input autocomplete="name" type="radio" name="ac-issue" value="no-power"> Unit won't turn on at all (no power/blower)
                                 </label>
                                 <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--gray-light); border-radius: 6px; cursor: pointer;">
-                                    <input type="radio" name="ac-issue" value="water-leak"> Water is leaking or pooling around air handler
+                                    <input autocomplete="name" type="radio" name="ac-issue" value="water-leak"> Water is leaking or pooling around air handler
                                 </label>
                                 <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--gray-light); border-radius: 6px; cursor: pointer;">
-                                    <input type="radio" name="ac-issue" value="loud-noise"> Unit makes squealing or loud rattling noises
+                                    <input autocomplete="name" type="radio" name="ac-issue" value="loud-noise"> Unit makes squealing or loud rattling noises
                                 </label>
                             </div>
                             <button onclick="runDiagnosticAssessment()" class="btn btn-primary btn-full">Run System Diagnostics</button>
@@ -295,29 +379,109 @@
                         
                         <div id="wizard-pane-2" style="display: none; border-top: 1px solid var(--gray-light); padding-top: 20px;">
                             <div style="background: rgba(11, 99, 229, 0.05); border: 1px solid rgba(11, 99, 229, 0.1); padding: 15px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; line-height: 1.6;">
-                                🛡️ <strong>Initial Assessment:</strong><br>
+                                <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <strong>Initial Assessment:</strong><br>
                                 <span id="diagnostic-assessment-text">Calculated...</span>
                             </div>
                             
                             <!-- Simple booking triggers -->
-                        <form class="contact-form" onsubmit="event.preventDefault(); alert('Priority dispatch secured. A technician will contact you shortly.'); resetDiagnosticWizard();" method="POST">
-                <div style="display:none;"><label for="honeypot_2">Leave this field blank</label><input type="text" id="honeypot_2" name="honeypot"></div>
+                        <form id="contact-wizard-form" class="contact-form" method="POST">
+                <div style="display:none;"><label for="honeypot_2">Leave this field blank</label><input autocomplete="name" type="text" id="honeypot_2" name="honeypot"></div>
 
                                 <div class="form-row grid-2-col">
                                     <div class="form-group">
                                         <label for="w-name">Your Name</label>
-                                        <input type="text" id="w-name" placeholder="Name" required name="w-name">
+                                        <input autocomplete="name" type="text" id="w-name" placeholder="Name" required name="w-name">
                                     </div>
                                     <div class="form-group">
                                         <label for="w-phone">Phone Number</label>
-                                        <input type="tel" id="w-phone" placeholder="Phone" required name="w-phone">
+                                        <input autocomplete="tel" type="tel" id="w-phone" placeholder="Phone" required name="w-phone">
                                     </div>
                                 </div>
+                                <p style="font-size: 11px; color: var(--gray-dark); margin: 15px 0 20px 0; line-height: 1.5; text-align: left;">
+                                    By submitting, you consent to receive calls and text messages (SMS/MMS) from A/C Now LLC at the number provided, including automated, pre-recorded, and promotional messages. Consent is not a condition of purchase. Message and data rates may apply. Message frequency varies. Reply STOP to cancel or HELP for help. View our <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>.
+                                </p>
                                 <button type="submit" class="btn btn-gold btn-full" style="padding: 14px 20px;">Secure Priority Dispatch Slot</button>
                             </form>
                         </div>
                     </div>
-                </div>
+
+                    <!-- Tab Panel 3: Live Dispatch Map Tracker -->
+                    <div id="dispatch-tracker-tab" class="inno-tab-panel"
+                         role="tabpanel" aria-labelledby="tab-dispatch" tabindex="0" style="display: none;">
+                        <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 8px;">Live Dispatch Tracker</h3>
+                        <p style="font-size: 13px; color: var(--gray-dark); margin-bottom: 15px;">Simulate en-route tracking of your assigned service vehicle in real time.</p>
+                        
+                        <div style="width: 100%; height: 200px; background: #0A182F; border: 1.5px solid var(--primary); border-radius: 12px; position: relative; overflow: hidden; margin-bottom: 15px;">
+                            <!-- Road lines SVG -->
+                            <svg viewBox="0 0 400 200" style="width:100%; height:100%; display:block;">
+                                <!-- Grid Lines -->
+                                <path d="M 0 50 L 400 50 M 0 150 L 400 150 M 100 0 L 100 200 M 300 0 L 300 200" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" />
+                                
+                                <!-- Stuart Highway Route (Thick blue street) -->
+                                <path id="dispatch-road-path" d="M 30 50 L 100 50 L 100 150 L 300 150 L 300 80 L 350 80" fill="none" stroke="rgba(11, 99, 229, 0.4)" stroke-width="8" stroke-linecap="round" />
+                                
+                                <!-- Home Icon (Target) -->
+                                <g transform="translate(340, 65)">
+                                    <rect width="20" height="20" rx="3" fill="#0B7A53" />
+                                    <path d="M 3 10 L 10 3 L 17 10 L 14 10 L 14 17 L 6 17 L 6 10 Z" fill="#fff" />
+                                </g>
+                                <text x="350" y="98" fill="#0B7A53" font-size="8" font-weight="bold" text-anchor="middle" font-family="monospace">YOUR HOME</text>
+
+                                <!-- Van Marker (Animated) -->
+                                <g id="dispatch-van-marker" transform="translate(30, 50)" style="transition: transform 0.05s linear;">
+                                    <circle cx="0" cy="0" r="10" fill="#C22A36" stroke="#fff" stroke-width="1.5" />
+                                    <!-- Simple Van graphic inside -->
+                                    <path d="M -5 -2 L -1 -2 L 2 1 L 5 1 L 5 4 L -5 4 Z" fill="#fff" transform="scale(0.8) translate(-1, -1)" />
+                                </g>
+                            </svg>
+                            
+                            <!-- Tracking Status Display -->
+                            <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(10,24,47,0.9); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center; font-family:monospace; font-size:11px; color:#fff;">
+                                <span>Status: <strong id="dispatch-status" style="color:#60A5FA;">VAN DEPARTED</strong></span>
+                                <span>ETA: <strong id="dispatch-eta" style="color:#0B7A53;">12 Mins</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div style="display:flex; gap:10px;">
+                            <button onclick="startDispatchSimulation()" class="btn btn-primary" style="flex:1; font-size:12px;">Start Tracking Simulation</button>
+                            <button onclick="sendSimulatedGateCode()" class="btn btn-secondary" style="font-size:12px;">Send Gate Code</button>
+                        </div>
+                    </div>
+
+                    <!-- Tab Panel 4: Veteran Identity Verification -->
+                    <div id="veteran-verify-tab" class="inno-tab-panel"
+                         role="tabpanel" aria-labelledby="tab-veteran" tabindex="0" style="display: none;">
+                        <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 8px;">Veteran Verification Gate</h3>
+                        <p style="font-size: 13px; color: var(--gray-dark); margin-bottom: 20px;">Verify your military/veteran status to lock in an active 5% lifetime discount on all services.</p>
+                        
+                        <div id="vet-input-fields" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="vet-branch">Military Service Branch</label>
+                                <select id="vet-branch" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:13px; font-weight:600; color:var(--dark);">
+                                    <option value="army">U.S. Army</option>
+                                    <option value="navy">U.S. Navy</option>
+                                    <option value="airforce">U.S. Air Force</option>
+                                    <option value="marines">U.S. Marine Corps</option>
+                                    <option value="coastguard">U.S. Coast Guard</option>
+                                    <option value="spaceforce">U.S. Space Force</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vet-id">Service / Veteran ID Number</label>
+                                <input type="text" id="vet-id" placeholder="e.g. VET-8829-FL" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--gray-light); font-size:13px;">
+                            </div>
+                            
+                            <button onclick="verifyVeteranStatus()" class="btn btn-gold btn-full">Verify Status & Apply Discount</button>
+                        </div>
+                        
+                        <!-- Verification Status Banner -->
+                        <div id="vet-success-banner" style="display:none; background: rgba(16, 185, 129, 0.1); border: 1.5px solid #0B7A53; padding: 15px; border-radius: 12px; text-align: center; color:#0B7A53; font-family:monospace; font-size:12px;">
+                            <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:1.8em;height:1.8em;margin-bottom:6px; display:block; margin-left:auto; margin-right:auto;"><polyline points="20 6 9 17 4 12"/></svg>
+                            <strong>VETERAN STATUS VERIFIED ACTIVE</strong><br>
+                            Discount Code Applied: <span style="font-weight:800; font-size:14px; text-transform:uppercase; color:#fff; background:#0B7A53; padding:2px 6px; border-radius:4px; margin-left:5px;">HONOR5</span>
+                        </div>
+                    </div>
             </div>
         </div>
     </section>
@@ -330,28 +494,32 @@
 <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="downloaded_images/Logo2.webp" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="120" height="48">
+                <img src="downloaded_images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
-                    1391 NW St. Lucie West Blvd, STE 120<br>
+                    <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
                     Port St. Lucie, FL 34986<br>
                     <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
                 </address>
             </div>
             <div class="footer-links">
                 <div class="footer-heading">Our Services</div>
-                <a href="services.html">AC Repair</a>
-                <a href="services.html">AC Installation</a>
-                <a href="services.html">Maintenance</a>
+                <a href="ac-repair.html">AC Repair</a>
+                <a href="ac-installation.html">AC Installation</a>
+                <a href="ac-maintenance.html">AC Maintenance</a>
                 <a href="services.html">Air Quality</a>
             </div>
-            <div class="footer-links">
+                        <div class="footer-links">
                 <div class="footer-heading">Quick Links</div>
                 <a href="about.html">About Us</a>
                 <a href="reviews.html">Reviews</a>
-                <a href="pool-heating.html">Pool Heating</a>
+                <a href="diagnose.html">DIY Troubleshooter</a>
+                <a href="planner.html">AC Lifespan Planner</a>
+                <a href="configurator.html">Build HVAC System</a>
+                <a href="storm-prep.html">Storm Prep Checklist</a>
                 <a href="areas.html">Service Areas</a>
+                <a href="members.html" class="phase-2-only">Members Area</a>
                 <a href="contact.html">Contact Us</a>
             </div>
             <div class="footer-links">
@@ -365,16 +533,81 @@
         <div class="footer-bottom">
             <div class="container footer-bottom-content">
                 <p>&copy; 2026 A/C Now LLC. All rights reserved. Licensed & Insured. Florida License #CAC1820542</p>
+                <div style="font-size: 12.5px; display: flex; gap: 15px;">
+                    <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
+                </div>
                 
             </div>
         </div>
     </footer>
-    <script src="app.js" defer></script>
+    <script src="app.js?v=101"></script>
+    <script src="calendar-widget.js?v=101" defer></script>
     <!-- WCAG 4.1.2: Sticky CTA with role + aria-labels -->
     <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
-        <a href="tel:+17725213568" class="sticky-cta-btn phone-btn" aria-label="Call A/C Now LLC at (772) 521-3568"><span aria-hidden="true">📞</span> Call Now</a>
-        <a href="contact.html" class="sticky-cta-btn book-btn" aria-label="Book HVAC service online"><span aria-hidden="true">📅</span> Book Online</a>
+        <a href="tel:+17725213568" class="sticky-cta-btn phone-btn" aria-label="Call A/C Now LLC at (772) 521-3568"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> Call Now</a>
+        <a href="contact.html" class="sticky-cta-btn book-btn" aria-label="Book HVAC service online"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Book Online</a>
     </div>
 
+    <!-- Dynamic Plan Selection Parser -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get("plan");
+        const messageField = document.getElementById("message");
+        
+        if (plan && messageField) {
+            let planName = "";
+            let planPrice = "";
+            
+            switch(plan.toLowerCase()) {
+                case "preferred":
+                    planName = "Preferred Care (Residential)";
+                    planPrice = "$14.95/mo";
+                    break;
+                case "comfort":
+                    planName = "Comfort Club (Residential)";
+                    planPrice = "$19.95/mo";
+                    break;
+                case "elite":
+                    planName = "Precision Elite (Residential)";
+                    planPrice = "$29.95/mo";
+                    break;
+                case "property":
+                    planName = "Property Care (Commercial)";
+                    planPrice = "Custom Quote";
+                    break;
+                case "association":
+                    planName = "Association Pro (Commercial)";
+                    planPrice = "Custom Quote";
+                    break;
+                case "enterprise":
+                    planName = "Enterprise Elite (Commercial)";
+                    planPrice = "Custom Quote";
+                    break;
+            }
+            
+            if (planName) {
+                // Set message textarea value
+                messageField.value = `I am interested in signing up for the ${planName} plan (${planPrice}). Please contact me to set up my membership and schedule the first service visit.`;
+                
+                // Insert visual confirmation banner
+                const form = document.getElementById("contact-general-form");
+                if (form) {
+                    const badge = document.createElement("div");
+                    badge.style.cssText = "background: rgba(11, 99, 229, 0.08); border-left: 4px solid var(--primary); padding: 15px; margin-bottom: 25px; border-radius: 6px; font-size: 14.5px; color: var(--dark); font-weight: 600; display: flex; align-items: center; gap: 10px; text-align: left;";
+                    badge.innerHTML = `
+                        <span style="font-size: 18px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                        <div>
+                            Selected Tier: <span style="color: var(--primary); font-weight: 800;">${planName}</span> 
+                            <span style="color: var(--gray-dark); font-weight: 400; margin-left: 5px;">(${planPrice})</span>
+                        </div>
+                    `;
+                    form.insertBefore(badge, form.firstChild);
+                }
+            }
+        }
+    });
+    </script>
 </body>
 </html>

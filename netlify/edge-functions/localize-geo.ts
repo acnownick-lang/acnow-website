@@ -27,8 +27,8 @@ const MARKET_DATA: Record<string, MarketCopy> = {
     headlineRes: "Jupiter's Premier AC Repair",
     headlineCom: "Commercial HVAC in Jupiter & Tequesta",
     serving: "Serving Jupiter, Tequesta & Hobe Sound.",
-    phone: "(561) 555-0199",
-    phoneHref: "tel:5615550199"
+    phone: "(772) 521-3568",
+    phoneHref: "tel:7725213568"
   },
   "Port St. Lucie": {
     headlineRes: "PSL's Certified HVAC Experts",
@@ -36,10 +36,17 @@ const MARKET_DATA: Record<string, MarketCopy> = {
     serving: "Serving Port St. Lucie, Fort Pierce & Lakewood Park.",
     phone: "(772) 521-3568",
     phoneHref: "tel:7725213568"
+  },
+  "Default": {
+    headlineRes: "Keep Your Family Cool",
+    headlineCom: "Manage Your Complex",
+    serving: "Serving Stuart, Palm City, Port St. Lucie & the Treasure Coast.",
+    phone: "(772) 521-3568",
+    phoneHref: "tel:7725213568"
   }
 };
 
-const DEFAULT_MARKET = "Stuart";
+const DEFAULT_MARKET = "Default";
 
 export default async (request: Request, context: Context) => {
   const url = new URL(request.url);
@@ -126,12 +133,12 @@ export default async (request: Request, context: Context) => {
   let html = await response.text();
 
   // 1. Replace title tag content
-  html = html.replace(/<title>[^<]*<\/title>/i, `<title>A/C Repair & HVAC Services in ${market}, FL | A/C Now LLC</title>`);
+  html = html.replace(/<title>[^<]*<\/title>/i, `<title>A/C Repair & HVAC Services in ${market === "Default" ? "Florida" : market + ", FL"} | A/C Now LLC</title>`);
 
   // 2. Replace visually hidden H1 content
   html = html.replace(
     /<h1 class="visually-hidden">[^<]*<\/h1>/i,
-    `<h1 class="visually-hidden">A/C Now LLC — AC Repair & HVAC Service in ${market}, FL | Same-Day | 24/7 Emergency</h1>`
+    `<h1 class="visually-hidden">A/C Now LLC — AC Repair & HVAC Service in ${market === "Default" ? "Florida" : market + ", FL"} | Same-Day | 24/7 Emergency</h1>`
   );
 
   // 3. Replace Residential side headline

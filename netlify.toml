@@ -7,7 +7,8 @@
 [functions]
   node_bundler = "esbuild"
 
-# Edge function routing for homepage geolocation personalization
-[[edge_functions]]
-  path = "/"
-  function = "localize-geo"
+# Edge functions disabled locally to bypass Deno CLI packaging errors.
+# They will be restored automatically on dev server exit.
+# [[edge_functions]]
+#   path = "/"
+#   function = "localize-geo"

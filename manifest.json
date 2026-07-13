@@ -1,22 +1,73 @@
 {
+  "id": "index.html?utm_source=pwa",
   "short_name": "A/C Now",
   "name": "A/C Now LLC | HVAC Diagnostics & Service",
+  "description": "Veteran-owned AC repair delivering military-grade precision for Treasure Coast homeowners. Same-day service, flat-rate pricing.",
+  "categories": ["business", "utilities"],
+  "lang": "en-US",
+  "prefer_related_applications": false,
+  "display_override": ["standalone", "minimal-ui"],
   "icons": [
     {
-      "src": "downloaded_images/Logo2.webp",
-      "type": "image/webp",
-      "sizes": "192x192"
+      "src": "downloaded_images/pwa-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
-      "src": "downloaded_images/mascot-logo-transparent.png",
+      "src": "downloaded_images/pwa-icon-512-maskable.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "downloaded_images/pwa-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "downloaded_images/pwa-icon-192-maskable.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Request Service",
+      "short_name": "Request",
+      "description": "Book an AC service call or request a free estimate",
+      "url": "contact.html?utm_source=pwa_shortcut",
+      "icons": [{ "src": "downloaded_images/pwa-icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Our Services",
+      "short_name": "Services",
+      "description": "View AC repair, installation, maintenance & pool heating",
+      "url": "services.html?utm_source=pwa_shortcut",
+      "icons": [{ "src": "downloaded_images/pwa-icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "downloaded_images/banner-home.jpg",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "A/C Now Premium HVAC Services"
+    },
+    {
+      "src": "downloaded_images/split_res_repair.jpg",
+      "sizes": "880x880",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Expert Residential Air Conditioning Repair"
     }
   ],
   "start_url": "index.html?utm_source=pwa",
   "background_color": "#0A182F",
   "theme_color": "#0B63E5",
   "display": "standalone",
-  "orientation": "portrait",
-  "scope": "/"
+  "scope": "."
 }

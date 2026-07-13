@@ -1,17 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="phase-1">
 <head>
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AC Repair &amp; HVAC Service in Port St. Lucie, FL | A/C Now LLC</title>
     <meta name="description" content="Veteran-owned AC repair delivering military-grade precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568 for a free estimate today!">
-    <link rel="canonical" href="https://acnowllc.netlify.app/">
+    <link rel="canonical" href="https://acnowllc.com/">
     <link rel="manifest" href="manifest.json">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://acnowllc.netlify.app/">
+    <meta property="og:url" content="https://acnowllc.com/">
     <meta property="og:title" content="A/C Now LLC | Port St. Lucie AC Repair & HVAC">
     <meta property="og:description" content="Veteran-owned AC repair delivering military-grade precision for Port St. Lucie homeowners. Same-day service, flat-rate pricing. Call (772) 521-3568!">
-    <meta property="og:image" content="https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png">
+    <meta property="og:image" content="https://acnowllc.com/downloaded_images/mascot-logo.svg">
     <!-- Google Fonts: Non-blocking to eliminate render-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,19 +62,21 @@
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
     <!-- Base redesign CSS file -->
-    <link rel="stylesheet" href="redesign.css">
+    <link rel="stylesheet" href="redesign.css?v=101">
     <!-- HVACBusiness Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "HVACBusiness",
+      "@id": "https://acnowllc.com/#hvacbusiness",
       "name": "A/C Now LLC",
-      "@id": "https://acnowllc.netlify.app/#hvacbusiness",
-      "url": "https://acnowllc.netlify.app/",
-      "image": "https://acnowllc.netlify.app/downloaded_images/mascot-logo-transparent.png",
+      "url": "https://acnowllc.com/",
+      "logo": "https://acnowllc.com/downloaded_images/mascot-logo.svg",
+      "image": "https://acnowllc.com/downloaded_images/mascot-logo.svg",
       "telephone": "(772) 521-3568",
       "email": "info@acnowllc.com",
       "priceRange": "$$",
+      "paymentAccepted": "Cash, Credit Card, Financing",
       "description": "A/C Now LLC is a veteran-owned HVAC contractor in Port St. Lucie, FL delivering same-day residential AC repair, commercial HVAC systems, pool heat pumps, and preventive maintenance across the Treasure Coast. Florida License #CAC1820542.",
       "address": {
         "@type": "PostalAddress",
@@ -50,6 +91,43 @@
         "latitude": 27.3138016,
         "longitude": -80.3954409
       },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Port St. Lucie",
+          "sameAs": "https://en.wikipedia.org/wiki/Port_St._Lucie,_Florida"
+        },
+        {
+          "@type": "City",
+          "name": "Stuart",
+          "sameAs": "https://en.wikipedia.org/wiki/Stuart,_Florida"
+        },
+        {
+          "@type": "City",
+          "name": "Palm City",
+          "sameAs": "https://en.wikipedia.org/wiki/Palm_City,_Florida"
+        },
+        {
+          "@type": "City",
+          "name": "Jensen Beach",
+          "sameAs": "https://en.wikipedia.org/wiki/Jensen_Beach,_Florida"
+        },
+        {
+          "@type": "City",
+          "name": "Fort Pierce",
+          "sameAs": "https://en.wikipedia.org/wiki/Fort_Pierce,_Florida"
+        },
+        {
+          "@type": "City",
+          "name": "Hobe Sound",
+          "sameAs": "https://en.wikipedia.org/wiki/Hobe_Sound,_Florida"
+        },
+        {
+          "@type": "City",
+          "name": "Jupiter",
+          "sameAs": "https://en.wikipedia.org/wiki/Jupiter,_Florida"
+        }
+      ],
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -58,10 +136,60 @@
           "closes": "18:00"
         }
       ],
+      "sameAs": [
+        "https://www.facebook.com/acnowllc",
+        "https://www.yelp.com/biz/ac-now-llc"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "HVAC Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Residential AC Repair & Diagnostics",
+              "description": "Same-day diagnostic and repair services for residential air conditioning units."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "High-Efficiency HVAC System Replacement",
+              "description": "Energy-efficient system installation and replacement with flexible 0% down financing."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "HVAC Preventative Maintenance",
+              "description": "50-point precision tune-ups and Service Club memberships."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Commercial HVAC System Installation & Maintenance",
+              "description": "Rooftop package units and multi-zone commercial split systems."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pool Heat Pump Installation & Repair",
+              "description": "High-efficiency pool heating solutions and COP heat pump diagnostics."
+            }
+          }
+        ]
+      },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "5.0",
-        "reviewCount": "6"
+        "reviewCount": "3"
       },
       "review": [
         {
@@ -86,576 +214,12 @@
     }
     </script>
     <!-- LCP Critical Image Preloads -->
-    <link rel="preload" as="image" href="downloaded_images/mascot-logo-transparent.png" fetchpriority="high">
-    <link rel="preload" as="image" href="downloaded_images/split_res_hero.jpg" fetchpriority="high">
-    <link rel="preload" as="image" href="downloaded_images/split_com_hero.jpg">
+    <link rel="preload" as="image" href="downloaded_images/split_res_hero.webp" type="image/webp" fetchpriority="high">
     
     <!-- Custom Dual-Gate Split Hero and Dual Grid Styling -->
-    <style>
-        /* Split Hero Styles */
-        .split-hero {
-            display: flex;
-            width: 100%;
-            min-height: 80vh;
-            position: relative;
-            overflow: hidden;
-            background-color: var(--dark);
-        }
-        
-        .split-hero-side {
-            flex: 1;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 48px;
-            background-size: cover;
-            background-position: center;
-            transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 1;
-        }
-        
-        /* Dark overlay for contrast on background images */
-        .split-hero-side::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg, rgba(10, 24, 47, 0.7) 0%, rgba(10, 24, 47, 0.85) 100%);
-            z-index: 1;
-            transition: opacity 0.5s ease;
-        }
-        
-        .left-side {
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Interactive Hover expand/collapse */
-        @media (min-width: 992px) {
-            .split-hero-side:hover {
-                flex: 1.25;
-            }
-            .split-hero-side:hover::before {
-                background: linear-gradient(180deg, rgba(10, 24, 47, 0.55) 0%, rgba(10, 24, 47, 0.75) 100%);
-            }
-        }
-        
-        .side-content {
-            position: relative;
-            z-index: 2;
-            max-width: 520px;
-            text-align: center;
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.5s ease;
-        }
-        
-        .split-hero-side:hover .side-content {
-            transform: scale(1.02);
-        }
-        
-        .side-tag {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-family: var(--font-heading);
-        }
-        
-        .left-side .side-tag {
-            background-color: rgba(11, 99, 229, 0.15);
-            color: #60A5FA;
-            border: 1px solid rgba(11, 99, 229, 0.35);
-        }
-        
-        .right-side .side-tag {
-            background-color: rgba(230, 57, 70, 0.15);
-            color: #FCA5A5;
-            border: 1px solid rgba(230, 57, 70, 0.35);
-        }
-        
-        .side-headline {
-            font-family: var(--font-heading);
-            font-size: 46px;
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 20px;
-            letter-spacing: -0.5px;
-        }
-        
-        .side-desc {
-            font-size: 16px;
-            color: #A0AEC0;
-            margin-bottom: 35px;
-            line-height: 1.6;
-        }
-        
-        .side-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-        
-        /* Mascot Central Floating Container */
-        .split-hero-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .center-mascot {
-            width: 175px;
-            height: 175px;
-            background: rgba(10, 24, 47, 0.85);
-            border: 3px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 
-                        0 0 20px rgba(11, 99, 229, 0.3),
-                        inset 0 0 15px rgba(255, 255, 255, 0.05);
-            padding: 16px;
-            
-            pointer-events: auto;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        
-        .center-mascot:hover {
-            transform: scale(1.08);
-            border-color: var(--primary);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 
-                        0 0 25px rgba(11, 99, 229, 0.5);
-        }
-        
-        .mascot-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
-        }
-        
-        @keyframes float-logo {
-            0% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
-            50% { transform: translate(-50%, -50%) translateY(-12px) rotate(1deg); }
-            100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
-        }
-        
-        /* Mobile Responsive Split Hero */
-        @media (max-width: 991px) {
-            .split-hero {
-                flex-direction: column;
-                min-height: auto;
-            }
-            .split-hero-side {
-                width: 100%;
-                min-height: 50vh;
-                padding: 60px 24px;
-                border-right: none;
-            }
-            .left-side {
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            .side-headline {
-                font-size: 32px;
-            }
-            .split-hero-center {
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-            .center-mascot {
-                width: 100px;
-                height: 100px;
-                padding: 18px;
-            }
-        }
-        
-        /* Split Section Dual Card Grids */
-        .split-services-section {
-            padding: 80px 0;
-            background-color: var(--white);
-        }
-        
-        .grid-header {
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--gray-light);
-            padding-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .grid-header-left {
-            max-width: 600px;
-        }
-        
-        .grid-header h3 {
-            font-family: var(--font-heading);
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-top: 5px;
-        }
-        
-        .grid-tag {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--primary);
-            display: inline-block;
-        }
-        
-        .commercial-tag {
-            color: var(--secondary);
-        }
-        
-        .grid-header-desc {
-            font-size: 15px;
-            color: var(--gray-dark);
-            margin-top: 5px;
-        }
-        
-        .grid-badge-count {
-            background-color: var(--light);
-            border: 1px solid var(--gray-light);
-            color: var(--dark);
-            font-family: var(--font-heading);
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 13px;
-        }
-        
-        .res-grid-badge {
-            border-color: rgba(11, 99, 229, 0.2);
-            color: var(--primary);
-            background-color: rgba(11, 99, 229, 0.03);
-        }
-        
-        .com-grid-badge {
-            border-color: rgba(230, 57, 70, 0.2);
-            color: var(--secondary);
-            background-color: rgba(230, 57, 70, 0.03);
-        }
-        
-        .dual-services-wrap {
-            margin-bottom: 60px;
-        }
-        
-        .dual-services-wrap:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* Adjust Link colors on commercial cards to match the red style guide */
-        .commercial-card:hover .service-link {
-            color: #F87171 !important;
-            border-color: rgba(248, 113, 113, 0.6) !important;
-        }
-
-        /* Large absolute mascot logo layout overrides */
-        .header-container {
-            position: relative;
-            padding-left: 330px; /* Fully clear the wide mascot logo container */
-            min-height: 110px;
-        }
-        .logo-link {
-            position: absolute !important;
-            left: 10px;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-            z-index: 100 !important;
-            display: block !important;
-        }
-        .logo-img {
-            max-height: 100px !important;
-            height: 100px !important;
-            width: auto !important;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12)) !important;
-            transition: transform 0.3s ease !important;
-            margin: 0 !important;
-        }
-        .logo-img:hover {
-            transform: scale(1.04) !important;
-        }
-        .nav {
-            margin-left: auto;
-            gap: 15px !important; /* Smaller link spacing to prevent collisions */
-        }
-        .nav-link {
-            white-space: nowrap !important; /* Prevent vertical wrapping of link labels */
-            font-size: 13.5px !important; /* Slightly smaller font size to fit header container */
-        }
-        @media (max-width: 991px) {
-            .header-container {
-                padding-left: 0 !important;
-                min-height: auto;
-                /* FIX 3: was flex-direction:column — caused logo/hamburger to stack vertically */
-                flex-direction: row !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                gap: 0;
-            }
-            .logo-link {
-                position: static !important;
-                transform: none !important;
-                margin: 10px 0 !important;
-            }
-            .logo-img {
-                max-height: 90px !important;
-                height: 90px !important;
-            }
-            .nav {
-                margin-left: 0;
-            }
-        }
-        
-    </style>
-<style>
-        /* ==========================================================================
-           Cinematic Split Hero & Dual Themed Card Grid overrides
-           ========================================================================== */
-        .split-hero-side {
-            position: relative;
-            overflow: hidden;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 48px;
-            z-index: 1;
-            transition: flex 0.7s cubic-bezier(0.25, 1, 0.3, 1);
-        }
-        
-        .side-bg {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.3, 1);
-        }
-        
-        .side-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(10, 24, 47, 0.65) 0%, rgba(10, 24, 47, 0.85) 100%);
-            z-index: 2;
-            transition: opacity 0.6s ease;
-        }
-        
-        /* Expansion physics via parent has() */
-        @media (min-width: 992px) {
-            .split-hero:has(.left-side:hover) .left-side {
-                flex: 1.6;
-            }
-            .split-hero:has(.left-side:hover) .right-side {
-                flex: 0.6;
-            }
-            .split-hero:has(.right-side:hover) .right-side {
-                flex: 1.6;
-            }
-            .split-hero:has(.right-side:hover) .left-side {
-                flex: 0.6;
-            }
-        
-            /* Cinematic background zoom */
-            .split-hero-side:hover .side-bg {
-                transform: scale(1.08);
-            }
-            .split-hero-side:hover .side-overlay {
-                opacity: 0.75;
-            }
-        
-            /* Content focus effect - dim the opposite side */
-            .split-hero:has(.left-side:hover) .right-side .side-content {
-                opacity: 0.45;
-                transform: scale(0.96);
-            }
-            .split-hero:has(.right-side:hover) .left-side .side-content {
-                opacity: 0.45;
-                transform: scale(0.96);
-            }
-            
-            .side-content {
-                transition: transform 0.7s cubic-bezier(0.25, 1, 0.3, 1), 
-                            opacity 0.7s cubic-bezier(0.25, 1, 0.3, 1);
-            }
-        }
-        
-        /* Divider glow overlay */
-        .split-hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, 
-                transparent 0%, 
-                rgba(255, 255, 255, 0.15) 30%, 
-                rgba(255, 255, 255, 0.15) 70%, 
-                transparent 100%);
-            z-index: 5;
-            transition: left 0.7s cubic-bezier(0.25, 1, 0.3, 1), 
-                        background 0.5s ease, 
-                        box-shadow 0.5s ease;
-            pointer-events: none;
-        }
-        
-        @media (min-width: 992px) {
-            .split-hero:has(.left-side:hover)::after {
-                left: 72.7%;
-                background: linear-gradient(to bottom, transparent 0%, #60A5FA 30%, #60A5FA 70%, transparent 100%);
-                box-shadow: 0 0 15px rgba(96, 165, 250, 0.8), 0 0 30px rgba(96, 165, 250, 0.4);
-            }
-            .split-hero:has(.right-side:hover)::after {
-                left: 27.3%;
-                background: linear-gradient(to bottom, transparent 0%, #F87171 30%, #F87171 70%, transparent 100%);
-                box-shadow: 0 0 15px rgba(248, 113, 113, 0.8), 0 0 30px rgba(248, 113, 113, 0.4);
-            }
-        }
-        
-        @media (max-width: 991px) {
-            .split-hero::after {
-                display: none;
-            }
-        }
-        
-        /* Mascot Drift transition */
-        .split-hero-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            pointer-events: none;
-            transition: left 0.7s cubic-bezier(0.25, 1, 0.3, 1);
-            animation: float-logo 5s ease-in-out infinite;
-        }
-        
-        .center-mascot {
-            
-            transition: transform 0.3s ease, border-color 0.5s ease, box-shadow 0.5s ease;
-        }
-        
-        @media (min-width: 992px) {
-            .split-hero:has(.left-side:hover) .split-hero-center {
-                left: 72.7%;
-            }
-            .split-hero:has(.left-side:hover) .center-mascot {
-                border-color: #60A5FA;
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(96, 165, 250, 0.6), inset 0 0 15px rgba(96, 165, 250, 0.2);
-            }
-            .split-hero:has(.right-side:hover) .split-hero-center {
-                left: 27.3%;
-            }
-            .split-hero:has(.right-side:hover) .center-mascot {
-                border-color: #F87171;
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(248, 113, 113, 0.6), inset 0 0 15px rgba(248, 113, 113, 0.2);
-            }
-        }
-        
-        /* Dual themed card styles */
-        .residential-card {
-            border: 1px solid rgba(11, 99, 229, 0.1) !important;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.3, 1), border-color 0.4s ease;
-        }
-        .residential-card:hover {
-            border-color: rgba(96, 165, 250, 0.4) !important;
-            box-shadow: 0 20px 45px rgba(10, 24, 47, 0.25), 0 0 20px rgba(11, 99, 229, 0.2) !important;
-        }
-        .commercial-card {
-            border: 1px solid rgba(230, 57, 70, 0.1) !important;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.3, 1), border-color 0.4s ease;
-        }
-        .commercial-card:hover {
-            border-color: rgba(248, 113, 113, 0.4) !important;
-            box-shadow: 0 20px 45px rgba(10, 24, 47, 0.25), 0 0 20px rgba(230, 57, 70, 0.2) !important;
-        }
-        
-        .service-link {
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-decoration: none;
-            font-weight: 700;
-            margin-top: 15px;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity 0.4s cubic-bezier(0.25, 1, 0.3, 1), transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), background-color 0.3s ease, color 0.3s ease;
-        }
-        .residential-card .service-link {
-            background-color: rgba(11, 99, 229, 0.1);
-            border: 1px solid rgba(96, 165, 250, 0.4);
-            color: #60A5FA;
-        }
-        .residential-card:hover .service-link {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .residential-card .service-link:hover {
-            background-color: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(11, 99, 229, 0.4);
-        }
-        
-        .commercial-card .service-link {
-            background-color: rgba(230, 57, 70, 0.1);
-            border: 1px solid rgba(248, 113, 113, 0.4);
-            color: #F87171;
-        }
-        .commercial-card:hover .service-link {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .commercial-card .service-link:hover {
-            background-color: var(--secondary);
-            color: var(--white);
-            border-color: var(--secondary);
-            box-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
-        }
-        
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: #000;
-            color: #fff;
-            padding: 8px;
-            z-index: 1000;
-            transition: top 0.3s;
-        }
-        .skip-link:focus {
-            top: 0;
-        }
-        </style>
+    <link rel="stylesheet" href="home.css?v=101">
+    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
 </head>
 <body>
     <!-- WCAG 2.4.1: Skip Navigation Link -->
@@ -669,9 +233,6 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                 Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
             </span>
-            <span class="top-bar-item highlight">
-                <span class="badge">PROMO</span> Are you a new customer? Save 10% on your first repair service!
-            </span>
         </div>
     </div>
 
@@ -683,14 +244,25 @@
             </a>
             <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
             <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
-            <nav class="nav" id="primary-nav" aria-label="Primary navigation">
-                <a href="index.html" class="nav-link active" aria-current="page">Home</a>
-                <a href="services.html" class="nav-link">HVAC Services</a>
-                <a href="pool-heating.html" class="nav-link">Pool Heating</a>
+                                    <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="ac-installation.html" class="nav-link">AC Installation</a>
+                <a href="ac-repair.html" class="nav-link">AC Repair</a>
+                <a href="ac-maintenance.html" class="nav-link">AC Maintenance</a>
                 <a href="commercial.html" class="nav-link">Commercial</a>
-                <a href="areas.html" class="nav-link">Service Area</a>
-                <a href="about.html" class="nav-link">About Us</a>
-                <a href="contact.html" class="nav-link">Contact</a></nav>
+                <a href="pool-heating.html" class="nav-link">Pool Heating</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" onclick="return false;">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="diagnose.html" class="">DIY Troubleshooter</a>
+                        <a href="planner.html" class="">AC Lifespan Planner</a>
+                        <a href="configurator.html" class="">Build HVAC System</a>
+                        <a href="corrosion-predictor.html" class="phase-2-only">Coil Corrosion Map</a>
+                        <a href="storm-prep.html" class="">Storm Prep Checklist</a>
+                        <a href="3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
+                    </div>
+                </div>
+                <a href="members.html" class="nav-link phase-2-only">Members Area</a>
+            </nav>
             <a href="contact.html" class="btn btn-primary nav-cta">Get Free Estimate</a>
         </div>
     </header>
@@ -700,38 +272,62 @@
 
     <!-- Dual-Gate Split Hero Section -->
     <section class="reveal split-hero">
-        <h1 class="visually-hidden">A/C Now LLC — AC Repair &amp; HVAC Service in Port St. Lucie, FL | Same-Day | 24/7 Emergency</h1>
+        <div class="hero-top-text-bar">
+            <h1 style="font-family: var(--font-heading); font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 900px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 2px 8px rgba(0,0,0,0.8); line-height: 1.4;">
+                A/C Now LLC — AC Repair &amp; HVAC Service in Port St. Lucie, FL | Same-Day | 24/7 Emergency
+            </h1>
+            <div class="hero-top-cta">
+                <a href="contact.html" class="btn btn-primary" style="padding: 12px 50px; font-size: 14px; font-weight: 700; border-radius: 30px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(11, 99, 229, 0.4); text-transform: uppercase; min-width: 280px; display: inline-block;">Get Free Estimate</a>
+            </div>
+        </div>
         <!-- Left Side: Residential -->
         <div class="split-hero-side left-side">
-            <div class="side-bg" style="background-image: url('downloaded_images/split_res_hero.jpg');"></div>
+            <div class="side-bg">
+                <picture>
+                    <source srcset="downloaded_images/split_res_hero.webp" type="image/webp" media="(min-width: 768px)">
+                    <source srcset="downloaded_images/split_res_hero_mobile.webp" type="image/webp">
+                    <source srcset="downloaded_images/split_res_hero.jpg" media="(min-width: 768px)">
+                    <img src="downloaded_images/split_res_hero_mobile.webp" width="600" height="402" loading="eager" alt="Comfortable residential Florida home interior cooled by AC" decoding="async">
+                </picture>
+            </div>
             <div class="side-overlay"></div>
             <div class="side-content">
                 <span class="side-tag">Residential Comfort</span>
-                <h2 class="side-headline" style="font-size: 46px; font-weight: 800; color: var(--white); margin-bottom: 15px; font-family: var(--font-heading); text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Keep Your Family Cool</h2>
+                <h2 class="side-headline" id="res-side-headline" style="font-size: 46px; font-weight: 800; color: var(--white); margin-bottom: 15px; font-family: var(--font-heading); text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Keep Your Family Cool</h2>
                 <p class="side-desc">Precision flat-rate cooling repair, ductless system configuration, and preventive maintenance designed to handle extreme Florida humidity.</p>
                 <div class="side-actions">
-                    <a href="#residential-services" class="btn btn-primary btn-large">Residential Services</a>
+                    <a href="services.html" class="btn btn-primary btn-large">Residential Services</a>
                     <a href="contact.html" class="btn btn-secondary btn-large">Book AC Service</a>
                 </div>
             </div>
         </div>
         
         <div class="split-hero-center">
+            <div class="mascot-speech-bubble"></div>
             <div class="center-mascot">
-                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now Logo Emblem" class="mascot-img">
+                <a href="diagnose.html" style="display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; text-decoration: none;" aria-label="Run DIY Diagnostics">
+                    <img src="downloaded_images/mascot-logo.svg" loading="eager" width="280" height="280" fetchpriority="high" alt="A/C Now Logo Emblem" class="mascot-img">
+                </a>
             </div>
         </div>
         
         <!-- Right Side: Commercial -->
         <div class="split-hero-side right-side">
-            <div class="side-bg" style="background-image: url('downloaded_images/split_com_hero.jpg');"></div>
-            <div class="side-overlay" style="background: linear-gradient(180deg, rgba(10, 24, 47, 0.75) 0%, rgba(10, 24, 47, 0.9) 100%);"></div>
+            <div class="side-bg">
+                <picture>
+                    <source srcset="downloaded_images/split_com_hero.webp" type="image/webp" media="(min-width: 768px)">
+                    <source srcset="downloaded_images/split_com_hero_mobile.webp" type="image/webp">
+                    <source srcset="downloaded_images/split_com_hero.jpg" media="(min-width: 768px)">
+                    <img src="downloaded_images/split_com_hero_mobile.webp" width="600" height="402" loading="eager" alt="Rooftop HVAC units servicing a commercial complex" decoding="async">
+                </picture>
+            </div>
+            <div class="side-overlay" style="background: linear-gradient(180deg, rgba(10, 24, 47, 0.65) 0%, rgba(10, 24, 47, 0.8) 100%);"></div>
             <div class="side-content">
                 <span class="side-tag">Commercial & Towers</span>
-                <h2 class="side-headline" style="font-size: 46px; font-weight: 800; color: var(--white); margin-bottom: 15px; font-family: var(--font-heading); text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Manage Your Complex</h2>
+                <h2 class="side-headline" id="com-side-headline" style="font-size: 46px; font-weight: 800; color: var(--white); margin-bottom: 15px; font-family: var(--font-heading); text-shadow: 0 4px 15px rgba(0,0,0,0.5);">Manage Your Complex</h2>
                 <p class="side-desc">Heavy-equipment split-system upgrades, rooftop package systems, and custom priority facility agreements for property managers.</p>
                 <div class="side-actions">
-                    <a href="#commercial-services" class="btn btn-primary btn-large" style="background: linear-gradient(135deg, var(--secondary) 0%, #a31d27 100%); box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);">Commercial Services</a>
+                    <a href="commercial.html" class="btn btn-primary btn-large" style="background: linear-gradient(135deg, var(--secondary) 0%, #a31d27 100%); box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);">Commercial Services</a>
                     <a href="contact.html" class="btn btn-secondary btn-large">Request Industrial Bid</a>
                 </div>
             </div>
@@ -742,7 +338,7 @@
     <section class="reveal trust-bar">
         <div class="container trust-container">
             <div class="trust-card">
-                <img src="downloaded_images/Veteran.webp" alt="Veteran Owned icon" class="trust-icon" width="48" height="48">
+                <img src="downloaded_images/Veteran.webp" loading="lazy" alt="Veteran Owned" class="trust-icon" width="48" height="48">
                 <div class="trust-info">
                     <!-- WCAG 1.3.1: h3 here (sub-items of a section, not top-level headings) -->
                     <h3>Veteran Owned</h3>
@@ -751,21 +347,21 @@
                 </div>
             </div>
             <div class="trust-card">
-                <img src="downloaded_images/Locally.webp" alt="Locally Owned icon" class="trust-icon" width="48" height="48">
+                <img src="downloaded_images/Locally.webp" loading="lazy" alt="Locally Operated" class="trust-icon" width="48" height="48">
                 <div class="trust-info">
                     <h3>Locally Operated</h3>
-                    <p>Serving Port St. Lucie &amp; Stuart.</p>
+                    <p id="serving-areas-text">Serving Port St. Lucie &amp; Stuart.</p>
                 </div>
             </div>
             <div class="trust-card">
-                <img src="downloaded_images/Trained.webp" alt="Certified Technicians icon" class="trust-icon" width="48" height="48">
+                <img src="downloaded_images/Trained.webp" loading="lazy" alt="Certified HVAC Experts" class="trust-icon" width="48" height="48">
                 <div class="trust-info">
                     <h3>Certified HVAC Experts</h3>
                     <p>Fully trained, licensed &amp; insured.</p>
                 </div>
             </div>
             <div class="trust-card">
-                <img src="downloaded_images/Personalized.webp" alt="Personalized service icon" class="trust-icon" width="48" height="48">
+                <img src="downloaded_images/Personalized.webp" loading="lazy" alt="Upfront Pricing" class="trust-icon" width="48" height="48">
                 <div class="trust-info">
                     <h3>Upfront Pricing</h3>
                     <p>Flat-rate pricing, zero hidden fees.</p>
@@ -778,16 +374,16 @@
             <button class="ticker-nav-btn prev-btn" id="ticker-prev" aria-label="Previous Review">‹</button>
             <div class="ticker-slides-container">
                 <div class="ticker-slide active">
-                    <p class="ticker-quote">"Sean and Chris are true professionals — fast, honest, and extremely fair pricing. Best AC company on the Treasure Coast!"</p>
-                    <div class="ticker-author">⭐⭐⭐⭐&nbsp;<strong>Robert M.</strong> — Port St. Lucie, FL</div>
+                    <p class="ticker-quote">"Sean was awesome! Very knowledgeable and got us back up and going right away. Fixed our compressor electrical wires in minutes. Highly recommend!"</p>
+                    <div class="ticker-author"><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>&nbsp;<strong>Todd G.</strong> — Palm City, FL</div>
                 </div>
                 <div class="ticker-slide">
-                    <p class="ticker-quote">"As a veteran myself, I highly appreciate their promptness, direct honesty, and attention to detail. No pushy sales, just clear diagnostics."</p>
-                    <div class="ticker-author">⭐⭐⭐⭐⭐&nbsp;<strong>David K.</strong> — Stuart, FL</div>
+                    <p class="ticker-quote">"These guys are responsive, honest and reliable. I had cooling issues and they showed up fast. I highly recommend their team."</p>
+                    <div class="ticker-author"><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>&nbsp;<strong>Nicole R.</strong> — Port St. Lucie, FL</div>
                 </div>
                 <div class="ticker-slide">
-                    <p class="ticker-quote">"My air conditioner broke down on a hot Sunday afternoon. A/C Now responded in 45 minutes and fixed it immediately. Outstanding customer care!"</p>
-                    <div class="ticker-author">⭐⭐⭐⭐⭐&nbsp;<strong>Jessica S.</strong> — Palm City, FL</div>
+                    <p class="ticker-quote">"We had them install a new A/C system. Very professional and honest and knowledgeable. We will be happy to refer them to our friends."</p>
+                    <div class="ticker-author"><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>&nbsp;<strong>Thomas D.</strong> — Stuart, FL</div>
                 </div>
             </div>
             <button class="ticker-nav-btn next-btn" id="ticker-next" aria-label="Next Review">›</button>
@@ -813,7 +409,7 @@
                     <!-- Service Card 1 -->
                     <div class="service-card residential-card card-3d reveal-up" data-delay="0">
                         <div class="service-img-wrapper">
-                            <img src="downloaded_images/split_res_repair.jpg" alt="AC Diagnostic &amp; Repair" class="service-img" loading="lazy" width="400" height="300">
+                            <img src="downloaded_images/split_res_repair.webp" alt="AC Diagnostic &amp; Repair" class="service-img" loading="lazy" width="400" height="300">
                         </div>
                         <div class="service-card-body">
                             <h3>AC Repair & Diagnostics</h3>
@@ -825,10 +421,10 @@
                     <!-- Service Card 2 -->
                     <div class="service-card residential-card card-3d reveal-up" data-delay="150">
                         <div class="service-img-wrapper">
-                            <img src="downloaded_images/split_res_install.jpg" alt="Residential Condenser Installation" class="service-img" loading="lazy" width="400" height="300">
+                            <img src="downloaded_images/split_res_install.webp" alt="Residential Condenser Installation" class="service-img" loading="lazy" width="400" height="300">
                         </div>
                         <div class="service-card-body">
-                            <h3>Precision Installations</h3>
+                            <h3>AC Installation &amp; Replacement</h3>
                             <p>Upgrade to a modern, energy-saving SEER2 cooling system. High-quality construction, solid warranties, and upfront pricing.</p>
                             <a href="contact.html" class="service-link">Get Free Estimate &rarr;</a>
                         </div>
@@ -837,10 +433,10 @@
                     <!-- Service Card 3 -->
                     <div class="service-card residential-card card-3d reveal-up" data-delay="300">
                         <div class="service-img-wrapper">
-                            <img src="downloaded_images/split_res_maintenance.jpg" alt="Air Handler Maintenance Inspection" class="service-img" loading="lazy" width="400" height="300">
+                            <img src="downloaded_images/split_res_maintenance.webp" alt="Air Handler Maintenance Inspection" class="service-img" loading="lazy" width="400" height="300">
                         </div>
                         <div class="service-card-body">
-                            <h3>Air Handler Maintenance</h3>
+                            <h3>AC Preventative Maintenance</h3>
                             <p>Keep your system operating efficiently and prevent expensive breakdowns with our comprehensive Service Club inspections.</p>
                             <a href="contact.html" class="service-link">View Memberships &rarr;</a>
                         </div>
@@ -863,7 +459,7 @@
                     <!-- Service Card 4 -->
                     <div class="service-card commercial-card card-3d reveal-up" data-delay="0">
                         <div class="service-img-wrapper">
-                            <img src="downloaded_images/split_com_install.jpg" alt="Rooftop Commercial Package Upgrade" class="service-img" loading="lazy" width="400" height="300">
+                            <img src="downloaded_images/split_com_install.webp" alt="Rooftop Commercial Package Upgrade" class="service-img" loading="lazy" width="400" height="300">
                         </div>
                         <div class="service-card-body">
                             <h3>Rooftop & Split Installs</h3>
@@ -875,7 +471,7 @@
                     <!-- Service Card 5 -->
                     <div class="service-card commercial-card card-3d reveal-up" data-delay="150">
                         <div class="service-img-wrapper">
-                            <img src="downloaded_images/split_com_maintenance.jpg" alt="Commercial Unit Rooftop Inspection" class="service-img" loading="lazy" width="400" height="300">
+                            <img src="downloaded_images/split_com_maintenance.webp" alt="Commercial Unit Rooftop Inspection" class="service-img" loading="lazy" width="400" height="300">
                         </div>
                         <div class="service-card-body">
                             <h3>Facility HVAC Maintenance</h3>
@@ -887,7 +483,7 @@
                     <!-- Service Card 6 -->
                     <div class="service-card commercial-card card-3d reveal-up" data-delay="300">
                         <div class="service-img-wrapper">
-                            <img src="downloaded_images/split_com_repair.jpg" alt="Commercial Manifold Gauges Pressure Check" class="service-img" loading="lazy" width="400" height="300">
+                            <img src="downloaded_images/split_com_repair.webp" alt="Commercial Manifold Gauges Pressure Check" class="service-img" loading="lazy" width="400" height="300">
                         </div>
                         <div class="service-card-body">
                             <h3>Industrial HVAC Repair</h3>
@@ -913,9 +509,9 @@
             <div class="about-image-column reveal-slide-left">
                 <!-- Interactive Before/After Comparison Slider -->
                 <div class="comparison-slider-container">
-                    <div class="comparison-image comparison-image-before" style="background-image: url('downloaded_images/split_res_repair.jpg');"></div>
-                    <div class="comparison-image comparison-image-after" style="background-image: url('downloaded_images/split_res_install.jpg');"></div>
-                    <button class="comparison-handle" aria-label="Coil comparison slider. Use Left and Right arrow keys to compare clean vs dirty." aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">⬌</button>
+                    <div class="comparison-image comparison-image-before" style="background-image: url('downloaded_images/split_res_repair.webp');"></div>
+                    <div class="comparison-image comparison-image-after" style="background-image: url('downloaded_images/split_res_install.webp');"></div>
+                    <button class="comparison-handle" role="slider" aria-label="Coil comparison slider. Use Left and Right arrow keys to compare clean vs dirty." aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">⬌</button>
                     <span class="comparison-label label-before">Clogged Coil</span>
                     <span class="comparison-label label-after">A/C Now Overhaul</span>
                 </div>
@@ -948,14 +544,14 @@
 
                 <div class="about-team-grid">
                     <div class="team-member">
-                        <img src="downloaded_images/Chris.webp" alt="Chris - A/C Now Team" class="team-img" loading="lazy" width="60" height="60">
+                        <img src="downloaded_images/Chris.webp" alt="Chris - A/C Now Team" class="team-img" loading="lazy" width="80" height="80">
                         <div class="team-info">
                             <strong>Chris</strong>
                             <span>Owner / Lead Specialist</span>
                         </div>
                     </div>
                     <div class="team-member">
-                        <img src="downloaded_images/Sean.webp" alt="Sean - A/C Now Team" class="team-img" loading="lazy" width="60" height="60">
+                        <img src="downloaded_images/Sean.webp" alt="Sean - A/C Now Team" class="team-img" loading="lazy" width="80" height="80">
                         <div class="team-info">
                             <strong>Sean</strong>
                             <span>Owner / Operations</span>
@@ -984,19 +580,19 @@
                             id="tab-seer"
                             aria-selected="true"
                             aria-controls="seer-calc"
-                            onclick="switchInnoTab(event, 'seer-calc')">⚡ SEER2 Savings Calculator</button>
+                            onclick="switchInnoTab(event, 'seer-calc')"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> SEER2 Savings Calculator</button>
                     <button class="inno-tab-btn"
                             role="tab"
                             id="tab-club"
                             aria-selected="false"
                             aria-controls="club-builder"
-                            onclick="switchInnoTab(event, 'club-builder')">🛡️ Membership ROI Builder</button>
+                            onclick="switchInnoTab(event, 'club-builder')"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Membership ROI Builder</button>
                     <button class="inno-tab-btn"
                             role="tab"
                             id="tab-dispatch"
                             aria-selected="false"
                             aria-controls="dispatch-scheduler"
-                            onclick="switchInnoTab(event, 'dispatch-scheduler')">🚨 Priority Emergency Dispatch</button>
+                            onclick="switchInnoTab(event, 'dispatch-scheduler')"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Priority Emergency Dispatch</button>
                 </div>
 
                 <div class="innovations-tab-body">
@@ -1049,6 +645,9 @@
                                         <span>Share Savings Report</span>
                                     </button>
                                 </div>
+                                <p style="font-size: 10px; color: var(--gray-dark); margin-top: 15px; line-height: 1.4; text-align: left;">
+                                    *Disclaimer: SEER2 energy savings calculations are estimates based on standard regional utility rates (such as FPL) and typical operating hours in South Florida. Actual energy bills and savings will vary based on weather conditions, thermostat settings, ductwork insulation, home occupancy habits, and system installation quality. No savings are guaranteed.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1060,8 +659,8 @@
                          tabindex="0">
                         <div class="calc-grid">
                             <div class="calc-inputs-pane">
-                                <h3>Service Club Membership ROI Builder</h3>
-                                <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 24px;">Select the regular service fees you face to calculate the cost-offset savings of our $19/mo Service Club agreement.</p>
+                                <h3>Comfort Club Membership ROI Builder</h3>
+                                <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 24px;">Select the regular service fees you face to calculate the cost-offset savings of our $19.95/mo Comfort Club agreement.</p>
                                 
                                 <div class="club-options-list">
                                     <label class="club-option-item">
@@ -1072,7 +671,7 @@
                                         </div>
                                     </label>
                                     <label class="club-option-item">
-                                        <input type="checkbox" id="opt-repair-cost" onchange="updateClubROI()">
+                                        <input type="checkbox" id="opt-repair-cost" checked onchange="updateClubROI()">
                                         <div>
                                             <strong>Annual Repair Diagnostic Fee</strong>
                                             <span>Normal Price: $95 (Saved with Membership)</span>
@@ -1085,20 +684,30 @@
                                             <span>Get 15% discount on all parts & labor</span>
                                         </div>
                                     </label>
+                                    <label class="club-option-item">
+                                        <input type="checkbox" id="opt-multi-system" onchange="updateClubROI()">
+                                        <div>
+                                            <strong>Multi-System Add-on (System #2)</strong>
+                                            <span>Just +$9.95/mo (saves additional $180/year)</span>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
                             <div class="calc-results-pane">
                                 <div class="results-wrapper" role="status" aria-live="polite">
                                     <span class="results-lbl">Net Annual Membership Savings</span>
-                                    <div class="results-price" id="club-savings-val">$47.00</div>
-                                    <div class="results-yearly">Annual Member Cost: <strong>$228.00</strong></div>
+                                    <div class="results-price" id="club-savings-val">$35.60</div>
+                                    <div class="results-yearly">Annual Member Cost: <strong id="club-cost-val">$239.40</strong></div>
                                     <p class="results-note" style="margin-top: 15px;">Your savings covers the entire cost of membership, plus gives you priority front-of-the-line scheduling during peak summer hours!</p>
-                                    <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Join the Service Club Now</a>
+                                    <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Join the Comfort Club Now</a>
                                     <button class="btn btn-secondary share-btn-club" style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--primary);"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                                         <span>Share Benefits Summary</span>
                                     </button>
                                 </div>
+                                <p style="font-size: 10px; color: var(--gray-dark); margin-top: 15px; line-height: 1.4; text-align: left;">
+                                    *Disclaimer: Membership ROI calculations are based on standard maintenance scheduling and diagnostic rates. Actual savings will vary depending on the frequency of repairs needed and equipment condition. Priority scheduling is subject to peak demand availability.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1119,7 +728,7 @@
                             </div>
                             <div class="wizard-body">
                                 <div class="wizard-pane active" id="pane-step-1">
-                                    <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 20px;">AC broken down? Answer three simple questions to find the next priority technician dispatch slot in your city.</p>
+                                    <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 20px;">AC broken down? Answer two quick questions to find the next priority technician dispatch slot in your city.</p>
                                     <div class="wizard-field">
                                         <!-- WCAG 1.3.1: labels must be programmatically associated -->
                                         <label for="dispatch-city">1. Select Your Location</label>
@@ -1145,22 +754,22 @@
                                 <div class="wizard-pane" id="pane-step-2">
                                     <div class="success-slot-box">
                                         <div class="slot-badge">CONFIRMED AVAILABILITY</div>
-                                        <h3 id="slot-time-text">Next Dispatch Slot: Today between 3:00 PM - 5:00 PM</h3>
+                                        <div id="slot-time-text" style="font-size: 18px; font-weight: 700; color: #166534; margin: 0;">Next Dispatch Slot: Today between 3:00 PM - 5:00 PM</div>
                                         <p style="font-size: 13px; color: var(--gray-dark); margin-top: 5px;">A technician is routing near your location. Enter your details to secure this priority slot.</p>
                                     </div>
                                     <div class="form-row" style="margin-top: 20px;">
                                         <div class="form-group">
                                             <!-- WCAG 1.3.1: label for/id association -->
                                             <label for="dispatch-name">Name</label>
-                                            <input type="text" id="dispatch-name" name="dispatch-name" placeholder="John Doe">
+                                            <input autocomplete="name" type="text" id="dispatch-name" name="dispatch-name" placeholder="John Doe">
                                         </div>
                                         <div class="form-group">
                                             <label for="dispatch-phone">Phone Number</label>
-                                            <input type="tel" id="dispatch-phone" name="dispatch-phone" placeholder="(772) 555-0100">
+                                            <input autocomplete="tel" type="tel" id="dispatch-phone" name="dispatch-phone" placeholder="(772) 521-3568">
                                         </div>
                                     </div>
                                     <div style="display: flex; gap: 15px; margin-top: 20px;">
-                                        <button class="btn btn-secondary" onclick="goToWizardStep1()" style="color: var(--dark); border-color: var(--gray-light);">Back</button>
+                                        <button class="btn btn-secondary" onclick="goToWizardStep1()" style="color: var(--dark); border-color: #94A3B8;">Back</button>
                                         <button class="btn btn-primary" onclick="submitDispatch()">Book Dispatch Slot Now</button>
                                     </div>
                                 </div>
@@ -1213,7 +822,7 @@
                 </div>
 
                 <div class="van-details-panel" role="status" aria-live="polite">
-                    <h3 id="van-detail-title">⚡ Core Replacement Parts</h3>
+                    <h3 id="van-detail-title"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Core Replacement Parts</h3>
                     <p id="van-detail-desc">We carry high-quality replacement parts on every truck, including dual run capacitors (35/5uF to 45/5uF), contactors, fan relays, and universal transformer modules. This ensures we can resolve 85% of common AC electrical issues right on the spot without leaving you in the heat to fetch parts.</p>
                 </div>
             </div>
@@ -1239,21 +848,21 @@
                         <div class="checklist-progress-percentage" id="chk-percentage">0%<span>Verified</span></div>
                     </div>
 
-                    <div class="checklist-category-selector">
-                        <button class="checklist-tab-btn active" data-target="chk-electrical">
-                            ⚡ 1. Electrical & Controls
+                    <div class="checklist-category-selector" role="tablist" aria-label="Maintenance categories select">
+                        <button class="checklist-tab-btn active" data-target="chk-electrical" role="tab" aria-selected="true" tabindex="0">
+                            <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 1. Electrical & Controls
                             <span class="badge-count">0/6</span>
                         </button>
-                        <button class="checklist-tab-btn" data-target="chk-refrigeration">
-                            ❄️ 2. Refrigeration Cycle
+                        <button class="checklist-tab-btn" data-target="chk-refrigeration" role="tab" aria-selected="false" tabindex="0">
+                            <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="16" y2="6"/><line x1="12" y1="2" x2="8" y2="6"/><line x1="12" y1="22" x2="16" y2="18"/><line x1="12" y1="22" x2="8" y2="18"/><line x1="2" y1="12" x2="6" y2="8"/><line x1="2" y1="12" x2="6" y2="16"/><line x1="22" y1="12" x2="18" y2="8"/><line x1="22" y1="12" x2="18" y2="16"/></svg> 2. Refrigeration Cycle
                             <span class="badge-count">0/6</span>
                         </button>
-                        <button class="checklist-tab-btn" data-target="chk-airhandler">
-                            🌀 3. Air Handler & IAQ
+                        <button class="checklist-tab-btn" data-target="chk-airhandler" role="tab" aria-selected="false" tabindex="0">
+                            <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg> 3. Air Handler & IAQ
                             <span class="badge-count">0/6</span>
                         </button>
-                        <button class="checklist-tab-btn" data-target="chk-safety">
-                            🛡️ 4. Safety Controls
+                        <button class="checklist-tab-btn" data-target="chk-safety" role="tab" aria-selected="false" tabindex="0">
+                            <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 4. Safety Controls
                             <span class="badge-count">0/6</span>
                         </button>
                     </div>
@@ -1337,7 +946,7 @@
                                 <div class="checklist-item-checkbox"></div>
                                 <span class="checklist-item-text">Test static system pressure inside ducts</span>
                             </div>
-                            <div class="checklist-item">
+                            <div class="checklist-item checked">
                                 <div class="checklist-item-checkbox"></div>
                                 <span class="checklist-item-text">Verify return filter sizing & sealing</span>
                             </div>
@@ -1397,10 +1006,10 @@
             <div class="smart-climate-text">
                 <span class="section-tag" style="color: #60A5FA;">INTERACTIVE COMFORT</span>
                 <h2 style="font-family: var(--font-heading); font-size: 42px; font-weight: 800; color: var(--white); margin: 15px 0 25px 0; line-height: 1.2;">Calibrate Your Smart Climate</h2>
-                <p style="font-size: 16px; color: var(--gray-dark); line-height: 1.8; margin-bottom: 20px;">
+                <p style="font-size: 16px; color: #CBD5E1; line-height: 1.8; margin-bottom: 20px;">
                     Modern comfort is built on digital precision. Our veteran technicians calibrate smart thermostats to run custom staging algorithms, optimizing both runtime cycles and humidity levels inside your Florida home.
                 </p>
-                <p style="font-size: 16px; color: var(--gray-dark); line-height: 1.8; margin-bottom: 30px;">
+                <p style="font-size: 16px; color: #CBD5E1; line-height: 1.8; margin-bottom: 30px;">
                     Interact with our 3D simulator to test how changing target temperatures controls cooling, heating, or ECO cycles in real time. Hover to feel the responsive 3D parallax tilt.
                 </p>
                 <div class="smart-climate-actions" style="display: flex; gap: 15px; flex-wrap: wrap;">
@@ -1411,23 +1020,25 @@
             
             <div class="smart-climate-widget-wrap" style="perspective: 1200px; display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%;">
                 <!-- Dynamic Interactive Tabs -->
-                <div class="smart-tabs" style="display: flex; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 5px; border-radius: 12px; margin-bottom: 10px; z-index: 10;">
-                    <button class="smart-tab-btn active" data-tab="thermostat" style="background: var(--primary); border: none; color: var(--white); padding: 8px 16px; border-radius: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Comfort Dial</button>
-                    <button class="smart-tab-btn" data-tab="airflow" style="background: none; border: none; color: var(--gray-dark); padding: 8px 16px; border-radius: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Duct Airflow Map</button>
+                <div class="smart-tabs" role="tablist" aria-label="Smart Climate Control System" style="display: flex; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 5px; border-radius: 12px; margin-bottom: 10px; z-index: 10;">
+                    <button class="smart-tab-btn active" id="tab-thermostat" role="tab" aria-selected="true" aria-controls="panel-thermostat" data-tab="thermostat" style="background: var(--primary); border: none; color: var(--white); padding: 8px 16px; border-radius: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Comfort Dial</button>
+                    <button class="smart-tab-btn phase-2-only" id="tab-airflow" role="tab" aria-selected="false" aria-controls="panel-airflow" data-tab="airflow" style="background: none; border: none; color: #94A3B8; padding: 8px 16px; border-radius: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Duct Airflow Map</button>
+                    <button class="smart-tab-btn" id="tab-energy" role="tab" aria-selected="false" aria-controls="panel-energy" data-tab="energy" style="background: none; border: none; color: #94A3B8; padding: 8px 16px; border-radius: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">Energy Simulator</button>
+                    <button class="smart-tab-btn" id="tab-moldmap" role="tab" aria-selected="false" aria-controls="panel-moldmap" data-tab="moldmap" style="background: none; border: none; color: #94A3B8; padding: 8px 16px; border-radius: 8px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">TC Mold Map</button>
                 </div>
                 
                 <!-- Tab Panel 1: Thermostat -->
-                <div id="panel-thermostat" class="smart-panel active" style="width: 100%; display: flex; justify-content: center;">
+                <div id="panel-thermostat" class="smart-panel active" role="tabpanel" aria-labelledby="tab-thermostat" style="width: 100%; display: flex; justify-content: center;">
                     <!-- 3D Thermostat Card -->
-                    <div class="thermostat-card" id="thermostat-card" role="group" aria-label="Digital Thermostat Climate Control" style="background: rgba(10, 25, 47, 0.45); backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 28px; padding: 40px; width: 340px; height: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 50px rgba(11,99,229,0.15); display: flex; flex-direction: column; align-items: center; justify-content: space-between; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-8deg); transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease;">
+                    <div class="thermostat-card" id="thermostat-card" role="group" aria-label="Digital Thermostat Climate Control" style="background: rgba(10, 25, 47, 0.45); backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 28px; padding: 40px; width: 100%; max-width: 100%; max-width: 340px; height: 400px; box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 50px rgba(11,99,229,0.15); display: flex; flex-direction: column; align-items: center; justify-content: space-between; transform-style: preserve-3d; transform: rotateX(12deg) rotateY(-8deg); transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease;">
                         <span class="sr-only">Interactive Thermostat Dial. Current setting is 72 degrees Fahrenheit. Drag dial or use Left/Right arrow keys to adjust.</span>
                         
                         <div class="card-header" style="text-align: center; transform: translateZ(30px);">
-                            <h2 style="font-size: 14px; font-weight: 600; letter-spacing: 2px; margin: 0; color: #94a3b8; text-transform: uppercase;">Climate Control</h2>
+                            <div style="font-size: 14px; font-weight: 600; letter-spacing: 2px; margin: 0; color: #94a3b8; text-transform: uppercase;" role="heading" aria-level="3">Climate Control</div>
                             <span class="status" id="status-text" style="font-size: 11px; font-weight: 700; color: #60A5FA; text-shadow: 0 0 8px #60A5FA; margin-top: 6px; display: block; letter-spacing: 1px; transition: color 0.5s ease;">COOLING SYSTEM ACTIVE</span>
                         </div>
 
-                        <div class="dial-outer" id="dial-outer" tabindex="0" aria-valuemin="55" aria-valuemax="85" aria-valuenow="72" aria-valuetext="72 degrees Fahrenheit" style="width: 210px; height: 210px; border-radius: 50%; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(11,99,229,0.15); display: flex; justify-content: center; align-items: center; position: relative; cursor: grab; transform: translateZ(45px); transform-style: preserve-3d; touch-action: none;">
+                        <div class="dial-outer" id="dial-outer" role="slider" tabindex="0" aria-valuemin="55" aria-valuemax="85" aria-valuenow="72" aria-valuetext="72 degrees Fahrenheit" aria-label="Temperature control dial" style="width: 210px; height: 210px; border-radius: 50%; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(11,99,229,0.15); display: flex; justify-content: center; align-items: center; position: relative; cursor: grab; transform: translateZ(45px); transform-style: preserve-3d; touch-action: none;">
                             <div class="dial-ring" id="dial-ring" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; background: linear-gradient(135deg, #475569, #1e293b, #64748b) border-box; -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude; pointer-events: none; transition: transform 0.1s linear;"></div>
                             <div class="dial-tick" id="dial-tick" style="position: absolute; top: 10px; width: 4px; height: 12px; background-color: #60A5FA; border-radius: 2px; box-shadow: 0 0 8px #60A5FA; transform-origin: center 95px; pointer-events: none;"></div>
 
@@ -1454,10 +1065,120 @@
                 </div>
                 
                 <!-- Tab Panel 2: WebGL Airflow (Loaded lazily inside iframe) -->
-                <div id="panel-airflow" class="smart-panel" style="width: 100%; display: none; justify-content: center; align-items: center; height: 400px; border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: rgba(10, 25, 47, 0.45); box-shadow: 0 30px 60px rgba(0,0,0,0.4);">
+                <div id="panel-airflow" class="smart-panel" role="tabpanel" aria-labelledby="tab-airflow" style="width: 100%; display: none; justify-content: center; align-items: center; height: 400px; border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: rgba(10, 25, 47, 0.45); box-shadow: 0 30px 60px rgba(0,0,0,0.4);">
                     <div id="airflow-iframe-placeholder" style="color: #b0c4de; font-size: 13px; text-align: center; font-family: var(--font-heading); display: flex; flex-direction: column; gap: 15px; align-items: center;">
                         <span>Loading WebGL Simulation...</span>
                         <div class="typing-dots"><span></span><span></span><span></span></div>
+                    </div>
+                </div>
+                
+                <!-- Tab Panel 3: Energy Simulator Game -->
+                <div id="panel-energy" class="smart-panel" role="tabpanel" aria-labelledby="tab-energy" style="width: 100%; display: none; justify-content: center;">
+                    <div class="thermostat-card" style="background: rgba(10, 25, 47, 0.45); backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 28px; padding: 30px; width: 100%; max-width: 100%; max-width: 340px; box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 20px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 14px; font-weight: 600; letter-spacing: 2px; color: #94a3b8; text-transform: uppercase;">Energy Simulator</div>
+                            <span style="font-size: 11px; font-weight: 700; color: #60a5fa; margin-top: 6px; display: block; letter-spacing: 1px;">ADJUST TEMPERATURE CYCLES</span>
+                        </div>
+
+                        <!-- Morning slider -->
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:#cbd5e1;">
+                                <span>Morning (8am - 12pm)</span>
+                                <span id="lbl-game-morning" style="color:#60a5fa;">72°F</span>
+                            </div>
+                            <input type="range" id="game-temp-morning" min="68" max="82" value="72" style="width:100%;" aria-label="Morning target temperature (8am - 12pm)">
+                        </div>
+
+                        <!-- Away slider -->
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:#cbd5e1;">
+                                <span>Away / Peak (12pm - 5pm)</span>
+                                <span id="lbl-game-away" style="color:#60a5fa;">72°F</span>
+                            </div>
+                            <input type="range" id="game-temp-away" min="68" max="82" value="72" style="width:100%;" aria-label="Away target temperature (12pm - 5pm)">
+                        </div>
+
+                        <!-- Evening slider -->
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:#cbd5e1;">
+                                <span>Evening (5pm - 10pm)</span>
+                                <span id="lbl-game-evening" style="color:#60a5fa;">70°F</span>
+                            </div>
+                            <input type="range" id="game-temp-evening" min="68" max="82" value="70" style="width:100%;" aria-label="Evening target temperature (5pm - 10pm)">
+                        </div>
+
+                        <!-- Grid Load Bar -->
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 12px; font-size: 11.5px; color:#94a3b8; line-height: 1.4;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom: 6px;">
+                                <span>Grid Demand Load:</span>
+                                <strong id="game-out-load-txt" style="color:#C22A36;">High Stress</strong>
+                            </div>
+                            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow:hidden;">
+                                <div id="game-out-load-bar" style="width: 80%; height: 100%; background: #C22A36; transition: width 0.3s ease, background 0.3s;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Output Metrics -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 12px; text-align: center;">
+                                <div style="font-size:10px; color:#94a3b8; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Power Bill</div>
+                                <div id="game-out-cost" style="font-size:15px; font-weight:800; color:#fff;">$178/mo</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 12px; text-align: center;">
+                                <div style="font-size:10px; color:#94a3b8; font-weight:600; text-transform:uppercase; margin-bottom:4px;">CO2 Output</div>
+                                <div id="game-out-footprint" style="font-size:14px; font-weight:800; color:#fff;">1,009 lbs</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:12.5px;">
+                                <span style="color:#94a3b8;">Est. Monthly Savings:</span>
+                                <strong id="game-out-savings" style="color:#0B7A53; font-size:14px;">$0.00</strong>
+                            </div>
+                            <button type="button" id="game-btn-optimize" style="background: linear-gradient(135deg, var(--primary) 0%, #084fc2 100%); color:var(--white); border:none; padding:10px 15px; font-weight:700; font-size:12.5px; border-radius:10px; cursor:pointer; width:100%; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='none'">Auto-Optimize Settings</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab Panel 4: Treasure Coast Mold Risk Map -->
+                <div id="panel-moldmap" class="smart-panel" role="tabpanel" aria-labelledby="tab-moldmap" style="width: 100%; display: none; justify-content: center;">
+                    <div class="thermostat-card" style="background: rgba(10, 25, 47, 0.45); backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 28px; padding: 25px; width: 100%; max-width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.4);">
+                        <div style="text-align: center;">
+                            <div style="font-size: 14px; font-weight: 600; letter-spacing: 2px; color: #94a3b8; text-transform: uppercase;">TC Mold Risk Map</div>
+                            <span style="font-size: 11px; font-weight: 700; color: #00F2FF; margin-top: 4px; display: block; letter-spacing: 1px;">REAL-TIME HUMIDITY MONITOR</span>
+                        </div>
+
+                        <!-- Selector for season -->
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label for="moldmap-season" style="font-size:11px; color:#94a3b8; font-weight:700;">Select Target Season:</label>
+                            <select id="moldmap-season" style="width:100%; padding:8px; font-size:12px; background:#152238; border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:6px; outline:none;" onchange="updateHomeMoldMap()">
+                                <option value="winter">Dry Winter (Jan) - 55% RH</option>
+                                <option value="summer" selected>High Summer (Aug) - 82% RH</option>
+                                <option value="storm">Tropical Storm (Sept) - 95% RH</option>
+                            </select>
+                        </div>
+
+                        <!-- Mini Vector Map -->
+                        <div style="width: 100%; height: 120px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; position: relative;">
+                            <svg viewBox="0 0 200 120" style="width:100%; height:100%; display:block;">
+                                <!-- Stuart Area (Left Circle) -->
+                                <circle id="map-stuart" cx="60" cy="70" r="22" fill="#C22A36" opacity="0.75" style="transition: fill 0.4s;" />
+                                <text x="60" y="73" fill="#fff" font-size="7" font-weight="bold" font-family="monospace" text-anchor="middle">STUART</text>
+
+                                <!-- Port St. Lucie Area (Right Circle) -->
+                                <circle id="map-psl" cx="130" cy="50" r="28" fill="#C22A36" opacity="0.75" style="transition: fill 0.4s;" />
+                                <text x="130" y="53" fill="#fff" font-size="7" font-weight="bold" font-family="monospace" text-anchor="middle">PSL</text>
+
+                                <!-- Coastline decorative vector line -->
+                                <path d="M 30 110 Q 90 60 180 20" fill="none" stroke="#00F2FF" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.3" />
+                            </svg>
+                            <div id="moldmap-rh-indicator" style="position: absolute; bottom: 8px; right: 8px; font-size: 10px; font-family: monospace; background: rgba(0,0,0,0.6); padding: 2px 6px; border-radius: 4px; color: #00F2FF;">RH: 82%</div>
+                        </div>
+
+                        <!-- Recommendations Box -->
+                        <div id="moldmap-recommendation" style="background: rgba(239, 68, 68, 0.1); border: 1px solid #C22A36; padding: 12px; border-radius: 12px; font-size: 11px; color:#C22A36; line-height: 1.4;">
+                            ⚠️ <strong>Critical Threat Level:</strong> High summer humidity causes indoor dust mite/mold reproduction. Set AC to dehumidify or install UV scrubbers.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1478,19 +1199,9 @@
                     <div class="review-rating" aria-label="5 Star Rating">
                         <span class="stars" aria-hidden="true">★★★★★</span>
                     </div>
-                    <p class="review-quote">"Sean and Chris were phenomenal! They replaced our entire AC system in less than a day, and the price was extremely fair. Service was quick, professional, and very clean."</p>
+                    <p class="review-quote">"Outstanding knowledge of what system is best for Florida and our home. Very trustworthy and professional crew."</p>
                     <div class="review-author">
-                        <strong>Robert M.</strong>
-                        <span>Port St. Lucie, FL</span>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-rating" aria-label="5 Star Rating">
-                        <span class="stars" aria-hidden="true">★★★★★</span>
-                    </div>
-                    <p class="review-quote">"As a veteran myself, I highly appreciate their promptness, direct honesty, and attention to detail. No pushy sales, just clear diagnostics and high-quality repairs."</p>
-                    <div class="review-author">
-                        <strong>David K.</strong>
+                        <strong>John H.</strong>
                         <span>Stuart, FL</span>
                     </div>
                 </div>
@@ -1498,10 +1209,20 @@
                     <div class="review-rating" aria-label="5 Star Rating">
                         <span class="stars" aria-hidden="true">★★★★★</span>
                     </div>
-                    <p class="review-quote">"My air conditioner broke down in the middle of a hot Sunday afternoon. A/C Now responded within 45 minutes and got it fixed immediately. Outstanding customer care!"</p>
+                    <p class="review-quote">"These guys are responsive, honest and reliable. I had cooling issues and they showed up fast. I highly recommend their team."</p>
                     <div class="review-author">
-                        <strong>Jessica S.</strong>
-                        <span>Palm City, FL</span>
+                        <strong>Nicole R.</strong>
+                        <span>Port St. Lucie, FL</span>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-rating" aria-label="5 Star Rating">
+                        <span class="stars" aria-hidden="true">★★★★★</span>
+                    </div>
+                    <p class="review-quote">"We had them install a new A/C system. Very professional and honest and knowledgeable. We will be happy to refer them to our friends."</p>
+                    <div class="review-author">
+                        <strong>Thomas D.</strong>
+                        <span>Treasure Coast, FL</span>
                     </div>
                 </div>
             </div>
@@ -1509,21 +1230,21 @@
     </section>
 
     <!-- Service Areas -->
-    <section id="serve" class="reveal serve-section" style="background-image: linear-gradient(180deg, rgba(246, 248, 252, 0.95) 0%, rgba(246, 248, 252, 0.95) 100%), url('downloaded_images/banner-areas.jpg');">
+    <section id="serve" class="reveal serve-section" style="background-image: linear-gradient(180deg, rgba(246, 248, 252, 0.95) 0%, rgba(246, 248, 252, 0.95) 100%), url('downloaded_images/banner-areas.webp');">
         <div class="container serve-grid">
             <div class="serve-text">
                 <span class="section-tag">SERVICE REGIONS</span>
                 <h2>Proudly Serving the Treasure Coast</h2>
                 <p>We bring premium climate services to communities across Martin County, St. Lucie County, and northern Palm Beach County, including:</p>
                 <div class="areas-list">
-                    <span>Port St. Lucie</span>
-                    <span>Stuart</span>
-                    <span>Palm City</span>
-                    <span>Jensen Beach</span>
-                    <span>Fort Pierce</span>
-                    <span>Jupiter</span>
-                    <span>Hobe Sound</span>
-                    <span>Palm Beach Gardens</span>
+                    <a href="services.html" class="area-link" style="text-decoration: none; color: inherit;">Port St. Lucie</a>
+                    <a href="hvac-services-stuart.html" class="area-link" style="text-decoration: none; color: inherit;">Stuart</a>
+                    <a href="hvac-services-palm-city.html" class="area-link" style="text-decoration: none; color: inherit;">Palm City</a>
+                    <a href="areas.html" class="area-link" style="text-decoration: none; color: inherit;">Jensen Beach</a>
+                    <a href="areas.html" class="area-link" style="text-decoration: none; color: inherit;">Fort Pierce</a>
+                    <a href="areas.html" class="area-link" style="text-decoration: none; color: inherit;">Jupiter</a>
+                    <a href="areas.html" class="area-link" style="text-decoration: none; color: inherit;">Hobe Sound</a>
+                    <a href="areas.html" class="area-link" style="text-decoration: none; color: inherit;">Palm Beach Gardens</a>
                 </div>
             </div>
             <div class="serve-map" style="position: relative; overflow: hidden; border-radius: 12px; box-shadow: var(--box-shadow); border: 1px solid var(--gray-light); height: 450px;">
@@ -1543,7 +1264,7 @@
                 
                 <div class="contact-channels">
                     <div class="contact-channel">
-                        <span class="channel-icon" aria-hidden="true">📞</span>
+                        <span class="channel-icon" aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
                         <div>
                             <strong>Phone Number</strong>
                             <p><a href="tel:+17725213568" class="phone-link" data-geo="phone" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></p>
@@ -1557,7 +1278,7 @@
                         </div>
                     </div>
                     <div class="contact-channel">
-                        <span class="channel-icon">⏰</span>
+                        <span class="channel-icon"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
                         <div>
                             <strong>Business Hours</strong>
                             <p>Mon - Sat: 8:00 AM - 6:00 PM<br>Emergency Callout: 24/7 Available</p>
@@ -1567,22 +1288,33 @@
             </div>
 
             <div class="contact-form-panel">
-                <form class="contact-form" method="POST" onsubmit="event.preventDefault(); alert('Estimate request submitted successfully! Chris or Sean will contact you shortly.');">
-                <div style="display:none;"><label for="honeypot">Leave this field blank</label><input type="text" id="honeypot" name="honeypot"></div>
+                <form id="hp-general-contact-form" class="contact-form" method="POST">
+                <div style="display:none;"><label for="honeypot">Leave this field blank</label><input autocomplete="name" type="text" id="honeypot" name="honeypot"></div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Your Name</label>
-                            <input type="text" id="name" placeholder="John Doe" required name="name">
+                            <input autocomplete="name" type="text" id="name" placeholder="John Doe" required name="name">
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" placeholder="(123) 456-7890" required name="phone">
+                            <input autocomplete="tel" type="tel" id="phone" placeholder="(123) 456-7890" required name="phone">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" placeholder="john@example.com" required name="email">
+                        <input autocomplete="email" type="email" id="email" placeholder="john@example.com" required name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Your City</label>
+                        <select id="city" name="city" required style="width:100%; padding:15px; border-radius:6px; border:1px solid var(--gray-light); font-size:14px; background:var(--white); height:50px;">
+                            <option value="Port St. Lucie">Port St. Lucie</option>
+                            <option value="Stuart">Stuart</option>
+                            <option value="Palm City">Palm City</option>
+                            <option value="Jupiter">Jupiter</option>
+                            <option value="Jensen Beach">Jensen Beach</option>
+                            <option value="Fort Pierce">Fort Pierce</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="service">Select Service</label>
@@ -1596,10 +1328,13 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" rows="4" placeholder="Briefly describe your request..." required name="message"></textarea>
+                        <label for="message">Your Message (Optional)</label>
+                        <textarea id="message" rows="4" placeholder="Briefly tell us what you need (e.g. AC blowing warm air, seasonal tune-up)..." name="message"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-full">Submit Request</button>
+                    <p style="font-size: 11px; color: var(--gray-dark); margin: 15px 0 20px 0; line-height: 1.5; text-align: left;">
+                        By submitting, you consent to receive calls and text messages (SMS/MMS) from A/C Now LLC at the number provided, including automated, pre-recorded, and promotional messages. Consent is not a condition of purchase. Message and data rates may apply. Message frequency varies. Reply STOP to cancel or HELP for help. View our <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>.
+                    </p>
+                    <button type="submit" class="btn btn-primary btn-full">Request Free Estimate</button>
                 </form>
             </div>
         </div>
@@ -1738,28 +1473,32 @@
 <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="downloaded_images/Logo2.webp" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="120" height="48">
+                <img src="downloaded_images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
-                    1391 NW St. Lucie West Blvd, STE 120<br>
+                    <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
                     Port St. Lucie, FL 34986<br>
                     <a href="tel:7725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
                 </address>
             </div>
             <div class="footer-links">
                 <div class="footer-heading">Our Services</div>
-                <a href="services.html">AC Repair</a>
-                <a href="services.html">AC Installation</a>
-                <a href="services.html">Maintenance</a>
+                <a href="ac-repair.html">AC Repair</a>
+                <a href="ac-installation.html">AC Installation</a>
+                <a href="ac-maintenance.html">AC Maintenance</a>
                 <a href="services.html">Air Quality</a>
             </div>
-            <div class="footer-links">
+                        <div class="footer-links">
                 <div class="footer-heading">Quick Links</div>
                 <a href="about.html">About Us</a>
                 <a href="reviews.html">Reviews</a>
-                <a href="pool-heating.html">Pool Heating</a>
+                <a href="diagnose.html">DIY Troubleshooter</a>
+                <a href="planner.html">AC Lifespan Planner</a>
+                <a href="configurator.html">Build HVAC System</a>
+                <a href="storm-prep.html">Storm Prep Checklist</a>
                 <a href="areas.html">Service Areas</a>
+                <a href="members.html" class="phase-2-only">Members Area</a>
                 <a href="contact.html">Contact Us</a>
             </div>
             <div class="footer-links">
@@ -1773,14 +1512,21 @@
         <div class="footer-bottom">
             <div class="container footer-bottom-content">
                 <p>&copy; 2026 A/C Now LLC. All rights reserved. Licensed & Insured. Florida License #CAC1820542</p>
+                <div style="font-size: 12.5px; display: flex; gap: 15px;">
+                    <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
+                </div>
             </div>
         </div>
     </footer>
-    <script src="app.js" defer></script>
+    <script src="app.js?v=101" defer></script>
+    <script src="home-widgets.js?v=8" defer></script>
+    <script src="home-interactive.js?v=8" defer></script>
+    <script src="energy-game.js?v=8" defer></script>
     <!-- Mobile Sticky CTA Bar -->
     <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
-        <a href="tel:7725213568" class="sticky-cta-btn phone-btn" data-geo="phone">📞 Call Service Line</a>
-        <a href="contact.html" class="sticky-cta-btn book-btn">📅 Book Service Visit</a>
+        <a href="tel:7725213568" class="sticky-cta-btn phone-btn" data-geo="phone"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call Service Line</a>
+        <a href="contact.html" class="sticky-cta-btn book-btn"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Book Service Visit</a>
     </div>
 
     <!-- Floating AI Chat Assistant Widget -->
@@ -1799,7 +1545,7 @@
             <div class="header-info">
                 <div class="avatar-container">
                     <span class="pulse-indicator"></span>
-                    <img src="downloaded_images/Logo2.webp" alt="A/C Now Assistant Mascot" onerror="this.src='https://acnowllc.netlify.app/downloaded_images/Logo2.webp'">
+                    <img src="downloaded_images/Logo2.webp" width="36" height="36" loading="eager" alt="A/C Now Assistant Mascot" onerror="this.src='https://acnowllc.com/downloaded_images/Logo2.webp'">
                 </div>
                 <div>
                     <h4 style="font-family: var(--font-heading); margin: 0; font-size: 15px; font-weight: 600;">A/C Now Assistant</h4>
@@ -1822,7 +1568,17 @@
                 <form id="chat-wizard-form" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
                     <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
                         <label for="chat-w-name" style="font-size: 11px; font-weight: 600; color: var(--gray-dark);">Your Full Name</label>
-                        <input type="text" id="chat-w-name" placeholder="John Doe" required style="padding: 8px 12px; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 13px; background-color: var(--light);">
+                        <input autocomplete="name" type="text" id="chat-w-name" placeholder="John Doe" required style="padding: 8px 12px; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 13px; background-color: var(--light);">
+                    </div>
+                    <div class="grid-2-col" style="gap:8px;">
+                        <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                            <label for="chat-w-phone" style="font-size: 11px; font-weight: 600; color: var(--gray-dark);">Your Phone</label>
+                            <input autocomplete="tel" type="tel" id="chat-w-phone" placeholder="(772) 521-3568" required style="padding: 8px 12px; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 13px; background-color: var(--light); width: 100%;">
+                        </div>
+                        <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                            <label for="chat-w-email" style="font-size: 11px; font-weight: 600; color: var(--gray-dark);">Your Email</label>
+                            <input autocomplete="email" type="email" id="chat-w-email" placeholder="john@example.com" required style="padding: 8px 12px; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 13px; background-color: var(--light); width: 100%;">
+                        </div>
                     </div>
                     <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
                         <label for="chat-w-city" style="font-size: 11px; font-weight: 600; color: var(--gray-dark);">Your Service City</label>
@@ -1840,6 +1596,9 @@
                         <label for="chat-w-issue" style="font-size: 11px; font-weight: 600; color: var(--gray-dark);">Describe your AC's behavior</label>
                         <textarea id="chat-w-issue" placeholder="E.g., System is running but blowing warm air, or water is leaking from the unit inside..." rows="3" required style="padding: 8px 12px; border-radius: 6px; border: 1px solid var(--gray-light); font-size: 13px; background-color: var(--light); resize: none;"></textarea>
                     </div>
+                    <p style="font-size: 9.5px; color: var(--gray-dark); margin: 5px 0 10px 0; line-height: 1.4; text-align: left;">
+                        By submitting, you consent to receive calls and text messages (SMS/MMS) from A/C Now LLC at the number provided, including automated, pre-recorded, and promotional messages. Consent is not a condition of purchase. Message and data rates may apply. Message frequency varies. Reply STOP to cancel or HELP for help. View our <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>.
+                    </p>
                     <button type="submit" class="submit-wizard-btn" style="background-color: var(--primary); color: var(--white); border: none; border-radius: 6px; padding: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; margin-top: 5px;">
                         <span>Draft Dispatch Report</span>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

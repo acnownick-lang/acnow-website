@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en" class="phase-1">
+<head>
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+
+            // bfcache breakout safety guard
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            });
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B63E5">
+    <title>Members Portal | A/C Now LLC</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+    </noscript>
+    <link rel="stylesheet" href="redesign.css?v=8">
+    
+    <style>
+        .members-container {
+            max-width: 1150px;
+            margin: 60px auto 80px auto;
+            padding: 0 20px;
+        }
+        .portal-view {
+            display: none;
+        }
+        .portal-view.active {
+            display: block;
+        }
+        .pricing-tier-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        @media (max-width: 768px) {
+            .pricing-tier-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        .tier-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--gray-light);
+            padding: 40px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .tier-card.featured {
+            border: 2px solid var(--primary);
+        }
+        .tier-badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 40px;
+            transform: rotate(45deg);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .tier-features {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0;
+        }
+        .tier-features li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--gray-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tier-features li::before {
+            content: "✓";
+            color: #0B7A53;
+            font-weight: 800;
+        }
+        .dashboard-header {
+            background: var(--dark);
+            color: #fff;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+            border-bottom: 4px solid var(--secondary);
+        }
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--gray-light);
+        }
+        .log-table th, .log-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .log-table th {
+            background: var(--light);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .log-table td {
+            font-size: 13.5px;
+            color: var(--gray-dark);
+        }
+        .log-table tr:last-child td {
+            border-bottom: none;
+        }
+        .badge-premium {
+            background: linear-gradient(135deg, var(--secondary) 0%, #c12230 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .badge-standard {
+            background: var(--primary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        /* Typography Consistency */
+        h4, h5, h6 {
+            font-family: var(--font-heading) !important;
+        }
+
+        /* Light Card Button Overrides (Fixing White-on-White Invisible Buttons) */
+        .tier-card .btn-secondary,
+        #print-area .btn-secondary,
+        #tech-lock-panel .btn-secondary {
+            color: var(--primary) !important;
+            border: 2px solid var(--primary) !important;
+            background-color: transparent !important;
+        }
+        .tier-card .btn-secondary:hover,
+        #print-area .btn-secondary:hover,
+        #tech-lock-panel .btn-secondary:hover {
+            background-color: rgba(11, 99, 229, 0.05) !important;
+            color: var(--primary-hover) !important;
+            border-color: var(--primary-hover) !important;
+        }
+
+        /* Responsive Table Wrapper */
+        .table-responsive {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-light);
+            box-sizing: border-box;
+        }
+        .table-responsive .log-table {
+            margin-bottom: 0 !important;
+            border: none !important;
+            width: 100%;
+        }
+        #print-area .log-table {
+            table-layout: fixed;
+            width: 100%;
+            min-width: 900px; /* Enforce minimum table width to prevent column squeezing */
+        }
+        #print-area .log-table th:nth-child(1),
+        #print-area .log-table td:nth-child(1) {
+            width: 110px; /* Date */
+        }
+        #print-area .log-table th:nth-child(2),
+        #print-area .log-table td:nth-child(2) {
+            width: 140px; /* Technician */
+        }
+        #print-area .log-table th:nth-child(3),
+        #print-area .log-table td:nth-child(3) {
+            width: auto;  /* Checklist Details - takes remaining space */
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        #print-area .log-table th:nth-child(4),
+        #print-area .log-table td:nth-child(4) {
+            width: 130px; /* Refrigerant Type */
+        }
+        #print-area .log-table th:nth-child(5),
+        #print-area .log-table td:nth-child(5) {
+            width: 140px; /* Charge Amt (lbs/oz) */
+        }
+        #print-area .log-table th:nth-child(6),
+        #print-area .log-table td:nth-child(6) {
+            width: 100px; /* Tech Initials */
+        }
+        #print-area .log-table th:nth-child(7),
+        #print-area .log-table td:nth-child(7) {
+            width: 110px; /* Status */
+        }
+        
+        /* Gold badge styling for Elite members */
+        .badge-elite {
+            background: linear-gradient(135deg, #FFC72C 0%, #D89B00 100%);
+            color: #111;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="downloaded_images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="downloaded_images/mascot-logo.svg">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span class="top-bar-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-link">
+                <img src="downloaded_images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            </a>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+            <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="ac-installation.html" class="nav-link">AC Installation</a>
+                <a href="ac-repair.html" class="nav-link">AC Repair</a>
+                <a href="ac-maintenance.html" class="nav-link">AC Maintenance</a>
+                <a href="areas.html" class="nav-link">Service Area</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="reviews.html" class="nav-link">Reviews</a>
+                <a href="members.html" class="nav-link active phase-2-only">Members Area</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Header -->
+        <section class="hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.85) 0%, rgba(10, 24, 47, 0.75) 100%), url('downloaded_images/cta-about.webp'); background-size: cover; background-position: center; min-height: 45vh; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="container" style="text-align: center;">
+                <span class="section-tag" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">VETERAN-OWNED DISCIPLINE</span>
+                <h1 style="font-family: var(--font-heading); font-size: 38px; color: #fff; margin-top: 15px; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">Comfort Command Center</h1>
+                <p style="color: var(--gray-light); max-width: 600px; margin: 15px auto 0 auto; font-size: 16px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); line-height: 1.6;">Access military-grade system oversight, track certified tune-up logs, and deploy priority emergency technicians instantly.</p>
+            </div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);"></div>
+        </section>
+
+        <div class="members-container">
+            <!-- VIEW A: SIGN UP / PROMO LANDING -->
+            <div class="portal-view active" id="view-promo">
+                <div class="section-header centered" style="margin-bottom: 50px;">
+                    <span class="section-tag">MEMBERSHIP ADVANTAGE</span>
+                    <h2>Select Your Comfort Shield Plan</h2>
+                    <p>Avoid expensive breakdown surprises. Our Service Club subscriptions guarantee that owners Sean or Chris keep your system tuned to peak efficiency year-round.</p>
+                </div>
+
+                <div class="section-header centered" style="margin-bottom: 50px;">
+                    <span class="section-tag">THE COMFORT SHIELD GUARANTEE</span>
+                    <h2>Deploy Your Comfort Defense Plan</h2>
+                    <p>Secure your home against the Florida heat. Our veteran-led maintenance plans guarantee co-owners Chris or Sean keep your system operating at peak tactical efficiency year-round.</p>
+                </div>
+
+                <div class="pricing-tier-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px;">
+                    <!-- Preferred Care Defense Tier -->
+                    <div class="tier-card" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--dark); margin: 0 0 5px 0;">Preferred Care Defense</h3>
+                            <div style="font-size: 36px; font-weight: 800; color: var(--primary); margin: 15px 0;">$14.95<span style="font-size: 14px; color: var(--gray-dark); font-weight: 400;">/month</span></div>
+                            <p style="font-size: 13px; color: var(--gray-dark); margin: 0; line-height: 1.5;">Establish a baseline defensive shield for newer systems. Perfect for maintaining factory warranties and keeping drain lines clear under Chris & Sean's oversight.</p>
+                            
+                            <ul class="tier-features" style="margin-top: 20px; padding-left: 20px; font-size: 13.5px; line-height: 1.6;">
+                                <li>1 Annual Precision Tune-Up & Safety Audit</li>
+                                <li>Anti-Algae Drain Line Treatment & Flush</li>
+                                <li>10% Discount on Repair Parts & Labor</li>
+                                <li>Standard Service Scheduling</li>
+                                <li>Maintains Manufacturer's Warranty</li>
+                             </ul>
+                        </div>
+                        <a href="contact.html?plan=preferred" class="btn btn-secondary btn-full btn-signup" style="margin-top: 25px; text-align: center;" data-tier="Standard">Deploy Preferred Defense</a>
+                    </div>
+
+                    <!-- Comfort Club Deluxe Tier (Featured) -->
+                    <div class="tier-card featured" style="background: var(--white); border: 2px solid var(--primary); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 10px 30px rgba(11,99,229,0.15);">
+                        <div class="tier-badge" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: var(--white); padding: 4px 15px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Best Value</div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--dark); margin: 0 0 5px 0;">Comfort Club Deluxe</h3>
+                            <div style="font-size: 36px; font-weight: 800; color: var(--primary); margin: 15px 0;">$19.95<span style="font-size: 14px; color: var(--gray-dark); font-weight: 400;">/month</span></div>
+                            <p style="font-size: 13px; color: var(--gray-dark); margin: 0; line-height: 1.5;">Our most popular tactical coverage for Treasure Coast homes. Guarantees priority dispatch routing and a 100% waiver on our standard $95 diagnostic fee.</p>
+                            
+                            <ul class="tier-features" style="margin-top: 20px; padding-left: 20px; font-size: 13.5px; line-height: 1.6;">
+                                <li><strong>2 Annual</strong> Precision Tune-Ups (Spring & Fall)</li>
+                                <li>Anti-Algae Drain Line Treatment & Flush</li>
+                                <li><strong>$95 Diagnostic Fee Waived</strong> (Free Service Calls)</li>
+                                <li><strong>15% Discount</strong> on Repair Parts & Labor</li>
+                                <li>Priority Dispatch (Ahead of non-members during heat waves)</li>
+                            </ul>
+                        </div>
+                        <a href="contact.html?plan=comfort" class="btn btn-primary btn-full btn-signup" style="margin-top: 25px; text-align: center;" data-tier="Comfort">Deploy Deluxe Protection</a>
+                    </div>
+
+                    <!-- Precision Elite Security Tier -->
+                    <div class="tier-card" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--dark); margin: 0 0 5px 0;">Precision Elite Security</h3>
+                            <div style="font-size: 36px; font-weight: 800; color: var(--primary); margin: 15px 0;">$29.95<span style="font-size: 14px; color: var(--gray-dark); font-weight: 400;">/month</span></div>
+                            <p style="font-size: 13px; color: var(--gray-dark); margin: 0; line-height: 1.5;">Full-spectrum climate security for older or multi-zone heat pumps. Includes deep condenser coil chemical washes, replacement filters, and front-of-line priority.</p>
+                            
+                            <ul class="tier-features" style="margin-top: 20px; padding-left: 20px; font-size: 13.5px; line-height: 1.6;">
+                                <li><strong>2 Annual</strong> Tune-Ups & Compressor Audits</li>
+                                <li>Coastal Salt-Air Corrosion Coil Wash</li>
+                                <li><strong>$95 Diagnostic Fee Waived</strong></li>
+                                <li><strong>20% Discount</strong> on Repair Parts & Labor</li>
+                                <li><strong>VIP Rapid Deployment</strong> (24hr emergency dispatch bypass)</li>
+                                <li>1 Free MERV 11 Replacement Filter per visit</li>
+                                <li><strong>$100/yr Accrued Credit</strong> towards new system replacement</li>
+                            </ul>
+                        </div>
+                        <a href="contact.html?plan=elite" class="btn btn-secondary btn-full btn-signup" style="margin-top: 25px; text-align: center;" data-tier="Elite">Deploy Elite Security</a>
+                    </div>
+                </div>
+
+                <!-- Trust Badges Section -->
+                <div class="members-trust-badges-bar" style="margin: 40px 0; padding: 20px 0; border-top: 1px solid var(--gray-light); border-bottom: 1px solid var(--gray-light); display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;" aria-hidden="true">⭐</span>
+                        <div>
+                            <strong style="display: block; font-family: var(--font-heading); font-size: 14px; color: var(--dark);">5.0 Star Google Rating</strong>
+                            <span style="font-size: 12px; color: var(--gray-dark);">Based on 150+ reviews</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;" aria-hidden="true">🎖️</span>
+                        <div>
+                            <strong style="display: block; font-family: var(--font-heading); font-size: 14px; color: var(--dark);">Veteran-Owned & Operated</strong>
+                            <span style="font-size: 12px; color: var(--gray-dark);">Serving the Treasure Coast</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;" aria-hidden="true">📋</span>
+                        <div>
+                            <strong style="display: block; font-family: var(--font-heading); font-size: 14px; color: var(--dark);">Licensed & Insured</strong>
+                            <span style="font-size: 12px; color: var(--gray-dark);">Florida Lic #CAC1820542</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;" aria-hidden="true">⚡</span>
+                        <div>
+                            <strong style="display: block; font-family: var(--font-heading); font-size: 14px; color: var(--dark);">NATE & EPA Certified</strong>
+                            <span style="font-size: 12px; color: var(--gray-dark);">Expert technical audits</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonials Section -->
+                <section aria-labelledby="testimonials-heading" style="margin: 50px 0; text-align: center;">
+                    <span class="section-tag">REAL MEMBER EXPERIENCES</span>
+                    <h3 id="testimonials-heading" style="font-family: var(--font-heading); font-size: 28px; font-weight: 800; color: var(--dark); margin-bottom: 30px;">Why Neighbors Love the Comfort Club</h3>
+                    
+                    <div class="comfort-testimonials-slider" style="position: relative; max-width: 800px; margin: 0 auto; overflow: hidden; padding: 20px;">
+                        <div class="slider-track" style="display: flex; transition: transform 0.5s ease; width: 300%;" id="comfort-slider-track">
+                            <!-- Slide 1: Focus on Immediate Savings -->
+                            <div class="testimonial-slide" style="width: 33.333%; flex-shrink: 0; padding: 0 20px; text-align: left;">
+                                <div style="background: linear-gradient(135deg, var(--white), var(--light)); border: 1px solid rgba(11,99,229,0.08); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: left;">
+                                    <div style="color: var(--gold); font-size: 18px; margin-bottom: 12px;" aria-label="5 Star Rating">★★★★★</div>
+                                    <p style="font-style: italic; font-size: 15px; color: var(--text); line-height: 1.6; margin-bottom: 15px;">"Joining the Comfort Club saved me $95 on the diagnostic fee instantly, plus 15% off my capacitor replacement. Chris explained everything. Incredible value!"</p>
+                                    <strong style="font-family: var(--font-heading); font-size: 14px; color: var(--dark); display: block;">Jerry S.</strong>
+                                    <span style="font-size: 12px; color: var(--gray-dark);">Stuart, FL</span>
+                                </div>
+                            </div>
+                            <!-- Slide 2: Focus on Priority Dispatch -->
+                            <div class="testimonial-slide" style="width: 33.333%; flex-shrink: 0; padding: 0 20px; text-align: left;">
+                                <div style="background: linear-gradient(135deg, var(--white), var(--light)); border: 1px solid rgba(11,99,229,0.08); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: left;">
+                                    <div style="color: var(--gold); font-size: 18px; margin-bottom: 12px;" aria-label="5 Star Rating">★★★★★</div>
+                                    <p style="font-style: italic; font-size: 15px; color: var(--text); line-height: 1.6; margin-bottom: 15px;">"These guys are responsive, honest and reliable. I had cooling issues and they showed up fast. The priority dispatch for members gives real peace of mind."</p>
+                                    <strong style="font-family: var(--font-heading); font-size: 14px; color: var(--dark); display: block;">Nicole R.</strong>
+                                    <span style="font-size: 12px; color: var(--gray-dark);">Port St. Lucie, FL</span>
+                                </div>
+                            </div>
+                            <!-- Slide 3: Focus on Co-Owner Expertise -->
+                            <div class="testimonial-slide" style="width: 33.333%; flex-shrink: 0; padding: 0 20px; text-align: left;">
+                                <div style="background: linear-gradient(135deg, var(--white), var(--light)); border: 1px solid rgba(11,99,229,0.08); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); text-align: left;">
+                                    <div style="color: var(--gold); font-size: 18px; margin-bottom: 12px;" aria-label="5 Star Rating">★★★★★</div>
+                                    <p style="font-style: italic; font-size: 15px; color: var(--text); line-height: 1.6; margin-bottom: 15px;">"Sean was awesome! Very knowledgeable and did a complete preventative audit of our system. It is reassuring to have the co-owners directly handle inspections."</p>
+                                    <strong style="font-family: var(--font-heading); font-size: 14px; color: var(--dark); display: block;">Todd G.</strong>
+                                    <span style="font-size: 12px; color: var(--gray-dark);">Palm City, FL</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Dots Navigation -->
+                        <div style="display: flex; justify-content: center; gap: 8px; margin-top: 20px;">
+                            <button type="button" class="slider-dot active" data-index="0" aria-label="Go to slide 1" style="width: 10px; height: 10px; border-radius: 50%; border: none; background-color: var(--primary); cursor: pointer; transition: var(--transition);"></button>
+                            <button type="button" class="slider-dot" data-index="1" aria-label="Go to slide 2" style="width: 10px; height: 10px; border-radius: 50%; border: none; background-color: var(--gray-light); cursor: pointer; transition: var(--transition);"></button>
+                            <button type="button" class="slider-dot" data-index="2" aria-label="Go to slide 3" style="width: 10px; height: 10px; border-radius: 50%; border: none; background-color: var(--gray-light); cursor: pointer; transition: var(--transition);"></button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Simple Login / Quick Demo Panel -->
+                <div style="background: var(--light); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 40px; text-align: center; max-width: 600px; margin: 0 auto; box-shadow: var(--box-shadow);">
+                    <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin: 0 0 10px 0; font-weight: 800;">Already a Member?</h3>
+                    <p style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 25px; line-height: 1.5;">Click below to log in, or bypass registration to explore a live demo members dashboard instantly.</p>
+                    
+                    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                        <button type="button" class="btn btn-primary" id="btn-login-demo" style="padding: 12px 24px;">Explore Live Dashboard Demo</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW B: MEMBER DASHBOARD (Simulated State) -->
+            <div class="portal-view" id="view-dashboard">
+                <!-- Dashboard Header -->
+                <div class="dashboard-header">
+                    <div>
+                        <span id="dash-membership-badge" class="badge-premium">Premium Member</span>
+                        <h2 style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; margin: 8px 0 0 0; color: #fff;" id="dash-welcome-text">Hello, Comfort Club Member!</h2>
+                        <span style="font-size: 12.5px; color: var(--gray-light);">Member ID: <strong id="dash-member-id">ACN-88102</strong> | Plan Status: <strong style="color: #0B7A53;">ACTIVE</strong></span>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="btn-logout" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 16px; font-size: 12.5px;">Log Out</button>
+                </div>
+
+                <!-- Dynamic Action Upsell & Replacement Credits Banner -->
+                <div id="dash-action-banner" style="padding: 20px; border-radius: var(--border-radius); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; transition: var(--transition);"></div>
+
+                <!-- Member Command Briefing (Onboarding Support) -->
+                <div style="background: rgba(11, 99, 229, 0.05); border: 1px solid rgba(11, 99, 229, 0.15); border-radius: var(--border-radius); padding: 20px; margin-bottom: 30px;">
+                    <h4 style="font-family: var(--font-heading); color: var(--primary); margin: 0 0 10px 0; font-size: 15px; font-weight: 800; display:flex; align-items:center; gap:8px;">
+                        <span>🎖️</span> Your Membership Command Briefing
+                    </h4>
+                    <p style="font-size: 13px; color: var(--gray-dark); margin: 0 0 12px 0; line-height: 1.5;">
+                        Welcome to the team! Your system protection is fully active and overseen by co-owners Chris and Sean. Here is how to command your benefits today:
+                    </p>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 12.5px; color: var(--gray-dark); line-height: 1.6;">
+                        <li><strong>Verify Your Specs:</strong> Inspect the <em>Verified Equipment Intelligence</em> card. If any details are incorrect, let your technician know so we can update your database record.</li>
+                        <li><strong>Monitor Filter Life:</strong> The <em>Efficiency Countdown</em> tracks filter quality. Change your MERV 11 filter before it hits zero to maintain peak airflow.</li>
+                        <li><strong>Claim Financial Credits:</strong> Use the <em>Member Tax & Warranty Assets</em> locker to calculate IRS Section 25C tax credits for your equipment.</li>
+                        <li><strong>Request Standby Dispatch:</strong> If cooling drops, utilize <em>VIP Rapid Deployment</em> to bypass the standard queue for immediate service.</li>
+                    </ul>
+                </div>
+
+                <!-- Two-Column Grid -->
+                <div class="planner-grid" style="display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 40px; text-align: left;">
+                    
+                    <!-- Left Column: Digital Logs & Tech Override (Print Area) -->
+                    <div id="print-area">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                            <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin: 0; font-weight: 800;">Certified System Service Ledger</h3>
+                            <button type="button" class="btn btn-secondary" id="btn-print-logs" style="font-size:12.5px; padding: 6px 12px;">🖨️ Export Certified Ledger</button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="log-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Technician</th>
+                                        <th>Service Checklist Details</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="log-table-body">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        </div>
+
+                    <!-- Right Column: System Specs, Filter Lifespan & Priorities -->
+                    <div>
+                        <!-- System Specifications Card -->
+                        <section aria-labelledby="specs-heading" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; box-shadow: var(--box-shadow); margin-bottom: 30px;">
+                            <h3 id="specs-heading" style="font-family: var(--font-heading); color: var(--dark); font-size: 16px; margin: 0 0 15px 0; font-weight: 800; border-bottom: 1px solid var(--gray-light); padding-bottom: 10px;">📋 System Specifications</h3>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+                                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--gray-light); padding-bottom:6px;">
+                                    <span style="color:var(--gray-dark);">Model:</span>
+                                    <strong id="dash-sys-model" style="color:var(--dark);">Carrier Comfort 15 SEER</strong>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--gray-light); padding-bottom:6px;">
+                                    <span style="color:var(--gray-dark);">Serial Number:</span>
+                                    <strong id="dash-sys-serial" style="color:var(--dark);">SRN-9988271A</strong>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--gray-light); padding-bottom:6px;">
+                                    <span style="color:var(--gray-dark);">Filter Dimensions:</span>
+                                    <strong id="dash-sys-filter" style="color:var(--dark);">16" x 25" x 1"</strong>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; padding-bottom:4px;">
+                                    <span style="color:var(--gray-dark);">Refrigerant Type:</span>
+                                    <strong id="dash-sys-refrigerant" style="color:var(--dark);">R-410A Clean Charge</strong>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Filter Lifespan Countdown Card -->
+                        <section aria-labelledby="filter-heading" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; box-shadow: var(--box-shadow); margin-bottom: 30px;">
+                            <h3 id="filter-heading" style="font-family: var(--font-heading); color: var(--dark); font-size: 16px; margin: 0 0 15px 0; font-weight: 800; border-bottom: 1px solid var(--gray-light); padding-bottom: 10px;">⏳ Filter Replacement Countdown</h3>
+                            
+                            <div style="text-align: center; margin: 15px 0;">
+                                <div style="display:inline-block; position:relative; width:100px; height:100px; border-radius:50%; background: radial-gradient(white 55%, transparent 56%), conic-gradient(#0B7A53 65%, var(--light) 65%); display:flex; align-items:center; justify-content:center; margin:0 auto 10px auto; border: 1px solid var(--gray-light);">
+                                    <div style="text-align:center;">
+                                        <div style="font-size:20px; font-weight:800; color:var(--dark);" id="filter-days-num">58</div>
+                                        <div style="font-size:9px; text-transform:uppercase; color:var(--gray-dark);">Days Left</div>
+                                    </div>
+                                </div>
+                                <span style="font-size:13px; font-weight:600; color:var(--dark); display:block; margin-top:8px;">Target Size: <strong id="filter-size-badge" style="color:var(--primary);">16x25x1</strong></span>
+                            </div>
+                            <p style="font-size: 11.5px; color: var(--gray-dark); line-height: 1.5; margin: 10px 0 0 0; text-align: center;">Keep backup MERV 11 filter sizes on hand to protect your blower coils.</p>
+                        </section>
+
+                        <!-- Document Locker Card -->
+                        <section aria-labelledby="locker-heading" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; box-shadow: var(--box-shadow); margin-bottom: 30px;">
+                            <h3 id="locker-heading" style="font-family: var(--font-heading); color: var(--dark); font-size: 16px; margin: 0 0 15px 0; font-weight: 800; border-bottom: 1px solid var(--gray-light); padding-bottom: 10px;">📑 Document Locker</h3>
+                            <p style="font-size:12.5px; color:var(--gray-dark); margin-bottom:20px; line-height: 1.5;">Access interactive tool suites to calculate AHRI certificates and IRS Section 25C tax write-offs.</p>
+                            
+                            <div style="display:flex; flex-direction:column; gap:12px;">
+                                <a href="planner.html" style="font-size:13px; font-weight:700; color:var(--primary); text-decoration:none; display:flex; align-items:center; gap:8px;">
+                                    <span>🛠️</span> Interactive IRS Section 25C Tax Credit Planner
+                                </a>
+                                <a href="configurator.html" style="font-size:13px; font-weight:700; color:var(--primary); text-decoration:none; display:flex; align-items:center; gap:8px;">
+                                    <span>🛠️</span> Interactive AHRI System Match Configurator
+                                </a>
+                            </div>
+                        </section>
+
+                        <!-- Priority Dispatch Scheduler -->
+                        <section aria-labelledby="dispatch-heading" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; box-shadow: var(--box-shadow);">
+                            <h3 id="dispatch-heading" style="font-family: var(--font-heading); color: var(--dark); font-size: 16px; margin: 0 0 15px 0; font-weight: 800; border-bottom: 1px solid var(--gray-light); padding-bottom: 10px;">⚡ Priority Dispatch</h3>
+                            <p style="font-size:12.5px; color:var(--gray-dark); margin-bottom:20px; line-height: 1.5;">You bypass standard scheduling tiers. Submit below to book a same-day site visit slot.</p>
+                            
+                            <a href="contact.html" class="btn btn-primary btn-full" style="font-size: 13px;">Book Member Priority Dispatch</a>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="downloaded_images/Logo2.webp" alt="A/C Now LLC" class="footer-logo" loading="lazy" width="160" height="72">
+                <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
+                    <strong>A/C Now LLC</strong><br>
+                    <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
+                    Port St. Lucie, FL 34986<br>
+                    <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
+                </address>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Our Services</div>
+                <a href="services.html">AC Repair</a>
+                <a href="services.html">AC Installation</a>
+                <a href="services.html">Maintenance</a>
+                <a href="services.html">Air Quality</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Quick Links</div>
+                <a href="about.html">About Us</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="pool-heating.html">Pool Heating</a>
+                <a href="diagnose.html">Diagnose AC</a>
+                <a href="planner.html">AC Planner</a>
+                <a href="configurator.html" >Build HVAC</a>
+                <a href="corrosion-predictor.html" class="phase-2-only">Coil Corrosion Map</a>
+                <a href="areas.html">Service Areas</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Service Cities</div>
+                <a href="index.html">Port St. Lucie</a>
+                <a href="hvac-services-palm-city.html">Palm City</a>
+                <a href="hvac-services-stuart.html">Stuart</a>
+                <a href="areas.html">All Service Areas</a>
+            </div>
+        </div>
+        <div style="background-color: #060d1a; padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px;">
+            <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; font-size: 12px; color: var(--gray-dark);">
+                <span>&copy; 2026 A/C Now LLC. All rights reserved. License #CAC1820542.</span>
+                <div style="display: flex; gap: 15px;">
+                    <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility</a>
+                </div>
+                <span>Veterans Serving the Treasure Coast with Pride.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js?v=8" defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // --- IndexedDB Offline Database Setup ---
+            function openOfflineDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open('acnow-offline-db', 3);
+                    request.onupgradeneeded = event => {
+                        const db = event.target.result;
+                        if (!db.objectStoreNames.contains('leads')) {
+                            db.createObjectStore('leads', { keyPath: 'id', autoIncrement: true });
+                        }
+                        if (!db.objectStoreNames.contains('logs')) {
+                            db.createObjectStore('logs', { keyPath: 'id', autoIncrement: true });
+                        }
+                        if (!db.objectStoreNames.contains('specs')) {
+                            db.createObjectStore('specs', { keyPath: 'id', autoIncrement: true });
+                        }
+                    };
+                    request.onsuccess = event => resolve(event.target.result);
+                    request.onerror = event => reject(request.error);
+                });
+            }
+
+            function queueOfflineItem(storeName, payload) {
+                return openOfflineDB().then(db => {
+                    return new Promise((resolve, reject) => {
+                        const transaction = db.transaction(storeName, 'readwrite');
+                        const store = transaction.objectStore(storeName);
+                        const request = store.add({
+                            payload: payload,
+                            timestamp: Date.now()
+                        });
+                        request.onsuccess = () => {
+                            console.log(`[PWA Client] Item queued in store '${storeName}'.`);
+                            if ('serviceWorker' in navigator && 'SyncManager' in window) {
+                                navigator.serviceWorker.ready.then(reg => {
+                                    return reg.sync.register(`sync-${storeName}`);
+                                }).then(() => {
+                                    console.log(`[PWA Client] Background Sync ('sync-${storeName}') registered.`);
+                                    resolve();
+                                }).catch(err => {
+                                    console.error("[PWA Client] Background Sync registration failed:", err);
+                                    resolve();
+                                });
+                            } else {
+                                resolve();
+                            }
+                        };
+                        request.onerror = () => reject(request.error);
+                    });
+                });
+            }
+
+            // Register Sync Completion listeners
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.addEventListener('message', event => {
+                    if (event.data && event.data.type === 'LOGS_SYNC_COMPLETE') {
+                        console.log(`[PWA Client] Logs sync completed:`, event.data);
+                        const logs = getLogs();
+                        const matchingLog = logs.find(l => l.date === event.data.payload.date && l.details === event.data.payload.details);
+                        if (matchingLog) {
+                            matchingLog.status = "🟢 COMPLETE";
+                            saveLogs(logs);
+                            renderLogs();
+                        }
+                    }
+                    if (event.data && event.data.type === 'SPECS_SYNC_COMPLETE') {
+                        console.log(`[PWA Client] Specs sync completed:`, event.data);
+                        const banner = document.createElement('div');
+                        banner.style.cssText = "position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #0B7A53; color: white; padding: 15px 30px; border-radius: 8px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.2);";
+                        banner.innerHTML = "✅ Equipment specs synced successfully!";
+                        document.body.appendChild(banner);
+                        setTimeout(() => banner.remove(), 4000);
+                    }
+                });
+            }
+
+            const viewPromo = document.getElementById("view-promo");
+            const viewDashboard = document.getElementById("view-dashboard");
+            
+            const btnDemo = document.getElementById("btn-login-demo");
+            const btnLogout = document.getElementById("btn-logout");
+            const btnsSignup = document.querySelectorAll(".btn-signup");
+            
+            const logTableBody = document.getElementById("log-table-body");
+            
+            const badgePremium = document.getElementById("dash-membership-badge");
+
+            // New equipment spec elements
+            const specModelLabel = document.getElementById("dash-sys-model");
+            const specSerialLabel = document.getElementById("dash-sys-serial");
+            const specFilterLabel = document.getElementById("dash-sys-filter");
+            const specRefrigerantLabel = document.getElementById("dash-sys-refrigerant");
+            const filterSizeBadge = document.getElementById("filter-size-badge");
+            
+            const filterDaysNum = document.getElementById("filter-days-num");
+
+            // Initial logs seed
+            const defaultLogs = [
+                { date: "2026-04-12", tech: "Sean (Co-Owner)", details: "Annual 21-point checkup completed. Balanced blower motor CFM, verified capacitor tolerances, and chemically flushed drain pan lines.", status: "🟢 COMPLETE" },
+                { date: "2025-10-08", tech: "Chris (Co-Owner)", details: "Fall system inspection. Chemically rinsed evaporator coil, cleared outdoor debris from central condenser pad, and replaced air filters.", status: "🟢 COMPLETE" }
+            ];
+
+            const defaultSpecs = {
+                model: "Carrier Comfort 15 SEER",
+                serial: "SRN-9988271A",
+                filter: "16x25x1 MERV 11",
+                refrigerant: "R-410A Clean Charge"
+            };
+
+            function getLogs() {
+                const local = localStorage.getItem("acnow_logs");
+                if (local) return JSON.parse(local);
+                return defaultLogs;
+            }
+
+            function saveLogs(logs) {
+                localStorage.setItem("acnow_logs", JSON.stringify(logs));
+            }
+
+            function getSpecs() {
+                const local = localStorage.getItem("acnow_specs");
+                if (local) return JSON.parse(local);
+                return defaultSpecs;
+            }
+
+            function saveSpecs(specs) {
+                localStorage.setItem("acnow_specs", JSON.stringify(specs));
+            }
+
+            function renderSpecs() {
+                const specs = getSpecs();
+                specModelLabel.textContent = specs.model;
+                specSerialLabel.textContent = specs.serial;
+                specFilterLabel.textContent = specs.filter;
+                specRefrigerantLabel.textContent = specs.refrigerant;
+                filterSizeBadge.textContent = specs.filter.split(" ")[0]; // Get dimensions e.g. 16x25x1
+            }
+
+            function renderLogs() {
+                const logs = getLogs();
+                logTableBody.innerHTML = "";
+                
+                logs.forEach(log => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td><strong>${log.date}</strong></td>
+                        <td>${log.tech}</td>
+                        <td>${log.details}</td>
+                        <td><span class="badge" style="background:#0B7A53; color:#fff; font-size:11px; padding:2px 6px; border-radius:4px; font-weight:700;">${log.status}</span></td>
+                    `;
+                    logTableBody.appendChild(tr);
+                });
+            }
+
+            function checkAuthState() {
+                const memberState = localStorage.getItem("acnow_member");
+                const headerEl = document.querySelector("header");
+                const footerEl = document.querySelector("footer");
+                if (memberState === "true") {
+                    const tier = localStorage.getItem("acnow_member_tier") || "Premium";
+                    if (tier === "Premium") {
+                        badgePremium.textContent = "Premium Member";
+                        badgePremium.className = "badge-premium";
+                    } else {
+                        badgePremium.textContent = "Standard Member";
+                        badgePremium.className = "badge-standard";
+                    }
+                    viewPromo.classList.remove("active");
+                    viewDashboard.classList.add("active");
+                    renderLogs();
+                    renderSpecs();
+                    if (headerEl) headerEl.removeAttribute("inert");
+                    if (footerEl) footerEl.removeAttribute("inert");
+                } else {
+                    viewDashboard.classList.remove("active");
+                    viewPromo.classList.add("active");
+                    if (headerEl) headerEl.setAttribute("inert", "");
+                    if (footerEl) footerEl.setAttribute("inert", "");
+                }
+            }
+
+            // Demo Access
+            btnDemo.addEventListener("click", () => {
+                localStorage.setItem("acnow_member", "true");
+                localStorage.setItem("acnow_member_tier", "Premium");
+                checkAuthState();
+                triggerSound("click");
+            });
+
+            // Signup handlers
+            btnsSignup.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const tier = btn.dataset.tier;
+                    localStorage.setItem("acnow_member", "true");
+                    localStorage.setItem("acnow_member_tier", tier);
+                    checkAuthState();
+                    triggerSound("click");
+                    alert(`Welcome to the Comfort Club! Your ${tier} membership is active.`);
+                });
+            });
+
+            // Logout
+            btnLogout.addEventListener("click", () => {
+                localStorage.removeItem("acnow_member");
+                localStorage.removeItem("acnow_member_tier");
+                checkAuthState();
+                triggerSound("click");
+            });
+
+            // Interactive filter reset when homeowner clicks countdown
+            document.getElementById("filter-days-num").parentElement.parentElement.addEventListener("click", () => {
+                triggerSound("tick");
+                filterDaysNum.textContent = "90";
+                alert("Filter lifespan tracker reset to 90 days! Keep your MERV 11 filter clean.");
+            });
+
+            // Print function
+            document.getElementById("btn-print-logs").addEventListener("click", () => {
+                document.body.classList.add("print-report");
+                window.print();
+            });
+            window.addEventListener("afterprint", () => {
+                document.body.classList.remove("print-report");
+            });
+
+            function triggerSound(type) {
+                if (window.ComfortAudio) {
+                    if (type === "click" && typeof window.ComfortAudio.playClick === "function") {
+                        window.ComfortAudio.playClick();
+                    } else if (type === "tick" && typeof window.ComfortAudio.playTick === "function") {
+                        window.ComfortAudio.playTick();
+                    }
+                }
+            }
+
+            // Init State
+            checkAuthState();
+        });
+    </script>
+</body>
+</html>
