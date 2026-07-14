@@ -19,7 +19,7 @@
 
   # Content Security Policy
   # Allows: self, Google Fonts, Google Maps embeds, NWS Weather API, inline styles (needed for inline <style> blocks)
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://www.google.com https://maps.google.com; connect-src 'self' https://api.weather.gov; frame-ancestors 'self';
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://www.google.com https://maps.google.com; connect-src 'self' https://api.weather.gov https://air-quality-api.open-meteo.com; frame-ancestors 'self';
 
   # XSS Protection header (legacy browsers)
   X-XSS-Protection: 1; mode=block
