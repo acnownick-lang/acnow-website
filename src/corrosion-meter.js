@@ -12,7 +12,10 @@ function initCorrosionMeter() {
         return;
     }
 
+    let userInteracted = false;
+
     window.selectDistance = function(key, val) {
+        userInteracted = true;
         slider.value = val;
         const buttons = document.querySelectorAll("#distance-picker button");
         buttons.forEach(btn => {
@@ -40,6 +43,18 @@ function initCorrosionMeter() {
 
     window.onSliderChange = function(val, bypassButtonsUpdate) {
         const dist = parseFloat(val);
+        
+        if (!userInteracted) {
+            lblDistance.textContent = "Awaiting Input";
+            valStdLife.textContent = "—";
+            valProtLife.textContent = "—";
+            valRecType.textContent = "Awaiting Input";
+            valRecType.style.color = "#64748b";
+            if (severityMarker) severityMarker.style.left = "50%";
+            if (formDistance) formDistance.value = "";
+            return;
+        }
+
         let zoneLabel = "";
         if (dist <= 0.5) zoneLabel = " (Beachfront)";
         else if (dist <= 1.5) zoneLabel = " (Coastal)";
@@ -92,10 +107,12 @@ function initCorrosionMeter() {
     };
 
     slider.addEventListener("input", (e) => {
+        userInteracted = true;
         window.onSliderChange(e.target.value);
     });
 
-    window.selectDistance("suburban", 3.5);
+    // Initialize with neutral display on load
+    window.onSliderChange(slider.value);
 }
 
 if (document.readyState === "loading") {

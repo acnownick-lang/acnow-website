@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const status = dispatchStatusEl ? dispatchStatusEl.value : "Dead AC";
 
         if (!name || !phone) {
-            alert("Please enter both your name and phone number to secure the dispatch slot!");
+            if (typeof window.showToast === "function") { window.showToast("Please enter both your name and phone number to secure the dispatch slot!", "error"); } else { alert("Please enter both your name and phone number to secure the dispatch slot!"); }
             return;
         }
 
@@ -224,13 +224,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             const result = await response.json();
             if (result.success) {
-                alert(`Thank you, ${name}! Your priority dispatch slot has been secured. Our team will contact you at ${phone} within 5 minutes.`);
+                if (typeof window.showToast === "function") { window.showToast(`Thank you, ${name}! Your priority dispatch slot has been secured. Our team will contact you at ${phone} within 5 minutes.`, "success"); } else { alert(`Thank you, ${name}! Your priority dispatch slot has been secured. Our team will contact you at ${phone} within 5 minutes.`); }
             } else {
                 throw new Error();
             }
         } catch (err) {
             console.error(err);
-            alert(`Offline reservation fallback: Thank you, ${name}! Your priority slot details are saved. Call (772) 521-3568 for instant dispatch.`);
+            if (typeof window.showToast === "function") { window.showToast(`Offline reservation fallback: Thank you, ${name}! Your priority slot details are saved. Call (772) 521-3568 for instant dispatch.`, "info"); } else { alert(`Offline reservation fallback: Thank you, ${name}! Your priority slot details are saved. Call (772) 521-3568 for instant dispatch.`); }
         } finally {
             window.goToWizardStep1();
             dispatchNameEl.value = "";

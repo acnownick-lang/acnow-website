@@ -268,7 +268,7 @@ function initHvacConfigurator() {
 
             if (typeof window.submitFormWithSync === "function") {
                 window.submitFormWithSync(e, configForm, payload, () => {
-                    alert("HVAC design secured! Chris or Sean will contact you to schedule an on-site installation evaluation.");
+                    if (typeof window.showToast === "function") { window.showToast("HVAC design secured! Chris or Sean will contact you to schedule an on-site installation evaluation.", "success"); } else { alert("HVAC design secured! Chris or Sean will contact you to schedule an on-site installation evaluation."); }
                     configForm.reset();
                     accessoryChecks.forEach(c => c.checked = false);
                     updateConfigurator();

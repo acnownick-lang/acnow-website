@@ -120,7 +120,7 @@ async function submitFormWithSync(event, formElement, payload, successCallback) 
     if (!navigator.onLine) {
         console.warn("[PWA Client] Network offline. Redirecting submission to IndexedDB.");
         await queueLeadOffline(payload);
-        alert("You are currently offline. Your service request has been saved and will submit automatically as soon as your connection returns.");
+        if (typeof window.showToast === "function") { window.showToast("You are currently offline. Your service request has been saved and will submit automatically as soon as your connection returns.", "info"); } else { alert("You are currently offline. Your service request has been saved and will submit automatically as soon as your connection returns."); }
         formElement.reset();
         setSubmitState(submitBtn, false);
         if (successCallback) successCallback();
@@ -146,12 +146,12 @@ async function submitFormWithSync(event, formElement, payload, successCallback) 
             if (successCallback) successCallback();
         } else {
             // Display validation error or server failure without clearing the form!
-            alert(`Validation Error: ${result.error || result.message || "Please check your inputs and try again."}`);
+            if (typeof window.showToast === "function") { window.showToast(`Validation Error: ${result.error || result.message || "Please check your inputs and try again."}`, "error"); } else { alert(`Validation Error: ${result.error || result.message || "Please check your inputs and try again."}`); }
         }
     } catch (err) {
         console.error("[PWA Client] Submission failed. Checking background sync capabilities:", err);
         await queueLeadOffline(payload);
-        alert("Network connection issue. Your request has been queued offline and will automatically submit once connectivity returns.");
+        if (typeof window.showToast === "function") { window.showToast("Network connection issue. Your request has been queued offline and will automatically submit once connectivity returns.", "warning"); } else { alert("Network connection issue. Your request has been queued offline and will automatically submit once connectivity returns."); }
         formElement.reset();
         if (successCallback) successCallback();
     } finally {
@@ -526,7 +526,7 @@ window.checkZipAvailability = function() {
     // 1. Validate Input Format (must be exactly 5 digits)
     const zipFormatRegex = /^\d{5}$/;
     if (!zipInput || !zipFormatRegex.test(zipInput)) {
-        alert("Please enter a valid 5-digit zip code.");
+        if (typeof window.showToast === "function") { window.showToast("Please enter a valid 5-digit zip code.", "error"); } else { alert("Please enter a valid 5-digit zip code."); }
         return;
     }
     
@@ -581,7 +581,7 @@ window.calculatePoolROI = function() {
     
     // Safety check for NaN, zero, or negative inputs
     if (gallons <= 0 || months <= 0) {
-        alert("Please select valid options.");
+        if (typeof window.showToast === "function") { window.showToast("Please select valid options.", "error"); } else { alert("Please select valid options."); }
         return;
     }
     
@@ -733,7 +733,7 @@ window.switchContactTab = function(event, tabId) {
 window.runDiagnosticAssessment = function() {
     const checkedRadio = document.querySelector('input[name="ac-issue"]:checked');
     if (!checkedRadio) {
-        alert("Please select an AC issue.");
+        if (typeof window.showToast === "function") { window.showToast("Please select an AC issue.", "error"); } else { alert("Please select an AC issue."); }
         return;
     }
     const selectedIssue = checkedRadio.value;
@@ -1281,7 +1281,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, hpContactForm, payload, () => {
-                alert(`Estimate request submitted successfully! Chris or Sean will contact you shortly.`);
+                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Chris or Sean will contact you shortly.", "success"); } else { alert(`Estimate request submitted successfully! Chris or Sean will contact you shortly.`); }
                 configurePushNotifications(); // Ask for notification permission after a high-value action
             });
         });
@@ -1314,7 +1314,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, contactGeneralForm, payload, () => {
-                alert("Your service request has been transmitted. Technicians have been notified.");
+                if (typeof window.showToast === "function") { window.showToast("Your service request has been transmitted. Technicians have been notified.", "success"); } else { alert("Your service request has been transmitted. Technicians have been notified."); }
                 configurePushNotifications();
             });
         });
@@ -1335,7 +1335,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, contactWizardForm, payload, () => {
-                alert("Priority dispatch secured! A technician will contact you shortly.");
+                if (typeof window.showToast === "function") { window.showToast("Priority dispatch secured! A technician will contact you shortly.", "success"); } else { alert("Priority dispatch secured! A technician will contact you shortly."); }
                 if (typeof window.resetDiagnosticWizard === "function") {
                     window.resetDiagnosticWizard();
                 }
@@ -1364,7 +1364,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, commercialForm, payload, () => {
-                alert("Estimate request submitted successfully! Chris or Sean will contact you within 15 minutes.");
+                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Chris or Sean will contact you within 15 minutes.", "success"); } else { alert("Estimate request submitted successfully! Chris or Sean will contact you within 15 minutes."); }
                 configurePushNotifications();
             });
         });
@@ -1390,7 +1390,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, corrosionForm, payload, () => {
-                alert("Corrosion protection audit requested successfully! Chris or Sean will contact you shortly.");
+                if (typeof window.showToast === "function") { window.showToast("Corrosion protection audit requested successfully! Chris or Sean will contact you shortly.", "success"); } else { alert("Corrosion protection audit requested successfully! Chris or Sean will contact you shortly."); }
                 configurePushNotifications();
             });
         });
@@ -1500,7 +1500,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         if (storeName === 'leads') {
                             const name = item.payload && item.payload.fname ? ` ${item.payload.fname}` : '';
-                            alert(`Offline Request${name} transmitted successfully!`);
+                            if (typeof window.showToast === "function") { window.showToast(`Offline Request ${name} transmitted successfully!`, "success"); } else { alert(`Offline Request${name} transmitted successfully!`); }
                         } else {
                             if (navigator.serviceWorker) {
                                 navigator.serviceWorker.dispatchEvent(new MessageEvent('message', {
@@ -2097,7 +2097,7 @@ window.startDispatchSimulation = function() {
 window.sendSimulatedGateCode = function() {
     const code = prompt("Enter gate entry code to transmit to service van:", "4821");
     if (code) {
-        alert(`Transmitted entry code: "${code}" to dispatch co-pilot dashboard!`);
+        if (typeof window.showToast === "function") { window.showToast(`Transmitted entry code: "${code}" to dispatch co-pilot dashboard!`, "success"); } else { alert(`Transmitted entry code: "${code}" to dispatch co-pilot dashboard!`); }
         if (typeof triggerSound === "function") triggerSound("success");
     }
 };
@@ -2111,7 +2111,7 @@ window.verifyVeteranStatus = function() {
         if (typeof window.showToast === "function") {
             window.showToast("Please check the self-certification box to proceed.", "warning");
         } else {
-            alert("Please check the self-certification box to proceed.");
+            if (typeof window.showToast === "function") { window.showToast("Please check the self-certification box to proceed.", "warning"); } else { alert("Please check the self-certification box to proceed."); }
         }
         return;
     }
@@ -2124,7 +2124,7 @@ window.verifyVeteranStatus = function() {
     if (typeof window.showToast === "function") {
         window.showToast("Veteran self-certification complete! 5% discount code applied.", "success");
     } else {
-        alert("Veteran credentials verified! 5% discount checkout code applied.");
+        if (typeof window.showToast === "function") { window.showToast("Veteran credentials verified! 5% discount checkout code applied.", "success"); } else { alert("Veteran credentials verified! 5% discount checkout code applied."); }
     }
 };
 
@@ -2421,7 +2421,7 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
                 title: "Staff Tactical Field Console",
                 items: [
                     { name: "Staff Command Console", url: "team-portal.html", phase: "2", desc: "Secure PIN-guarded terminal for dispatch lists and system logs." },
-                    { name: "Coil Corrosion Map", url: "corrosion-predictor.html", phase: "2", desc: "WebGL visualizer mapping salt spray corrosion risks by Florida zip codes." },
+                    { name: "Corrosion Risk Predictor", url: "corrosion-predictor.html", phase: "2", desc: "WebGL visualizer mapping salt spray corrosion risks by Florida zip codes." },
                     { name: "3D Airflow Simulator", url: "3d-airflow.html", phase: "2", desc: "Three.js dynamic model simulating room layout ventilation paths." }
                 ]
             },

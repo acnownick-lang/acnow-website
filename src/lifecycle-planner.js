@@ -23,16 +23,19 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    let userInteracted = false; // default false to prevent anchoring bias
     let maintenanceType = "yearly"; // default
 
     // Sliders listeners
     sliderAge.addEventListener("input", () => {
+        userInteracted = true;
         labelAge.textContent = `${sliderAge.value} Years`;
         updatePlanner();
         triggerAudioTick();
     });
 
     sliderTonnage.addEventListener("input", () => {
+        userInteracted = true;
         labelTonnage.textContent = `${parseFloat(sliderTonnage.value).toFixed(1)} Tons`;
         updatePlanner();
         triggerAudioTick();
@@ -41,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle button group for maintenance
     maintButtons.forEach(btn => {
         btn.addEventListener("click", () => {
+            userInteracted = true;
             maintButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
             maintenanceType = btn.dataset.val;
@@ -59,6 +63,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updatePlanner() {
+        if (!userInteracted) {
+            metricRemaining.textContent = "Adjust inputs to calculate";
+            metricEffLoss.textContent = "—";
+            metricWaste.textContent = "—";
+            metricCapex.textContent = "—";
+            statusBadge.textContent = "Awaiting Input";
+            statusBadge.style.background = "#64748b"; // neutral gray
+            
+            svgElement.innerHTML = `
+                <rect x="10" y="10" width="430" height="230" fill="rgba(0,0,0,0.02)" rx="4"/>
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="var(--font-body)" font-size="13" fill="#64748B">Graph will populate after interaction</text>
+            `;
+            return;
+        }
+
         const age = parseInt(sliderAge.value);
         const tonnage = parseFloat(sliderTonnage.value);
         
@@ -209,7 +228,11 @@ document.addEventListener("DOMContentLoaded", () => {
             // Submit using global async sync handler
             if (typeof window.submitFormWithSync === "function") {
                 window.submitFormWithSync(e, plannerForm, payload, () => {
-                    alert("Consultation request secure! Chris or Sean will contact you to schedule an inspection.");
+                    if (typeof window.showToast === "function") {
+                        window.showToast("Consultation request secure! Chris or Sean will contact you to schedule an inspection.", "success");
+                    } else {
+                        alert("Consultation request secure! Chris or Sean will contact you to schedule an inspection.");
+                    }
                     plannerForm.reset();
                     
                     if (typeof window.configurePushNotifications === "function") {

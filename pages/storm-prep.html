@@ -434,7 +434,7 @@
                         <a href="diagnose.html" class="">DIY Troubleshooter</a>
                         <a href="planner.html" class="">AC Lifespan Planner</a>
                         <a href="configurator.html" class="">Build HVAC System</a>
-                        <a href="corrosion-predictor.html" class="phase-2-only">Coil Corrosion Map</a>
+                        <a href="corrosion-predictor.html" class="phase-2-only">Corrosion Risk Predictor</a>
                         <a href="storm-prep.html" class="">Storm Prep Checklist</a>
                         <a href="3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
                     </div>
@@ -501,14 +501,14 @@
                                 <div>
                                     <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800;">Storm Preparedness Index</h3>
                                     <div style="text-align:center; margin-bottom:25px;">
-                                        <div id="storm-score" style="font-size:48px; font-weight:800; color:var(--secondary); font-family:var(--font-heading);">0%</div>
-                                        <div id="storm-score-text" style="font-size:13.5px; color:var(--gray-dark); font-weight:600; text-transform:uppercase; margin-top:5px;">CRITICAL RISK</div>
+                                        <div id="storm-score" style="font-size:48px; font-weight:800; color:#64748b; font-family:var(--font-heading);">0%</div>
+                                        <div id="storm-score-text" style="font-size:13.5px; color:#64748b; font-weight:600; text-transform:uppercase; margin-top:5px;">Awaiting Assessment</div>
                                         <div class="progress-track" style="background: var(--gray-light); height: 8px; border-radius: 4px; overflow: hidden; margin: 15px auto 0; max-width: 200px;">
                                             <div id="storm-progress-fill" style="background: #9ca3af; width: 0%; height: 100%; transition: width 0.3s ease, background-color 0.3s ease;"></div>
                                         </div>
                                     </div>
-                                    <div id="storm-priority-badge" style="background:rgba(230,57,70,0.1); border:1px solid rgba(230,57,70,0.2); padding:15px; border-radius:8px; color:var(--secondary); font-size:12.5px; text-align:center; font-weight:700;">
-                                        Priority Dispatch Queue Status: Standard
+                                    <div id="storm-priority-badge" style="background:rgba(100,116,139,0.08); border:1px solid rgba(100,116,139,0.15); padding:15px; border-radius:8px; color:#64748b; font-size:12.5px; text-align:center; font-weight:700;">
+                                        Priority Dispatch Queue Status: Awaiting Assessment
                                     </div>
                                 </div>
                                 <a href="contact.html" class="btn btn-primary btn-full" style="margin-top:20px;">Pre-Book Emergency Storm Dispatch</a>
@@ -540,7 +540,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem(`storm_check_${c.id}`, c.checked);
             });
             const pct = Math.round((checkedCount / checks.length) * 100);
-            if (stormScore) stormScore.textContent = `${pct}%`;
+            if (stormScore) {
+                stormScore.textContent = `${pct}%`;
+                stormScore.style.color = checkedCount === 0 ? "#64748b" : (pct === 100 ? "#0B7A53" : (pct >= 60 ? "#F59E0B" : "var(--secondary)"));
+            }
 
             if (progressFill) {
                 progressFill.style.width = `${pct}%`;
@@ -554,7 +557,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (stormScoreText && stormPriority) {
-                if (pct === 100) {
+                if (checkedCount === 0) {
+                    stormScoreText.textContent = "AWAITING ASSESSMENT";
+                    stormScoreText.style.color = "#64748b";
+                    stormPriority.textContent = "Priority Dispatch Queue Status: Awaiting Assessment";
+                    stormPriority.style.background = "rgba(100, 116, 139, 0.08)";
+                    stormPriority.style.borderColor = "rgba(100, 116, 139, 0.15)";
+                    stormPriority.style.color = "#64748b";
+                } else if (pct === 100) {
                     stormScoreText.textContent = "SECURED / READY";
                     stormScoreText.style.color = "#0B7A53";
                     stormPriority.textContent = "Priority Dispatch Queue Status: SECURED (100%)";

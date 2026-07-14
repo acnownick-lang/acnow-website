@@ -357,7 +357,7 @@ function initDiagnoseWizard() {
             // Call global sync submission wrapper
             if (typeof window.submitFormWithSync === "function") {
                 window.submitFormWithSync(e, diagnoseForm, payload, () => {
-                    alert("Diagnostics secured! Technicians Chris or Sean will call you within 15 minutes.");
+                    if (typeof window.showToast === "function") { window.showToast("Diagnostics secured! Technicians Chris or Sean will call you within 15 minutes.", "success"); } else { alert("Diagnostics secured! Technicians Chris or Sean will call you within 15 minutes."); }
                     diagnoseForm.reset();
                     // Reset wizard to Step 1
                     stepResults.classList.remove("active");
