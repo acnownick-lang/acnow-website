@@ -2488,6 +2488,8 @@
                 if (activeToken) {
                     viewPromo.classList.remove("active");
                     viewDashboard.classList.add("active");
+                    viewPromo.style.display = "none";
+                    viewDashboard.style.display = "block";
                     renderLogs();
                     renderSpecs();
                     if (headerEl) headerEl.removeAttribute("inert");
@@ -2506,6 +2508,8 @@
                                 sessionStorage.removeItem("tech_override_token");
                                 viewDashboard.classList.remove("active");
                                 viewPromo.classList.add("active");
+                                viewDashboard.style.display = "none";
+                                viewPromo.style.display = "block";
                                 if (headerEl) headerEl.setAttribute("inert", "");
                                 if (footerEl) footerEl.setAttribute("inert", "");
                                 if (typeof window.showToast === "function") {
@@ -2518,6 +2522,8 @@
                 } else {
                     viewDashboard.classList.remove("active");
                     viewPromo.classList.add("active");
+                    viewDashboard.style.display = "none";
+                    viewPromo.style.display = "block";
                     if (headerEl) headerEl.setAttribute("inert", "");
                     if (footerEl) footerEl.setAttribute("inert", "");
                 }

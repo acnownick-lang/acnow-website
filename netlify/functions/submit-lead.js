@@ -42,7 +42,7 @@ export async function handler(event, context) {
       const parsedUrl = new URL(origin);
       const hostname = parsedUrl.hostname;
       const protocol = parsedUrl.protocol;
-      const isProd = hostname === "acnowllc.com" || hostname === "www.acnowllc.com";
+      const isProd = hostname === "acnowllc.com" || hostname === "www.acnowllc.com" || hostname.endsWith(".netlify.app");
       const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
       
       // Enforce HTTPS for production domains, allow HTTP for localhost
