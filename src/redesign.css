@@ -1067,7 +1067,7 @@ section {
     grid-template-columns: 1fr 1fr;
     gap: 30px;
 }
-.grid-3-col {
+.grid-3-col, .features-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
@@ -1117,7 +1117,7 @@ section {
 }
 
 @media (max-width: 1024px) {
-    .grid-2-col, .grid-3-col, .grid-4-col, .grid-about, .grid-about-reverse, .grid-contact {
+    .grid-2-col, .grid-3-col, .features-grid, .grid-4-col, .grid-about, .grid-about-reverse, .grid-contact {
         grid-template-columns: 1fr !important;
         gap: 30px;
     }

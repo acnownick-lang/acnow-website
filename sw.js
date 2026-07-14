@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v50'; // Bumped: Security Audit - removed restricted pages from precache list
+const CACHE_NAME = 'acnow-cache-v51'; // Bumped: Security Audit - removed restricted pages from precache list
 const DEBUG = true;
 
 // Helper function for structured logging
@@ -46,6 +46,8 @@ const STATIC_ASSETS = [
   'pages/planner.html',
   'pages/storm-prep.html',
   'manifest.json',
+  'assets/lib/three.min.js',
+  'assets/lib/OrbitControls.js',
   'assets/images/mascot-logo.svg',
   'assets/images/pwa-icon-512.png',
   'assets/images/pwa-icon-512-maskable.png',

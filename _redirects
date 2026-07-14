@@ -31,6 +31,30 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /directions             /pages/directions.html              200
 /offline                /pages/offline.html                 200
 
+# Redirect root .html requests to pages/ subfolder (internal rewrite 200)
+/about.html                  /pages/about.html                   200
+/services.html               /pages/services.html                200
+/contact.html                /pages/contact.html                 200
+/areas.html                  /pages/areas.html                   200
+/reviews.html                /pages/reviews.html                 200
+/commercial.html             /pages/commercial.html              200
+/pool-heating.html           /pages/pool-heating.html            200
+/hvac-services-palm-city.html /pages/hvac-services-palm-city.html 200
+/hvac-services-stuart.html    /pages/hvac-services-stuart.html    200
+/privacy.html                /pages/privacy.html                 200
+/accessibility.html          /pages/accessibility.html           200
+/members.html                /pages/members.html                 200
+/team-portal.html            /pages/team-portal.html             200
+/corrosion-predictor.html    /pages/corrosion-predictor.html     200
+/3d-airflow.html            /pages/3d-airflow.html              200
+/diagnose.html               /pages/diagnose.html                200
+/configurator.html           /pages/configurator.html            200
+/planner.html                /pages/planner.html                 200
+/storm-prep.html             /pages/storm-prep.html              200
+/directions.html             /pages/directions.html              200
+/offline.html                /pages/offline.html                 200
+
+
 # Legacy slash-appended paths → subpages (301 redirect)
 /about/                 /pages/about.html                   301
 /services/              /pages/services.html                301

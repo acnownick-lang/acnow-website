@@ -1,41 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="phase-1">
+<html lang="en" class="phase-2">
 <head>
     <script>
+        // This page is a public tool (unlike Members Area / Team Portal / Corrosion
+        // Predictor, which are still gated) — it no longer checks acnow_phase or
+        // redirects guests away. It renders directly for every visitor.
         (function() {
-            let isDevMode = false;
-            let phase = '1';
-            try {
-                const params = new URLSearchParams(window.location.search);
-                let urlPhase = params.get('phase');
-                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
-                
-                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
-                    phase = urlPhase;
-                    localStorage.setItem('acnow_phase', phase);
-                } else {
-                    phase = localStorage.getItem('acnow_phase') || '1';
-                }
-            } catch (e) {
-                console.warn('Storage blocked: defaulting to guest phase 1', e);
-            }
-            
-            if (phase === '1') {
-                const path = window.location.pathname.toLowerCase();
-                if (path.includes('members') || 
-                    path.includes('team-portal') || 
-                    path.includes('3d-airflow') || 
-                    path.includes('corrosion-predictor')) {
-                    window.location.replace('../index.html?redirected=phase2-restricted');
-                    return;
-                }
-            }
-            
-            if (phase === '2') {
-                document.documentElement.classList.remove('phase-1');
-                document.documentElement.classList.add('phase-2');
-            }
-
             // bfcache breakout safety guard
             window.addEventListener('pageshow', function(event) {
                 if (event.persisted) {
@@ -50,6 +20,9 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#0B63E5">
     <title>3D Comfort Diagnostics & Airflow Workspace | A/C Now LLC</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="preload" href="../assets/lib/three.min.js" as="script">
+    <link rel="preload" href="../assets/lib/OrbitControls.js" as="script">
     
     <!-- Load premium outfit and inter typography from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,7 +30,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
 
     <script>
+        window.jsErrors = [];
         window.onerror = function(message, source, lineno, colno, error) {
+            window.jsErrors.push({ message, source, line: lineno, col: colno, error: error ? error.stack : null });
             const div = document.createElement('div');
             div.style.position = 'absolute';
             div.style.top = '10px';
@@ -77,6 +52,7 @@
             return false;
         };
         window.addEventListener('unhandledrejection', function(event) {
+            window.jsErrors.push({ message: "Unhandled Rejection", reason: event.reason ? (event.reason.stack || event.reason) : null });
             const div = document.createElement('div');
             div.style.position = 'absolute';
             div.style.top = '100px';
@@ -96,6 +72,11 @@
         });
     </script>
     <style>
+        /* Prevent No-JS rendering access bypass and Flash of Gated Content */
+        html.phase-1 body > *:not(noscript) {
+            display: none !important;
+        }
+
         :root {
             --dark: #0a182f;
             --blue-glow: rgba(0, 242, 254, 0.4);
@@ -201,7 +182,7 @@
 
         /* Dedicated onboarding welcome modal layout */
         .welcome-modal-overlay {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
@@ -225,6 +206,7 @@
             max-width: 90vw;
             box-shadow: 0 25px 80px rgba(0, 242, 254, 0.15);
             box-sizing: border-box;
+            animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .welcome-title-row {
@@ -355,10 +337,10 @@
         .booking-badge {
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #0B7A53;
+            color: #34d399;
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 9px;
+            font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -603,7 +585,7 @@
         }
 
         .objective-item.complete {
-            color: #0B7A53;
+            color: #10b981;
         }
 
         .obj-check {
@@ -613,7 +595,7 @@
         .success-banner {
             background: rgba(16, 185, 129, 0.15);
             border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #0B7A53;
+            color: #34d399;
             padding: 10px;
             border-radius: 8px;
             font-weight: 700;
@@ -639,6 +621,132 @@
 
         .advanced-toggle-btn:hover {
             color: var(--blue-neon);
+        }
+
+        /* Role Selector Tabs */
+        .role-selector-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            padding: 2px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .role-tab {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 8px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .role-tab:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .role-tab.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+        }
+
+        @page {
+            size: letter portrait;
+            margin: 15mm 15mm 15mm 15mm;
+        }
+
+        @media print {
+            /* Physically collapse all root nodes except the target modal to prevent layout spill */
+            body > *:not(#diagnostic-report-modal) {
+                display: none !important;
+            }
+            
+            #diagnostic-report-modal {
+                display: block !important;
+                position: static !important;
+                width: 100% !important;
+                height: auto !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+
+            #diagnostic-report-modal .welcome-modal-card {
+                background: #ffffff !important;
+                color: #000000 !important;
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* Override all neon and light text for printed legibility */
+            #diagnostic-report-modal .welcome-title {
+                color: #000000 !important;
+                background: none !important;
+                -webkit-text-fill-color: initial !important;
+            }
+            
+            #diagnostic-report-modal .welcome-subtitle {
+                color: #475569 !important;
+            }
+
+            #diagnostic-report-modal .report-metric-card {
+                background: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #000000 !important;
+            }
+
+            #diagnostic-report-modal .report-metric-label {
+                color: #475569 !important;
+            }
+
+            #diagnostic-report-modal .report-metric-val {
+                color: #000000 !important;
+            }
+
+            #diagnostic-report-modal #report-comfort-score,
+            #diagnostic-report-modal #report-static-pressure {
+                color: #000000 !important;
+                text-shadow: none !important;
+            }
+
+            #diagnostic-report-modal .report-section-heading {
+                color: #000000 !important;
+                border-bottom: 2px solid #000000 !important;
+            }
+
+            #diagnostic-report-modal .report-table th {
+                color: #475569 !important;
+                border-bottom: 2px solid #cbd5e1 !important;
+            }
+
+            #diagnostic-report-modal .report-table td {
+                color: #000000 !important;
+                border-bottom: 1px solid #cbd5e1 !important;
+            }
+
+            #diagnostic-report-modal .report-advisory-block {
+                background: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                border-left: 6px solid #000000 !important;
+                color: #000000 !important;
+            }
+
+            .print-hide {
+                display: none !important;
+            }
         }
 
         /* Navigation Tabs Menu */
@@ -936,7 +1044,7 @@
         .legend-item {
             display: flex;
             align-items: center;
-            font-size: 9px;
+            font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -963,7 +1071,7 @@
             backdrop-filter: blur(8px);
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 9px;
+            font-size: 11px;
             letter-spacing: 1px;
             color: #a0aec0;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -999,7 +1107,7 @@
             color: #00f2fe;
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 9px;
+            font-size: 11px;
             font-weight: 600;
             letter-spacing: 0.5px;
             box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
@@ -1037,53 +1145,474 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Media Queries for full mobile responsiveness */
-        @media (max-width: 1024px) {
-            .booking-card {
-                position: relative;
-                top: 0;
-                right: 0;
-                width: 100%;
-                margin-top: 15px;
-            }
-            .ui-container {
-                width: 320px;
-            }
+        /* ==========================================================================
+           PREMIUM GLASSMORPHISM & RESPONSIVENESS OVERLAYS
+           Targeting: Range Sliders, Tonnage Select, ROI Cards, Evap Inputs & Modal
+           ========================================================================== */
+
+        /* Member Sandbox Custom Range Sliders */
+        #member-custom-loadout input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            outline: none;
+            margin: 12px 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        #member-custom-loadout input[type="range"]:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 242, 254, 0.35);
+        }
+
+        #member-custom-loadout input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        #member-custom-loadout input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffffff 15%, var(--blue-neon) 100%);
+            border: 2px solid #0a182f;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.6), inset 0 0 4px rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            margin-top: -6px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+        }
+
+        #member-custom-loadout input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.95), inset 0 0 6px rgba(255, 255, 255, 1);
+        }
+
+        #member-custom-loadout input[type="range"]::-webkit-slider-thumb:active {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 1), inset 0 0 8px rgba(255, 255, 255, 1);
+        }
+
+        #member-custom-loadout input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffffff 15%, var(--blue-neon) 100%);
+            border: 2px solid #0a182f;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.6), inset 0 0 4px rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+        }
+
+        #member-custom-loadout input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.95), inset 0 0 6px rgba(255, 255, 255, 1);
+        }
+
+        #member-custom-loadout input[type="range"]::-moz-range-thumb:active {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 1), inset 0 0 8px rgba(255, 255, 255, 1);
+        }
+
+        /* Glassmorphic Tonnage Dropdown Selector */
+        #member-tonnage {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 100% !important;
+            background: rgba(10, 24, 47, 0.7) !important;
+            backdrop-filter: blur(12px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+            border: 1px solid rgba(0, 242, 254, 0.25) !important;
+            border-radius: 12px !important;
+            color: #ffffff !important;
+            padding: 12px 40px 12px 16px !important;
+            font-family: var(--font-stack) !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            outline: none !important;
+            margin-top: 6px !important;
+            cursor: pointer !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2300f2fe' stroke-width='3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 16px center !important;
+            background-size: 14px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        #member-tonnage:hover {
+            border-color: var(--blue-neon) !important;
+            background: rgba(10, 24, 47, 0.8) !important;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2), 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        #member-tonnage:focus {
+            border-color: var(--blue-neon) !important;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4), 0 4px 25px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        #member-tonnage option {
+            background-color: #0a182f !important;
+            color: #ffffff !important;
+            font-family: var(--font-stack) !important;
+            padding: 12px !important;
+        }
+
+        /* Sales & Tech Mode ROI and Investment Panels */
+        #sales-pitch-deck .value-prop-card {
+            background: rgba(10, 24, 47, 0.55) !important;
+            backdrop-filter: blur(16px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+            border: 1px solid rgba(0, 242, 254, 0.15) !important;
+            border-left: 4px solid var(--blue-neon) !important;
+            border-radius: 14px !important;
+            padding: 16px 18px !important;
+            margin-bottom: 16px !important;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        #sales-pitch-deck .value-prop-card:hover {
+            border-color: rgba(0, 242, 254, 0.3) !important;
+            border-left-color: var(--gold) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 242, 254, 0.12), 0 8px 32px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        #sales-pitch-deck .value-prop-card h3 {
+            color: var(--blue-neon) !important;
+            font-size: 12.5px !important;
+            font-weight: 800 !important;
+            margin-top: 0 !important;
+            margin-bottom: 12px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        #sales-pitch-deck .value-prop-card div[style*="display: flex; justify-content: space-between;"] {
+            padding: 8px 0 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            font-size: 12px !important;
+            color: #cbd5e1 !important;
+        }
+
+        #sales-pitch-deck .value-prop-card div[style*="display: flex; justify-content: space-between;"]:last-child {
+            border-bottom: none !important;
+        }
+
+        #sales-pitch-deck .value-prop-card span[style*="color: #ffffff;"] {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+        }
+
+        #sales-pitch-deck .value-prop-card span[style*="color: #10b981;"] {
+            color: #10b981 !important;
+            font-weight: 700 !important;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
+        }
+
+        #sales-pitch-deck .value-prop-card span[style*="color: #ff9f0a;"] {
+            color: #ff9f0a !important;
+            font-weight: 700 !important;
+            text-shadow: 0 0 10px rgba(255, 159, 10, 0.35);
+        }
+
+        /* Evaporator Temp Split Input Fields & Pass/Fail Badge */
+        #sales-pitch-deck input[type="number"] {
+            background: rgba(10, 24, 47, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            border-radius: 8px !important;
+            color: #ffffff !important;
+            padding: 10px 12px !important;
+            font-size: 13px !important;
+            outline: none !important;
+            transition: all 0.3s ease !important;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        #sales-pitch-deck input[type="number"]:hover {
+            border-color: rgba(0, 242, 254, 0.3) !important;
+        }
+
+        #sales-pitch-deck input[type="number"]:focus {
+            border-color: var(--blue-neon) !important;
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        #sales-pitch-deck input[type="number"]::-webkit-outer-spin-button,
+        #sales-pitch-deck input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        #sales-pitch-deck input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        #delta-t-badge {
+            padding: 6px 12px !important;
+            border-radius: 8px !important;
+            font-size: 11px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.5px !important;
+            text-shadow: 0 0 8px currentColor !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* Diagnostic Report Modal Overlay (Screen View) */
+        #diagnostic-report-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(6, 11, 25, 0.82);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+            overflow-y: auto;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        #diagnostic-report-modal .welcome-modal-card {
+            background: rgba(10, 24, 47, 0.72) !important;
+            border: 1px solid rgba(0, 242, 254, 0.25) !important;
+            box-shadow: 0 30px 100px rgba(0, 242, 254, 0.25), inset 0 0 24px rgba(255, 255, 255, 0.05) !important;
+            border-radius: 28px !important;
+            padding: 36px !important;
+            width: 620px !important;
+            max-width: 95vw !important;
+            box-sizing: border-box !important;
+            position: relative !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+            transform: rotate(90deg);
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .report-metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .report-metric-card:hover {
+            border-color: rgba(0, 242, 254, 0.2);
+            background: rgba(0, 242, 254, 0.02);
+            transform: translateY(-1px);
+        }
+
+        .report-metric-icon {
+            font-size: 26px;
+            filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.3));
+        }
+
+        .report-metric-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .report-metric-label {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+        }
+
+        .report-metric-val {
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        #report-comfort-score {
+            color: var(--blue-neon);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.35);
+        }
+
+        #report-static-pressure {
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255, 159, 10, 0.35);
+        }
+
+        .report-section-heading {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--blue-neon);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 22px 0 12px 0;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+            padding-bottom: 6px;
+        }
+
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 22px;
+        }
+
+        .report-table th {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 700;
+        }
+
+        .report-table td {
+            font-size: 12px;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+        }
+
+        .report-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .report-advisory-block {
+            background: rgba(255, 159, 10, 0.06);
+            border: 1px solid rgba(255, 159, 10, 0.18);
+            border-left: 4px solid var(--gold);
+            border-radius: 12px;
+            padding: 15px 18px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 24px;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .report-actions .welcome-btn {
+            flex: 1;
+            margin: 0;
+            padding: 14px;
+            border-radius: 12px;
+        }
+
+        .report-actions .print-btn {
+            background: linear-gradient(135deg, #ff9f0a 0%, #ff7b00 100%);
+            box-shadow: 0 4px 15px rgba(255, 159, 10, 0.35);
+        }
+
+        .report-actions .print-btn:hover {
+            box-shadow: 0 6px 20px rgba(255, 159, 10, 0.5);
+        }
+
+        .report-actions .close-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: none;
+        }
+
+        .report-actions .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- Tablet Breakpoint (Under 768px) --- */
         @media (max-width: 768px) {
             body {
                 overflow-y: auto;
                 height: auto;
             }
+            /* Split-screen layout to keep WebGL Canvas visible & interactive */
             #webgl-canvas {
-                position: fixed;
-                height: 100vh;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 45vh !important; /* Top 45% of screen for 3D model */
+                z-index: 1;
             }
-            .top-nav-bar {
-                position: sticky;
-            }
+
             .ui-container {
-                position: relative;
-                top: 0;
-                left: 0;
-                width: 100%;
-                padding: 15px;
+                position: relative !important;
+                top: 45vh !important; /* Push UI controls below the WebGL viewport */
+                left: 0 !important;
+                width: 100% !important;
+                padding: 16px !important;
                 box-sizing: border-box;
+                z-index: 10;
                 pointer-events: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
             }
+
             .card {
-                width: 100%;
+                width: 100% !important;
                 box-sizing: border-box;
             }
+
             .booking-card {
-                position: relative;
-                top: 0;
-                right: 0;
-                width: 100%;
+                position: relative !important;
+                top: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
                 box-sizing: border-box;
-                margin-top: 0;
+                margin-top: 0 !important;
             }
+
             .promo-card {
                 position: relative;
                 bottom: 0;
@@ -1093,15 +1622,155 @@
                 margin-top: 15px;
                 border-radius: 12px;
             }
+
             .controls-hint {
                 display: none;
             }
+
+            /* Stack Sales & Tech preset buttons vertically to prevent clipping */
+            #sales-pitch-deck div[style*="display: flex"] {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            
+            #sales-pitch-deck .room-sel-btn {
+                width: 100% !important;
+            }
+
+            /* Ensure HUD Badge stays fixed in WebGL viewport */
+            .hud-status {
+                position: fixed !important;
+                top: 65px !important;
+                right: 15px !important;
+                z-index: 15;
+            }
+
+            /* Keep Toast Notification fixed at bottom of screen */
             .toast-notification {
-                width: 90%;
+                position: fixed !important;
+                bottom: 20px !important;
+                z-index: 1000;
+                width: 90% !important;
                 box-sizing: border-box;
-                bottom: 20px;
                 text-align: center;
                 border-radius: 12px;
+            }
+        }
+
+        /* --- Mobile Breakpoint (Under 480px) --- */
+        @media (max-width: 480px) {
+            /* Stack Role Tabs vertically to prevent vertical text overlap */
+            .role-selector-tabs {
+                flex-direction: column !important;
+                gap: 4px !important;
+                padding: 4px !important;
+            }
+
+            .role-tab {
+                width: 100% !important;
+                padding: 10px 4px !important;
+                font-size: 11px !important;
+                text-align: center;
+            }
+
+            /* Stack Room Selector Resizer buttons vertically */
+            .room-selector-group {
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+            
+            .room-sel-btn {
+                width: 100% !important;
+            }
+
+            /* Stack Delta-T Inputs vertically */
+            .delta-t-input-row {
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+
+            #sales-pitch-deck div[style*="display: flex; gap: 8px; margin-bottom: 8px;"] {
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+
+            #sales-pitch-deck div[style*="display: flex; gap: 8px; margin-bottom: 8px;"] > div {
+                width: 100% !important;
+            }
+
+            /* Prevent Switch distortion when labels wrap */
+            .switch {
+                flex-shrink: 0 !important;
+            }
+
+            /* Control Labels wrapping safety */
+            .control-label {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 11px;
+            }
+
+            /* Optimize Welcome Modal for small/narrow screens */
+            .welcome-modal-overlay {
+                overflow-y: auto !important;
+                align-items: flex-start !important;
+                padding: 20px 10px !important;
+            }
+
+            .welcome-modal-card {
+                padding: 20px !important;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                max-width: 95vw !important;
+                border-radius: 16px !important;
+            }
+
+            .welcome-title {
+                font-size: 20px !important;
+            }
+
+            .welcome-emoji {
+                font-size: 32px !important;
+            }
+
+            .welcome-desc {
+                font-size: 13px !important;
+                line-height: 1.5 !important;
+                margin-bottom: 16px !important;
+            }
+
+            .welcome-features {
+                gap: 12px !important;
+                margin-bottom: 20px !important;
+            }
+
+            .welcome-feature-icon {
+                font-size: 18px !important;
+            }
+
+            .welcome-feature-title {
+                font-size: 13px !important;
+            }
+
+            .welcome-feature-desc {
+                font-size: 11.5px !important;
+                line-height: 1.4 !important;
+            }
+
+            .welcome-btn {
+                padding: 12px !important;
+                font-size: 12px !important;
+            }
+
+            /* Larger mobile touch targets for range sliders */
+            input[type="range"]::-webkit-slider-thumb {
+                width: 24px !important;
+                height: 24px !important;
+            }
+            
+            input[type="range"] {
+                height: 8px !important;
             }
         }
 
@@ -1109,49 +1778,368 @@
             0%, 100% { opacity: 0.8; }
             50% { opacity: 1; }
         }
+
+        /* Client Report & Onboarding Modal Animation */
+        @keyframes modalSlideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Keyboard Accessibility Custom Focus Outlines */
+        input[type="range"]:focus-visible,
+        select:focus-visible,
+        input[type="number"]:focus-visible,
+        button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--blue-neon) !important;
+            outline-offset: 3px !important;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.6) !important;
+        }
+
+        /* Button Click Tactile Compression Effects */
+        .welcome-btn:active,
+        .booking-btn:active,
+        .symptom-btn:active,
+        .tab-btn:active,
+        .room-sel-btn:active,
+        .role-tab:active,
+        .layout-btn:active,
+        .advanced-toggle-btn:active,
+        .modal-close-btn:active,
+        .phone-cta:active {
+            transform: translateY(1px) scale(0.98) !important;
+            transition: transform 0.1s ease;
+        }
+
+        /* Standard Range Sliders Unified Premium Aesthetics */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            outline: none;
+            margin: 12px 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        input[type="range"]:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 242, 254, 0.35);
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffffff 15%, var(--blue-neon) 100%);
+            border: 2px solid #0a182f;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.6), inset 0 0 4px rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            margin-top: -6px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.95), inset 0 0 6px rgba(255, 255, 255, 1);
+        }
+        input[type="range"]::-webkit-slider-thumb:active {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 1), inset 0 0 8px rgba(255, 255, 255, 1);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffffff 15%, var(--blue-neon) 100%);
+            border: 2px solid #0a182f;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.6), inset 0 0 4px rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+        }
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.95), inset 0 0 6px rgba(255, 255, 255, 1);
+        }
+        input[type="range"]::-moz-range-thumb:active {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 1), inset 0 0 8px rgba(255, 255, 255, 1);
+        }
+
+        /* Glassmorphic Shadow Depth Polish */
+        .card {
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 0 1px rgba(0, 242, 254, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        }
+
+        /* Accessibility Skip Link Visual Hidden Outline */
+        .skip-link {
+            position: absolute;
+            top: -80px;
+            left: 20px;
+            background: var(--blue-neon);
+            color: var(--dark);
+            padding: 10px 20px;
+            border-radius: 0 0 10px 10px;
+            z-index: 99999;
+            font-weight: 700;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+        .skip-link:focus-visible {
+            top: 0;
+            outline: 2px solid #ffffff !important;
+        }
+
+        /* Desktop Sidebar Scrollbar & Height Boundary Fix */
+        .ui-container {
+            position: absolute;
+            top: 75px;
+            left: 15px;
+            max-height: calc(100vh - 160px);
+            overflow-y: auto;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 242, 254, 0.3) rgba(255, 255, 255, 0.02);
+        }
+        .ui-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .ui-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 3px;
+        }
+        .ui-container::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 242, 254, 0.3);
+            border-radius: 3px;
+        }
+        .ui-container .card {
+            pointer-events: auto;
+        }
+
+        /* HUD Status Badge Alignment to Avoid Booking Card Collision */
+        .hud-status {
+            position: absolute;
+            top: 75px;
+            right: 350px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-end;
+            pointer-events: auto;
+        }
+
+        /* Mobile & Tablet Overrides Block */
+        @media (max-width: 768px) {
+            .hud-status {
+                position: fixed !important;
+                top: 65px !important;
+                right: 15px !important;
+                z-index: 15;
+            }
+            .ui-container {
+                position: static !important;
+                margin-top: 45vh !important;
+                max-height: none !important;
+                overflow-y: visible !important;
+            }
+            .ui-container .legend-card {
+                position: fixed !important;
+                top: calc(45vh - 45px) !important;
+                left: 10px !important;
+                z-index: 15;
+                background: rgba(10, 24, 47, 0.95);
+                border: 1px solid rgba(0, 242, 254, 0.3);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+                padding: 6px 10px !important;
+            }
+            .tab-btn {
+                padding: 12px 10px !important;
+                font-size: 11px !important;
+            }
+            .room-sel-btn {
+                padding: 12px 16px !important;
+                font-size: 12px !important;
+            }
+            .layout-btn {
+                padding: 16px !important;
+                font-size: 13px !important;
+            }
+            .booking-btn {
+                padding: 16px 12px !important;
+                font-size: 13px !important;
+            }
+            .advanced-toggle-btn {
+                padding: 14px 10px !important;
+                font-size: 12px !important;
+                display: block;
+            }
+            input[type="range"] {
+                height: 10px !important;
+            }
+            input[type="range"]::-webkit-slider-thumb {
+                width: 28px !important;
+                height: 28px !important;
+                box-shadow: 0 0 12px var(--blue-neon);
+            }
+            .modal-close-btn {
+                width: 46px !important;
+                height: 46px !important;
+                top: 15px;
+                right: 15px;
+            }
+            input[type="number"], select {
+                font-size: 16px !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .switch-group {
+                align-items: flex-start !important;
+                gap: 12px;
+                padding: 8px 0;
+            }
+            .switch-label {
+                font-size: 13px !important;
+                cursor: pointer;
+                user-select: none;
+                flex-grow: 1;
+            }
+            .switch {
+                width: 48px !important;
+                height: 26px !important;
+                flex-shrink: 0 !important;
+            }
+            .slider-round:before {
+                height: 18px !important;
+                width: 18px !important;
+                left: 4px !important;
+                bottom: 4px !important;
+            }
+            input:checked + .slider-round:before {
+                transform: translateX(22px) !important;
+            }
+            .role-tab {
+                padding: 14px 8px !important;
+                font-size: 13px !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <noscript>
+        <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #0a182f; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999999; font-family: 'Outfit', 'Inter', sans-serif; padding: 20px; box-sizing: border-box; text-align: center;">
+            <h1 style="color: #ff9f0a; font-size: 28px; margin-bottom: 15px; font-weight: 800; letter-spacing: 0.5px; background: none; -webkit-text-fill-color: initial;">JavaScript Required</h1>
+            <p style="color: #cbd5e1; font-size: 16px; max-width: 500px; line-height: 1.6; margin: 0 0 25px 0;">This secure diagnostics portal requires JavaScript to be enabled for cryptographic phase authorization and 3D engine rendering.</p>
+            <a href="../index.html" style="color: #00f2fe; text-decoration: none; font-weight: 700; border: 1px solid rgba(0, 242, 254, 0.3); padding: 10px 20px; border-radius: 8px; background: rgba(0, 242, 254, 0.05); transition: background-color 0.2s;">Return to Homepage</a>
+        </div>
+    </noscript>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <!-- Welcome Info Modal -->
-    <div id="welcome-modal" class="welcome-modal-overlay">
+    <!-- Client Diagnostic Report Modal (Hidden by Default) -->
+    <div id="diagnostic-report-modal" class="welcome-modal-overlay" style="display: none;">
         <div class="welcome-modal-card">
+            <!-- Modal Header -->
             <div class="welcome-title-row">
-                <span class="welcome-emoji">🏠</span>
-                <div>
-                    <h2 class="welcome-title">Airflow Balancing Simulator</h2>
-                    <p class="welcome-subtitle">Homeowner Diagnostic Sandbox</p>
+                <span class="welcome-emoji">📋</span>
+                <div style="flex-grow: 1;">
+                    <h2 class="welcome-title" style="margin: 0;">Comfort Diagnostic Report</h2>
+                    <p class="welcome-subtitle" id="report-date" style="margin: 4px 0 0 0;"></p>
+                </div>
+                <button class="modal-close-btn print-hide" onclick="closeReportModal()" aria-label="Close report">&times;</button>
+            </div>
+            
+            <!-- Report Core Metrics Grid -->
+            <div class="report-grid">
+                <div class="report-metric-card">
+                    <span class="report-metric-icon">🌬️</span>
+                    <div class="report-metric-info">
+                        <span class="report-metric-label">System Capacity</span>
+                        <span class="report-metric-val" id="report-capacity">-</span>
+                    </div>
+                </div>
+                <div class="report-metric-card">
+                    <span class="report-metric-icon">⚖️</span>
+                    <div class="report-metric-info">
+                        <span class="report-metric-label">Static Pressure</span>
+                        <span class="report-metric-val" id="report-static-pressure">-</span>
+                    </div>
+                </div>
+                <div class="report-metric-card">
+                    <span class="report-metric-icon">🌡️</span>
+                    <div class="report-metric-info">
+                        <span class="report-metric-label">Delta-T Split</span>
+                        <span class="report-metric-val" id="report-delta-t">-</span>
+                    </div>
+                </div>
+                <div class="report-metric-card">
+                    <span class="report-metric-icon">📈</span>
+                    <div class="report-metric-info">
+                        <span class="report-metric-label">Comfort Score</span>
+                        <span class="report-metric-val" id="report-comfort-score">-</span>
+                    </div>
                 </div>
             </div>
-            <p class="welcome-desc">
-                Ever wonder why some rooms in your house are freezing while others are boiling hot? This interactive simulator models the physics of air distribution inside home ducts.
-            </p>
-            <div class="welcome-features">
-                <div class="welcome-feature-item">
-                    <span class="welcome-feature-icon">🔄</span>
-                    <div>
-                        <div class="welcome-feature-title">Inspect Duct Routing</div>
-                        <div class="welcome-feature-desc">Drag the background to rotate the 3D model and trace where supply ducts run.</div>
-                    </div>
-                </div>
-                <div class="welcome-feature-item">
-                    <span class="welcome-feature-icon">🎯</span>
-                    <div>
-                        <div class="welcome-feature-title">Solve Hot & Cold Spots</div>
-                        <div class="welcome-feature-desc">Select a scenario in the panel and drag floor registers close to window heat loads.</div>
-                    </div>
-                </div>
-                <div class="welcome-feature-item">
-                    <span class="welcome-feature-icon">⚠️</span>
-                    <div>
-                        <div class="welcome-feature-title">Protect Blower Health</div>
-                        <div class="welcome-feature-desc">Learn how closing too many vents creates backpressure, straining your fan and inflating bills.</div>
-                    </div>
-                </div>
+
+            <!-- Room Temperature Breakdown Table -->
+            <h3 class="report-section-heading">Room Air Balancing Status</h3>
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Zone Name</th>
+                        <th>Target Temp</th>
+                        <th>Current Temp</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Zone A: Living Room</td>
+                        <td>72°F</td>
+                        <td id="report-temp-a">-</td>
+                        <td id="report-status-a" style="font-weight: 700;">-</td>
+                    </tr>
+                    <tr>
+                        <td>Zone B: Bedroom</td>
+                        <td>72°F</td>
+                        <td id="report-temp-b">-</td>
+                        <td id="report-status-b" style="font-weight: 700;">-</td>
+                    </tr>
+                    <tr>
+                        <td>Zone C: Kitchen</td>
+                        <td>72°F</td>
+                        <td id="report-temp-c">-</td>
+                        <td id="report-status-c" style="font-weight: 700;">-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Technical Summary & Recommendations Advisory -->
+            <h3 class="report-section-heading">NATE-Certified Technician Advisory</h3>
+            <div id="report-summary-text" class="report-advisory-block">
+                No telemetry recorded. Run simulation first.
             </div>
-            <button class="welcome-btn" onclick="closeWelcomeModal()">Start Balancing Simulator</button>
+
+            <!-- Action Controls Buttons -->
+            <div class="report-actions print-hide">
+                <button class="welcome-btn print-btn" onclick="triggerPrint()">🖨️ Print & Save PDF</button>
+                <button class="welcome-btn close-btn" onclick="closeReportModal()">Close Report</button>
+            </div>
         </div>
     </div>
+
+
 
     <!-- Top Nav Header -->
     <header class="top-nav-bar">
@@ -1160,98 +2148,30 @@
             <span class="logo-text">A/C Now <span class="logo-sub">LLC</span></span>
         </div>
         <div class="header-right">
-            <a href="tel:8662266935" class="phone-cta">📞 (866) AC-NOW-FL</a>
+            <a href="tel:7725213568" class="phone-cta">📞 (772) 521-3568</a>
             <a href="../index.html" class="back-link">Back to Home</a>
         </div>
     </header>
 
-    <div class="ui-container" id="main-content">
+    <main class="ui-container" id="main-content">
         <!-- Main Controls Panel / Diagnostic Wizard -->
         <div class="card" id="wizard-panel">
-            <div class="value-prop-card">
-                <h3>Solve Hot & Cold Rooms</h3>
-                <p>Use this simulator to diagnose airflow issues in your home. You will learn:</p>
-                <ul>
-                    <li>🎯 How vent placement redirects cooling to solar hotspots.</li>
-                    <li>⚠️ Why shutting registers increases backpressure and utility bills.</li>
-                    <li>🔧 When to use manual balancing vs. automated zoning.</li>
-                </ul>
+            <!-- Role Selector Tabs -->
+            <div class="role-selector-tabs">
+                <button class="role-tab active" onclick="switchRole('member')">⚙️ Advanced System Controls</button>
+                <button class="role-tab" onclick="switchRole('sales-tech')">🔧 Diagnostic Report</button>
             </div>
 
-            <h1 id="wiz-title" style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Easy Airflow Game</h1>
-            <p class="desc" id="wiz-subtitle" style="font-size: 13px; line-height: 1.5; color: #cbd5e1; margin-bottom: 20px;">
-                Can you balance the airflow in this house? Choose a room to fix below:
-            </p>
-            
-            <!-- Step 1: Scenario Selector -->
-            <div id="wiz-step-1" class="wiz-step active">
-                <div class="symptom-list" style="gap: 12px;">
-                    <button class="symptom-btn" style="padding: 16px; border-radius: 16px; border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);" onclick="startWizardScenario('bedroom_hot')">
-                        <span class="symptom-icon" style="font-size: 32px;">🥵</span>
-                        <div class="symptom-meta">
-                            <div class="symptom-title" style="font-size: 14px; font-weight: 800; color: #ffffff;">Fix the Hot Bedroom</div>
-                            <div class="symptom-desc" style="font-size: 11px; color: #fca5a5; margin-top: 4px;">Make the hot orange room cool again.</div>
-                        </div>
-                    </button>
-                    <button class="symptom-btn" style="padding: 16px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.05);" onclick="startWizardScenario('living_cold')">
-                        <span class="symptom-icon" style="font-size: 32px;">🥶</span>
-                        <div class="symptom-meta">
-                            <div class="symptom-title" style="font-size: 14px; font-weight: 800; color: #ffffff;">Fix the Cold Living Room</div>
-                            <div class="symptom-desc" style="font-size: 11px; color: #bae6fd; margin-top: 4px;">Balance flow in the freezing blue room.</div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Step 2: Interactive Troubleshooting -->
-            <div id="wiz-step-2" class="wiz-step">
-                <div class="wizard-instruction" id="wiz-instruction" style="font-size: 13px; line-height: 1.5; padding: 14px; border-radius: 10px; background: rgba(0, 242, 254, 0.05); border-color: rgba(0,242,254,0.3); margin-bottom: 20px;">
-                    Follow the steps below to cool down the hotspot.
-                </div>
-                
-                <div class="wizard-objectives" style="gap: 12px; margin-bottom: 20px;">
-                    <div class="objective-item" id="obj-damper" style="font-size: 13px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 10px;">
-                        <span class="obj-check" style="font-size: 18px;">⬜</span>
-                        <span class="obj-text">Step 1: Turn ON the Vent Switch</span>
-                    </div>
-                    <div class="objective-item" id="obj-drag" style="font-size: 13px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 10px;">
-                        <span class="obj-check" style="font-size: 18px;">⬜</span>
-                        <span class="obj-text">Step 2: Drag the glowing ring close to the hot window</span>
-                    </div>
+            <!-- Homeowner Mode Container -->
+            <!-- Homeowner Mode Container -->
+            <div id="homeowner-mode-container" style="display: none;">
+                <div class="value-prop-card" style="margin-bottom: 15px;">
+                    <h3 style="font-size: 13px; font-weight: 800; color: var(--blue-neon); margin-top: 0; margin-bottom: 5px;">3D Airflow Diagnostics Workspace</h3>
+                    <p style="font-size: 11.5px; line-height: 1.45; color: #cbd5e1; margin: 0;">
+                        Use this professional simulation workspace to test blower fan CFM flow rates, toggle zone damper valves, adjust room physical boundaries, and reposition supply registers to optimize thermal comfort.
+                    </p>
                 </div>
 
-                <div class="wizard-stats" style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.06);">
-                    <div class="score-row" style="margin-bottom: 10px;">
-                        <span class="score-label" style="font-size: 12px; font-weight: 800; color: #94a3b8;">Home Comfort Score</span>
-                        <span class="score-number" id="wiz-comfort-score" style="font-size: 32px; font-weight: 800; color: #00f2fe;">60%</span>
-                    </div>
-                    <div class="zone-telemetry" style="margin-top: 5px; border-top: none; padding-top: 0; gap: 6px;">
-                        <div class="zone-row" style="font-size: 12px; font-weight: 600;">
-                            <span>Living Room Temp</span>
-                            <span class="zone-temp" id="wiz-temp-a" style="color: #00f2fe;">72°F</span>
-                        </div>
-                        <div class="zone-row" style="font-size: 12px; font-weight: 600;">
-                            <span>Bedroom Temp</span>
-                            <span class="zone-temp" id="wiz-temp-b" style="color: #ff9f0a;">80°F</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 3: Resolution & Conversion Call to Action -->
-            <div id="wiz-step-3" class="wiz-step">
-                <div class="success-banner" style="font-size: 15px; padding: 14px; border-radius: 12px; margin-bottom: 20px;">
-                    🎉 You Did It! Room is Balanced!
-                </div>
-                <p class="desc" id="wiz-resolution-text" style="font-size: 13px; line-height: 1.6; color: #cbd5e1; margin-bottom: 20px;">
-                    You moved the register to cool down the hot spots! However, closing manual dampers strains your system. An automated zoning upgrade can keep your house perfectly balanced without any manual effort.
-                </p>
-                <a href="contact.html" class="booking-btn" style="font-size: 13px; padding: 15px; border-radius: 10px;">Book Free Airflow Audit</a>
-                <button class="booking-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; margin-top: 8px; font-size: 12px; padding: 12px;" onclick="resetWizard()">Play Another Level</button>
-            </div>
-
-            <!-- Advanced Manual Control Panel Content (hidden by default) -->
-            <div id="manual-controls-content" style="display: none;">
                 <div class="tabs">
                     <button class="tab-btn active" onclick="switchTab(event, 'tab-zoning')">Zoning & Dampers</button>
                     <button class="tab-btn" onclick="switchTab(event, 'tab-comfort')">Comfort HUD</button>
@@ -1261,7 +2181,7 @@
                 <!-- Tab 1: Zoning & Dampers -->
                 <div id="tab-zoning" class="tab-content active">
                     <div class="control-group">
-                        <label class="control-label">
+                        <label class="control-label" for="cfm-range">
                             <span>Blower Flow Rate</span>
                             <span class="control-val" id="cfm-val">1200 CFM</span>
                         </label>
@@ -1270,21 +2190,21 @@
 
                     <div class="zoning-dampers">
                         <div class="switch-group">
-                            <span class="switch-label">Zone A Damper (Living Room)</span>
+                            <label for="damper-a" class="switch-label">Zone A Damper (Living Room)</label>
                             <label class="switch">
                                 <input type="checkbox" id="damper-a" checked onchange="toggleDamper('a', this.checked)">
                                 <span class="slider-round"></span>
                             </label>
                         </div>
                         <div class="switch-group">
-                            <span class="switch-label">Zone B Damper (Bedroom)</span>
+                            <label for="damper-b" class="switch-label">Zone B Damper (Bedroom)</label>
                             <label class="switch">
                                 <input type="checkbox" id="damper-b" checked onchange="toggleDamper('b', this.checked)">
                                 <span class="slider-round"></span>
                             </label>
                         </div>
                         <div class="switch-group">
-                            <span class="switch-label">Zone C Damper (Kitchen)</span>
+                            <label for="damper-c" class="switch-label">Zone C Damper (Kitchen)</label>
                             <label class="switch">
                                 <input type="checkbox" id="damper-c" checked onchange="toggleDamper('c', this.checked)">
                                 <span class="slider-round"></span>
@@ -1315,7 +2235,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">
+                        <label class="control-label" for="width-range">
                             <span>Room Width (ft)</span>
                             <span class="control-val" id="width-val">12 ft</span>
                         </label>
@@ -1323,7 +2243,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">
+                        <label class="control-label" for="length-range">
                             <span>Room Length (ft)</span>
                             <span class="control-val" id="length-val">12 ft</span>
                         </label>
@@ -1331,7 +2251,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">
+                        <label class="control-label" for="height-range">
                             <span>Room Height (ft)</span>
                             <span class="control-val" id="height-val">8 ft</span>
                         </label>
@@ -1341,61 +2261,201 @@
 
                 <!-- Tab 2: Comfort Score HUD -->
                 <div id="tab-comfort" class="tab-content">
-                    <div class="score-row">
-                        <span class="score-label">Comfort Balance</span>
-                        <span class="score-number" id="comfort-score-val">76%</span>
+                    <div class="hud-card" style="margin-bottom: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 8px;">
+                        <div style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase;">Comfort Index</div>
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px;">
+                            <span id="comfort-score-val" style="font-size: 32px; font-weight: 800; color: #00f2fe; text-shadow: 0 0 10px rgba(0,242,254,0.3);">100%</span>
+                            <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">based on zone deviation from 72&deg;F</span>
+                        </div>
                     </div>
                     
-                    <div class="zone-telemetry">
-                        <div class="zone-row">
+                    <div class="zone-telemetry" style="border-top: none; padding-top: 0; gap: 8px;">
+                        <div class="zone-row" style="font-size: 11.5px; font-weight: 600; display: flex; justify-content: space-between;">
                             <span>Zone A: Living Room</span>
-                            <span class="zone-temp" id="temp-zone-a">78°F</span>
+                            <span class="zone-temp" id="temp-zone-a">72°F</span>
                         </div>
-                        <div class="zone-row">
+                        <div class="zone-row" style="font-size: 11.5px; font-weight: 600; display: flex; justify-content: space-between;">
                             <span>Zone B: Bedroom</span>
-                            <span class="zone-temp" id="temp-zone-b">76°F</span>
+                            <span class="zone-temp" id="temp-zone-b">72°F</span>
                         </div>
-                        <div class="zone-row">
+                        <div class="zone-row" style="font-size: 11.5px; font-weight: 600; display: flex; justify-content: space-between;">
                             <span>Zone C: Kitchen</span>
-                            <span class="zone-temp" id="temp-zone-c">74°F</span>
+                            <span class="zone-temp" id="temp-zone-c">72°F</span>
                         </div>
                     </div>
 
-                    <div class="comfort-recommendation" id="comfort-reco">
+                    <div class="comfort-recommendation" id="comfort-reco" style="font-size: 11px; line-height: 1.45; border: 1px solid rgba(16, 185, 129, 0.3); color: #10b981; background: rgba(16,185,129,0.05); padding: 10px; border-radius: 8px; margin-top: 12px;">
                         Drag the floor registers closer to the red window hotspots to balance the cooling load.
                     </div>
                 </div>
 
                 <!-- Tab 3: Layout Options -->
                 <div id="tab-layout" class="tab-content">
-                    <div class="layout-grid">
+                    <div class="layout-grid" style="display: flex; flex-direction: column; gap: 8px; margin-top: 5px;">
                         <button class="layout-btn active" id="layout-residential" onclick="switchLayout('standard')">
                             <div>
-                                <div>Residential Single Zone</div>
-                                <div class="layout-sub">Standard split-system setup</div>
+                                <div style="font-size: 12px; font-weight: 700; color: #ffffff;">Residential Single Zone</div>
+                                <div class="layout-sub" style="font-size: 9px; color: #94a3b8; font-weight: normal; margin-top: 2px;">Standard split-system setup</div>
                             </div>
-                            <span>🏠</span>
+                            <span style="font-size: 18px;">🏠</span>
                         </button>
                         <button class="layout-btn" id="layout-commercial" onclick="switchLayout('commercial')">
                             <div>
-                                <div>Commercial Multi-Zone</div>
-                                <div class="layout-sub">6-duct star redistribution</div>
+                                <div style="font-size: 12px; font-weight: 700; color: #ffffff;">Commercial Multi-Zone</div>
+                                <div class="layout-sub" style="font-size: 9px; color: #94a3b8; font-weight: normal; margin-top: 2px;">6-duct star redistribution</div>
                             </div>
-                            <span>🏢</span>
+                            <span style="font-size: 18px;">🏢</span>
                         </button>
                         <button class="layout-btn" id="layout-twostory" onclick="switchLayout('twostory')">
                             <div>
-                                <div>Multi-Story Layout</div>
-                                <div class="layout-sub">Duplex airflow balance</div>
+                                <div style="font-size: 12px; font-weight: 700; color: #ffffff;">Multi-Story Layout</div>
+                                <div class="layout-sub" style="font-size: 9px; color: #94a3b8; font-weight: normal; margin-top: 2px;">Duplex airflow balance</div>
                             </div>
-                            <span>🛗</span>
+                            <span style="font-size: 18px;">🛗</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Advanced Manual Switch button -->
-            <button class="advanced-toggle-btn" id="adv-toggle-btn" onclick="toggleAdvancedMode()">Switch to Advanced System Controls</button>
+            <!-- Member Mode Container -->
+            <div id="member-custom-loadout" style="display: block;">
+                <h2 style="font-size: 16px; font-weight: 800; color: var(--blue-neon); margin-top: 0; margin-bottom: 8px;">Advanced System Controls</h2>
+                <p class="desc" style="font-size: 11.5px; line-height: 1.45; color: #cbd5e1; margin-bottom: 15px;">
+                    Configure custom space dimensions, scale room geometry values dynamically, and define system tonnage specifications.
+                </p>
+                
+                <!-- Tonnage Dropdown -->
+                <div class="control-group">
+                    <label class="control-label" for="member-tonnage">
+                        <span>A/C Unit Tonnage</span>
+                        <span class="control-val" id="member-tonnage-val">3.0 Tons</span>
+                    </label>
+                    <select id="member-tonnage" style="width: 100%; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; color: white; padding: 10px; font-family: var(--font-stack); font-size: 12px; outline: none; margin-top: 5px;" onchange="document.getElementById('member-tonnage-val').innerText = this.value + ' Tons'; runMemberSimulation();">
+                        <option value="2.0">2.0 Tons (800 CFM)</option>
+                        <option value="2.5">2.5 Tons (1000 CFM)</option>
+                        <option value="3.0" selected>3.0 Tons (1200 CFM)</option>
+                        <option value="3.5">3.5 Tons (1400 CFM)</option>
+                        <option value="4.0">4.0 Tons (1600 CFM)</option>
+                        <option value="5.0">5.0 Tons (2000 CFM)</option>
+                    </select>
+                </div>
+
+                <!-- Room Width Sliders -->
+                <div class="control-group">
+                    <label class="control-label" for="member-width-a">
+                        <span>Room A Width (ft)</span>
+                        <span class="control-val" id="member-width-a-val">12 ft</span>
+                    </label>
+                    <input type="range" id="member-width-a" min="6" max="18" step="1" value="12" oninput="document.getElementById('member-width-a-val').innerText = this.value + ' ft'; runMemberSimulation();">
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="member-width-b">
+                        <span>Room B Width (ft)</span>
+                        <span class="control-val" id="member-width-b-val">12 ft</span>
+                    </label>
+                    <input type="range" id="member-width-b" min="6" max="18" step="1" value="12" oninput="document.getElementById('member-width-b-val').innerText = this.value + ' ft'; runMemberSimulation();">
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="member-width-c">
+                        <span>Room C Width (ft)</span>
+                        <span class="control-val" id="member-width-c-val">12 ft</span>
+                    </label>
+                    <input type="range" id="member-width-c" min="6" max="18" step="1" value="12" oninput="document.getElementById('member-width-c-val').innerText = this.value + ' ft'; runMemberSimulation();">
+                </div>
+
+                <button class="booking-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; margin-bottom: 10px;" onclick="resetSandboxDefaults()">Reset System Defaults</button>
+
+                <!-- Dynamic Telemetry Card -->
+                <div class="zone-telemetry" style="margin-top: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 8px;">
+                    <div class="zone-row" style="font-size: 11px; font-weight: 600; display: flex; justify-content: space-between;">
+                        <span>Room A Required Flow:</span>
+                        <span id="member-cfm-a" style="color: var(--blue-neon);">400 CFM</span>
+                    </div>
+                    <div class="zone-row" style="font-size: 11px; font-weight: 600; display: flex; justify-content: space-between;">
+                        <span>Room B Required Flow:</span>
+                        <span id="member-cfm-b" style="color: var(--blue-neon);">400 CFM</span>
+                    </div>
+                    <div class="zone-row" style="font-size: 11px; font-weight: 600; display: flex; justify-content: space-between;">
+                        <span>Room C Required Flow:</span>
+                        <span id="member-cfm-c" style="color: var(--blue-neon);">400 CFM</span>
+                    </div>
+                    <div class="zone-row" style="font-size: 11px; font-weight: 600; display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
+                        <span>Total Sizing Load:</span>
+                        <span id="member-total-load" style="color: #ff9f0a;">0.9 Tons</span>
+                    </div>
+                    <div class="zone-row" style="font-size: 11px; font-weight: 600; display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
+                        <span>Sizing Suitability:</span>
+                        <span id="member-sizing-status" style="font-weight: 800; text-transform: uppercase;">Optimal</span>
+                    </div>
+                    <div class="zone-row" style="font-size: 11px; font-weight: 600; display: flex; justify-content: space-between;">
+                        <span>Efficiency Impact:</span>
+                        <span id="member-efficiency-impact" style="font-weight: 700;">Peak Efficiency</span>
+                    </div>
+                </div>
+
+                <!-- Advisory Card -->
+                <div class="value-prop-card" style="margin-top: 15px; background: rgba(255, 159, 10, 0.05); border: 1px solid rgba(255, 159, 10, 0.2);">
+                    <h3 style="color: #ff9f0a; font-size: 11px;">⚠️ System Operating Principle</h3>
+                    <p style="font-size: 10px; margin: 0; line-height: 1.4;">
+                        Target flow rate is 400 CFM per Ton. Standard residential sizing requires 1 CFM per square foot of room area under normal solar loads.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sales & Tech Mode Container (hidden by default) -->
+            <div id="sales-pitch-deck" style="display: none;">
+                <h2 style="font-size: 16px; font-weight: 800; color: #ff9f0a; margin-top: 0; margin-bottom: 8px;">Diagnostic Report Panel</h2>
+                <p class="desc" style="font-size: 11.5px; line-height: 1.45; color: #cbd5e1; margin-bottom: 15px;">
+                    Compare before and after balancing specs, run payback parameters, and check Delta-T operating splits.
+                </p>
+
+                <!-- Before / After Presets -->
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <button class="room-sel-btn" style="border-color: #C22A36; background: rgba(194, 42, 54, 0.1);" onclick="loadSalesBeforePreset()">Standard Complaint (Before)</button>
+                    <button class="room-sel-btn" style="border-color: #10b981; background: rgba(16, 185, 129, 0.1);" onclick="loadSalesAfterPreset()">Smart Zoning (After)</button>
+                </div>
+                        <!-- ROI Calculator Card -->
+                <div class="value-prop-card" style="margin-bottom: 15px;">
+                    <h3 style="color: var(--blue-neon); font-size: 11px;">📈 Investment & ROI Estimate</h3>
+                    <div style="font-size: 11px; color: #cbd5e1; display: flex; flex-direction: column; gap: 4px; margin-top: 5px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Est. Retrofit Cost:</span>
+                            <span id="sales-retrofit-cost" style="font-weight: bold; color: #ffffff;">$2,450</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Est. Annual Energy Savings:</span>
+                            <span id="sales-annual-savings" style="font-weight: bold; color: #10b981;">28% ($450/yr)</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 4px; margin-top: 4px;">
+                            <span>Simple Payback Period:</span>
+                            <span id="sales-payback-period" style="font-weight: bold; color: #ff9f0a;">5.4 Years</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delta-T Split Calculator -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 12px; margin-bottom: 15px;">
+                    <h4 style="font-size: 11px; font-weight: 700; color: #ffffff; margin: 0 0 8px 0; text-transform: uppercase;">Delta-T Evaporator Split</h4>
+                    <div class="delta-t-input-row" style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <div style="flex: 1;">
+                            <label for="tech-return-temp" style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px;">Return Air Temp (°F)</label>
+                            <input type="number" id="tech-return-temp" value="75" min="60" max="100" step="1" style="width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: white; padding: 6px; font-size: 12px; font-family: var(--font-stack);" oninput="calculateDeltaT()">
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="tech-supply-temp" style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px;">Supply Air Temp (°F)</label>
+                            <input type="number" id="tech-supply-temp" value="57" min="40" max="80" step="1" style="width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: white; padding: 6px; font-size: 12px; font-family: var(--font-stack);" oninput="calculateDeltaT()">
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                        <span style="font-size: 10px; color: #cbd5e1;">Target: 16°F - 22°F Split</span>
+                        <span id="delta-t-badge" class="booking-badge" style="margin: 0; background: rgba(16, 185, 129, 0.15); border-color: #34d399; color: #34d399; font-size: 10px; padding: 3px 6px;">18.0°F Split - PASS</span>
+                    </div>
+                </div>
+
+                <button class="booking-btn" onclick="openReportModal()">Generate Client Report</button>
+            </div>
         </div>
 
         <!-- Floating Legend -->
@@ -1415,16 +2475,16 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Floating Booking Panel (Right) -->
     <div class="card booking-card">
         <span class="booking-badge">🟢 Same-Day Slots Open</span>
-        <h1>Schedule Comfort Audit</h1>
+        <h2>Schedule Comfort Audit</h2>
         <p class="desc" style="margin-bottom: 12px;">Uneven temperatures? Our NATE-certified technicians specialize in system balancing, coil cleaning, and zoning.</p>
         
         <a href="contact.html" class="booking-btn">Book Airflow Audit Online</a>
-        <a href="tel:8662266935" class="booking-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; margin-top: 8px;">Call (866) AC-NOW-FL</a>
+        <a href="tel:7725213568" class="booking-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; margin-top: 8px;">Call (772) 521-3568</a>
         
         <!-- Trust Trigger Reviews -->
         <div class="testimonial-widget">
@@ -1467,6 +2527,8 @@
         let particles, particleProgress = [];
         let ducts = [];
         let hvacFan, evaporatorCoilMesh;
+        let houseShell = null;
+        let activeScenario = null;
         let lastTime = 0;
         
         // Simulation States
@@ -1488,6 +2550,18 @@
             { width: 12, length: 12, height: 8, x: 0, z: -4 },  // Room B (Bedroom)
             { width: 12, length: 12, height: 8, x: 12, z: 4 }   // Room C (Kitchen)
         ];
+        
+        try {
+            const savedDimensions = localStorage.getItem('acnow_room_dimensions');
+            if (savedDimensions) {
+                const parsed = JSON.parse(savedDimensions);
+                if (Array.isArray(parsed) && parsed.length === 3) {
+                    roomDimensions = parsed;
+                }
+            }
+        } catch (e) {
+            console.warn('Failed to parse roomDimensions from localStorage', e);
+        }
         let roomMeshes = [];
         let roomEdges = [];
         let activeRoomResizeIndex = 0; // Selected index for resizing controls
@@ -1517,37 +2591,7 @@
         const PARTICLE_COUNT = 1500;
         let curves = [];
 
-        // Welcome Modal closer
-        function closeWelcomeModal() {
-            const modal = document.getElementById('welcome-modal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-            document.removeEventListener("keydown", modalFocusTrap);
-        }
 
-        function modalFocusTrap(e) {
-            const modal = document.getElementById('welcome-modal');
-            if (modal && modal.style.display !== 'none') {
-                if (e.key === "Tab") {
-                    e.preventDefault();
-                    const btn = modal.querySelector(".welcome-btn");
-                    if (btn) btn.focus();
-                } else if (e.key === "Escape") {
-                    closeWelcomeModal();
-                }
-            }
-        }
-
-        // Focus welcome button on load and trap focus
-        document.addEventListener("DOMContentLoaded", () => {
-            const modal = document.getElementById('welcome-modal');
-            if (modal && modal.style.display !== 'none') {
-                const btn = modal.querySelector(".welcome-btn");
-                if (btn) setTimeout(() => btn.focus(), 100);
-                document.addEventListener("keydown", modalFocusTrap);
-            }
-        });
 
         // Tab Switching Logic
         function switchTab(evt, tabId) {
@@ -1569,6 +2613,10 @@
             const ratio = val / 1200;
             flowSpeed = 0.08 * ratio;
             fanSpeedRotationVal = 1.5 * ratio;
+        }
+
+        function syncWizDampers() {
+            // Deprecated, no longer used
         }
 
         // Damper Toggles (Zoning Solver)
@@ -1598,16 +2646,19 @@
             const badge = document.getElementById('hud-badge');
             if (activeCount === 0) {
                 badge.innerText = '⚠️ CRITICAL PRESSURE';
-                badge.style.color = '#C22A36';
-                badge.style.borderColor = '#C22A36';
+                badge.style.color = '#ff6b6b';
+                badge.style.borderColor = '#ff6b6b';
+                badge.style.background = 'rgba(239, 68, 68, 0.15)';
             } else if (activeCount === 1) {
                 badge.innerText = '● CFM HIGH • BACKPRESSURE';
                 badge.style.color = '#ff9f0a';
                 badge.style.borderColor = '#ff9f0a';
+                badge.style.background = 'rgba(249, 115, 22, 0.15)';
             } else {
                 badge.innerText = '● CFM OK • BALANCED';
                 badge.style.color = '#00f2fe';
                 badge.style.borderColor = '#00f2fe';
+                badge.style.background = 'rgba(0, 242, 254, 0.1)';
             }
 
             // Trigger warnings if static pressure spikes
@@ -1822,17 +2873,22 @@
             if (!mesh) return;
             if (mesh.geometry) mesh.geometry.dispose();
             if (mesh.material) {
-                if (Array.isArray(mesh.material)) {
-                    mesh.material.forEach(mat => mat.dispose());
-                } else {
-                    mesh.material.dispose();
-                }
+                const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+                materials.forEach(mat => {
+                    if (mat.map && typeof mat.map.dispose === 'function') mat.map.dispose();
+                    if (mat.lightMap && typeof mat.lightMap.dispose === 'function') mat.lightMap.dispose();
+                    if (mat.bumpMap && typeof mat.bumpMap.dispose === 'function') mat.bumpMap.dispose();
+                    if (mat.normalMap && typeof mat.normalMap.dispose === 'function') mat.normalMap.dispose();
+                    if (mat.specularMap && typeof mat.specularMap.dispose === 'function') mat.specularMap.dispose();
+                    if (mat.envMap && typeof mat.envMap.dispose === 'function') mat.envMap.dispose();
+                    mat.dispose();
+                });
             }
         }
 
         function disposeHierarchy(obj) {
             obj.traverse(child => {
-                if (child.isMesh || child.isPoints || child.isLineSegments) {
+                if (child.isMesh || child.isPoints || child.isLineSegments || child.isLine) {
                     disposeMesh(child);
                 }
             });
@@ -1843,12 +2899,14 @@
             scene = new THREE.Scene();
             scene.fog = new THREE.FogExp2(0x0a182f, 0.015);
 
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+            const width = canvas.clientWidth || window.innerWidth;
+            const height = canvas.clientHeight || window.innerHeight;
+            camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
             camera.position.set(28, 20, 42);
 
             renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(width, height, false);
 
             controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
@@ -1883,13 +2941,91 @@
             window.addEventListener('pointerup', onPointerUp);
 
             window.addEventListener('resize', onWindowResize);
+            
+            // Expose read-only state copies and calculated metrics to JXA processes
+            window.hvacSimulator = {
+                getRoomDimensions: () => JSON.parse(JSON.stringify(roomDimensions)),
+                getDampers: () => JSON.parse(JSON.stringify(dampers)),
+                getRoomTemps: () => [...roomTemps],
+                getActiveScenario: () => activeScenario,
+                getReportData: () => {
+                    const comfortScoreText = document.getElementById('comfort-score-val')?.innerText || '0%';
+                    const staticPressureText = document.getElementById('pressure-val')?.innerText || '0.00';
+                    const dtData = getValidatedDeltaT();
+                    return {
+                        comfortScore: parseInt(comfortScoreText, 10),
+                        staticPressure: parseFloat(staticPressureText),
+                        deltaT: dtData.splitVal,
+                        roomTemps: roomTemps.map(Math.round)
+                    };
+                }
+            };
+
+            // Register global simulator unmount hooks for memory safety
+            window.addEventListener('pagehide', destroySimulator);
+            window.addEventListener('unload', destroySimulator);
+
             requestAnimationFrame(animate);
+
+            // Load saved role and initialize active UI states
+            try {
+                const savedRole = localStorage.getItem('acnow_active_role') || 'member';
+                // If the saved role was homeowner, force reset to member since homeowner mode is removed
+                if (savedRole === 'homeowner') {
+                    switchRole('member');
+                } else {
+                    switchRole(savedRole);
+                }
+            } catch (e) {
+                switchRole('member');
+            }
+        }
+
+        // Global unmount & resource cleanup handler to prevent GPU/VRAM leaks
+        function destroySimulator() {
+            // Remove bound global and DOM event listeners
+            if (renderer && renderer.domElement) {
+                renderer.domElement.removeEventListener('pointerdown', onPointerDown);
+                renderer.domElement.removeEventListener('pointermove', onPointerMove);
+            }
+            window.removeEventListener('pointerup', onPointerUp);
+            window.removeEventListener('resize', onWindowResize);
+            window.removeEventListener('pagehide', destroySimulator);
+            window.removeEventListener('unload', destroySimulator);
+            
+            // Remove pointerover link prefetch listener
+            if (prefetchListener) {
+                document.body.removeEventListener('pointerover', prefetchListener);
+                prefetchListener = null;
+            }
+            
+            // Remove focus-traps from document context
+            if (typeof modalFocusTrap === 'function') {
+                document.removeEventListener("keydown", modalFocusTrap);
+            }
+            if (typeof reportModalFocusTrap === 'function') {
+                document.removeEventListener('keydown', reportModalFocusTrap);
+            }
+
+            // Traverse and deep dispose scene graph assets
+            if (scene) {
+                disposeHierarchy(scene);
+            }
+
+            // Dispose WebGL rendering context
+            if (renderer) {
+                renderer.dispose();
+            }
+
+            // Nullify simulator global
+            window.hvacSimulator = null;
         }
 
         // Custom Raycast DragControls with boundaries clamping constraints
         function onPointerDown(event) {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
             
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(draggableObjects, true);
@@ -1918,8 +3054,9 @@
         }
 
         function onPointerMove(event) {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
             
             if (isDragging && draggedGroup) {
                 raycaster.setFromCamera(mouse, camera);
@@ -1955,6 +3092,7 @@
                 draggedGroup = null;
                 controls.enabled = true; // Resume camera orbit navigation
                 renderer.domElement.style.cursor = 'default';
+                saveSandboxState();
             }
         }
 
@@ -2101,20 +3239,36 @@
 
         // Create supply registers
         function spawnRegisters() {
+            let regPos = null;
+            try {
+                const savedRegs = localStorage.getItem('acnow_register_positions');
+                if (savedRegs) {
+                    regPos = JSON.parse(savedRegs);
+                }
+            } catch (e) {
+                console.warn('Failed to parse register positions from localStorage', e);
+            }
+
             const reg1Group = createRegisterMesh('Living Room Vent', 0x00f2fe);
-            reg1Group.position.set(-12, -5.4, 2);
+            const x1 = regPos && regPos[0] ? regPos[0].x : -12;
+            const z1 = regPos && regPos[0] ? regPos[0].z : 2;
+            reg1Group.position.set(x1, -5.4, z1);
             reg1Group.name = 'register_1';
             scene.add(reg1Group);
             draggableObjects.push(reg1Group.children[0]); // register grilles for drag raycasting
             
             const reg2Group = createRegisterMesh('Bedroom Vent', 0x00f2fe);
-            reg2Group.position.set(0, -5.4, -4);
+            const x2 = regPos && regPos[1] ? regPos[1].x : 0;
+            const z2 = regPos && regPos[1] ? regPos[1].z : -4;
+            reg2Group.position.set(x2, -5.4, z2);
             reg2Group.name = 'register_2';
             scene.add(reg2Group);
             draggableObjects.push(reg2Group.children[0]);
             
             const reg3Group = createRegisterMesh('Kitchen Vent', 0x00f2fe);
-            reg3Group.position.set(12, -5.4, 4);
+            const x3 = regPos && regPos[2] ? regPos[2].x : 12;
+            const z3 = regPos && regPos[2] ? regPos[2].z : 4;
+            reg3Group.position.set(x3, -5.4, z3);
             reg3Group.name = 'register_3';
             scene.add(reg3Group);
             draggableObjects.push(reg3Group.children[0]);
@@ -2299,105 +3453,7 @@
             }
         }
 
-        // Diagnostic Wizard Logic
-        let activeScenario = null;
-        let currentStep = 1;
-        let advancedMode = false;
-
-        function toggleAdvancedMode() {
-            advancedMode = !advancedMode;
-            
-            const wizSteps = document.querySelectorAll('.wiz-step');
-            wizSteps.forEach(step => step.classList.remove('active'));
-            
-            const advancedContent = document.getElementById('manual-controls-content');
-            const wizardTitle = document.getElementById('wiz-title');
-            const wizardSubtitle = document.getElementById('wiz-subtitle');
-            
-            if (advancedMode) {
-                advancedContent.style.display = 'block';
-                wizardTitle.innerText = "System Architect Controls";
-                wizardSubtitle.innerText = "Manually configure duct sizes, layouts, and system balance details.";
-                document.getElementById('adv-toggle-btn').innerText = "Back to Diagnostic Wizard";
-            } else {
-                advancedContent.style.display = 'none';
-                wizardTitle.innerText = "Easy Airflow Game";
-                wizardSubtitle.innerText = "Can you balance the airflow in this house? Choose a room to fix below:";
-                document.getElementById('adv-toggle-btn').innerText = "Switch to Advanced System Controls";
-                showWizardStep(currentStep);
-            }
-        }
-
-        function showWizardStep(step) {
-            currentStep = step;
-            const wizSteps = document.querySelectorAll('.wiz-step');
-            wizSteps.forEach(st => st.classList.remove('active'));
-            document.getElementById('wiz-step-' + step).classList.add('active');
-        }
-
-        function startWizardScenario(scenario) {
-            activeScenario = scenario;
-            showWizardStep(2);
-            
-            const inst = document.getElementById('wiz-instruction');
-            const objDamper = document.getElementById('obj-damper');
-            const objDrag = document.getElementById('obj-drag');
-
-            objDamper.classList.remove('complete');
-            objDamper.querySelector('.obj-check').innerText = "⬜";
-            objDrag.classList.remove('complete');
-            objDrag.querySelector('.obj-check').innerText = "⬜";
-            
-            if (scenario === 'bedroom_hot') {
-                roomTemps = [72.0, 80.0, 72.0];
-                hotspot2.position.set(4.5, -4.5, -5); // Shift hotspot far away
-                hotspot2.scale.setScalar(1.5);
-                hotspot2.material.color.setHex(0xff4b2b);
-                
-                dampers.b = false;
-                document.getElementById('damper-b').checked = false;
-                toggleDamper('b', false);
-                
-                inst.innerHTML = `<strong>Goal: Cool down the Bedroom.</strong> <br><br>Follow the two simple steps below to bring cold air back into the room.`;
-                
-                objDamper.querySelector('.obj-text').innerText = "Step 1: Turn ON the Zone B Vent switch";
-                objDrag.querySelector('.obj-text').innerText = "Step 2: Drag the blue vent circle closer to the hot window";
-            } 
-            else if (scenario === 'living_cold') {
-                roomTemps = [80.0, 72.0, 72.0];
-                hotspot1.position.set(-8.5, -4.5, -3);
-                hotspot1.scale.setScalar(1.5);
-                hotspot1.material.color.setHex(0xff4b2b);
-                
-                dampers.a = false;
-                document.getElementById('damper-a').checked = false;
-                toggleDamper('a', false);
-                
-                inst.innerHTML = `<strong>Goal: Cool down the Living Room.</strong> <br><br>Follow the two simple steps below to restore cooling balance.`;
-                
-                objDamper.querySelector('.obj-text').innerText = "Step 1: Turn ON the Zone A Vent switch";
-                objDrag.querySelector('.obj-text').innerText = "Step 2: Drag the blue vent circle closer to the hot window";
-            } 
-            else if (scenario === 'high_pressure') {
-                roomTemps = [78.0, 78.0, 78.0];
-                
-                dampers.a = false;
-                dampers.b = false;
-                dampers.c = false;
-                document.getElementById('damper-a').checked = false;
-                document.getElementById('damper-b').checked = false;
-                document.getElementById('damper-c').checked = false;
-                toggleDamper('a', false);
-                toggleDamper('b', false);
-                toggleDamper('c', false);
-                
-                inst.innerHTML = `<strong>Goal: Release High System Strain.</strong> All vents are closed, blocking airflow.`;
-                
-                objDamper.querySelector('.obj-text').innerText = "Step 1: Turn ON all three vent switches";
-                objDrag.querySelector('.obj-text').innerText = "Step 2: Bring the system back to Balanced status";
-            }
-        }
-
+        // Professional System Controls Workspace
         function resetWizard() {
             activeScenario = null;
             roomTemps = [72.0, 72.0, 72.0];
@@ -2412,8 +3468,6 @@
             toggleDamper('b', true);
             toggleDamper('c', true);
             
-            showWizardStep(1);
-
             // Clear guide line mesh
             updateGuideLine(null, null, false);
         }
@@ -2479,15 +3533,9 @@
                     hotspot1.scale.setScalar(Math.max(0.4, hotspot1.scale.x - dt * 0.4));
                     hotspot1.material.color.setHex(0x00f2fe); // Cool blue
                 } else {
-                    if (!dampers.a || (activeScenario === 'living_cold' && d1 >= 5.0)) {
-                        roomTemps[0] = Math.min(80.0, roomTemps[0] + dt * 0.3);
-                        hotspot1.scale.setScalar(Math.min(1.4, hotspot1.scale.x + dt * 0.2));
-                        hotspot1.material.color.setHex(0xff4b2b); // Hot red
-                    } else {
-                        roomTemps[0] = Math.max(72.0, roomTemps[0] - dt * 0.2);
-                        hotspot1.scale.setScalar(Math.max(0.6, hotspot1.scale.x - dt * 0.2));
-                        hotspot1.material.color.setHex(0x00f2fe);
-                    }
+                    roomTemps[0] = Math.max(72.0, roomTemps[0] - dt * 0.2);
+                    hotspot1.scale.setScalar(Math.max(0.6, hotspot1.scale.x - dt * 0.2));
+                    hotspot1.material.color.setHex(0x00f2fe);
                 }
             }
 
@@ -2500,15 +3548,9 @@
                     hotspot2.scale.setScalar(Math.max(0.4, hotspot2.scale.x - dt * 0.4));
                     hotspot2.material.color.setHex(0x00f2fe);
                 } else {
-                    if (!dampers.b || (activeScenario === 'bedroom_hot' && d2 >= 5.0)) {
-                        roomTemps[1] = Math.min(80.0, roomTemps[1] + dt * 0.3);
-                        hotspot2.scale.setScalar(Math.min(1.4, hotspot2.scale.x + dt * 0.2));
-                        hotspot2.material.color.setHex(0xff4b2b);
-                    } else {
-                        roomTemps[1] = Math.max(72.0, roomTemps[1] - dt * 0.2);
-                        hotspot2.scale.setScalar(Math.max(0.6, hotspot2.scale.x - dt * 0.2));
-                        hotspot2.material.color.setHex(0x00f2fe);
-                    }
+                    roomTemps[1] = Math.max(72.0, roomTemps[1] - dt * 0.2);
+                    hotspot2.scale.setScalar(Math.max(0.6, hotspot2.scale.x - dt * 0.2));
+                    hotspot2.material.color.setHex(0x00f2fe);
                 }
             }
 
@@ -2536,84 +3578,17 @@
             // Dynamic recommendations mapping based on score
             const reco = document.getElementById('comfort-reco');
             if (comfortScore < 60) {
-                reco.innerHTML = `⚠️ <strong>Critical Imbalance:</strong> High temperature splits detected. Your system is fighting itself. Request a professional balance audit.`;
-                reco.style.color = '#C22A36';
+                reco.innerHTML = `<strong>Significant imbalance detected:</strong> Large temperature splits exist between zones. A professional duct balancing audit is recommended to restore system equilibrium.`;
+                reco.style.color = '#ff6b6b';
                 reco.style.borderColor = 'rgba(239, 68, 68, 0.3)';
             } else if (comfortScore < 90) {
-                reco.innerHTML = `⚠️ <strong>Moderate Discomfort:</strong> Drag supply registers closer to the red window hotspots to balance the cooling load.`;
+                reco.innerHTML = `<strong>Moderate imbalance:</strong> Adjust supply registers closer to window hotspots to even out the thermal load.`;
                 reco.style.color = '#ff9f0a';
                 reco.style.borderColor = 'rgba(255, 159, 10, 0.3)';
             } else {
-                reco.innerHTML = `🟢 <strong>Balanced Oasis:</strong> Excellent comfort balance achieved! Lock in seasonal tune-ups to maintain efficiency.`;
-                reco.style.color = '#0B7A53';
+                reco.innerHTML = `<strong>Zones are well balanced.</strong> Regular seasonal tune-ups will help maintain optimal distribution.`;
+                reco.style.color = '#10b981';
                 reco.style.borderColor = 'rgba(16, 185, 129, 0.3)';
-            }
-
-            // Monitor wizard objective states in real-time
-            if (activeScenario && currentStep === 2) {
-                const objDamper = document.getElementById('obj-damper');
-                const objDrag = document.getElementById('obj-drag');
-                
-                if (activeScenario === 'bedroom_hot') {
-                    // Update glowing guide line pointing directly from register to window target
-                    updateGuideLine(registers[1].position, hotspot2.position, true);
-
-                    if (dampers.b) {
-                        objDamper.classList.add('complete');
-                        objDamper.querySelector('.obj-check').innerText = "✅";
-                        document.getElementById('wiz-instruction').innerHTML = `<strong>Step 2:</strong> Air is flowing! Now drag the glowing blue Bedroom register vent (middle room) close to the red window hotspot.`;
-                    }
-                    
-                    const regB = registers[1];
-                    const dist = regB ? regB.position.distanceTo(hotspot2.position) : 999;
-                    if (dist < 5.0 && dampers.b) {
-                        objDrag.classList.add('complete');
-                        objDrag.querySelector('.obj-check').innerText = "✅";
-                        
-                        setTimeout(() => {
-                            showWizardStep(3);
-                            document.getElementById('wiz-resolution-text').innerHTML = `<strong>Bedroom Balanced Successfully!</strong> By placing the register directly under the sun-baked window, room temperature fell to 72°F. However, manually adjusting dampers shifts backpressure inside ducts. Our NATE-certified technicians specialize in automated zoning system retrofits that do this dynamically without risking blower failure.`;
-                        }, 1200);
-                    }
-                } 
-                else if (activeScenario === 'living_cold') {
-                    updateGuideLine(registers[0].position, hotspot1.position, true);
-
-                    if (dampers.a) {
-                        objDamper.classList.add('complete');
-                        objDamper.querySelector('.obj-check').innerText = "✅";
-                        document.getElementById('wiz-instruction').innerHTML = `<strong>Step 2:</strong> Drag the blue Living Room register vent (left side room) close to the red window hotspot.`;
-                    }
-                    const regA = registers[0];
-                    const dist = regA ? regA.position.distanceTo(hotspot1.position) : 999;
-                    if (dist < 5.0 && dampers.a) {
-                        objDrag.classList.add('complete');
-                        objDrag.querySelector('.obj-check').innerText = "✅";
-                        setTimeout(() => {
-                            showWizardStep(3);
-                            document.getElementById('wiz-resolution-text').innerHTML = `<strong>Living Room Balanced!</strong> Living Room cold spot mitigated. Request a free site balance inspection to check your damper actuator valves.`;
-                        }, 1200);
-                    }
-                } 
-                else if (activeScenario === 'high_pressure') {
-                    if (activeCount >= 2) {
-                        objDamper.classList.add('complete');
-                        objDamper.querySelector('.obj-check').innerText = "✅";
-                        document.getElementById('wiz-instruction').innerHTML = `<strong>Step 2:</strong> System pressure released. Keep all three zone dampers open to restore system health.`;
-                    }
-                    if (activeCount === 3) {
-                        objDrag.classList.add('complete');
-                        objDrag.querySelector('.obj-check').innerText = "✅";
-                        setTimeout(() => {
-                            showWizardStep(3);
-                            document.getElementById('wiz-resolution-text').innerHTML = `<strong>Static Pressure Released!</strong> Restricting airflow strains blower coils and leads to frozen coils or system failures. Keep at least 70% of registers open for optimal system health.`;
-                        }, 1200);
-                    }
-                }
-
-                document.getElementById('wiz-comfort-score').innerText = comfortScore + '%';
-                document.getElementById('wiz-temp-a').innerText = Math.round(roomTemps[0]) + '°F';
-                document.getElementById('wiz-temp-b').innerText = Math.round(roomTemps[1]) + '°F';
             }
 
             // Particle flow animation
@@ -2666,11 +3641,558 @@
         }
 
         function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            const width = canvas.clientWidth || window.innerWidth;
+            const height = canvas.clientHeight || window.innerHeight;
+            camera.aspect = width / height;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(width, height, false);
         }
 
+        // --- CUSTOM ROLES AND SIMULATION FUNCTIONS ---
+
+        function switchRole(role) {
+            try {
+                localStorage.setItem('acnow_active_role', role);
+            } catch (e) {}
+
+            const homeownerContainer = document.getElementById('homeowner-mode-container');
+            const memberContainer = document.getElementById('member-custom-loadout');
+            const salesContainer = document.getElementById('sales-pitch-deck');
+            
+            if (homeownerContainer) homeownerContainer.style.display = 'none';
+            if (memberContainer) memberContainer.style.display = 'none';
+            if (salesContainer) salesContainer.style.display = 'none';
+
+            if (role === 'homeowner') {
+                if (homeownerContainer) homeownerContainer.style.display = 'block';
+            } else if (role === 'member') {
+                if (memberContainer) memberContainer.style.display = 'block';
+                
+                // Sync tonnage selector
+                let savedTonnage = '3.0';
+                try {
+                    savedTonnage = localStorage.getItem('acnow_member_tonnage') || '3.0';
+                } catch (e) {}
+                
+                const tonnageSelect = document.getElementById('member-tonnage');
+                if (tonnageSelect) {
+                    tonnageSelect.value = savedTonnage;
+                    document.getElementById('member-tonnage-val').innerText = savedTonnage + ' Tons';
+                }
+
+                // Sync sliders to current global dimensions
+                document.getElementById('member-width-a').value = roomDimensions[0].width;
+                document.getElementById('member-width-b').value = roomDimensions[1].width;
+                document.getElementById('member-width-c').value = roomDimensions[2].width;
+                
+                document.getElementById('member-width-a-val').innerText = roomDimensions[0].width + ' ft';
+                document.getElementById('member-width-b-val').innerText = roomDimensions[1].width + ' ft';
+                document.getElementById('member-width-c-val').innerText = roomDimensions[2].width + ' ft';
+                
+                runMemberSimulation();
+            } else if (role === 'sales-tech') {
+                if (salesContainer) salesContainer.style.display = 'block';
+                calculateDeltaT();
+                updateSalesROI();
+            }
+
+            // Style active tabs
+            const tabs = document.querySelectorAll('.role-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('onclick').includes(`'${role}'`)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        function runMemberSimulation() {
+            const tonnage = parseFloat(document.getElementById('member-tonnage').value);
+            const widthA = parseInt(document.getElementById('member-width-a').value);
+            const widthB = parseInt(document.getElementById('member-width-b').value);
+            const widthC = parseInt(document.getElementById('member-width-c').value);
+
+            // Resize room dimensions
+            roomDimensions[0].width = widthA;
+            roomDimensions[1].width = widthB;
+            roomDimensions[2].width = widthC;
+
+            // Recalculate geometries
+            buildRoomsGeometry();
+
+            // Clamp registers to new dimensions
+            clampRegisterToRoom(1);
+            clampRegisterToRoom(2);
+            clampRegisterToRoom(3);
+
+            // Update custom CFM (400 CFM per Ton)
+            const cfmVal = Math.round(tonnage * 400);
+            updateCFM(cfmVal);
+            const cfmRange = document.getElementById('cfm-range');
+            if (cfmRange) cfmRange.value = cfmVal;
+
+            // Perform custom calculations for required flows (1 CFM per sq ft)
+            const areaA = widthA * 12; // room length is 12
+            const areaB = widthB * 12; 
+            const areaC = widthC * 12;
+            const totalArea = areaA + areaB + areaC;
+
+            // Proportional CFM distribution
+            const cfmA = Math.round(cfmVal * (areaA / totalArea));
+            const cfmB = Math.round(cfmVal * (areaB / totalArea));
+            const cfmC = Math.round(cfmVal * (areaC / totalArea));
+
+            // Update member mode telemetry outputs
+            document.getElementById('member-cfm-a').innerText = `${cfmA} CFM`;
+            document.getElementById('member-cfm-b').innerText = `${cfmB} CFM`;
+            document.getElementById('member-cfm-c').innerText = `${cfmC} CFM`;
+            
+            const reqTons = totalArea / 400;
+            document.getElementById('member-total-load').innerText = `${reqTons.toFixed(1)} Tons`;
+
+            // Calculate dynamic sizing suitability and efficiency impact
+            const sizingStatusEl = document.getElementById('member-sizing-status');
+            const efficiencyEl = document.getElementById('member-efficiency-impact');
+            if (sizingStatusEl && efficiencyEl) {
+                const diff = tonnage - reqTons;
+                if (diff > 0.75) {
+                    sizingStatusEl.innerText = 'Oversized';
+                    sizingStatusEl.style.color = '#ef4444'; // Red
+                    efficiencyEl.innerText = `Short-cycling wastes ~$${Math.round(diff * 120)}/yr`;
+                    efficiencyEl.style.color = '#ef4444';
+                } else if (diff < -0.25) {
+                    sizingStatusEl.innerText = 'Undersized';
+                    sizingStatusEl.style.color = '#ff9f0a'; // Orange
+                    efficiencyEl.innerText = `Continuous run wastes ~$${Math.round(Math.abs(diff) * 80)}/yr`;
+                    efficiencyEl.style.color = '#ff9f0a';
+                } else {
+                    sizingStatusEl.innerText = 'Perfect Match';
+                    sizingStatusEl.style.color = '#10b981'; // Green
+                    efficiencyEl.innerText = 'Peak Efficiency (Optimal ROI)';
+                    efficiencyEl.style.color = '#10b981';
+                }
+            }
+
+            saveSandboxState();
+            updateSalesROI();
+        }
+
+        function saveSandboxState() {
+            try {
+                localStorage.setItem('acnow_room_dimensions', JSON.stringify(roomDimensions));
+                
+                const tonnageSelect = document.getElementById('member-tonnage');
+                if (tonnageSelect) {
+                    localStorage.setItem('acnow_member_tonnage', tonnageSelect.value);
+                }
+
+                if (registers && registers.length === 3) {
+                    const positions = registers.map(reg => ({ x: reg.position.x, z: reg.position.z }));
+                    localStorage.setItem('acnow_register_positions', JSON.stringify(positions));
+                }
+            } catch (e) {
+                console.warn('Failed to save sandbox state to localStorage', e);
+            }
+        }
+
+        function resetSandboxDefaults() {
+            try {
+                localStorage.removeItem('acnow_room_dimensions');
+                localStorage.removeItem('acnow_member_tonnage');
+                localStorage.removeItem('acnow_register_positions');
+            } catch (e) {}
+            
+            // Restore hardcoded defaults
+            roomDimensions = [
+                { width: 12, length: 12, height: 8, x: -12, z: 2 },
+                { width: 12, length: 12, height: 8, x: 0, z: -4 },
+                { width: 12, length: 12, height: 8, x: 12, z: 4 }
+            ];
+            
+            // Reset register positions in scene
+            if (registers && registers.length === 3) {
+                registers[0].position.set(-12, -5.4, 2);
+                registers[1].position.set(0, -5.4, -4);
+                registers[2].position.set(12, -5.4, 4);
+                clampRegisterToRoom(1);
+                clampRegisterToRoom(2);
+                clampRegisterToRoom(3);
+            }
+            
+            // Sync UI inputs
+            const tonnageSelect = document.getElementById('member-tonnage');
+            if (tonnageSelect) {
+                tonnageSelect.value = '3.0';
+                document.getElementById('member-tonnage-val').innerText = '3.0 Tons';
+            }
+            
+            document.getElementById('member-width-a').value = 12;
+            document.getElementById('member-width-b').value = 12;
+            document.getElementById('member-width-c').value = 12;
+            document.getElementById('member-width-a-val').innerText = '12 ft';
+            document.getElementById('member-width-b-val').innerText = '12 ft';
+            document.getElementById('member-width-c-val').innerText = '12 ft';
+            
+            runMemberSimulation();
+        }
+
+        function loadSalesBeforePreset() {
+            // Sets uneven temperatures (comfort imbalance)
+            roomTemps[0] = 78.0;
+            roomTemps[1] = 84.0;
+            roomTemps[2] = 74.0;
+
+            // Restricts dampers
+            dampers.a = false;
+            dampers.b = false;
+            dampers.c = true;
+
+            // Update damper checkbox elements in HTML if they exist
+            if (document.getElementById('damper-a')) document.getElementById('damper-a').checked = false;
+            if (document.getElementById('damper-b')) document.getElementById('damper-b').checked = false;
+            if (document.getElementById('damper-c')) document.getElementById('damper-c').checked = true;
+
+            // Recalculate static pressure and update HUD
+            toggleDamper('c', true);
+
+            // Force high static pressure and red alarm HUD
+            const pressureVal = 1.6;
+            document.getElementById('pressure-val').innerText = pressureVal.toFixed(2) + ' in. wg';
+            const bar = document.getElementById('pressure-bar');
+            if (bar) {
+                bar.style.width = (pressureVal / 2.5 * 100) + '%';
+                bar.style.background = '#C22A36';
+            }
+
+            const badge = document.getElementById('hud-badge');
+            if (badge) {
+                badge.innerText = '🔴 HIGH STATIC PRESSURE ALERT';
+                badge.style.color = '#ff6b6b';
+                badge.style.borderColor = '#ff6b6b';
+                badge.style.background = 'rgba(239, 68, 68, 0.15)';
+            }
+
+            const toast = document.getElementById('edu-toast');
+            if (toast) {
+                toast.classList.add('show');
+            }
+
+            updateCFM(800);
+            const cfmRange = document.getElementById('cfm-range');
+            if (cfmRange) cfmRange.value = 800;
+
+            buildRoomsGeometry();
+        }
+
+        function loadSalesAfterPreset() {
+            // Restores balanced 72°F rooms
+            roomTemps[0] = 72.0;
+            roomTemps[1] = 72.0;
+            roomTemps[2] = 72.0;
+
+            // Opens dampers
+            dampers.a = true;
+            dampers.b = true;
+            dampers.c = true;
+
+            if (document.getElementById('damper-a')) document.getElementById('damper-a').checked = true;
+            if (document.getElementById('damper-b')) document.getElementById('damper-b').checked = true;
+            if (document.getElementById('damper-c')) document.getElementById('damper-c').checked = true;
+
+            // Recalculate static pressure and update HUD
+            toggleDamper('c', true);
+
+            // Reset safe pressure and green HUD
+            const pressureVal = 0.45;
+            document.getElementById('pressure-val').innerText = pressureVal.toFixed(2) + ' in. wg';
+            const bar = document.getElementById('pressure-bar');
+            if (bar) {
+                bar.style.width = (pressureVal / 2.5 * 100) + '%';
+                bar.style.background = '#00f2fe';
+            }
+
+            const badge = document.getElementById('hud-badge');
+            if (badge) {
+                badge.innerText = '🟢 SYSTEM BALANCED & OPTIMAL';
+                badge.style.color = '#34d399';
+                badge.style.borderColor = '#34d399';
+                badge.style.background = 'rgba(16, 185, 129, 0.15)';
+            }
+
+            const toast = document.getElementById('edu-toast');
+            if (toast) {
+                toast.classList.remove('show');
+            }
+
+            updateCFM(1200);
+            const cfmRange = document.getElementById('cfm-range');
+            if (cfmRange) cfmRange.value = 1200;
+
+            buildRoomsGeometry();
+        }
+
+        function getValidatedDeltaT() {
+            let returnRaw = document.getElementById('tech-return-temp').value.trim();
+            let supplyRaw = document.getElementById('tech-supply-temp').value.trim();
+            
+            // If both are empty, use standard fallbacks
+            if (returnRaw === "" && supplyRaw === "") {
+                return { returnT: 75.0, supplyT: 57.0, splitVal: 18.0, error: null };
+            }
+            
+            let returnT = parseFloat(returnRaw);
+            let supplyT = parseFloat(supplyRaw);
+            
+            // If one is empty or invalid number, return incomplete error
+            if (isNaN(returnT) || isNaN(supplyT)) {
+                return { returnT: 75.0, supplyT: 57.0, splitVal: 0, error: "Incomplete Inputs" };
+            }
+            
+            // Programmatic range enforcement
+            if (returnT < 60 || returnT > 100) {
+                return { returnT, supplyT, splitVal: 0, error: "Range Err (60-100)" };
+            }
+            if (supplyT < 40 || supplyT > 80) {
+                return { returnT, supplyT, splitVal: 0, error: "Range Err (40-80)" };
+            }
+            if (returnT <= supplyT) {
+                return { returnT, supplyT, splitVal: 0, error: "Ret must be > Sup" };
+            }
+            
+            const splitVal = parseFloat((returnT - supplyT).toFixed(1));
+            return { returnT, supplyT, splitVal, error: null };
+        }
+
+        function updateSalesROI() {
+            const costEl = document.getElementById('sales-retrofit-cost');
+            const savingsEl = document.getElementById('sales-annual-savings');
+            const paybackEl = document.getElementById('sales-payback-period');
+            if (!costEl || !savingsEl || !paybackEl) return;
+
+            const totalArea = roomDimensions.reduce((sum, room) => sum + (room.width * room.length), 0);
+            const cost = Math.round(1500 + totalArea * 2.2);
+            const baseCoolingCost = totalArea * 3.73;
+            const savings = Math.round(baseCoolingCost * 0.28);
+            const payback = (cost / savings).toFixed(1);
+
+            costEl.innerText = `$${cost.toLocaleString()}`;
+            savingsEl.innerText = `28% ($${savings}/yr)`;
+            paybackEl.innerText = `${payback} Years`;
+        }
+
+        function calculateDeltaT() {
+            const badge = document.getElementById('delta-t-badge');
+            if (!badge) return;
+            
+            const data = getValidatedDeltaT();
+            
+            if (data.error) {
+                badge.innerText = data.error;
+                badge.style.background = 'rgba(249, 115, 22, 0.15)'; // Orange
+                badge.style.borderColor = '#ff9f0a';
+                badge.style.color = '#ff9f0a';
+                return;
+            }
+            
+            const split = data.splitVal.toFixed(1);
+            if (data.splitVal >= 16 && data.splitVal <= 22) {
+                badge.innerText = `${split}°F Split - PASS`;
+                badge.style.background = 'rgba(16, 185, 129, 0.15)';
+                badge.style.borderColor = '#34d399';
+                badge.style.color = '#34d399';
+            } else if (data.splitVal < 16) {
+                badge.innerText = `${split}°F Split - FAIL (Low)`;
+                badge.style.background = 'rgba(239, 68, 68, 0.15)';
+                badge.style.borderColor = '#ff6b6b';
+                badge.style.color = '#ff6b6b';
+            } else {
+                badge.innerText = `${split}°F Split - FAIL (High)`;
+                badge.style.background = 'rgba(249, 115, 22, 0.15)';
+                badge.style.borderColor = '#ff9f0a';
+                badge.style.color = '#ff9f0a';
+            }
+        }
+
+        function openReportModal() {
+            // Populate date/time
+            const now = new Date();
+            const dateStr = now.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            document.getElementById('report-date').innerText = dateStr;
+
+            // Get current simulator telemetry
+            const pressureText = document.getElementById('pressure-val').innerText;
+            const cfmText = document.getElementById('cfm-val').innerText;
+            const comfortScoreText = document.getElementById('comfort-score-val').innerText;
+
+            let tonnageVal = "3.0 Tons";
+            const memberTonnage = document.getElementById('member-tonnage');
+            if (memberTonnage) {
+                tonnageVal = memberTonnage.value + " Tons";
+            }
+            document.getElementById('report-capacity').innerText = `${tonnageVal} (${cfmText})`;
+
+            document.getElementById('report-static-pressure').innerText = pressureText;
+            document.getElementById('report-comfort-score').innerText = comfortScoreText;
+
+            // Delta-T Split
+            const dtData = getValidatedDeltaT();
+            if (dtData.error) {
+                document.getElementById('report-delta-t').innerText = `INVALID: ${dtData.error}`;
+            } else {
+                document.getElementById('report-delta-t').innerText = `${dtData.splitVal.toFixed(1)}°F Split (${dtData.returnT.toFixed(1)}°F Ret / ${dtData.supplyT.toFixed(1)}°F Sup)`;
+            }
+
+            // Room temperatures
+            const tempA = Math.round(roomTemps[0]);
+            const tempB = Math.round(roomTemps[1]);
+            const tempC = Math.round(roomTemps[2]);
+
+            document.getElementById('report-temp-a').innerText = `${tempA}°F`;
+            document.getElementById('report-temp-b').innerText = `${tempB}°F`;
+            document.getElementById('report-temp-c').innerText = `${tempC}°F`;
+
+            // Status checks
+            const getStatus = (temp) => {
+                const diff = Math.abs(temp - 72.0);
+                if (diff <= 1.5) return 'OPTIMAL';
+                if (temp > 75) return 'HOT SPOT';
+                if (temp < 69) return 'OVERCOOLING';
+                return 'MARGINAL';
+            };
+
+            const statusA = getStatus(tempA);
+            const statusB = getStatus(tempB);
+            const statusC = getStatus(tempC);
+
+            document.getElementById('report-status-a').innerText = statusA;
+            document.getElementById('report-status-b').innerText = statusB;
+            document.getElementById('report-status-c').innerText = statusC;
+
+            // Color-code the report statuses
+            const setStatusStyle = (elId, status) => {
+                const el = document.getElementById(elId);
+                if (status === 'OPTIMAL') el.style.color = '#10b981';
+                else if (status === 'HOT SPOT') el.style.color = '#ef4444';
+                else if (status === 'OVERCOOLING') el.style.color = '#38bdf8';
+                else el.style.color = '#f59e0b';
+            };
+            setStatusStyle('report-status-a', statusA);
+            setStatusStyle('report-status-b', statusB);
+            setStatusStyle('report-status-c', statusC);
+
+            // Recommendations advisory text
+            const pVal = parseFloat(pressureText);
+            let summaryText = "";
+            if (pVal >= 1.4) {
+                summaryText += "⚠️ CRITICAL SYSTEM ALERT: High static backpressure detected. Closing dampers has severely restricted airflow, risking blower motor failure. Recommend a smart zoning bypass damper installation. ";
+            } else if (pVal >= 0.75) {
+                summaryText += "⚠️ WARNING: Moderate static pressure detected. Airflow velocity is elevated, causing duct noise and minor efficiency loss. ";
+            } else {
+                summaryText += "🟢 Static pressure is within the safe manufacturer specification (< 0.50 in. wg). ";
+            }
+
+            if (dtData.error) {
+                summaryText += `⚠️ Evaporator temperature split is unverified: ${dtData.error}. `;
+            } else if (dtData.splitVal < 16 || dtData.splitVal > 22) {
+                summaryText += `⚠️ Evaporator temperature split is abnormal (${dtData.splitVal.toFixed(1)}°F). This indicates incorrect refrigerant charge, dirty coils, or restricted system airflow. `;
+            } else {
+                summaryText += "🟢 Evaporator Delta-T temperature split is optimal. ";
+            }
+
+            const comfortNum = parseInt(comfortScoreText);
+            if (comfortNum < 70) {
+                summaryText += `Home comfort score is low (${comfortNum}%). Significant thermal stratification and room hotspots exist. Recommend manual duct balancing or automated motorized zoning dampers.`;
+            } else {
+                summaryText += `System is well-balanced with a high comfort rating of ${comfortNum}%.`;
+            }
+
+            document.getElementById('report-summary-text').innerText = summaryText;
+
+            // Show report modal
+            document.getElementById('diagnostic-report-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            document.addEventListener('keydown', reportModalFocusTrap);
+            
+            setTimeout(() => {
+                const closeBtn = document.querySelector('#diagnostic-report-modal .modal-close-btn');
+                if (closeBtn) closeBtn.focus();
+            }, 50);
+        }
+
+        function reportModalFocusTrap(e) {
+            const modal = document.getElementById('diagnostic-report-modal');
+            if (modal && modal.style.display !== 'none') {
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex="0"]');
+                if (focusableElements.length === 0) return;
+                
+                const firstFocusable = focusableElements[0];
+                const lastFocusable = focusableElements[focusableElements.length - 1];
+
+                if (e.key === "Tab") {
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstFocusable) {
+                            lastFocusable.focus();
+                            e.preventDefault();
+                        }
+                    } else {
+                        if (document.activeElement === lastFocusable) {
+                            firstFocusable.focus();
+                            e.preventDefault();
+                        }
+                    }
+                } else if (e.key === "Escape") {
+                    closeReportModal();
+                }
+            }
+        }
+
+        function closeReportModal() {
+            document.getElementById('diagnostic-report-modal').style.display = 'none';
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', reportModalFocusTrap);
+        }
+
+        let isPrinting = false;
+        function triggerPrint() {
+            if (isPrinting) return;
+            if (window.isAutomatedTest) {
+                console.log("Print dialog suppressed during testing.");
+                return;
+            }
+            isPrinting = true;
+            window.print();
+            setTimeout(() => {
+                isPrinting = false;
+            }, 1000); // 1-second debounce delay
+        }
+
+        let prefetchListener = null;
+        // Hover-based link prefetching to enhance transit speeds
+        function initLinkPrefetching() {
+            const prefetchCache = new Set();
+            prefetchListener = (e) => {
+                const link = e.target.closest('a');
+                if (!link || !link.href) return;
+                
+                const url = new URL(link.href, window.location.href);
+                if (url.origin !== window.location.origin) return;
+                
+                const path = url.pathname;
+                if (prefetchCache.has(path)) return;
+                
+                // Do not prefetch restricted/gated pages
+                if (path.includes('members') || path.includes('team-portal') || path.includes('3d-airflow') || path.includes('corrosion-predictor')) return;
+
+                prefetchCache.add(path);
+                const prefetchLink = document.createElement('link');
+                prefetchLink.rel = 'prefetch';
+                prefetchLink.href = link.href;
+                document.head.appendChild(prefetchLink);
+            };
+            document.body.addEventListener('pointerover', prefetchListener);
+        }
+
+        initLinkPrefetching();
         init();
     </script>
 </body>
