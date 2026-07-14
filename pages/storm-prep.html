@@ -169,7 +169,6 @@
             background: var(--white);
             border: 1px solid var(--gray-light);
             border-radius: 6px;
-            padding: 10px 15px;
             margin-bottom: 8px;
             font-size: 13px;
         }
@@ -179,6 +178,10 @@
             gap: 10px;
             cursor: pointer;
             margin-bottom: 0;
+            padding: 12px 15px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
         }
         .option-box-grid {
             display: grid;
@@ -494,13 +497,14 @@
                                             <span>Clear Drain Lines to Avoid Flooding</span>
                                         </label>
                                     </div>
+                                    <button type="button" id="btn-reset-storm" class="btn btn-secondary btn-full" style="margin-top: 10px; font-size: 12px; padding: 8px 12px; height: auto; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--gray-light); color: var(--gray-dark);">Reset Checklist</button>
                                 </form>
                             </div>
-
+ 
                             <div class="planner-card" style="display:flex; flex-direction:column; justify-content:space-between;">
                                 <div>
                                     <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800; margin-top: 0;">Storm Preparedness Index</h2>
-                                    <div style="text-align:center; margin-bottom:25px;">
+                                    <div style="text-align:center; margin-bottom:25px;" aria-live="polite">
                                         <div id="storm-score" style="font-size:48px; font-weight:800; color:#64748b; font-family:var(--font-heading);">—</div>
                                         <div id="storm-score-text" style="font-size:13.5px; color:#64748b; font-weight:600; text-transform:uppercase; margin-top:5px;">Awaiting Assessment</div>
                                         <div class="progress-track" style="background: var(--gray-light); height: 8px; border-radius: 4px; overflow: hidden; margin: 15px auto 0; max-width: 200px;">
@@ -528,7 +532,7 @@
                             Additionally, heavy torrential rains and coastal storm surges can flood low-lying properties. Submerging an active compressor's electrical circuit boards or fan motor under standing water can cause permanent short circuits and catastrophic compressor failure once grid power is restored. Taking preventive steps beforehand secures your physical investment and safeguards your home from expensive equipment replacements.
                         </p>
                     </div>
-                    <div style="background: var(--light); border: 1px solid var(--gray-light); border-radius: 12px; padding: 30px; box-shadow: var(--box-shadow);">
+                    <div class="tool-card" style="background: var(--light); border: 1px solid var(--gray-light); border-radius: 12px; padding: 30px; box-shadow: var(--box-shadow);">
                         <span class="section-tag" style="background: rgba(11,99,229,0.06); color: var(--primary); padding: 5px 15px; border-radius: 999px; font-size: 11px; font-weight:700;">POST-STORM RECOVERY</span>
                         <h2 style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--dark); margin-top: 10px; margin-bottom: 20px;">Safe Post-Storm AC Restart Steps</h2>
                         <ul style="padding-left: 20px; color: var(--gray-dark); font-size: 14.5px; line-height: 1.6; display: flex; flex-direction: column; gap: 12px; margin: 0 0 20px 0;">
@@ -572,6 +576,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Restore interaction state if there are checks saved in localStorage
             if (checkedCount > 0) {
                 userInteracted = true;
+            } else {
+                userInteracted = false;
             }
 
             const pct = Math.round((checkedCount / checks.length) * 100);
@@ -634,6 +640,21 @@ document.addEventListener("DOMContentLoaded", () => {
             updateStormScore();
         }));
         
+        const btnReset = document.getElementById("btn-reset-storm");
+        if (btnReset) {
+            btnReset.addEventListener("click", () => {
+                checks.forEach(c => {
+                    c.checked = false;
+                    localStorage.removeItem(`storm_check_${c.id}`);
+                });
+                userInteracted = false;
+                updateStormScore();
+                if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
+                    window.ComfortAudio.playClick();
+                }
+            });
+        }
+
         updateStormScore();
     }
 });

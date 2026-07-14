@@ -827,7 +827,7 @@
                     
                     <div style="margin-bottom: 20px; text-align: left;">
                         <label for="tech-pin-input" style="font-size: 11px; font-weight: 700; color: var(--gray-light); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Security PIN</label>
-                        <input type="password" id="tech-pin-input" placeholder="Enter 4-Digit Security PIN" aria-label="Owner or Technician Access PIN" style="width: 100%; padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; font-size: 14px; letter-spacing: 2px; text-align: center;">
+                        <input type="password" id="tech-pin-input" placeholder="Enter 4-Digit Security PIN" aria-label="Owner or Technician Access PIN" inputmode="numeric" pattern="[0-9]*" maxlength="4" style="width: 100%; padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; font-size: 14px; letter-spacing: 2px; text-align: center;">
                     </div>
                     <button type="button" class="btn btn-primary btn-full" id="btn-unlock-tech" style="padding: 14px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px;">Unlock Command Console</button>
                     <span id="tech-error-msg" style="color: #C22A36; font-size: 12px; display: block; margin-top: 15px; font-weight: 700;"></span>
@@ -1905,7 +1905,7 @@
                         <!-- Priority Dispatch Scheduler (Audited: Agent 7 Round 2 - added priority level, ETA, tech assignment) -->
                         <section aria-labelledby="dispatch-heading" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; box-shadow: var(--box-shadow);">
                             <h3 id="dispatch-heading" style="font-family: var(--font-heading); color: var(--dark); font-size: 16px; margin: 0 0 15px 0; font-weight: 800; border-bottom: 1px solid var(--gray-light); padding-bottom: 10px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Priority Dispatch Queue</h3>
-                            <p style="font-size:12.5px; color:var(--gray-dark); margin-bottom:20px; line-height: 1.5;">Active Client: <strong id="dispatch-client-id" style="color:var(--primary);">ACN-88102</strong> — Bypasses standard scheduling tiers. Fill the form below and submit to book a same-day site visit slot.</p>
+                            <p style="font-size:12.5px; color:var(--gray-dark); margin-bottom:20px; line-height: 1.5;">Active Client: <strong id="dispatch-client-id" style="color:var(--primary);">ACN-88102</strong> — Bypasses standard scheduling tiers. Fill the form below and submit to book a same-day site visit slot. <span style="display:block; margin-top:8px; font-size:11px; color:#C22A36; font-weight:700;">⚠️ Simulated Queue — Dispatch actions persist to local storage only.</span></p>
 
                             <!-- Dispatch Queue Form -->
                             <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:20px;">
@@ -1981,8 +1981,8 @@
                                 <button type="button" id="btn-send-sms" onclick="(function(){
                                     var phone = document.getElementById('notify-to-phone').value.replace(/\D/g,'');
                                     var msg = document.getElementById('notify-message').value.trim();
-                                    if(!phone){ alert('Please enter a customer phone number.'); return; }
-                                    if(!msg){ alert('Please enter a message.'); return; }
+                                    if(!phone){ if (typeof window.showToast === "function") { window.showToast('Please enter a customer phone number.', "error"); } else { alert('Please enter a customer phone number.'); }; return; }
+                                    if(!msg){ if (typeof window.showToast === "function") { window.showToast('Please enter a message.', "error"); } else { alert('Please enter a message.'); }; return; }
                                     window.open('sms:+1' + phone + '?body=' + encodeURIComponent(msg), '_blank');
                                 })()" style="flex:1; padding:10px; border-radius:6px; background:#0B7A53; color:#fff; border:none; font-size:12.5px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.1em;height:1.1em;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -1991,8 +1991,8 @@
                                 <button type="button" id="btn-send-email" onclick="(function(){
                                     var email = document.getElementById('notify-to-email').value.trim();
                                     var msg = document.getElementById('notify-message').value.trim();
-                                    if(!email){ alert('Please enter a customer email address.'); return; }
-                                    if(!msg){ alert('Please enter a message.'); return; }
+                                    if(!email){ if (typeof window.showToast === "function") { window.showToast('Please enter a customer email address.', "error"); } else { alert('Please enter a customer email address.'); }; return; }
+                                    if(!msg){ if (typeof window.showToast === "function") { window.showToast('Please enter a message.', "error"); } else { alert('Please enter a message.'); }; return; }
                                     var subject = encodeURIComponent('Your A/C Now LLC Service Update');
                                     var body = encodeURIComponent(msg);
                                     window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
@@ -2020,52 +2020,54 @@
                             </div>
 
                             <!-- Line Items Table -->
-                            <table style="width:100%; border-collapse:collapse; margin-bottom:14px; font-size:13px;">
-                                <thead>
-                                    <tr style="background:var(--light); border-bottom:2px solid var(--gray-light);">
-                                        <th style="padding:8px 10px; text-align:left; font-weight:700; color:var(--dark); font-size:11px; text-transform:uppercase; letter-spacing:0.4px;">Description</th>
-                                        <th style="padding:8px 10px; text-align:right; font-weight:700; color:var(--dark); font-size:11px; text-transform:uppercase; letter-spacing:0.4px; width:100px;">Amount ($)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="border-bottom:1px solid var(--gray-light);">
-                                        <td style="padding:8px 10px; color:var(--gray-dark);">Labor (hrs &times; rate)</td>
-                                        <td style="padding:8px 10px; text-align:right;">
-                                            <input autocomplete="name" type="number" id="inv-labor" name="inv-labor" aria-label="Labor charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
-                                        </td>
-                                    </tr>
-                                    <tr style="border-bottom:1px solid var(--gray-light);">
-                                        <td style="padding:8px 10px; color:var(--gray-dark);">Parts &amp; Materials</td>
-                                        <td style="padding:8px 10px; text-align:right;">
-                                            <input autocomplete="name" type="number" id="inv-parts" name="inv-parts" aria-label="Parts and materials charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
-                                        </td>
-                                    </tr>
-                                    <tr style="border-bottom:1px solid var(--gray-light);">
-                                        <td style="padding:8px 10px; color:var(--gray-dark);">Refrigerant</td>
-                                        <td style="padding:8px 10px; text-align:right;">
-                                            <input autocomplete="name" type="number" id="inv-refrigerant" name="inv-refrigerant" aria-label="Refrigerant charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
-                                        </td>
-                                    </tr>
-                                    <tr style="border-bottom:1px solid var(--gray-light);">
-                                        <td style="padding:8px 10px; color:var(--gray-dark);">Mileage / Travel Surcharge</td>
-                                        <td style="padding:8px 10px; text-align:right;">
-                                            <input autocomplete="name" type="number" id="inv-mileage" name="inv-mileage" aria-label="Mileage and travel surcharge charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
-                                        </td>
-                                    </tr>
-                                    <tr style="border-top:2px solid var(--gray-light);">
-                                        <td style="padding:8px 10px; font-weight:700; color:var(--dark);">Subtotal</td>
-                                        <td id="inv-subtotal" style="padding:8px 10px; text-align:right; font-weight:700; color:var(--dark);">$0.00</td>
-                                    </tr>
-                                    <tr style="border-bottom:1px solid var(--gray-light);">
-                                        <td style="padding:8px 10px; color:var(--gray-dark); font-size:12px;">FL Sales Tax (6.0%)</td>
-                                        <td id="inv-tax" style="padding:8px 10px; text-align:right; color:var(--gray-dark); font-size:12px;">$0.00</td>
-                                    </tr>
-                                    <tr style="background:var(--dark);">
-                                        <td style="padding:10px 10px; font-weight:800; color:#fff; font-size:14px;">TOTAL DUE</td>
-                                        <td id="inv-total" style="padding:10px 10px; text-align:right; font-weight:800; color:#fff; font-size:14px;">$0.00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive" style="overflow-x:auto; -webkit-overflow-scrolling:touch;">
+                                <table style="width:100%; border-collapse:collapse; margin-bottom:14px; font-size:13px;">
+                                    <thead>
+                                        <tr style="background:var(--light); border-bottom:2px solid var(--gray-light);">
+                                            <th style="padding:8px 10px; text-align:left; font-weight:700; color:var(--dark); font-size:11px; text-transform:uppercase; letter-spacing:0.4px;">Description</th>
+                                            <th style="padding:8px 10px; text-align:right; font-weight:700; color:var(--dark); font-size:11px; text-transform:uppercase; letter-spacing:0.4px; width:100px;">Amount ($)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom:1px solid var(--gray-light);">
+                                            <td style="padding:8px 10px; color:var(--gray-dark);">Labor (hrs &times; rate)</td>
+                                            <td style="padding:8px 10px; text-align:right;">
+                                                <input autocomplete="name" type="number" id="inv-labor" name="inv-labor" aria-label="Labor charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom:1px solid var(--gray-light);">
+                                            <td style="padding:8px 10px; color:var(--gray-dark);">Parts &amp; Materials</td>
+                                            <td style="padding:8px 10px; text-align:right;">
+                                                <input autocomplete="name" type="number" id="inv-parts" name="inv-parts" aria-label="Parts and materials charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom:1px solid var(--gray-light);">
+                                            <td style="padding:8px 10px; color:var(--gray-dark);">Refrigerant</td>
+                                            <td style="padding:8px 10px; text-align:right;">
+                                                <input autocomplete="name" type="number" id="inv-refrigerant" name="inv-refrigerant" aria-label="Refrigerant charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom:1px solid var(--gray-light);">
+                                            <td style="padding:8px 10px; color:var(--gray-dark);">Mileage / Travel Surcharge</td>
+                                            <td style="padding:8px 10px; text-align:right;">
+                                                <input autocomplete="name" type="number" id="inv-mileage" name="inv-mileage" aria-label="Mileage and travel surcharge charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
+                                            </td>
+                                        </tr>
+                                        <tr style="border-top:2px solid var(--gray-light);">
+                                            <td style="padding:8px 10px; font-weight:700; color:var(--dark);">Subtotal</td>
+                                            <td id="inv-subtotal" style="padding:8px 10px; text-align:right; font-weight:700; color:var(--dark);">$0.00</td>
+                                        </tr>
+                                        <tr style="border-bottom:1px solid var(--gray-light);">
+                                            <td style="padding:8px 10px; color:var(--gray-dark); font-size:12px;">FL Sales Tax (6.0%)</td>
+                                            <td id="inv-tax" style="padding:8px 10px; text-align:right; color:var(--gray-dark); font-size:12px;">$0.00</td>
+                                        </tr>
+                                        <tr style="background:var(--dark);">
+                                            <td style="padding:10px 10px; font-weight:800; color:#fff; font-size:14px;">TOTAL DUE</td>
+                                            <td id="inv-total" style="padding:10px 10px; text-align:right; font-weight:800; color:#fff; font-size:14px;">$0.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <p style="font-size:11px; color:var(--gray-dark); margin:0 0 14px 0; line-height:1.5;"><strong>Note:</strong> FL state sales tax (6%) is applied to the full invoice total per Florida Statute 212. Refrigerant is a taxable item in Florida.</p>
 
@@ -2654,7 +2656,7 @@
 
                 if (!navigator.onLine) {
                     await queueOfflineItem('specs', updatedSpecs);
-                    alert("Specifications saved locally. Updates will sync once connected.");
+                    if (typeof window.showToast === "function") { window.showToast("Specifications saved locally. Updates will sync once connected.", "success"); } else { alert("Specifications saved locally. Updates will sync once connected."); };
                 } else {
                     try {
                         const token = sessionStorage.getItem("tech_override_token") || "";
@@ -2667,14 +2669,14 @@
                             body: JSON.stringify(updatedSpecs)
                         });
                         if (res.ok) {
-                            alert("Home Equipment specifications successfully saved and uploaded!");
+                            if (typeof window.showToast === "function") { window.showToast("Home Equipment specifications successfully saved and uploaded!", "success"); } else { alert("Home Equipment specifications successfully saved and uploaded!"); };
                         } else {
                             throw new Error("Server error");
                         }
                     } catch (err) {
                         console.warn("Specs upload failed. Queuing:", err);
                         await queueOfflineItem('specs', updatedSpecs);
-                        alert("Specs saved locally (queued for sync).");
+                        if (typeof window.showToast === "function") { window.showToast("Specs saved locally (queued for sync).", "success"); } else { alert("Specs saved locally (queued for sync)."); };
                     }
                 }
                 triggerSound("click");
@@ -2691,7 +2693,7 @@
                 const initials   = (document.getElementById('tech-log-initials')      || {}).value  || '';
 
                 if (!logNotes) {
-                    alert("Please write a summary of the service done.");
+                    if (typeof window.showToast === "function") { window.showToast("Please write a summary of the service done.", "error"); } else { alert("Please write a summary of the service done."); };
                     return;
                 }
 
@@ -2715,7 +2717,7 @@
                     saveLogs(logs); 
                     renderLogs();
 
-                    alert("You are currently offline. The maintenance log has been saved locally and will sync to the server when you are back online.");
+                    if (typeof window.showToast === "function") { window.showToast("You are currently offline. The maintenance log has been saved locally and will sync to the server when you are back online.", "success"); } else { alert("You are currently offline. The maintenance log has been saved locally and will sync to the server when you are back online."); };
                 } else {
                     try {
                         const token = sessionStorage.getItem("tech_override_token") || "";
@@ -2733,7 +2735,7 @@
                             logs.unshift(onlineLog);
                             saveLogs(logs);
                             renderLogs();
-                            alert("Certified maintenance log signature published!");
+                            if (typeof window.showToast === "function") { window.showToast("Certified maintenance log signature published!", "success"); } else { alert("Certified maintenance log signature published!"); };
                         } else {
                             throw new Error("Server error");
                         }
@@ -2745,7 +2747,7 @@
                         logs.unshift(offlineLog);
                         saveLogs(logs);
                         renderLogs();
-                        alert("Network issue. Maintenance log queued for auto-sync.");
+                        if (typeof window.showToast === "function") { window.showToast("Network issue. Maintenance log queued for auto-sync.", "info"); } else { alert("Network issue. Maintenance log queued for auto-sync."); };
                     }
                 }
 
@@ -2893,7 +2895,7 @@
                 _filterDaysEl.parentElement.parentElement.addEventListener("click", () => {
                     triggerSound("tick");
                     filterDaysNum.textContent = "90";
-                    alert("Filter lifespan tracker reset to 90 days! Keep your MERV 11 filter clean.");
+                    if (typeof window.showToast === "function") { window.showToast("Filter lifespan tracker reset to 90 days! Keep your MERV 11 filter clean.", "info"); } else { alert("Filter lifespan tracker reset to 90 days! Keep your MERV 11 filter clean."); };
                 });
             }
 
@@ -3352,12 +3354,12 @@
             window.copyPartsToClipboard = function() {
                 const parts = getCheckedParts();
                 if (parts.length === 0) {
-                    alert("Please select at least one part to copy.");
+                    if (typeof window.showToast === "function") { window.showToast("Please select at least one part to copy.", "error"); } else { alert("Please select at least one part to copy."); };
                     return;
                 }
                 const text = "A/C Now LLC Will-Call Parts Order:\n- " + parts.join("\n- ");
                 navigator.clipboard.writeText(text).then(() => {
-                    alert("Parts order copied to clipboard! You can paste it directly into emails or supplier texts.");
+                    if (typeof window.showToast === "function") { window.showToast("Parts order copied to clipboard! You can paste it directly into emails or supplier texts.", "success"); } else { alert("Parts order copied to clipboard! You can paste it directly into emails or supplier texts."); };
                 });
                 triggerSound("tick");
             };
@@ -3365,7 +3367,7 @@
             window.sendPartsSMS = function() {
                 const parts = getCheckedParts();
                 if (parts.length === 0) {
-                    alert("Please select at least one part to text.");
+                    if (typeof window.showToast === "function") { window.showToast("Please select at least one part to text.", "error"); } else { alert("Please select at least one part to text."); };
                     return;
                 }
                 const bodyText = encodeURIComponent("A/C Now Will-Call Request:\n" + parts.map(p => "• " + p).join("\n"));
@@ -3477,7 +3479,7 @@
                 const textarea = document.getElementById('tech-voice-text');
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 if (!SpeechRecognition) {
-                    alert("Speech recognition is not supported on this browser/device. Please type your invoice notes.");
+                    if (typeof window.showToast === "function") { window.showToast("Speech recognition is not supported on this browser/device. Please type your invoice notes.", "error"); } else { alert("Speech recognition is not supported on this browser/device. Please type your invoice notes."); };
                     return;
                 }
                 
@@ -3499,7 +3501,7 @@
                 
                 recognition.start();
                 triggerSound("click");
-                alert(`<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Microphone is active. Speak clearly to dictate invoice notes. Click Stop to finish.`);
+                if (typeof window.showToast === "function") { window.showToast(`<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Microphone is active. Speak clearly to dictate invoice notes. Click Stop to finish.`, "success"); } else { alert(`<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Microphone is active. Speak clearly to dictate invoice notes. Click Stop to finish.`); };
             };
 
             window.stopVoiceNotes = function() {
@@ -3507,7 +3509,7 @@
                     recognition.stop();
                 }
                 triggerSound("click");
-                alert(`<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Microphone disabled. Speech processing complete.`);
+                if (typeof window.showToast === "function") { window.showToast(`<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Microphone disabled. Speech processing complete.`, "success"); } else { alert(`<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Microphone disabled. Speech processing complete.`); };
             };
 
             // Signature Canvas Initialization
@@ -4032,9 +4034,13 @@
                         // Fall back to desktop simulator
                         window.toggleSimulationMode(true);
                         
-                        alert("No motion data detected. We have automatically enabled 'Desktop Simulator' for you.\n\n" +
-                              "• Drag the bubble directly, or adjust the sliders to test the leveling feedback.\n" +
-                              "• For hardware sensors, test on a mobile device.");
+                        if (typeof window.showToast === "function") {
+                            window.showToast("No motion data detected. Enabled 'Desktop Simulator' fallback.", "warning");
+                        } else {
+                            alert("No motion data detected. We have automatically enabled 'Desktop Simulator' for you.\n\n" +
+                                  "• Drag the bubble directly, or adjust the sliders to test the leveling feedback.\n" +
+                                  "• For hardware sensors, test on a mobile device.");
+                        }
                         
                         window.stopDrainLevelSensor();
                     }
@@ -4047,7 +4053,7 @@
                             statusDisplay.textContent = "Security Block";
                             statusDisplay.style.color = "#C22A36";
                         }
-                        alert("Security Error: iOS requires a secure HTTPS connection (or localhost) to grant motion sensor access. Falling back to simulator.");
+                        if (typeof window.showToast === "function") { window.showToast("Security Error: iOS requires a secure HTTPS connection (or localhost) to grant motion sensor access. Falling back to simulator.", "error"); } else { alert("Security Error: iOS requires a secure HTTPS connection (or localhost) to grant motion sensor access. Falling back to simulator."); };
                         clearTimeout(levelWatchdogTimeout);
                         window.toggleSimulationMode(true);
                         return;
@@ -4064,7 +4070,7 @@
                                     statusDisplay.textContent = "Access Denied";
                                     statusDisplay.style.color = "#C22A36";
                                 }
-                                alert("Permission Denied: Falling back to manual simulator.");
+                                if (typeof window.showToast === "function") { window.showToast("Permission Denied: Falling back to manual simulator.", "error"); } else { alert("Permission Denied: Falling back to manual simulator."); };
                                 clearTimeout(levelWatchdogTimeout);
                                 window.toggleSimulationMode(true);
                             }
@@ -5185,7 +5191,7 @@
                 const cost    = parseFloat(document.getElementById('pt-unit-cost').value) || 0;
 
                 if (!desc && !partNum) {
-                    alert('Please enter at least a part number or description.');
+                    if (typeof window.showToast === "function") { window.showToast('Please enter at least a part number or description.', "error"); } else { alert('Please enter at least a part number or description.'); };
                     return;
                 }
 
@@ -5234,7 +5240,7 @@
                 const expiry   = document.getElementById('wty-expiry-date').value   || '';
 
                 if (!brand && !model) {
-                    alert('Please enter at least an equipment brand or model number.');
+                    if (typeof window.showToast === "function") { window.showToast('Please enter at least an equipment brand or model number.', "error"); } else { alert('Please enter at least an equipment brand or model number.'); };
                     return;
                 }
 
@@ -5286,10 +5292,10 @@
             // Live invoice calculator — FL 6% tax applied to all line items
             window.calcInvoice = function() {
                 const FL_TAX = 0.06;
-                const labor   = parseFloat(document.getElementById('inv-labor').value)      || 0;
-                const parts   = parseFloat(document.getElementById('inv-parts').value)      || 0;
-                const refrig  = parseFloat(document.getElementById('inv-refrigerant').value) || 0;
-                const mileage = parseFloat(document.getElementById('inv-mileage').value)    || 0;
+                const labor   = Math.max(0, parseFloat(document.getElementById('inv-labor').value)      || 0);
+                const parts   = Math.max(0, parseFloat(document.getElementById('inv-parts').value)      || 0);
+                const refrig  = Math.max(0, parseFloat(document.getElementById('inv-refrigerant').value) || 0);
+                const mileage = Math.max(0, parseFloat(document.getElementById('inv-mileage').value)    || 0);
                 const subtotal = labor + parts + refrig + mileage;
                 const tax   = subtotal * FL_TAX;
                 const total = subtotal + tax;
@@ -5305,10 +5311,10 @@
             // Print a standalone formatted invoice for this job
             window.printAcnowInvoice = function() {
                 const FL_TAX = 0.06;
-                const labor   = parseFloat(document.getElementById('inv-labor').value)      || 0;
-                const parts   = parseFloat(document.getElementById('inv-parts').value)      || 0;
-                const refrig  = parseFloat(document.getElementById('inv-refrigerant').value) || 0;
-                const mileage = parseFloat(document.getElementById('inv-mileage').value)    || 0;
+                const labor   = Math.max(0, parseFloat(document.getElementById('inv-labor').value)      || 0);
+                const parts   = Math.max(0, parseFloat(document.getElementById('inv-parts').value)      || 0);
+                const refrig  = Math.max(0, parseFloat(document.getElementById('inv-refrigerant').value) || 0);
+                const mileage = Math.max(0, parseFloat(document.getElementById('inv-mileage').value)    || 0);
                 const subtotal = labor + parts + refrig + mileage;
                 const tax   = subtotal * FL_TAX;
                 const total = subtotal + tax;

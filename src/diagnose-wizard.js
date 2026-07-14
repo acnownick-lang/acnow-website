@@ -121,6 +121,8 @@ function initDiagnoseWizard() {
             card.classList.add("selected");
             selectedSymptom = card.dataset.symptom;
             btnNextSymptom.removeAttribute("disabled");
+            sessionStorage.setItem("diag_selected_symptom", selectedSymptom);
+            sessionStorage.setItem("diag_step", "symptom");
             
             // Play click audio if initialized (Round 4 Web Audio)
             if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
@@ -158,6 +160,15 @@ function initDiagnoseWizard() {
                 </div>
             `;
             checklistContainer.appendChild(itemDiv);
+            
+            const box = itemDiv.querySelector(".wizard-check");
+            box.addEventListener("change", () => {
+                const checkedIds = [];
+                document.querySelectorAll(".wizard-check").forEach(b => {
+                    if (b.checked) checkedIds.push(b.id);
+                });
+                sessionStorage.setItem("diag_checked_boxes", JSON.stringify(checkedIds));
+            });
         });
 
         // Set Progress
@@ -166,6 +177,7 @@ function initDiagnoseWizard() {
         wizardProgress.style.width = "50%";
         stepLabel.textContent = "Step 2: DIY Checkpoints";
         stepPercent.textContent = "50% Complete";
+        sessionStorage.setItem("diag_step", "checklist");
 
         if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
             window.ComfortAudio.playClick();
@@ -179,6 +191,8 @@ function initDiagnoseWizard() {
         wizardProgress.style.width = "0%";
         stepLabel.textContent = "Step 1: Choose Your Symptom";
         stepPercent.textContent = "0% Complete";
+        sessionStorage.setItem("diag_step", "symptom");
+        sessionStorage.removeItem("diag_checked_boxes");
 
         if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
             window.ComfortAudio.playClick();
@@ -193,7 +207,7 @@ function initDiagnoseWizard() {
         let checkedDetails = [];
 
         checkboxes.forEach(box => {
-            const labelText = box.nextElementSibling.querySelector("h4").textContent;
+            const labelText = box.closest(".check-item-header").querySelector("h4").textContent;
             const isChecked = box.checked;
             checkedDetails.push(`${labelText}: ${isChecked ? "YES" : "NO"}`);
             
@@ -209,6 +223,7 @@ function initDiagnoseWizard() {
         // Generate Diagnostic Summary for input payload
         const symptomName = document.querySelector(`.option-card[data-symptom="${selectedSymptom}"] h4`).textContent;
         diagSummaryInput.value = `[Symptom: ${symptomName}] [Checks Run: ${checkedDetails.join(" | ")}]`;
+        sessionStorage.setItem("diag_step", "results");
         
         let resultHtml = "";
         let speechText = "";
@@ -327,6 +342,7 @@ function initDiagnoseWizard() {
         wizardProgress.style.width = "50%";
         stepLabel.textContent = "Step 2: DIY Checkpoints";
         stepPercent.textContent = "50% Complete";
+        sessionStorage.setItem("diag_step", "checklist");
 
         if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
             window.ComfortAudio.playClick();
@@ -359,6 +375,11 @@ function initDiagnoseWizard() {
                 window.submitFormWithSync(e, diagnoseForm, payload, () => {
                     if (typeof window.showToast === "function") { window.showToast("Diagnostics secured! Technicians Chris or Sean will call you within 15 minutes.", "success"); } else { alert("Diagnostics secured! Technicians Chris or Sean will call you within 15 minutes."); }
                     diagnoseForm.reset();
+                    // Clear sessionStorage states
+                    sessionStorage.removeItem("diag_selected_symptom");
+                    sessionStorage.removeItem("diag_step");
+                    sessionStorage.removeItem("diag_checked_boxes");
+                    
                     // Reset wizard to Step 1
                     stepResults.classList.remove("active");
                     stepSymptom.classList.add("active");
@@ -415,6 +436,38 @@ function initDiagnoseWizard() {
 
         // Init
         updateFlushSafety();
+    }
+
+    // Restore from sessionStorage on load
+    try {
+        const savedSymptom = sessionStorage.getItem("diag_selected_symptom");
+        const savedStep = sessionStorage.getItem("diag_step");
+        if (savedSymptom) {
+            selectedSymptom = savedSymptom;
+            const card = document.querySelector(`.option-card[data-symptom="${selectedSymptom}"]`);
+            if (card) {
+                card.classList.add("selected");
+                btnNextSymptom.removeAttribute("disabled");
+            }
+        }
+        if (savedStep === "checklist" && selectedSymptom) {
+            btnNextSymptom.click();
+            const savedChecks = JSON.parse(sessionStorage.getItem("diag_checked_boxes") || "[]");
+            savedChecks.forEach(id => {
+                const cb = document.getElementById(id);
+                if (cb) cb.checked = true;
+            });
+        } else if (savedStep === "results" && selectedSymptom) {
+            btnNextSymptom.click();
+            const savedChecks = JSON.parse(sessionStorage.getItem("diag_checked_boxes") || "[]");
+            savedChecks.forEach(id => {
+                const cb = document.getElementById(id);
+                if (cb) cb.checked = true;
+            });
+            btnNextChecklist.click();
+        }
+    } catch (e) {
+        console.warn("[PWA Client] Failed to restore sessionStorage wizard state:", e);
     }
 }
 

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    let userInteracted = false; // default false to prevent anchoring bias
+    let userInteracted = true; // calculate immediately on load to prevent empty placeholder state
     let maintenanceType = "yearly"; // default
 
     // Sliders listeners

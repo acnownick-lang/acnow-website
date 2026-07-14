@@ -633,8 +633,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 touchStartPos = null;
             }
 
+            // Immediate visual hold feedback
+            mascotEl.classList.add('mascot-holding');
+
             pressTimer = setTimeout(() => {
                 isLongPress = true;
+                mascotEl.classList.remove('mascot-holding');
                 
                 if (window.ComfortAudio && typeof window.ComfortAudio.playClick === 'function') {
                     window.ComfortAudio.playClick();
@@ -660,6 +664,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearTimeout(pressTimer);
                 pressTimer = null;
             }
+            mascotEl.classList.remove('mascot-holding');
             if (!isLongPress) {
                 mascotEl.style.transform = '';
                 mascotEl.style.filter = '';

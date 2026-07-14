@@ -1,18 +1,20 @@
 function initCorrosionMeter() {
-    const slider = document.getElementById("distance-slider");
-    const lblDistance = document.getElementById("slider-val");
-    const valStdLife = document.getElementById("life-unprotected");
-    const valProtLife = document.getElementById("life-protected");
-    const valRecType = document.getElementById("severity-label");
+    const slider = document.getElementById("distance-slider") || document.getElementById("corrosion-distance");
+    const lblDistance = document.getElementById("slider-val") || document.getElementById("lbl-corrosion-distance");
+    const valStdLife = document.getElementById("life-unprotected") || document.getElementById("val-std-life");
+    const valProtLife = document.getElementById("life-protected") || document.getElementById("val-prot-life");
+    const valRecType = document.getElementById("severity-label") || document.getElementById("val-rec-type");
     const severityMarker = document.getElementById("severity-marker");
     const formDistance = document.getElementById("form-distance");
+    const valDegradeRate = document.getElementById("val-degrade-rate");
 
     if (!slider || !lblDistance || !valStdLife || !valProtLife || !valRecType) {
         console.warn("[PWA Client] Corrosion Meter elements missing. Skipping initialization.");
         return;
     }
 
-    let userInteracted = false;
+    const isAreasPage = !!document.getElementById("corrosion-distance");
+    let userInteracted = isAreasPage; // Initialize immediately on areas page
 
     window.selectDistance = function(key, val) {
         userInteracted = true;
@@ -85,24 +87,42 @@ function initCorrosionMeter() {
         let severityText = "LOW INLAND RISK";
         let severityColor = "#10B981";
         let markerPct = 15;
+        let recommendationText = "Inland Standard Staging";
 
         if (dist <= 1.0) {
             severityText = "CRITICAL SEVERE RISK";
             severityColor = "#EF4444";
             markerPct = 95;
+            recommendationText = "Blygold / Coastal Epoxy Coating Mandate";
         } else if (dist <= 2.5) {
             severityText = "HIGH CORROSION RISK";
             severityColor = "#F59E0B";
             markerPct = 75;
+            recommendationText = "Gulfshield / Marine-Grade Coil Shield";
         } else if (dist <= 5.0) {
             severityText = "MODERATE RISK";
             severityColor = "#FBBF24";
             markerPct = 45;
+            recommendationText = "Standard Condenser Guard Protection";
         }
 
-        valRecType.textContent = severityText;
+        if (valRecType.id === "val-rec-type") {
+            valRecType.textContent = recommendationText;
+        } else {
+            valRecType.textContent = severityText;
+        }
         valRecType.style.color = severityColor;
+        
         if (severityMarker) severityMarker.style.left = `${markerPct}%`;
+
+        if (valDegradeRate) {
+            let degradePercent = "3%";
+            if (dist <= 0.5) degradePercent = "30%";
+            else if (dist <= 1.0) degradePercent = "25%";
+            else if (dist <= 2.0) degradePercent = "15%";
+            else if (dist <= 3.0) degradePercent = "8%";
+            valDegradeRate.textContent = `${degradePercent} / year`;
+        }
 
         if (window.ComfortAudio && typeof window.ComfortAudio.playTick === "function") {
             window.ComfortAudio.playTick();

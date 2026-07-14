@@ -545,6 +545,16 @@
     <!-- Dynamic Plan Selection Parser -->
     <script>
     document.addEventListener("DOMContentLoaded", () => {
+        // Restore veteran certification state
+        const certCheck = document.getElementById("vet-certify-check");
+        const vetFields = document.getElementById("vet-input-fields");
+        const successBanner = document.getElementById("vet-success-banner");
+        if (localStorage.getItem("acnow_military_verified") === "true") {
+            if (certCheck) certCheck.checked = true;
+            if (vetFields) vetFields.style.display = "none";
+            if (successBanner) successBanner.style.display = "block";
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const plan = urlParams.get("plan");
         const messageField = document.getElementById("message");

@@ -274,6 +274,40 @@
             font-weight: 800;
             text-transform: uppercase;
         }
+        
+        @media (max-width: 1024px) {
+            .planner-grid {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+            }
+            .dashboard-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                padding: 20px !important;
+                gap: 16px !important;
+            }
+            .dashboard-header > div:last-child {
+                width: 100% !important;
+                justify-content: flex-start !important;
+            }
+            .responsive-grid-3 {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px !important;
+            }
+            .responsive-grid-2 {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px !important;
+            }
+            .btn,
+            button.btn {
+                min-height: 44px !important;
+                min-width: 44px !important;
+                padding: 11px 16px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+        }
     </style>
     <link rel="manifest" href="../manifest.json">
     <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
@@ -865,7 +899,11 @@
                     localStorage.setItem("acnow_member_tier", tier);
                     checkAuthState();
                     triggerSound("click");
-                    alert(`Welcome to the Comfort Club! Your ${tier} membership is active.`);
+                    if (typeof window.showToast === "function") {
+                        window.showToast(`Welcome to the Comfort Club! Your ${tier} membership is active.`, "success");
+                    } else {
+                        alert(`Welcome to the Comfort Club! Your ${tier} membership is active.`);
+                    }
                 });
             });
 
@@ -881,7 +919,11 @@
             document.getElementById("filter-days-num").parentElement.parentElement.addEventListener("click", () => {
                 triggerSound("tick");
                 filterDaysNum.textContent = "90";
-                alert("Filter lifespan tracker reset to 90 days! Keep your MERV 11 filter clean.");
+                if (typeof window.showToast === "function") {
+                    window.showToast("Filter lifespan tracker reset to 90 days! Keep your MERV 11 filter clean.", "success");
+                } else {
+                    alert("Filter lifespan tracker reset to 90 days! Keep your MERV 11 filter clean.");
+                }
             });
 
             // Print function

@@ -5368,3 +5368,111 @@ input[type="range"]:focus-visible {
     outline-offset: 2px !important;
 }
 
+/* ==========================================================================
+   SHARED TOUCH TARGET & USABILITY OVERRIDES (WCAG 44PX REQUIREMENT)
+   ========================================================================== */
+
+/* Toggle Buttons Touch Targets */
+.toggle-btn {
+    min-height: 44px !important;
+    padding: 12px 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Range Input track and thumb enlargements */
+.input-slider,
+input[type="range"] {
+    min-height: 44px !important;
+}
+
+.input-slider::-webkit-slider-thumb,
+input[type="range"]::-webkit-slider-thumb {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    background-color: var(--primary) !important;
+    box-shadow: 0 2px 8px rgba(11, 99, 229, 0.4) !important;
+    cursor: pointer !important;
+}
+
+.input-slider::-moz-range-thumb,
+input[type="range"]::-moz-range-thumb {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    background-color: var(--primary) !important;
+    box-shadow: 0 2px 8px rgba(11, 99, 229, 0.4) !important;
+    cursor: pointer !important;
+    border: none !important;
+}
+
+/* Clear and Reset Buttons Focus-Visible Outlines */
+#btn-clear-signature:focus-visible,
+#btn-reset-storm:focus-visible,
+[id*="clear"]:focus-visible,
+[class*="clear"]:focus-visible,
+[id*="reset"]:focus-visible,
+[class*="reset"]:focus-visible {
+    outline: 3px solid var(--primary) !important;
+    outline-offset: 2px !important;
+}
+
+/* Horizontal Tab Headers Scroll Indicator */
+.inno-tab-headers::-webkit-scrollbar {
+    height: 5px !important;
+}
+.inno-tab-headers::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.03) !important;
+    border-radius: 3px !important;
+}
+.inno-tab-headers::-webkit-scrollbar-thumb {
+    background: var(--primary) !important;
+    border-radius: 3px !important;
+}
+
+/* Mascot Long Press Hold State */
+.center-mascot.mascot-holding {
+    animation: mascotHoldPulse 3s linear forwards;
+    cursor: wait !important;
+}
+@keyframes mascotHoldPulse {
+    0% {
+        transform: scale(0.98);
+        filter: drop-shadow(0 0 5px rgba(255, 199, 44, 0.2));
+    }
+    50% {
+        transform: scale(0.92);
+        filter: drop-shadow(0 0 15px rgba(255, 199, 44, 0.5));
+    }
+    100% {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 35px #FFC72C);
+    }
+}
+
+#ac-chat-fab.fab-holding {
+    animation: fabHoldPulse 3s linear forwards;
+    cursor: wait !important;
+}
+@keyframes fabHoldPulse {
+    0% {
+        transform: scale(0.98);
+        box-shadow: 0 0 5px rgba(255, 199, 44, 0.2), 0 5px 20px rgba(11, 99, 229, 0.2);
+    }
+    50% {
+        transform: scale(0.9);
+        background-color: #E0AE20;
+        box-shadow: 0 0 15px rgba(255, 199, 44, 0.5), 0 5px 20px rgba(11, 99, 229, 0.4);
+    }
+    100% {
+        transform: scale(1.1);
+        background-color: #E0AE20;
+        box-shadow: 0 0 25px #FFC72C, 0 5px 20px rgba(11, 99, 229, 0.6);
+    }
+}
+
+
+
+

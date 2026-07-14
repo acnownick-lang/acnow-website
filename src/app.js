@@ -1118,10 +1118,12 @@ document.addEventListener("DOMContentLoaded", () => {
             isHolding = true;
             holdComplete = false;
             fab.classList.remove("shake");
+            fab.classList.add("fab-holding");
 
             holdTimer = setTimeout(() => {
                 if (isHolding) {
                     holdComplete = true;
+                    fab.classList.remove("fab-holding");
                     fab.classList.add("shake");
                     if (navigator.vibrate) {
                         navigator.vibrate([100, 50, 100]);
@@ -1137,6 +1139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isHolding) return;
             isHolding = false;
             clearTimeout(holdTimer);
+            fab.classList.remove("fab-holding");
             
             if (holdComplete) {
                 // If they released after the 3-second hold completed, prevent the click
@@ -2408,7 +2411,7 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
         const isDevHost = devHosts.some(host => window.location.hostname.includes(host));
 
         // Allow on production if Phase 2 mascot unlock is active
-        if (currentPhase !== '2' && !isDevHost) return;
+        if (!isDev && !isDevHost) return;
 
         // Get saved checkbox states
         let checklistStates = {};
