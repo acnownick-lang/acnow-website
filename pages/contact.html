@@ -305,14 +305,14 @@
                             id="tab-dispatch"
                             aria-selected="false"
                             aria-controls="dispatch-tracker-tab"
-                            style="flex: 1; padding: 12px 15px; border: none; font-family: var(--font-heading); font-weight: 700; cursor: pointer; transition: var(--transition); min-width: 120px; white-space: nowrap;">Dispatch Map</button>
+                            style="flex: 1; padding: 12px 15px; border: none; font-family: var(--font-heading); font-weight: 700; cursor: pointer; transition: var(--transition); min-width: 120px; white-space: nowrap;">Dispatch Tracker (Demo)</button>
                     <button onclick="switchContactTab(event, 'veteran-verify-tab')"
                             class="inno-tab-btn"
                             role="tab"
                             id="tab-veteran"
                             aria-selected="false"
                             aria-controls="veteran-verify-tab"
-                            style="flex: 1; padding: 12px 15px; border: none; font-family: var(--font-heading); font-weight: 700; cursor: pointer; transition: var(--transition); min-width: 120px; white-space: nowrap;">Veteran Gate</button>
+                            style="flex: 1; padding: 12px 15px; border: none; font-family: var(--font-heading); font-weight: 700; cursor: pointer; transition: var(--transition); min-width: 120px; white-space: nowrap;">Veteran Discount</button>
                 </div>
                     
                     <!-- Tab Panel 1: General Message Form -->
@@ -409,6 +409,9 @@
                     <div id="dispatch-tracker-tab" class="inno-tab-panel"
                          role="tabpanel" aria-labelledby="tab-dispatch" tabindex="0" style="display: none;">
                         <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 8px;">Live Dispatch Tracker</h3>
+                        <div style="background: rgba(196,106,18,0.1); border: 1px solid var(--high, #c46a12); color: #F59E0B; padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; text-align: center; font-weight: 600; line-height: 1.5;">
+                            <strong>Demonstration Walkthrough</strong>: This tracker simulates what customers see in real time once a dispatch vehicle leaves the St. Lucie depot.
+                        </div>
                         <p style="font-size: 13px; color: var(--gray-dark); margin-bottom: 15px;">Simulate en-route tracking of your assigned service vehicle in real time.</p>
                         
                         <div style="width: 100%; height: 200px; background: #0A182F; border: 1.5px solid var(--primary); border-radius: 12px; position: relative; overflow: hidden; margin-bottom: 15px;">
@@ -451,34 +454,24 @@
                     <!-- Tab Panel 4: Veteran Identity Verification -->
                     <div id="veteran-verify-tab" class="inno-tab-panel"
                          role="tabpanel" aria-labelledby="tab-veteran" tabindex="0" style="display: none;">
-                        <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 8px;">Veteran Verification Gate</h3>
-                        <p style="font-size: 13px; color: var(--gray-dark); margin-bottom: 20px;">Verify your military/veteran status to lock in an active 5% lifetime discount on all services.</p>
+                        <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 8px;">Veteran Discount Self-Certification</h3>
+                        <p style="font-size: 13px; color: var(--gray-dark); margin-bottom: 20px;">Honesty and integrity are our core values. By checking this box, you self-certify your veteran or active military status to activate your 5% lifetime discount code.</p>
                         
                         <div id="vet-input-fields" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
-                            <div class="form-group">
-                                <label for="vet-branch">Military Service Branch</label>
-                                <select id="vet-branch" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:13px; font-weight:600; color:var(--dark);">
-                                    <option value="army">U.S. Army</option>
-                                    <option value="navy">U.S. Navy</option>
-                                    <option value="airforce">U.S. Air Force</option>
-                                    <option value="marines">U.S. Marine Corps</option>
-                                    <option value="coastguard">U.S. Coast Guard</option>
-                                    <option value="spaceforce">U.S. Space Force</option>
-                                </select>
+                            <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px;">
+                                <input type="checkbox" id="vet-certify-check" style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer;">
+                                <label for="vet-certify-check" style="font-size: 13px; color: var(--dark); cursor: pointer; user-select: none; line-height: 1.4;">
+                                    I certify under penalty of dishonor that I am a veteran, active duty service member, or military spouse.
+                                </label>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="vet-id">Service / Veteran ID Number</label>
-                                <input type="text" id="vet-id" placeholder="e.g. VET-8829-FL" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--gray-light); font-size:13px;">
-                            </div>
-                            
-                            <button onclick="verifyVeteranStatus()" class="btn btn-gold btn-full">Verify Status & Apply Discount</button>
+                            <button onclick="verifyVeteranStatus()" class="btn btn-gold btn-full">Activate Veteran Discount</button>
                         </div>
                         
                         <!-- Verification Status Banner -->
                         <div id="vet-success-banner" style="display:none; background: rgba(16, 185, 129, 0.1); border: 1.5px solid #0B7A53; padding: 15px; border-radius: 12px; text-align: center; color:#0B7A53; font-family:monospace; font-size:12px;">
                             <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:1.8em;height:1.8em;margin-bottom:6px; display:block; margin-left:auto; margin-right:auto;"><polyline points="20 6 9 17 4 12"/></svg>
-                            <strong>VETERAN STATUS VERIFIED ACTIVE</strong><br>
+                            <strong>VETERAN STATUS CONFIRMED</strong><br>
                             Discount Code Applied: <span style="font-weight:800; font-size:14px; text-transform:uppercase; color:#fff; background:#0B7A53; padding:2px 6px; border-radius:4px; margin-left:5px;">HONOR5</span>
                         </div>
                     </div>
@@ -494,13 +487,13 @@
 <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="../assets/images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
                     Port St. Lucie, FL 34986<br>
-                    <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
                 </address>
             </div>
             <div class="footer-links">
@@ -508,9 +501,10 @@
                 <a href="ac-repair.html">AC Repair</a>
                 <a href="ac-installation.html">AC Installation</a>
                 <a href="ac-maintenance.html">AC Maintenance</a>
-                <a href="services.html">Air Quality</a>
+                <a href="commercial.html">Commercial Services</a>
+                <a href="pool-heating.html">Pool Heating</a>
             </div>
-                        <div class="footer-links">
+            <div class="footer-links">
                 <div class="footer-heading">Quick Links</div>
                 <a href="about.html">About Us</a>
                 <a href="reviews.html">Reviews</a>
@@ -537,7 +531,6 @@
                     <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
                     <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
                 </div>
-                
             </div>
         </div>
     </footer>

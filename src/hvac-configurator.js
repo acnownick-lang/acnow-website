@@ -232,6 +232,15 @@ function initHvacConfigurator() {
         if (invDuration) invDuration.textContent = estHours;
         if (invPriceEl) invPriceEl.textContent = `$${totalInvoicePrice.toLocaleString()}`;
 
+        const stickyBrand = document.getElementById("sticky-inv-brand");
+        if (stickyBrand) {
+            stickyBrand.textContent = `${brandName} (${systemStyle === 'split' ? 'Central' : 'Ductless'})`;
+        }
+        const stickyPrice = document.getElementById("sticky-inv-price");
+        if (stickyPrice) {
+            stickyPrice.textContent = `$${totalInvoicePrice.toLocaleString()}`;
+        }
+
         // Set Lead details payload
         if (confMetricsInput) {
             confMetricsInput.value = `[System Size: ${matchedTonnage.toFixed(1)} Ton | Style: ${systemStyle} | SEER: ${efficiencyTier} | Insulation: ${insulation} | Accessories: ${checkedAccessories.join(", ") || "None"} | Price: $${totalInvoicePrice}]`;

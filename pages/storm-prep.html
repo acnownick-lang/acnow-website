@@ -503,6 +503,9 @@
                                     <div style="text-align:center; margin-bottom:25px;">
                                         <div id="storm-score" style="font-size:48px; font-weight:800; color:var(--secondary); font-family:var(--font-heading);">0%</div>
                                         <div id="storm-score-text" style="font-size:13.5px; color:var(--gray-dark); font-weight:600; text-transform:uppercase; margin-top:5px;">CRITICAL RISK</div>
+                                        <div class="progress-track" style="background: var(--gray-light); height: 8px; border-radius: 4px; overflow: hidden; margin: 15px auto 0; max-width: 200px;">
+                                            <div id="storm-progress-fill" style="background: #9ca3af; width: 0%; height: 100%; transition: width 0.3s ease, background-color 0.3s ease;"></div>
+                                        </div>
                                     </div>
                                     <div id="storm-priority-badge" style="background:rgba(230,57,70,0.1); border:1px solid rgba(230,57,70,0.2); padding:15px; border-radius:8px; color:var(--secondary); font-size:12.5px; text-align:center; font-weight:700;">
                                         Priority Dispatch Queue Status: Standard
@@ -517,14 +520,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const stormScore = document.getElementById("storm-score");
     const stormScoreText = document.getElementById("storm-score-text");
     const stormPriority = document.getElementById("storm-priority-badge");
+    const progressFill = document.getElementById("storm-progress-fill");
 
     if (stormForm) {
         const checks = stormForm.querySelectorAll("input[type='checkbox']");
+
+        // Restore from localStorage
+        checks.forEach(c => {
+            const savedState = localStorage.getItem(`storm_check_${c.id}`);
+            if (savedState !== null) {
+                c.checked = savedState === "true";
+            }
+        });
+
         function updateStormScore() {
             let checkedCount = 0;
-            checks.forEach(c => { if(c.checked) checkedCount++; });
+            checks.forEach(c => {
+                if(c.checked) checkedCount++;
+                localStorage.setItem(`storm_check_${c.id}`, c.checked);
+            });
             const pct = Math.round((checkedCount / checks.length) * 100);
             if (stormScore) stormScore.textContent = `${pct}%`;
+
+            if (progressFill) {
+                progressFill.style.width = `${pct}%`;
+                if (pct === 100) {
+                    progressFill.style.backgroundColor = "#0B7A53"; // green
+                } else if (pct >= 60) {
+                    progressFill.style.backgroundColor = "#F59E0B"; // gold / warm yellow
+                } else {
+                    progressFill.style.backgroundColor = "#9ca3af"; // neutral gray
+                }
+            }
 
             if (stormScoreText && stormPriority) {
                 if (pct === 100) {
@@ -562,13 +589,13 @@ document.addEventListener("DOMContentLoaded", () => {
     <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="../assets/images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
                     Port St. Lucie, FL 34986<br>
-                    <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
                 </address>
             </div>
             <div class="footer-links">
@@ -576,9 +603,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a href="ac-repair.html">AC Repair</a>
                 <a href="ac-installation.html">AC Installation</a>
                 <a href="ac-maintenance.html">AC Maintenance</a>
-                <a href="services.html">Air Quality</a>
+                <a href="commercial.html">Commercial Services</a>
+                <a href="pool-heating.html">Pool Heating</a>
             </div>
-                        <div class="footer-links">
+            <div class="footer-links">
                 <div class="footer-heading">Quick Links</div>
                 <a href="about.html">About Us</a>
                 <a href="reviews.html">Reviews</a>
@@ -605,7 +633,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
                     <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
                 </div>
-                
             </div>
         </div>
     </footer>

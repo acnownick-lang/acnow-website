@@ -231,16 +231,92 @@
     </div>
 
     <script>
+        // Fallback/Premium toast notification system
+        window.showToast = window.showToast || function(message, type = 'info') {
+            let container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.style.position = 'fixed';
+                container.style.bottom = '20px';
+                container.style.right = '20px';
+                container.style.zIndex = '1000';
+                container.style.display = 'flex';
+                container.style.flexDirection = 'column';
+                container.style.gap = '10px';
+                container.style.maxWidth = '350px';
+                document.body.appendChild(container);
+            }
+            
+            const toast = document.createElement('div');
+            toast.style.padding = '12px 18px';
+            toast.style.borderRadius = '8px';
+            toast.style.fontSize = '13.5px';
+            toast.style.fontWeight = '600';
+            toast.style.color = '#fff';
+            toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+            toast.style.transition = 'all 0.3s ease';
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(20px)';
+            toast.style.display = 'flex';
+            toast.style.alignItems = 'center';
+            toast.style.gap = '8px';
+            
+            if (type === 'success') {
+                toast.style.background = '#0B7A53';
+                toast.style.borderLeft = '4px solid #10B981';
+            } else if (type === 'warning' || type === 'error') {
+                toast.style.background = '#C22A36';
+                toast.style.borderLeft = '4px solid #EF4444';
+            } else {
+                toast.style.background = '#1E293B';
+                toast.style.borderLeft = '4px solid #3B82F6';
+            }
+            
+            toast.textContent = message;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 4000);
+        };
+
         async function checkConnectivity() {
             const btn = document.getElementById('retry-btn');
             btn.textContent = 'Checking...';
             btn.disabled = true;
             try {
                 // Fetch request with a cache-busting query parameter to test actual connectivity
-                await fetch('/../assets/images/Logo2.webp?cb=' + Date.now(), { method: 'HEAD' });
-                window.location.reload();
+                await fetch('../assets/images/Logo2.webp?cb=' + Date.now(), { method: 'HEAD' });
+                window.showToast('Connection restored! Reconnecting now...', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             } catch (e) {
-                alert('Device is still offline. Please check your connection or call the office.');
+                console.error(e);
+                
+                // Map raw JS error payloads to friendly user warning messages
+                let errorMessage = 'Device is still offline. Please check your signal or Wi-Fi settings.';
+                const errStr = String(e).toLowerCase();
+                
+                if (errStr.includes('abort') || errStr.includes('timeout')) {
+                    errorMessage = 'The connection attempt timed out. The server is taking too long to respond.';
+                } else if (errStr.includes('networkerror') || errStr.includes('failed to fetch')) {
+                    errorMessage = 'Still offline: No network connection detected. Please verify your Wi-Fi or cellular connection.';
+                } else if (errStr.includes('permission') || errStr.includes('security')) {
+                    errorMessage = 'Network connection blocked by browser security or permissions settings.';
+                }
+                
+                window.showToast(errorMessage, 'error');
                 btn.textContent = 'Retry Connection';
                 btn.disabled = false;
             }

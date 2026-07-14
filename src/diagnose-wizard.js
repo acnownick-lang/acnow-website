@@ -163,9 +163,9 @@ function initDiagnoseWizard() {
         // Set Progress
         stepSymptom.classList.remove("active");
         stepChecklist.classList.add("active");
-        wizardProgress.style.width = "66%";
+        wizardProgress.style.width = "50%";
         stepLabel.textContent = "Step 2: DIY Checkpoints";
-        stepPercent.textContent = "66% Complete";
+        stepPercent.textContent = "50% Complete";
 
         if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
             window.ComfortAudio.playClick();
@@ -176,9 +176,9 @@ function initDiagnoseWizard() {
     btnBackChecklist.addEventListener("click", () => {
         stepChecklist.classList.remove("active");
         stepSymptom.classList.add("active");
-        wizardProgress.style.width = "33%";
+        wizardProgress.style.width = "0%";
         stepLabel.textContent = "Step 1: Choose Your Symptom";
-        stepPercent.textContent = "33% Complete";
+        stepPercent.textContent = "0% Complete";
 
         if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
             window.ComfortAudio.playClick();
@@ -229,7 +229,7 @@ function initDiagnoseWizard() {
         } else {
             resultHtml = `
                 <div class="diag-box">
-                    <h4>⚠️ Professional Dispatch Recommended</h4>
+                    <h4><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:1.2em;height:1.2em;color:#991b1b;margin-right:8px;vertical-align:middle;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Professional Dispatch Recommended</h4>
                     <p style="font-size:14px; color:#991b1b; line-height:1.6; margin-bottom: 0;">You have cleared the simple home checks, but the symptom persists. This indicates a technical component issue (e.g. refrigerant leak, electrical failure, or bad motor capacitor).</p>
                 </div>
             `;
@@ -324,9 +324,9 @@ function initDiagnoseWizard() {
         window.speechSynthesis.cancel(); // Mute any speaking voice
         stepResults.classList.remove("active");
         stepChecklist.classList.add("active");
-        wizardProgress.style.width = "66%";
+        wizardProgress.style.width = "50%";
         stepLabel.textContent = "Step 2: DIY Checkpoints";
-        stepPercent.textContent = "66% Complete";
+        stepPercent.textContent = "50% Complete";
 
         if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
             window.ComfortAudio.playClick();

@@ -92,14 +92,17 @@ document.addEventListener("DOMContentLoaded", () => {
         metricCapex.textContent = `$${capexCost.toLocaleString()}`;
 
         // Status Badge Logic
-        if (remainingLife > 7) {
+        if (remainingLife > 10) {
             statusBadge.textContent = "Excellent";
             statusBadge.style.background = "#10B981"; // green
-        } else if (remainingLife > 3) {
+        } else if (remainingLife > 5) {
+            statusBadge.textContent = "Good";
+            statusBadge.style.background = "#0B7A53"; // dark green
+        } else if (remainingLife > 2) {
             statusBadge.textContent = "Caution";
             statusBadge.style.background = "#F59E0B"; // orange
         } else {
-            statusBadge.textContent = "Alert - Replace";
+            statusBadge.textContent = "Critical - Replace";
             statusBadge.style.background = "#EF4444"; // red
         }
 

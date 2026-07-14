@@ -39,8 +39,15 @@ function initCorrosionMeter() {
     };
 
     window.onSliderChange = function(val, bypassButtonsUpdate) {
-        lblDistance.textContent = `${parseFloat(val).toFixed(1)} ${parseFloat(val) === 1.0 ? "Mile" : "Miles"}`;
-        if (formDistance) formDistance.value = `${parseFloat(val).toFixed(1)} miles`;
+        const dist = parseFloat(val);
+        let zoneLabel = "";
+        if (dist <= 0.5) zoneLabel = " (Beachfront)";
+        else if (dist <= 1.5) zoneLabel = " (Coastal)";
+        else if (dist <= 5.0) zoneLabel = " (Suburban)";
+        else zoneLabel = " (Inland)";
+
+        lblDistance.textContent = `${dist.toFixed(1)} ${dist === 1.0 ? "Mile" : "Miles"}${zoneLabel}`;
+        if (formDistance) formDistance.value = `${dist.toFixed(1)} miles${zoneLabel}`;
 
         if (!bypassButtonsUpdate) {
             const buttons = document.querySelectorAll("#distance-picker button");
@@ -52,10 +59,8 @@ function initCorrosionMeter() {
             });
         }
 
-        const dist = parseFloat(val);
         const stdLife = Math.min(12.0, 2.5 + dist * 1.9);
         const protLife = Math.min(15.0, 9.5 + dist * 1.1);
-        
         valStdLife.textContent = `${stdLife.toFixed(1)} Years`;
         valProtLife.textContent = `${protLife.toFixed(1)} Years`;
 
@@ -90,7 +95,7 @@ function initCorrosionMeter() {
         window.onSliderChange(e.target.value);
     });
 
-    window.selectDistance("beachfront", 0.1);
+    window.selectDistance("suburban", 3.5);
 }
 
 if (document.readyState === "loading") {

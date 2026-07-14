@@ -194,8 +194,9 @@
             <div class="container">
                 <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; align-items:center;">
                     <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> $95 Diagnostic Dispatch</span>
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(16,185,129,0.35); border:1px solid rgba(16,185,129,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Typical Repair: $150 - $600</span>
                     <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(11,99,229,0.35); border:1px solid rgba(11,99,229,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Same-Day Route Priority</span>
-                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(230,57,70,0.35); border:1px solid rgba(230,57,70,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 2 22 22 22"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Transparent Flat Rates</span>
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(230,57,70,0.35); border:1px solid rgba(230,57,70,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 2 22 22 22"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Flat-Rate Pricing</span>
                 </div>
             </div>
         </section>
@@ -268,8 +269,29 @@
                                 <input autocomplete="tel" type="tel" id="phone" name="phone" required placeholder="(772) 521-3568" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;">
                             </div>
                             <div>
-                                <label for="issue-description" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Describe the issue</label>
-                                <textarea id="issue-description" name="issue-description" required rows="3" placeholder="Blowing warm air / Fan not spinning / Leaking water..." style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white; font-family:inherit;"></textarea>
+                                <label style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Common Symptoms (Tap to Add)</label>
+                                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+                                    <button type="button" onclick="selectSymptom('AC Blowing Warm Air')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Warm Air</button>
+                                    <button type="button" onclick="selectSymptom('Unit Won\'t Turn On')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Won't Start</button>
+                                    <button type="button" onclick="selectSymptom('Water Leak')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Water Leak</button>
+                                    <button type="button" onclick="selectSymptom('Strange Noise')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Strange Noise</button>
+                                </div>
+                                <script>
+                                    function selectSymptom(text) {
+                                        const area = document.getElementById('issue-description');
+                                        if (area) {
+                                            if (area.value) {
+                                                area.value += ', ' + text;
+                                            } else {
+                                                area.value = text;
+                                            }
+                                        }
+                                    }
+                                </script>
+                            </div>
+                            <div>
+                                <label for="issue-description" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Describe the issue (Optional)</label>
+                                <textarea id="issue-description" name="issue-description" rows="3" placeholder="Describe symptoms or leave blank..." style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white; font-family:inherit;"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary" style="margin-top: 10px; font-weight: 700; width: 100%;">Dispatch Same-Day Repair</button>
                         </form>
@@ -282,21 +304,22 @@
     <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="../assets/images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
                     Port St. Lucie, FL 34986<br>
-                    <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
                 </address>
             </div>
             <div class="footer-links">
                 <div class="footer-heading">Our Services</div>
                 <a href="ac-repair.html">AC Repair</a>
                 <a href="ac-installation.html">AC Installation</a>
-                <a href="ac-maintenance.html">Maintenance</a>
-                <a href="commercial.html">Commercial</a>
+                <a href="ac-maintenance.html">AC Maintenance</a>
+                <a href="commercial.html">Commercial Services</a>
+                <a href="pool-heating.html">Pool Heating</a>
             </div>
             <div class="footer-links">
                 <div class="footer-heading">Quick Links</div>

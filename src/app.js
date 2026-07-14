@@ -2103,12 +2103,16 @@ window.sendSimulatedGateCode = function() {
 };
 
 window.verifyVeteranStatus = function() {
-    const vetId = document.getElementById("vet-id").value;
+    const certifyCheck = document.getElementById("vet-certify-check");
     const inputFields = document.getElementById("vet-input-fields");
     const successBanner = document.getElementById("vet-success-banner");
     
-    if (!vetId) {
-        alert("Please enter your Service or Veteran ID card number.");
+    if (certifyCheck && !certifyCheck.checked) {
+        if (typeof window.showToast === "function") {
+            window.showToast("Please check the self-certification box to proceed.", "warning");
+        } else {
+            alert("Please check the self-certification box to proceed.");
+        }
         return;
     }
     
@@ -2117,7 +2121,11 @@ window.verifyVeteranStatus = function() {
     if (successBanner) successBanner.style.display = "block";
     
     if (typeof triggerSound === "function") triggerSound("success");
-    alert("Veteran credentials verified! 5% discount checkout code applied.");
+    if (typeof window.showToast === "function") {
+        window.showToast("Veteran self-certification complete! 5% discount code applied.", "success");
+    } else {
+        alert("Veteran credentials verified! 5% discount checkout code applied.");
+    }
 };
 
 window.toggleBillingPeriod = function(isYearly) {

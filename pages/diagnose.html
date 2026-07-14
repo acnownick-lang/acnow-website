@@ -481,10 +481,10 @@
                             <div class="progress-bar-wrapper">
                                 <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--gray-dark); margin-bottom: 8px;">
                                     <span id="step-label">Step 1: Choose Your Symptom</span>
-                                    <span id="step-percent">33% Complete</span>
+                                    <span id="step-percent">0% Complete</span>
                                 </div>
                                 <div class="progress-track">
-                                    <div class="progress-fill" id="wizard-progress"></div>
+                                    <div class="progress-fill" id="wizard-progress" style="width: 0%;"></div>
                                 </div>
                             </div>
 
@@ -494,35 +494,35 @@
                                 
                                 <div class="option-cards-grid">
                                     <div class="option-card" data-symptom="warm-air">
-                                        <div class="option-icon">💨</div>
+                                        <div class="option-icon" style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; color:var(--primary);"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
                                         <div class="option-info">
                                             <h4>AC is Blowing Warm Air</h4>
                                             <p>Air is discharging from the vents but it isn't cold or feels lukewarm.</p>
                                         </div>
                                     </div>
                                     <div class="option-card" data-symptom="no-power">
-                                        <div class="option-icon">🔌</div>
+                                        <div class="option-icon" style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; color:var(--primary);"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/><path d="M12 6v6"/></svg></div>
                                         <div class="option-info">
                                             <h4>No Power / Won't Turn On</h4>
                                             <p>System is completely silent. Thermostat display might be blank.</p>
                                         </div>
                                     </div>
                                     <div class="option-card" data-symptom="frozen">
-                                        <div class="option-icon">❄️</div>
+                                        <div class="option-icon" style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; color:var(--primary);"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5L7 19M19 12H5M17 19L7 5"/></svg></div>
                                         <div class="option-info">
                                             <h4>Ice or Frozen Coil</h4>
                                             <p>Visual frost or ice block on lines or the indoor air handler coil.</p>
                                         </div>
                                     </div>
                                     <div class="option-card" data-symptom="water-leak">
-                                        <div class="option-icon">💧</div>
+                                        <div class="option-icon" style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; color:var(--primary);"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-13-7-13S5 10.7 5 15a7 7 0 0 0 7 7z"/></svg></div>
                                         <div class="option-info">
                                             <h4>System is Leaking Water</h4>
                                             <p>Water pooling around the furnace unit or dripping from ceiling tiles.</p>
                                         </div>
                                     </div>
                                     <div class="option-card" data-symptom="noises">
-                                        <div class="option-icon">🔊</div>
+                                        <div class="option-icon" style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; color:var(--primary);"><svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></div>
                                         <div class="option-info">
                                             <h4>Strange Noises</h4>
                                             <p>Metal scraping, loud squeals, rattling, or clicking sounds.</p>
@@ -605,13 +605,13 @@
     <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">
-                <img src="../assets/images/Logo2.webp" width="106" height="48" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy" width="160" height="72">
+                <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
                 <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
                     Port St. Lucie, FL 34986<br>
-                    <a href="tel:7725213568" class="phone-link">(772) 521-3568</a>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
                 </address>
             </div>
             <div class="footer-links">
@@ -619,9 +619,10 @@
                 <a href="ac-repair.html">AC Repair</a>
                 <a href="ac-installation.html">AC Installation</a>
                 <a href="ac-maintenance.html">AC Maintenance</a>
-                <a href="services.html">Air Quality</a>
+                <a href="commercial.html">Commercial Services</a>
+                <a href="pool-heating.html">Pool Heating</a>
             </div>
-                        <div class="footer-links">
+            <div class="footer-links">
                 <div class="footer-heading">Quick Links</div>
                 <a href="about.html">About Us</a>
                 <a href="reviews.html">Reviews</a>
@@ -648,7 +649,6 @@
                     <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
                     <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
                 </div>
-                
             </div>
         </div>
     </footer>
