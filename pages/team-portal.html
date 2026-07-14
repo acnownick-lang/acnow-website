@@ -32,7 +32,6 @@
             if (phase === '1') {
                 const path = window.location.pathname.toLowerCase();
                 if (path.includes('members') || 
-                    path.includes('team-portal') || 
                     path.includes('3d-airflow') || 
                     path.includes('corrosion-predictor')) {
                     window.location.replace('../index.html?redirected=phase2-restricted');
@@ -3075,6 +3074,7 @@
                     </html>
                 `);
                 printWindow.document.close();
+            });
 
             // --- Field Co-Pilot JS Helpers ---
             window.switchCategory = function(catName) {
