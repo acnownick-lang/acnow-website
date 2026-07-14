@@ -45,8 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
     maintButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             userInteracted = true;
-            maintButtons.forEach(b => b.classList.remove("active"));
+            maintButtons.forEach(b => {
+                b.classList.remove("active");
+                b.setAttribute("aria-pressed", "false");
+            });
             btn.classList.add("active");
+            btn.setAttribute("aria-pressed", "true");
             maintenanceType = btn.dataset.val;
             updatePlanner();
             

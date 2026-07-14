@@ -43,12 +43,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AC Lifespan & CAPEX Planner | A/C Now LLC</title>
-    <meta name="description" content="Impeccable HVAC services in Port St. Lucie, Palm City, Jupiter, and Stuart. Professional AC repair, installation, pool heating, air quality and maintenance.">
+    <meta name="description" content="Calculate your air conditioner's remaining operating life and potential energy waste. Plan replacements and budget capital expenditures with A/C Now LLC.">
     <link rel="canonical" href="https://acnowllc.com/planner.html">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://acnowllc.com/services.html">
-    <meta property="og:title" content="HVAC Services | Port St. Lucie AC Repair &amp; Installation | A/C Now">
-    <meta property="og:description" content="Impeccable HVAC services in Port St. Lucie, Palm City, Jupiter, and Stuart. Professional AC repair, installation, pool heating, air quality and maintenance.">
+    <meta property="og:url" content="https://acnowllc.com/planner.html">
+    <meta property="og:title" content="AC Lifespan & CAPEX Planner | Financial Tool | A/C Now LLC">
+    <meta property="og:description" content="Calculate your air conditioner's remaining operating life and potential energy waste. Plan replacements and budget capital expenditures with A/C Now LLC.">
     <meta property="og:image" content="https://acnowllc.com/../assets/images/mascot-logo.svg">
     <!-- Google Fonts: Non-blocking (CWV fix) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -472,7 +472,7 @@
 <div class="toolbox-panel-container">
     <div class="tool-grid-2col">
                             <div id="planner-inputs" class="planner-card">
-                                <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 25px; font-weight: 800;">System Parameters</h3>
+                                 <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 25px; font-weight: 800; margin-top: 0;">System Parameters</h2>
                                 <div class="slider-group">
                                     <label for="slider-age">Current System Age: <span id="label-age">5 Years</span></label>
                                     <input type="range" id="slider-age" class="input-slider" min="1" max="15" value="5">
@@ -484,14 +484,14 @@
                                 <div class="slider-group" style="margin-bottom:25px;">
                                     <span style="font-size:13.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:10px;">Maintenance Frequency</span>
                                     <div class="toggle-btn-group" role="group" aria-label="Maintenance Selector">
-                                        <button class="toggle-btn" data-val="none">None (Neglected)</button>
-                                        <button class="toggle-btn active" data-val="yearly">Yearly Tune-Up</button>
-                                        <button class="toggle-btn" data-val="twice">Twice / Year Club</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="none">None (Neglected)</button>
+                                        <button class="toggle-btn active" aria-pressed="true" data-val="yearly">Yearly Tune-Up</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="twice">Twice / Year Club</button>
                                     </div>
                             </div>
                             <div id="planner-results" class="planner-card">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                                    <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin: 0; font-weight: 800;">Lifespan Assessment</h3>
+                                    <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin: 0; font-weight: 800;">Lifespan Assessment</h2>
                                     <span id="lifecycle-status-badge" style="background:#64748b; color:#fff; font-size:11px; font-weight:800; padding:3px 10px; border-radius:30px;">Awaiting Input</span>
                                 </div>
                                 <div class="report-row">
@@ -500,11 +500,11 @@
                                 </div>
                                 <div class="report-row">
                                     <span>Efficiency Loss (SEER Decay):</span>
-                                    <span id="metric-eff-loss" style="color:var(--secondary); font-size:15px;">—</span>
+                                    <span id="metric-eff-loss" style="color:var(--secondary-text); font-size:15px;">—</span>
                                 </div>
                                 <div class="report-row">
                                     <span>Annual Cost Waste:</span>
-                                    <span id="metric-waste-cost" style="color:var(--secondary); font-size:15px;">—</span>
+                                    <span id="metric-waste-cost" style="color:var(--secondary-text); font-size:15px;">—</span>
                                 </div>
                                 <div class="report-row" style="border-bottom:none; margin-bottom:15px;">
                                     <span>Estimated Replacement Cost (CAPEX):</span>
@@ -542,34 +542,34 @@
     <div style="margin-top: 80px;">
         <div class="tool-grid-2col">
                             <div class="planner-card">
-                                <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 25px; font-weight: 800;">Rebate Parameters</h3>
+                                 <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 25px; font-weight: 800; margin-top: 0;">Rebate Parameters</h2>
                                 <div class="slider-group" style="margin-bottom:25px;">
                                     <span style="font-size:13.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:10px;">Select System Configuration Sizing</span>
                                     <div class="toggle-btn-group" id="rebate-seer" role="group" aria-label="SEER Upgrade Selector">
-                                        <button class="toggle-btn" data-val="14">14.3 SEER2 Standard</button>
-                                        <button class="toggle-btn active" data-val="16">16 SEER2 Premium</button>
-                                        <button class="toggle-btn" data-val="18">18+ SEER2 Inverter</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="14">14.3 SEER2 Standard</button>
+                                        <button class="toggle-btn active" aria-pressed="true" data-val="16">16 SEER2 Premium</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="18">18+ SEER2 Inverter</button>
                                     </div>
                                 </div>
                                 <div class="slider-group" style="margin-bottom:25px;">
                                     <span style="font-size:13.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:10px;">System Heating Configuration</span>
                                     <div class="toggle-btn-group" id="rebate-heating" role="group" aria-label="Heating Configuration Selector">
-                                        <button class="toggle-btn active" data-val="heatpump">Energy Star Heat Pump</button>
-                                        <button class="toggle-btn" data-val="straightcool">Electric Straight Cool</button>
+                                        <button class="toggle-btn active" aria-pressed="true" data-val="heatpump">Energy Star Heat Pump</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="straightcool">Electric Straight Cool</button>
                                     </div>
                                 </div>
                                 <div class="slider-group" style="margin-bottom:25px;">
                                     <span style="font-size:13.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:10px;">Client Incentive Discounts</span>
                                     <div class="toggle-btn-group" id="rebate-disc" role="group" aria-label="Client Discounts Selector">
-                                        <button class="toggle-btn active" data-val="standard">Standard Pricing</button>
-                                        <button class="toggle-btn" data-val="club">Comfort Club Member</button>
-                                        <button class="toggle-btn" data-val="military">Active Military / Veteran</button>
+                                        <button class="toggle-btn active" aria-pressed="true" data-val="standard">Standard Pricing</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="club">Comfort Club Member</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="military">Active Military / Veteran</button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="planner-card">
-                                <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800;">Estimated Incentives &amp; Credits</h3>
+                                 <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800; margin-top: 0;">Estimated Incentives &amp; Credits</h2>
                                 <div class="report-row">
                                     <span>2026 Federal Tax Credit (25C):</span>
                                     <span id="val-fed-credit" style="color:var(--primary); font-size:15px;">$2,000</span>
@@ -598,7 +598,7 @@
     <div style="margin-top: 80px;">
         <div class="tool-grid-2col">
                             <div class="planner-card">
-                                <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 25px; font-weight: 800;">Attic Parameters</h3>
+                                 <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 25px; font-weight: 800; margin-top: 0;">Attic Parameters</h2>
                                 <div class="slider-group">
                                     <label for="attic-temp-input">Peak Summer Attic Temperature: <span id="attic-temp-val">135°F</span></label>
                                     <input type="range" id="attic-temp-input" min="100" max="150" value="135" class="input-slider">
@@ -614,10 +614,10 @@
                             </div>
 
                             <div class="planner-card">
-                                <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800;">Estimated Attic Heat Load</h3>
+                                 <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800; margin-top: 0;">Estimated Attic Heat Load</h2>
                                 <div class="report-row">
                                     <span>Ceiling Heat Entry:</span>
-                                    <span id="attic-heat-btu" style="color:var(--secondary); font-size:15px; font-weight:700;">14,000 BTU/hr</span>
+                                    <span id="attic-heat-btu" style="color:var(--secondary-text); font-size:15px; font-weight:700;">14,000 BTU/hr</span>
                                 </div>
                                 <div class="report-row">
                                     <span>Compressor Runtime Reduction:</span>
@@ -660,7 +660,7 @@
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
@@ -698,7 +698,7 @@
         </div>
         <div class="footer-bottom">
             <div class="container footer-bottom-content">
-                <p>&copy; 2026 A/C Now LLC. All rights reserved. Licensed & Insured. Florida License #CAC1820542</p>
+                <p>&copy; 2026 A/C Now LLC. NATE-Certified • EPA 608 Certified • Florida License #CAC1820542</p>
                 <div style="font-size: 12.5px; display: flex; gap: 15px;">
                     <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
                     <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>

@@ -54,30 +54,26 @@ exports.handler = async (event, context) => {
     let authorized = false;
     if (authHeader && authHeader.startsWith('Bearer ')) {
         const token = authHeader.substring(7);
-        if (token === "tp-override-session-7f3a9c2e-active" || token === "override-session-active-token-1981") {
-            authorized = true;
-        } else {
-            try {
-                const crypto = require('crypto');
-                const SECRET_KEY = process.env.JWT_SECRET || "acnow-super-secret-key-1981-treasure-coast";
+        try {
+            const crypto = require('crypto');
+            const SECRET_KEY = process.env.JWT_SECRET;
+            if (!SECRET_KEY) {
+                console.error("JWT_SECRET environment variable is missing!");
+            } else {
                 const parts = token.split('.');
                 if (parts.length === 2) {
-                    const [payloadBase64, signature] = parts;
-                    const hmac = crypto.createHmac('sha256', SECRET_KEY);
-                    hmac.update(payloadBase64);
-                    const expectedSignature = hmac.digest('base64');
-                    if (signature === expectedSignature) {
-                        const payloadStr = Buffer.from(payloadBase64, 'base64').toString('utf8');
-                        const payload = JSON.parse(payloadStr);
-                        // Check if token is older than 24 hours
-                        if (Date.now() - payload.timestamp <= 24 * 60 * 60 * 1000) {
+                    const [payloadB64, sig] = parts;
+                    const computedSig = crypto.createHmac('sha256', SECRET_KEY).update(payloadB64).digest('hex');
+                    if (computedSig === sig) {
+                        const payload = JSON.parse(Buffer.from(payloadB64, 'base64').toString('utf8'));
+                        if (payload.exp && payload.exp > Date.now()) {
                             authorized = true;
                         }
                     }
                 }
-            } catch (e) {
-                // Authorized remains false
             }
+        } catch (e) {
+            // Authorized remains false
         }
     }
 
@@ -101,7 +97,35 @@ exports.handler = async (event, context) => {
             };
         }
 
-        // Return mock success response (storing equipment specs mock)
+        const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+        if (webhookUrl) {
+            const discordPayload = {
+                username: "Operations Monitor",
+                embeds: [{
+                    title: "🛠️ HVAC Equipment Spec Update Submitted",
+                    color: 3447003,
+                    fields: [
+                        { name: "Model Number", value: String(data.model).substring(0, 100), inline: true },
+                        { name: "Serial Number", value: String(data.serial).substring(0, 100), inline: true },
+                        { name: "Filter Size", value: String(data.filter).substring(0, 100), inline: true },
+                        { name: "Refrigerant Type", value: String(data.refrigerant).substring(0, 100), inline: true },
+                        { name: "Technician Notes", value: String(data.notes || "None").substring(0, 1000), inline: false }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(discordPayload)
+                });
+            } catch (err) {
+                console.error("Failed to post specs update to Discord webhook:", err);
+            }
+        }
+
         return {
             statusCode: 200,
             headers,

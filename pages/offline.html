@@ -204,13 +204,13 @@
         <button id="retry-btn" onclick="checkConnectivity()" class="btn">Retry Connection</button>
 
         <div id="sync-container" class="sync-box">
-            <h3>Pending Offline Operations</h3>
+            <h2>Pending Offline Operations</h2>
             <p style="font-size: 0.85rem; margin-bottom: 12px; color:#A0AEC0;">The following items will synchronize as soon as you connect:</p>
             <ul id="sync-list" class="sync-list"></ul>
         </div>
 
         <div class="troubleshoot-box">
-            <h3>AC Self-Help Troubleshooting</h3>
+            <h2>AC Self-Help Troubleshooting</h2>
             <details>
                 <summary>❄️ AC is blowing warm air</summary>
                 <p>Check if the outdoor unit is running. Verify that your air filter is not clogged (restricting airflow). Ensure the thermostat is set to "Cool" and the fan is on "Auto" rather than "On".</p>
@@ -374,7 +374,7 @@
                             li.style.borderLeft = '3px solid var(--secondary)';
                             li.style.background = 'rgba(230, 57, 70, 0.05)';
                             const label = item.item?.payload?.fname ? `${item.item.payload.fname}'s Request` : `${item.originalStore} update`;
-                            li.innerHTML = `⚠️ <strong>[Failed]</strong> [${timeString}] ${label} - Error: ${item.error}. <span style="font-size: 0.8rem; color: #60a5fa; cursor: pointer; text-decoration: underline;" onclick="retryDeadLetter(${item.id})">Retry Send</span>`;
+                            li.innerHTML = `⚠️ <strong>[Failed]</strong> [${timeString}] ${label} - Error: ${item.error}. <button style="background: none; border: none; padding: 0; font-size: 0.8rem; color: #60a5fa; cursor: pointer; text-decoration: underline;" onclick="retryDeadLetter(${item.id})">Retry Send</button>`;
                         } else {
                             const label = item.payload?.fname ? `${item.payload.fname}'s Request` : `${store} update`;
                             li.textContent = `⏳ [Pending] [${timeString}] ${label} - Waiting for connection (Retries: ${item.retries || 0})`;
@@ -413,8 +413,14 @@
                     delTx.objectStore(originalStore).add(itemToRestore);
 
                     delTx.oncomplete = () => {
-                        alert('Restored item back to queue. Reloading...');
-                        location.reload();
+                        if (typeof window.showToast === 'function') {
+                            window.showToast('Restored item back to queue. Reloading...', 'success');
+                        } else {
+                            alert('Restored item back to queue. Reloading...');
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
                     };
                 };
             };

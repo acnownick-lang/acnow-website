@@ -49,9 +49,50 @@ exports.handler = async function(event, context) {
         };
     }
 
-    return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ success: true, message: 'Push subscription saved successfully.' })
-    };
+    try {
+        const body = JSON.parse(event.body || "{}");
+        const sub = body.subscription;
+        if (!sub || !sub.endpoint || !sub.keys || !sub.keys.p256dh || !sub.keys.auth) {
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({ error: 'Invalid payload: subscription (with endpoint and keys) is required.' })
+            };
+        }
+
+        const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+        if (webhookUrl) {
+            const discordPayload = {
+                username: "Operations Monitor",
+                embeds: [{
+                    title: "🔔 New PWA Push Notification Subscription",
+                    color: 741913,
+                    fields: [
+                        { name: "Endpoint", value: sub.endpoint.substring(0, 1000), inline: false },
+                        { name: "p256dh Key", value: sub.keys.p256dh.substring(0, 1000), inline: true },
+                        { name: "Auth Key", value: sub.keys.auth.substring(0, 1000), inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            await fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(discordPayload)
+            });
+        }
+
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({ success: true, message: 'Push subscription saved successfully.' })
+        };
+    } catch (e) {
+        return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({ error: 'Invalid JSON body.' })
+        };
+    }
 };

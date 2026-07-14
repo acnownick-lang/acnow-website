@@ -20,6 +20,7 @@ function initCorrosionMeter() {
         const buttons = document.querySelectorAll("#distance-picker button");
         buttons.forEach(btn => {
             btn.classList.remove("active");
+            btn.setAttribute("aria-pressed", "false");
             btn.style.border = "1px solid var(--gray-light)";
             btn.style.background = "#fff";
             btn.style.color = "var(--dark)";
@@ -33,6 +34,7 @@ function initCorrosionMeter() {
 
         if (buttons[activeIdx]) {
             buttons[activeIdx].classList.add("active");
+            buttons[activeIdx].setAttribute("aria-pressed", "true");
             buttons[activeIdx].style.border = "2px solid var(--primary)";
             buttons[activeIdx].style.background = "rgba(0, 98, 230, 0.05)";
             buttons[activeIdx].style.color = "var(--primary)";
@@ -68,6 +70,7 @@ function initCorrosionMeter() {
             const buttons = document.querySelectorAll("#distance-picker button");
             buttons.forEach(btn => {
                 btn.classList.remove("active");
+                btn.setAttribute("aria-pressed", "false");
                 btn.style.border = "1px solid var(--gray-light)";
                 btn.style.background = "#fff";
                 btn.style.color = "var(--dark)";

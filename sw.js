@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v53'; // Bumped: Security Audit - gated visual errors & star ratings fill override
+const CACHE_NAME = 'acnow-cache-v54'; // Bumped: Correct offline fallback match key and accessibility improvements
 const DEBUG = true;
 
 // Helper function for structured logging
@@ -230,7 +230,7 @@ self.addEventListener('fetch', event => {
         fetch(event.request)
           .catch(err => {
             log('warn', 'Network request failed for restricted HTML page:', url.pathname, err);
-            return caches.match('offline.html');
+            return caches.match('pages/offline.html');
           })
       );
       return;
@@ -251,7 +251,7 @@ self.addEventListener('fetch', event => {
           log('warn', 'Network request failed for HTML page, checking cache:', url.pathname, err);
           return caches.match(event.request, { ignoreSearch: true }).then(cachedResponse => {
             if (cachedResponse) return cachedResponse;
-            return caches.match('offline.html');
+            return caches.match('pages/offline.html');
           });
         })
     );

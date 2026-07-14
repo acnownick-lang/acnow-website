@@ -1216,13 +1216,9 @@
  
                                     <!-- Panel D: Route Sorter -->
                                     <div id="panel-tech-route" class="tech-copilot-panel" style="display:none;">
-                                        <h5 style="margin:0 0 8px 0; font-size:13px; color:#fff; font-weight:700;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="3 6 9 3 15 6 21 3 21 18 15 15 9 18 3 15"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg> Treasure Coast Dispatch Sorter</h5>
-                                        <p style="font-size:11px; color:rgba(255,255,255,0.6); margin-bottom:15px; line-height:1.4;">Select stops. We'll sequence them North-to-South to avoid Palm City / Roosevelt bridge delays and backtrack miles.</p>
-                                        
-                                        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;">
                                             <div style="display:flex; align-items:center; gap:10px;">
                                                 <span style="font-size:12px; font-weight:800; width:22px; height:22px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center;">1</span>
-                                                <select class="route-city-select" style="flex:1; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height:36px; outline:none;">
+                                                <select class="route-city-select" aria-label="Route City Selection Stop 1" style="flex:1; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height:36px; outline:none;">
                                                     <option value="">-- Select Stop --</option>
                                                     <option value="Fort Pierce">Fort Pierce (Northmost)</option>
                                                     <option value="St. Lucie West">St. Lucie West (PSL North)</option>
@@ -1235,7 +1231,7 @@
                                             </div>
                                             <div style="display:flex; align-items:center; gap:10px;">
                                                 <span style="font-size:12px; font-weight:800; width:22px; height:22px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center;">2</span>
-                                                <select class="route-city-select" style="flex:1; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height:36px; outline:none;">
+                                                <select class="route-city-select" aria-label="Route City Selection Stop 2" style="flex:1; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height:36px; outline:none;">
                                                     <option value="">-- Select Stop --</option>
                                                     <option value="Fort Pierce">Fort Pierce (Northmost)</option>
                                                     <option value="St. Lucie West">St. Lucie West (PSL North)</option>
@@ -1248,7 +1244,7 @@
                                             </div>
                                             <div style="display:flex; align-items:center; gap:10px;">
                                                 <span style="font-size:12px; font-weight:800; width:22px; height:22px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center;">3</span>
-                                                <select class="route-city-select" style="flex:1; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height:36px; outline:none;">
+                                                <select class="route-city-select" aria-label="Route City Selection Stop 3" style="flex:1; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height:36px; outline:none;">
                                                     <option value="">-- Select Stop --</option>
                                                     <option value="Fort Pierce">Fort Pierce (Northmost)</option>
                                                     <option value="St. Lucie West">St. Lucie West (PSL North)</option>
@@ -1261,7 +1257,7 @@
                                             </div>
                                             <div style="display:flex; align-items:center; gap:10px;">
                                                 <span style="font-size:12px; font-weight:800; width:22px; height:22px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center;">4</span>
-                                                <select class="route-city-select" style="flex:1; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height:36px; outline:none;">
+                                                <select class="route-city-select" aria-label="Route City Selection Stop 4" style="flex:1; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height:36px; outline:none;">
                                                     <option value="">-- Select Stop --</option>
                                                     <option value="Fort Pierce">Fort Pierce (Northmost)</option>
                                                     <option value="St. Lucie West">St. Lucie West (PSL North)</option>
@@ -2036,25 +2032,25 @@
                                     <tr style="border-bottom:1px solid var(--gray-light);">
                                         <td style="padding:8px 10px; color:var(--gray-dark);">Labor (hrs &times; rate)</td>
                                         <td style="padding:8px 10px; text-align:right;">
-                                            <input autocomplete="name" type="number" id="inv-labor" name="inv-labor" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
+                                            <input autocomplete="name" type="number" id="inv-labor" name="inv-labor" aria-label="Labor charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
                                         </td>
                                     </tr>
                                     <tr style="border-bottom:1px solid var(--gray-light);">
                                         <td style="padding:8px 10px; color:var(--gray-dark);">Parts &amp; Materials</td>
                                         <td style="padding:8px 10px; text-align:right;">
-                                            <input autocomplete="name" type="number" id="inv-parts" name="inv-parts" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
+                                            <input autocomplete="name" type="number" id="inv-parts" name="inv-parts" aria-label="Parts and materials charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
                                         </td>
                                     </tr>
                                     <tr style="border-bottom:1px solid var(--gray-light);">
                                         <td style="padding:8px 10px; color:var(--gray-dark);">Refrigerant</td>
                                         <td style="padding:8px 10px; text-align:right;">
-                                            <input autocomplete="name" type="number" id="inv-refrigerant" name="inv-refrigerant" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
+                                            <input autocomplete="name" type="number" id="inv-refrigerant" name="inv-refrigerant" aria-label="Refrigerant charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
                                         </td>
                                     </tr>
                                     <tr style="border-bottom:1px solid var(--gray-light);">
                                         <td style="padding:8px 10px; color:var(--gray-dark);">Mileage / Travel Surcharge</td>
                                         <td style="padding:8px 10px; text-align:right;">
-                                            <input autocomplete="name" type="number" id="inv-mileage" name="inv-mileage" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
+                                            <input autocomplete="name" type="number" id="inv-mileage" name="inv-mileage" aria-label="Mileage and travel surcharge charge amount in dollars" min="0" step="0.01" placeholder="0.00" value="" style="width:90px; padding:5px 8px; border-radius:5px; border:1px solid var(--gray-light); font-size:12.5px; text-align:right;" oninput="calcInvoice()">
                                         </td>
                                     </tr>
                                     <tr style="border-top:2px solid var(--gray-light);">
@@ -2090,7 +2086,7 @@
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
@@ -2128,7 +2124,7 @@
         </div>
         <div class="footer-bottom">
             <div class="container footer-bottom-content">
-                <p>&copy; 2026 A/C Now LLC. All rights reserved. Licensed & Insured. Florida License #CAC1820542</p>
+                <p>&copy; 2026 A/C Now LLC. NATE-Certified • EPA 608 Certified • Florida License #CAC1820542</p>
                 <div style="font-size: 12.5px; display: flex; gap: 15px;">
                     <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
                     <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>

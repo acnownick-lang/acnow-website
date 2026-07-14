@@ -469,16 +469,16 @@
         <div class="container">
             <div class="toolbox-panel-container"><div class="tool-grid-2col">
                             <div class="tool-card">
-                                <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 15px; font-weight: 800;">Coil Silt degradation calculator</h3>
+                                <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 15px; font-weight: 800; margin-top: 0;">Coil Silt degradation calculator</h2>
                                 <p style="font-size:13.5px; color:var(--gray-dark); margin-bottom:25px; line-height:1.5;">Marine salt aerosols dramatically accelerate HVAC condenser decomposition in coastal Martin and St. Lucie counties.</p>
                                 
                                 <div style="margin-bottom: 25px;">
                                     <span style="font-size: 13.5px; font-weight: 700; color: var(--dark); display: block; margin-bottom: 10px;">Select Distance to Coast</span>
-                                    <div class="option-box-grid" id="distance-picker" style="grid-template-columns: repeat(4, 1fr); gap: 10px;">
-                                        <button class="toggle-btn" onclick="selectDistance('beachfront', 0.1)" style="font-size: 11.5px; padding: 10px 5px; font-weight: 700; border-radius:6px; width:100%;">0.1 mi</button>
-                                        <button class="toggle-btn" onclick="selectDistance('coastal', 0.8)" style="font-size: 11.5px; padding: 10px 5px; font-weight: 700; border-radius:6px; width:100%;">0.8 mi</button>
-                                        <button class="toggle-btn" onclick="selectDistance('suburban', 3.5)" style="font-size: 11.5px; padding: 10px 5px; font-weight: 700; border-radius:6px; width:100%;">3.5 mi</button>
-                                        <button class="toggle-btn" onclick="selectDistance('inland', 7.5)" style="font-size: 11.5px; padding: 10px 5px; font-weight: 700; border-radius:6px; width:100%;">7.5 mi</button>
+                                    <div class="option-box-grid" id="distance-picker" role="group" aria-label="Distance to Coast" style="grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                                        <button class="toggle-btn" aria-pressed="false" onclick="selectDistance('beachfront', 0.1)" style="font-size: 11.5px; padding: 10px 5px; font-weight: 700; border-radius:6px; width:100%;">0.1 mi</button>
+                                        <button class="toggle-btn" aria-pressed="false" onclick="selectDistance('coastal', 0.8)" style="font-size: 11.5px; padding: 10px 5px; font-weight: 700; border-radius:6px; width:100%;">0.8 mi</button>
+                                        <button class="toggle-btn" aria-pressed="false" onclick="selectDistance('suburban', 3.5)" style="font-size: 11.5px; padding: 10px 5px; font-weight: 700; border-radius:6px; width:100%;">3.5 mi</button>
+                                        <button class="toggle-btn" aria-pressed="false" onclick="selectDistance('inland', 7.5)" style="font-size: 11.5px; padding: 10px 5px; font-weight: 700; border-radius:6px; width:100%;">7.5 mi</button>
                                     </div>
                                 </div>
 
@@ -500,7 +500,7 @@
 
                             <div style="background:var(--dark); color:#fff; padding:30px; border-radius:var(--border-radius); border:1px solid rgba(255,255,255,0.06); display:flex; flex-direction:column; justify-content:space-between;">
                                 <div>
-                                    <h3 style="margin: 0 0 15px 0; font-size:15px; color:#fff; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Estimated Condenser Lifespan</h3>
+                                    <h2 style="margin: 0 0 15px 0; font-size:15px; color:#fff; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Estimated Condenser Lifespan</h2>
                                     <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:15px; margin-bottom:12px;">
                                         <div style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 4px; font-weight:700;">Standard Unprotected Coil</div>
                                         <div id="life-unprotected" style="font-size: 24px; font-weight: 800; color: #fff; font-family:var(--font-heading);">—</div>
@@ -547,7 +547,7 @@
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
@@ -585,7 +585,7 @@
         </div>
         <div class="footer-bottom">
             <div class="container footer-bottom-content">
-                <p>&copy; 2026 A/C Now LLC. All rights reserved. Licensed & Insured. Florida License #CAC1820542</p>
+                <p>&copy; 2026 A/C Now LLC. NATE-Certified • EPA 608 Certified • Florida License #CAC1820542</p>
                 <div style="font-size: 12.5px; display: flex; gap: 15px;">
                     <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
                     <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>

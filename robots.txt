@@ -3,7 +3,6 @@ Allow: /
 
 # Block internal utility pages
 Disallow: /offline.html
-Disallow: /dev-dashboard.html
 Disallow: /members.html
 Disallow: /team-portal.html
 Disallow: /3d-airflow.html

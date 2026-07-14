@@ -2,6 +2,7 @@
 # Configures build settings, redirects, headers, serverless functions, and edge functions.
 
 [build]
+  command = "npm run build"
   publish = "."
   ignore = "exit 0"
 

@@ -64,6 +64,7 @@ export async function handler(event, context) {
   if (origin && !allowedOrigin) {
     return {
       statusCode: 403,
+      headers: corsHeaders,
       body: JSON.stringify({ error: "Access Denied: Origin not allowed" }),
     };
   }
@@ -292,7 +293,7 @@ export async function handler(event, context) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "A/C Now Site Alerts <alerts@yourverifieddomain.com>",
+            from: "A/C Now Site Alerts <alerts@acnowllc.com>",
             to: ["chris@acnowllc.com", "sean@acnowllc.com"],
             subject: emailSubject,
             html: emailHtml,

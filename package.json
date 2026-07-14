@@ -1,8 +1,12 @@
 {
   "scripts": {
+    "build": "node scripts/minify.js",
     "deploy": "npx netlify-cli@17 deploy --dir=. --prod"
   },
   "dependencies": {
     "ws": "^8.21.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.0"
   }
 }
