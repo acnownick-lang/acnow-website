@@ -2272,6 +2272,17 @@
             })();
             // ─────────────────────────────────────────────────────────────────────────────
 
+            // Trigger brand audio feedback safely
+            function triggerSound(type) {
+                if (window.ComfortAudio) {
+                    if (type === "click" && typeof window.ComfortAudio.playClick === "function") {
+                        window.ComfortAudio.playClick();
+                    } else if (type === "tick" && typeof window.ComfortAudio.playTick === "function") {
+                        window.ComfortAudio.playTick();
+                    }
+                }
+            }
+
             // NOTE: btn-login-demo removed – element does not exist in this portal view.
             const btnLogout = document.getElementById("btn-logout");
             const btnsSignup = document.querySelectorAll(".btn-signup");
