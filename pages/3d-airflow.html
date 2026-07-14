@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" class="phase-2">
+<html lang="en" class="phase-1">
 <head>
     <script>
-        // This page is a public tool (unlike Members Area / Team Portal / Corrosion
-        // Predictor, which are still gated) — it no longer checks acnow_phase or
-        // redirects guests away. It renders directly for every visitor.
         (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('../index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+
             // bfcache breakout safety guard
             window.addEventListener('pageshow', function(event) {
                 if (event.persisted) {
@@ -17,7 +47,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#0B63E5">
     <title>3D Comfort Diagnostics & Airflow Workspace | A/C Now LLC</title>
     <link rel="manifest" href="../manifest.json">
