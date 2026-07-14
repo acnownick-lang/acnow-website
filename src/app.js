@@ -2410,8 +2410,8 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
         const devHosts = ["localhost", "127.0.0.1", "deploy-preview", "acnow-staging.netlify.app"];
         const isDevHost = devHosts.some(host => window.location.hostname.includes(host));
 
-        // Allow on production if Phase 2 mascot unlock is active
-        if (!isDev && !isDevHost) return;
+        // Unconditional: always render the QA review console bar on this deployment for test & critique
+        // if (!isDev && !isDevHost) return;
 
         // Get saved checkbox states
         let checklistStates = {};
