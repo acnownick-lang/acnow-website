@@ -147,9 +147,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // 7. 50-Point Mission Checklist Dashboard
     // ==========================================================================
     const initializeChecklist = () => {
-        const tabButtons = document.querySelectorAll(".checklist-tab-btn");
-        const panels = document.querySelectorAll(".checklist-panel");
-        const items = document.querySelectorAll(".checklist-item");
+        const container = document.querySelector(".checklist-dashboard");
+        if (!container) return;
+
+        const tabButtons = container.querySelectorAll(".checklist-tab-btn");
+        const panels = container.querySelectorAll(".checklist-panel");
+        const items = container.querySelectorAll(".checklist-item");
 
         const percentageEl = document.getElementById("chk-percentage");
         const progressRing = document.getElementById("chk-ring-bar");
@@ -210,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const updateProgress = () => {
             const totalItems = items.length;
-            const checkedItems = document.querySelectorAll(".checklist-item.checked").length;
+            const checkedItems = container.querySelectorAll(".checklist-item.checked").length;
             const percentage = Math.round((checkedItems / totalItems) * 100);
 
             // Update percentage text
@@ -223,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Recalculate badge counts for each category tab dynamically
             panels.forEach(panel => {
                 const panelId = panel.id;
-                const tabBtn = document.querySelector(`.checklist-tab-btn[data-target="${panelId}"]`);
+                const tabBtn = container.querySelector(`.checklist-tab-btn[data-target="${panelId}"]`);
                 if (tabBtn) {
                     const badge = tabBtn.querySelector(".badge-count");
                     const checkedInPanel = panel.querySelectorAll(".checklist-item.checked").length;

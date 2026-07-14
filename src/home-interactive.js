@@ -484,6 +484,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         });
+
+        // Initialize active tab state on load (especially if moldmap is default)
+        const activeTabBtn = document.querySelector(".smart-tab-btn.active");
+        if (activeTabBtn && activeTabBtn.getAttribute("data-tab") === "moldmap") {
+            window.updateHomeMoldMap();
+        }
     };
     initializeSmartClimateTabs();
 
