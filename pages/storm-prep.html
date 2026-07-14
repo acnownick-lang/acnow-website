@@ -60,7 +60,7 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="../assets/css/redesign.css?v=105">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=106">
     <!-- HVACBusiness Schema -->
     <script type="application/ld+json">
     {
@@ -399,6 +399,11 @@
             align-items: center;
             gap: 8px;
         }
+        @media (max-width: 991px) {
+            #storm-card-cta {
+                display: none !important;
+            }
+        }
     
 </style>
 </head>
@@ -507,6 +512,7 @@
                                     <div style="text-align:center; margin-bottom:25px;" aria-live="polite">
                                         <div id="storm-score" style="font-size:48px; font-weight:800; color:#64748b; font-family:var(--font-heading);">—</div>
                                         <div id="storm-score-text" style="font-size:13.5px; color:#64748b; font-weight:600; text-transform:uppercase; margin-top:5px;">Awaiting Assessment</div>
+                                        <div id="storm-resume-note" style="display:none; font-size:11.5px; color:#64748b; margin-top:6px; font-style:italic; font-weight:600;">(Resumed from previous visit)</div>
                                         <div class="progress-track" style="background: var(--gray-light); height: 8px; border-radius: 4px; overflow: hidden; margin: 15px auto 0; max-width: 200px;">
                                             <div id="storm-progress-fill" style="background: #9ca3af; width: 0%; height: 100%; transition: width 0.3s ease, background-color 0.3s ease;"></div>
                                         </div>
@@ -515,7 +521,7 @@
                                         Priority Dispatch Queue Status: Awaiting Assessment
                                     </div>
                                 </div>
-                                <a href="contact.html" class="btn btn-primary btn-full" style="margin-top:20px;">Pre-Book Emergency Storm Dispatch</a>
+                                <a href="contact.html" id="storm-card-cta" class="btn btn-primary btn-full" style="margin-top:20px;">Pre-Book Emergency Storm Dispatch</a>
                             </div>
                         </div></div>
 
@@ -553,6 +559,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const stormScoreText = document.getElementById("storm-score-text");
     const stormPriority = document.getElementById("storm-priority-badge");
     const progressFill = document.getElementById("storm-progress-fill");
+    const resumeNote = document.getElementById("storm-resume-note");
 
     if (stormForm) {
         const checks = stormForm.querySelectorAll("input[type='checkbox']");
@@ -565,6 +572,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 c.checked = savedState === "true";
             }
         });
+
+        // Show resume note on load if any boxes were checked in previous session
+        let initialChecked = 0;
+        checks.forEach(c => {
+            if (c.checked) initialChecked++;
+        });
+        if (resumeNote && initialChecked > 0) {
+            resumeNote.style.display = "block";
+        }
 
         function updateStormScore() {
             let checkedCount = 0;
@@ -584,7 +600,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (stormScore) {
                 if (userInteracted) {
                     stormScore.textContent = `${pct}%`;
-                    stormScore.style.color = checkedCount === 0 ? "#64748b" : (pct === 100 ? "#0B7A53" : (pct >= 60 ? "#F59E0B" : "var(--secondary)"));
+                    stormScore.style.color = checkedCount === 0 ? "#64748b" : (pct === 100 ? "#0B7A53" : (pct === 80 ? "#10B981" : (pct === 60 ? "#D97706" : "#C22A36")));
                 } else {
                     stormScore.textContent = "—";
                     stormScore.style.color = "#64748b";
@@ -594,11 +610,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (progressFill) {
                 progressFill.style.width = `${pct}%`;
                 if (pct === 100) {
-                    progressFill.style.backgroundColor = "#0B7A53"; // green
-                } else if (pct >= 60) {
-                    progressFill.style.backgroundColor = "#F59E0B"; // gold / warm yellow
+                    progressFill.style.backgroundColor = "#0B7A53"; // dark green
+                } else if (pct === 80) {
+                    progressFill.style.backgroundColor = "#10B981"; // light green
+                } else if (pct === 60) {
+                    progressFill.style.backgroundColor = "#D97706"; // dark orange/gold
                 } else {
-                    progressFill.style.backgroundColor = "#9ca3af"; // neutral gray
+                    progressFill.style.backgroundColor = "#C22A36"; // dark red
                 }
             }
 
@@ -606,30 +624,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (checkedCount === 0) {
                     stormScoreText.textContent = "AWAITING ASSESSMENT";
                     stormScoreText.style.color = "#64748b";
-                    stormPriority.textContent = "Priority Dispatch Queue Status: Awaiting Assessment";
+                    stormPriority.textContent = "Priority Dispatch: Assessment Pending";
                     stormPriority.style.background = "rgba(100, 116, 139, 0.08)";
                     stormPriority.style.borderColor = "rgba(100, 116, 139, 0.15)";
                     stormPriority.style.color = "#64748b";
                 } else if (pct === 100) {
                     stormScoreText.textContent = "SECURED / READY";
                     stormScoreText.style.color = "#0B7A53";
-                    stormPriority.textContent = "Priority Dispatch Queue Status: SECURED (100%)";
+                    stormPriority.textContent = "Priority Dispatch: Recommended (100% Prepared)";
+                    stormPriority.style.background = "rgba(11, 122, 83, 0.08)";
+                    stormPriority.style.borderColor = "rgba(11, 122, 83, 0.15)";
+                    stormPriority.style.color = "#0B7A53";
+                } else if (pct === 80) {
+                    stormScoreText.textContent = "LOW RISK / PREPARED";
+                    stormScoreText.style.color = "#10B981";
+                    stormPriority.textContent = "Priority Dispatch: Recommended (80% Prepared)";
                     stormPriority.style.background = "rgba(16, 185, 129, 0.08)";
                     stormPriority.style.borderColor = "rgba(16, 185, 129, 0.15)";
-                    stormPriority.style.color = "#0B7A53";
-                } else if (pct >= 60) {
+                    stormPriority.style.color = "#10B981";
+                } else if (pct === 60) {
                     stormScoreText.textContent = "MODERATE RISK";
-                    stormScoreText.style.color = "#945203";
-                    stormPriority.textContent = "Priority Dispatch Queue Status: Elevated Priority";
-                    stormPriority.style.background = "rgba(245, 158, 11, 0.08)";
-                    stormPriority.style.borderColor = "rgba(245, 158, 11, 0.15)";
-                    stormPriority.style.color = "#945203";
+                    stormScoreText.style.color = "#D97706";
+                    stormPriority.textContent = "Priority Dispatch: Recommended (60% Prepared)";
+                    stormPriority.style.background = "rgba(217, 119, 6, 0.08)";
+                    stormPriority.style.borderColor = "rgba(217, 119, 6, 0.15)";
+                    stormPriority.style.color = "#D97706";
                 } else {
-                    stormScoreText.textContent = "CRITICAL RISK";
+                    stormScoreText.textContent = "HIGH RISK";
                     stormScoreText.style.color = "#C22A36";
-                    stormPriority.textContent = "Priority Dispatch Queue Status: Standard";
-                    stormPriority.style.background = "rgba(230, 57, 70, 0.08)";
-                    stormPriority.style.borderColor = "rgba(230, 57, 70, 0.15)";
+                    stormPriority.textContent = "Priority Dispatch: Standard Standby Support";
+                    stormPriority.style.background = "rgba(194, 42, 54, 0.08)";
+                    stormPriority.style.borderColor = "rgba(194, 42, 54, 0.15)";
                     stormPriority.style.color = "#C22A36";
                 }
             }
@@ -637,6 +662,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         checks.forEach(c => c.addEventListener("change", () => {
             userInteracted = true;
+            if (resumeNote) {
+                resumeNote.style.display = "none";
+            }
             updateStormScore();
         }));
         
@@ -648,6 +676,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.removeItem(`storm_check_${c.id}`);
                 });
                 userInteracted = false;
+                if (resumeNote) {
+                    resumeNote.style.display = "none";
+                }
                 updateStormScore();
                 if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
                     window.ComfortAudio.playClick();
@@ -659,9 +690,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 </script>
-
         </div>
     </section>
+
     <footer class="footer">
         <div class="container footer-container">
             <div class="footer-brand">

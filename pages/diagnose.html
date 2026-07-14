@@ -60,7 +60,7 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="../assets/css/redesign.css?v=105">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=106">
     <!-- HVACBusiness Schema -->
     <script type="application/ld+json">
     {
@@ -270,21 +270,28 @@
         }
         .option-cards-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 15px;
             margin-bottom: 25px;
         }
         .option-cards-grid .option-card {
             margin-bottom: 0;
+            grid-column: span 2;
         }
         @media (min-width: 769px) {
-            .option-cards-grid .option-card:last-child {
-                grid-column: span 2;
+            .option-cards-grid .option-card:nth-child(4) {
+                grid-column: 2 / span 2;
+            }
+            .option-cards-grid .option-card:nth-child(5) {
+                grid-column: 4 / span 2;
             }
         }
         @media (max-width: 768px) {
             .option-cards-grid {
                 grid-template-columns: 1fr;
+            }
+            .option-cards-grid .option-card {
+                grid-column: span 1 !important;
             }
         }
         .option-card {

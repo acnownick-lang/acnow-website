@@ -540,7 +540,8 @@ section {
 .about-experience-badge {
     position: absolute;
     bottom: 0;
-    left: -20px;
+    right: 0;
+    left: auto;
     background-color: var(--dark);
     color: var(--white);
     padding: 24px;
@@ -4319,6 +4320,9 @@ section.trust-bar {
     .tool-card, .planner-card {
         padding: 20px !important;
     }
+}
+
+@media (max-width: 576px) {
     .toggle-btn-group {
         flex-direction: column;
         gap: 8px;

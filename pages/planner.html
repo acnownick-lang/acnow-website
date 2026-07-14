@@ -60,7 +60,7 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="../assets/css/redesign.css?v=105">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=106">
     <!-- HVACBusiness Schema -->
     <script type="application/ld+json">
     {
@@ -111,6 +111,7 @@
         :root {
             --primary: #0B63E5;
             --secondary: #E63946;
+            --secondary-text: #B91C2C;
         }
         .header::after {
             content: '';
@@ -488,6 +489,7 @@
                                         <button class="toggle-btn active" aria-pressed="true" data-val="yearly">Yearly Tune-Up</button>
                                         <button class="toggle-btn" aria-pressed="false" data-val="twice">Twice / Year Club</button>
                                     </div>
+                                </div>
                             </div>
                             <div id="planner-results" class="planner-card" aria-live="polite">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
@@ -546,7 +548,7 @@
                                 <div class="slider-group" style="margin-bottom:25px;">
                                     <span style="font-size:13.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:10px;">Select System Configuration Sizing</span>
                                     <div class="toggle-btn-group" id="rebate-seer" role="group" aria-label="SEER Upgrade Selector">
-                                        <button class="toggle-btn" aria-pressed="false" data-val="14">14.3 SEER2 Standard</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="14.3">14.3 SEER2 Standard</button>
                                         <button class="toggle-btn active" aria-pressed="true" data-val="16">16 SEER2 Premium</button>
                                         <button class="toggle-btn" aria-pressed="false" data-val="18">18+ SEER2 Inverter</button>
                                     </div>
@@ -586,7 +588,7 @@
                                     <strong>Total Combined Savings:</strong>
                                     <strong id="val-total-incentive" style="color:#0B7A53; font-size:20px;">$2,200</strong>
                                 </div>
-                                <div style="background:rgba(16,185,129,0.05); padding:15px; border-radius:8px; border:1px solid rgba(16,185,129,0.15); margin-top:20px;">
+                                <div style="background:rgba(11,122,83,0.05); padding:15px; border-radius:8px; border:1px solid rgba(11,122,83,0.15); margin-top:20px;">
                                     <p style="font-size:11.5px; color:var(--gray-dark); margin:0; line-height:1.45;">
                                         <strong>FPL Instant Rebate:</strong> Injected automatically on your invoice upon qualifying installation of a central split heat pump (&gt; 15.2 SEER2) by certified specialists.
                                     </p>
@@ -718,7 +720,6 @@
     <script src="../assets/js/app.js?v=101" defer></script>
     <script src="../assets/js/lifecycle-planner.js?v=10" defer></script>
     <script src="../assets/js/rebate-estimator.js?v=10" defer></script>
-    <script src="../assets/js/humidity-planner.js" defer></script>
 
 </body>
 </html>

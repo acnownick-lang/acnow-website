@@ -290,31 +290,35 @@ function initDiagnoseWizard() {
         let speechUtterance = null;
 
         if (btnSpeak) {
-            btnSpeak.addEventListener("click", () => {
-                if (window.speechSynthesis.speaking) {
-                    window.speechSynthesis.cancel();
-                    resetSpeechUI();
-                } else {
-                    window.speechSynthesis.cancel(); // safety clear
-                    
-                    speechUtterance = new SpeechSynthesisUtterance(speechText);
-                    
-                    speechUtterance.onstart = () => {
-                        waveWrap.style.display = "flex";
-                        btnSpeak.innerHTML = `<span>⏹️</span> Stop Voice`;
-                    };
-                    
-                    speechUtterance.onend = () => {
+            if (!('speechSynthesis' in window)) {
+                btnSpeak.style.display = "none";
+            } else {
+                btnSpeak.addEventListener("click", () => {
+                    if (window.speechSynthesis.speaking) {
+                        window.speechSynthesis.cancel();
                         resetSpeechUI();
-                    };
+                    } else {
+                        window.speechSynthesis.cancel(); // safety clear
+                        
+                        speechUtterance = new SpeechSynthesisUtterance(speechText);
+                        
+                        speechUtterance.onstart = () => {
+                            waveWrap.style.display = "flex";
+                            btnSpeak.innerHTML = `<span>⏹️</span> Stop Voice`;
+                        };
+                        
+                        speechUtterance.onend = () => {
+                            resetSpeechUI();
+                        };
 
-                    speechUtterance.onerror = () => {
-                        resetSpeechUI();
-                    };
+                        speechUtterance.onerror = () => {
+                            resetSpeechUI();
+                        };
 
-                    window.speechSynthesis.speak(speechUtterance);
-                }
-            });
+                        window.speechSynthesis.speak(speechUtterance);
+                    }
+                });
+            }
         }
 
         function resetSpeechUI() {
@@ -336,7 +340,9 @@ function initDiagnoseWizard() {
 
     // Step 3 Back -> Step 2
     btnBackResults.addEventListener("click", () => {
-        window.speechSynthesis.cancel(); // Mute any speaking voice
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); // Mute any speaking voice
+        }
         stepResults.classList.remove("active");
         stepChecklist.classList.add("active");
         wizardProgress.style.width = "50%";
@@ -355,8 +361,7 @@ function initDiagnoseWizard() {
             const nameVal = document.getElementById("fullname_diag").value.trim();
             const nameParts = nameVal.split(" ");
             const fname = nameParts[0] || "";
-            const lname = nameParts.slice(1).join(" ") || "Customer";
-            const reservedSlot = diagnoseForm.querySelector("input[name='reserved_appointment_slot']") ? diagnoseForm.querySelector("input[name='reserved_appointment_slot']").value : "None";
+            const lname = nameParts.slice(1).join(" ") || "";
 
             const payload = {
                 fname,
@@ -366,7 +371,7 @@ function initDiagnoseWizard() {
                 tel: document.getElementById("phone_diag").value.trim(),
                 email: document.getElementById("email_diag").value.trim(),
                 city: document.getElementById("city_diag").value.trim(),
-                message: `[Interactive Troubleshooter Report] ${diagSummaryInput.value} [Reserved Slot] ${reservedSlot} [Notes] ${document.getElementById("notes_diag").value.trim()}`,
+                message: `[Interactive Troubleshooter Report] ${diagSummaryInput.value} [Notes] ${document.getElementById("notes_diag").value.trim()}`,
                 honeypot: document.getElementById("honeypot_diag").value
             };
 
@@ -385,9 +390,9 @@ function initDiagnoseWizard() {
                     stepSymptom.classList.add("active");
                     optionCards.forEach(c => c.classList.remove("selected"));
                     btnNextSymptom.setAttribute("disabled", "true");
-                    wizardProgress.style.width = "33%";
+                    wizardProgress.style.width = "0%";
                     stepLabel.textContent = "Step 1: Choose Your Symptom";
-                    stepPercent.textContent = "33% Complete";
+                    stepPercent.textContent = "0% Complete";
                     
                     if (typeof window.configurePushNotifications === "function") {
                         window.configurePushNotifications();

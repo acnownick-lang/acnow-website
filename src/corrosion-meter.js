@@ -61,8 +61,8 @@ function initCorrosionMeter() {
 
         let zoneLabel = "";
         if (dist <= 0.5) zoneLabel = " (Beachfront)";
-        else if (dist <= 1.5) zoneLabel = " (Coastal)";
-        else if (dist <= 5.0) zoneLabel = " (Suburban)";
+        else if (dist <= 3.0) zoneLabel = " (Coastal)";
+        else if (dist <= 6.0) zoneLabel = " (Suburban)";
         else zoneLabel = " (Inland)";
 
         lblDistance.textContent = `${dist.toFixed(1)} ${dist === 1.0 ? "Mile" : "Miles"}${zoneLabel}`;
@@ -85,25 +85,29 @@ function initCorrosionMeter() {
         valProtLife.textContent = `${protLife.toFixed(1)} Years`;
 
         let severityText = "LOW INLAND RISK";
-        let severityColor = "#10B981";
+        let severityColor = "#0B7A53"; // WCAG AA Green
         let markerPct = 15;
         let recommendationText = "Inland Standard Staging";
+        let degradePercent = "1%";
 
         if (dist <= 1.0) {
             severityText = "CRITICAL SEVERE RISK";
-            severityColor = "#EF4444";
-            markerPct = 95;
+            severityColor = "#C22A36"; // WCAG AA Red
+            markerPct = dist <= 0.5 ? 95 : 85;
             recommendationText = "Blygold / Coastal Epoxy Coating Mandate";
-        } else if (dist <= 2.5) {
+            degradePercent = dist <= 0.5 ? "30%" : "25%";
+        } else if (dist <= 3.0) {
             severityText = "HIGH CORROSION RISK";
-            severityColor = "#F59E0B";
-            markerPct = 75;
+            severityColor = "#D97706"; // WCAG AA Orange
+            markerPct = 65;
             recommendationText = "Gulfshield / Marine-Grade Coil Shield";
-        } else if (dist <= 5.0) {
+            degradePercent = dist <= 2.0 ? "15%" : "8%";
+        } else if (dist <= 6.0) {
             severityText = "MODERATE RISK";
-            severityColor = "#FBBF24";
-            markerPct = 45;
+            severityColor = "#B45309"; // WCAG AA Deep Amber
+            markerPct = 40;
             recommendationText = "Standard Condenser Guard Protection";
+            degradePercent = "4%";
         }
 
         if (valRecType.id === "val-rec-type") {
@@ -116,11 +120,6 @@ function initCorrosionMeter() {
         if (severityMarker) severityMarker.style.left = `${markerPct}%`;
 
         if (valDegradeRate) {
-            let degradePercent = "3%";
-            if (dist <= 0.5) degradePercent = "30%";
-            else if (dist <= 1.0) degradePercent = "25%";
-            else if (dist <= 2.0) degradePercent = "15%";
-            else if (dist <= 3.0) degradePercent = "8%";
             valDegradeRate.textContent = `${degradePercent} / year`;
         }
 

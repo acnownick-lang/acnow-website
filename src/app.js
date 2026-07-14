@@ -622,6 +622,28 @@ window.checkZipAvailability = function() {
         resultDiv.style.color = "#C22A36";
         resultDiv.innerHTML = `🔴 <strong>Service Availability: Out of Service Area</strong><br>Zip code <strong>${zipInput}</strong> is currently outside our service region. We only serve Martin, St. Lucie, and northern Palm Beach counties. If you believe this is in error, call <a href="tel:7725213568" style="color: inherit; font-weight: 700;">(772) 521-3568</a>.`;
     }
+
+    // Auto-update corrosion slider if present on areas.html
+    const zipDistanceMap = {
+        "34996": 0.1, 
+        "34994": 1.2, "34995": 1.2, "34957": 1.2,
+        "34997": 2.2, "33455": 2.2,
+        "34952": 3.0, "34982": 3.0, "34981": 3.0,
+        "34990": 4.5,
+        "33469": 1.5, "33458": 2.5, "33477": 0.5, "33478": 4.0,
+        "34953": 6.5, "34983": 6.5, "34984": 6.5,
+        "34986": 9.5, "34987": 9.5
+    };
+    const zipDist = zipDistanceMap[zipInput];
+    if (zipDist !== undefined) {
+        const slider = document.getElementById("corrosion-distance") || document.getElementById("distance-slider");
+        if (slider) {
+            slider.value = zipDist;
+            if (typeof window.onSliderChange === "function") {
+                window.onSliderChange(zipDist);
+            }
+        }
+    }
 };
 
 
@@ -1330,7 +1352,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const nameVal = document.getElementById("name").value.trim();
             const nameParts = nameVal.split(" ");
             const fname = nameParts[0] || "";
-            const lname = nameParts.slice(1).join(" ") || "Customer";
+            const lname = nameParts.slice(1).join(" ") || "";
 
             const payload = {
                 fname,
@@ -1356,7 +1378,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const nameVal = document.getElementById("fullname_contact").value.trim();
             const nameParts = nameVal.split(" ");
             const fname = nameParts[0] || "";
-            const lname = nameParts.slice(1).join(" ") || "Customer";
+            const lname = nameParts.slice(1).join(" ") || "";
 
             const slotField = contactGeneralForm.querySelector("input[name='reserved_appointment_slot']");
             const slotVal = slotField ? slotField.value : "None";
@@ -1413,7 +1435,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const nameVal = document.getElementById("fullname_service").value.trim();
             const nameParts = nameVal.split(" ");
             const fname = nameParts[0] || "";
-            const lname = nameParts.slice(1).join(" ") || "Customer";
+            const lname = nameParts.slice(1).join(" ") || "";
 
             const payload = {
                 fname,
@@ -1439,7 +1461,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const rawName = document.getElementById("lead-name").value.trim();
             const nameParts = rawName.split(" ");
             const fname = nameParts[0] || "";
-            const lname = nameParts.slice(1).join(" ") || "Customer";
+            const lname = nameParts.slice(1).join(" ") || "";
             
             const payload = {
                 fname,
@@ -1465,7 +1487,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log('Service Worker disabled on localhost to prevent local caching.');
                 return;
             }
-            navigator.serviceWorker.register('sw.js')
+            navigator.serviceWorker.register('/sw.js')
                 .then(registration => {
                     console.log('A/C Now Service Worker registered successfully with scope:', registration.scope);
                 })

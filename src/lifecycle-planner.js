@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const plannerForm = document.getElementById("planner-lead-form");
     const plannerMetricsInput = document.getElementById("plan_metrics_input");
 
+    // Attic Heat Load Calculator Elements
+    const atticTempInput = document.getElementById("attic-temp-input");
+    const atticTempVal = document.getElementById("attic-temp-val");
+    const atticInsulationSelect = document.getElementById("attic-insulation-select");
+    const atticHeatBtu = document.getElementById("attic-heat-btu");
+    const atticRuntimePct = document.getElementById("attic-runtime-pct");
+    const atticMonthlySavings = document.getElementById("attic-monthly-savings");
+
     if (!sliderAge || !sliderTonnage || !metricRemaining || !metricEffLoss || !metricWaste || !metricCapex || !statusBadge) {
         console.warn("[PWA Client] Lifecycle Planner elements missing. Skipping initialization.");
         return;
@@ -99,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Calculations
         const remainingLife = Math.max(0, maxLife - age);
-        const effLossPercent = Math.min(100, Math.round(age * decayRate * 100));
+        const baseEffLoss = Math.round(age * decayRate * 100);
+        const effLossPercent = remainingLife === 0 ? Math.min(100, Math.max(60, baseEffLoss + 20)) : Math.min(100, baseEffLoss);
         
         // Replacement reserve base ($4500 minimum for 1.5 ton, scales to $9500 for 5 ton)
         const capexCost = Math.round(4000 + (tonnage - 1) * 1400);
@@ -115,25 +124,42 @@ document.addEventListener("DOMContentLoaded", () => {
         metricCapex.textContent = `$${capexCost.toLocaleString()}`;
 
         // Status Badge Logic
+        let statusText = "Excellent";
+        let statusBg = "#10B981"; // green
+        
         if (remainingLife > 10) {
-            statusBadge.textContent = "Excellent";
-            statusBadge.style.background = "#10B981"; // green
+            statusText = "Excellent";
+            statusBg = "#10B981";
         } else if (remainingLife > 5) {
-            statusBadge.textContent = "Good";
-            statusBadge.style.background = "#0B7A53"; // dark green
+            statusText = "Good";
+            statusBg = "#0B7A53"; // dark green
         } else if (remainingLife > 2) {
-            statusBadge.textContent = "Caution";
-            statusBadge.style.background = "#F59E0B"; // orange
+            statusText = "Caution";
+            statusBg = "#F59E0B"; // orange
         } else {
-            statusBadge.textContent = "Critical - Replace";
-            statusBadge.style.background = "#EF4444"; // red
+            statusText = "Critical - Replace";
+            statusBg = "#EF4444"; // red
         }
+
+        // Downgrade status if maintenance is neglected
+        if (maintenanceType === "none") {
+            if (statusText === "Excellent" || statusText === "Good") {
+                statusText = "Caution (Neglected)";
+                statusBg = "#F59E0B"; // orange
+            }
+        }
+
+        statusBadge.textContent = statusText;
+        statusBadge.style.background = statusBg;
 
         // Set form lead details payload
         plannerMetricsInput.value = `[System Age: ${age} Years | Tonnage: ${tonnage} Tons | Maintenance: ${maintenanceType} | Remaining Life: ${remainingLife.toFixed(1)} Yrs | Eff Loss: ${effLossPercent}%]`;
 
         // Render SVG Line Chart
         renderSVG(age, maxLife, decayRate);
+
+        // Update the Attic Heat Load calculator calculations when inputs change
+        updateAtticCalculator();
     }
 
     function renderSVG(age, maxLife, decayRate) {
@@ -217,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const nameVal = document.getElementById("fullname_plan").value.trim();
             const nameParts = nameVal.split(" ");
             const fname = nameParts[0] || "";
-            const lname = nameParts.slice(1).join(" ") || "Customer";
+            const lname = nameParts.slice(1).join(" ") || "";
 
             const payload = {
                 fname,
@@ -249,6 +275,66 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function updateAtticCalculator() {
+        if (!atticTempInput || !atticInsulationSelect || !atticHeatBtu) return;
+
+        const temp = parseInt(atticTempInput.value);
+        if (atticTempVal) {
+            atticTempVal.textContent = `${temp}°F`;
+        }
+
+        const dT = Math.max(0, temp - 75);
+        const insulation = atticInsulationSelect.value;
+
+        let U = 1 / 19;
+        let radMultiplier = 1.0;
+
+        if (insulation === "r38") {
+            U = 1 / 38;
+        } else if (insulation === "r38shield") {
+            U = 1 / 38;
+            radMultiplier = 0.55;
+        }
+
+        // Tonnage from system planner
+        const tonnage = parseFloat(sliderTonnage.value) || 3.0;
+        const acCapacityBtu = tonnage * 12000;
+
+        const btuHr = Math.round(1500 * dT * U * radMultiplier * 1.5);
+        const worstBtu = Math.round(1500 * dT * (1 / 19) * 1.0 * 1.5);
+        const btuSaved = Math.max(0, worstBtu - btuHr);
+
+        const runtimeReductionPct = Math.round((btuSaved / acCapacityBtu) * 100);
+        const monthlySavings = (btuSaved / 12000) * 1.2 * 30 * 6 * 0.15;
+
+        if (atticHeatBtu) {
+            atticHeatBtu.textContent = `${btuHr.toLocaleString()} BTU/hr`;
+        }
+        if (atticRuntimePct) {
+            atticRuntimePct.textContent = `${runtimeReductionPct}% Runtime Reduction`;
+        }
+        if (atticMonthlySavings) {
+            atticMonthlySavings.textContent = `$${monthlySavings.toFixed(2)}/month`;
+        }
+    }
+
+    if (atticTempInput) {
+        atticTempInput.addEventListener("input", () => {
+            updateAtticCalculator();
+            triggerAudioTick();
+        });
+    }
+
+    if (atticInsulationSelect) {
+        atticInsulationSelect.addEventListener("change", () => {
+            updateAtticCalculator();
+            if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
+                window.ComfortAudio.playClick();
+            }
+        });
+    }
+
     // Initialize display on load
     updatePlanner();
+    updateAtticCalculator();
 });

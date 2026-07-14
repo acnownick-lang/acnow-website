@@ -88,7 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // 1. Equipment class and SEER rating calculations
         if (equipClass === "heatpump") {
             // Heat pump federal credit: Capped at $2,000 for qualifying tier (>= 15.2 SEER2)
-            if (seerValue >= 15.2) {
+            if (seerValue >= 17.5) {
+                taxCredit = 2000;
+                fplRebate = 350; // Higher incentive for ultra-high efficiency inverter
+            } else if (seerValue >= 15.2) {
                 taxCredit = 2000;
                 fplRebate = 200; // FPL utility flat rebate
             } else if (seerValue >= 14.3) {
@@ -100,7 +103,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } else {
             // Straight Cool AC federal credit: Capped at $600 under Section 25C CEE tier (>= 16.0 SEER2)
-            if (seerValue >= 16.0) {
+            if (seerValue >= 17.5) {
+                taxCredit = 600;
+                fplRebate = 300; // Higher rebate for ultra-high straight cool inverter
+            } else if (seerValue >= 16.0) {
                 taxCredit = 600;
                 fplRebate = 200;
             } else if (seerValue >= 15.2) {

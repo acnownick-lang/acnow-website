@@ -152,10 +152,10 @@ function initHvacConfigurator() {
         const simCycleDesc = document.getElementById("sim-cycle-desc");
         const simSavings = document.getElementById("sim-savings");
         
-        let humText = "High Humidity";
-        let humBg = "#EF4444";
-        let humPct = 15; // Clammy (68%)
-        let cycleText = "Short-cycling spikes. Blasts on at 100% capacity then cycles off, causing temperature swings and clammy air.";
+        let humText = "Standard Dehumidification";
+        let humBg = "#64748B"; // Slate gray baseline
+        let humPct = 25; // Baseline level
+        let cycleText = "Standard single-stage cooling. Cycle spikes are typical, dehumidification is standard (Baseline).";
         let annualSavings = 0;
 
         if (efficiencyTier === "16") {
@@ -188,7 +188,7 @@ function initHvacConfigurator() {
             simCycleDesc.textContent = cycleText;
         }
         if (simSavings) {
-            simSavings.textContent = `$${annualSavings} / year`;
+            simSavings.textContent = annualSavings === 0 ? "$0 / yr (Baseline)" : `$${annualSavings} / year`;
         }
 
         // Equipment Cost Estimate (tonnage base pricing)
@@ -254,7 +254,7 @@ function initHvacConfigurator() {
             const nameVal = document.getElementById("fullname_config").value.trim();
             const nameParts = nameVal.split(" ");
             const fname = nameParts[0] || "";
-            const lname = nameParts.slice(1).join(" ") || "Customer";
+            const lname = nameParts.slice(1).join(" ") || "";
 
             const payload = {
                 fname,
