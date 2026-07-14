@@ -778,6 +778,7 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 0;
 }
 
 .contact-channels {
@@ -824,6 +825,7 @@ section {
     border-radius: var(--border-radius);
     padding: 40px;
     box-shadow: var(--box-shadow);
+    min-width: 0;
 }
 
 .contact-form {
@@ -5479,6 +5481,7 @@ input[type="range"]::-moz-range-thumb {
     }
 }
 
+
 #ac-chat-fab.fab-holding {
     animation: fabHoldPulse 3s linear forwards;
     cursor: wait !important;
@@ -5499,6 +5502,24 @@ input[type="range"]::-moz-range-thumb {
         box-shadow: 0 0 25px #FFC72C, 0 5px 20px rgba(11, 99, 229, 0.6);
     }
 }
+
+/* Decibel Soundboard Button Hover Contrast Fix */
+#play-standard:hover {
+    background-color: #A01F29 !important;
+    color: var(--white) !important;
+    border-color: transparent !important;
+}
+#play-inverter:hover {
+    background-color: #085C3E !important;
+    color: var(--white) !important;
+    border-color: transparent !important;
+}
+#play-standard:focus-visible,
+#play-inverter:focus-visible {
+    outline: 3px solid var(--primary) !important;
+    outline-offset: 3px !important;
+}
+
 
 
 

@@ -60,7 +60,7 @@
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
     </noscript>
-    <link rel="stylesheet" href="../assets/css/redesign.css?v=107">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=108">
     <!-- HVACBusiness Schema -->
     <script type="application/ld+json">
     {
@@ -551,10 +551,14 @@
                         <h3>Indoor Air Quality</h3>
                         <p>Improve respiratory health and allergen filtration with HEPA filter systems, UV sanitizing lamps, and advanced dehumidifier installations.</p>
                         <!-- Live AQI Detector Widget with Particle Canvas -->
-                        <div style="position: relative; margin-top: 15px; border-radius: 6px; overflow: hidden;">
-                            <canvas id="clean-air-canvas" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;"></canvas>
-                            <div id="live-aqi-widget" style="position: relative; z-index:2; padding: 12px; background: rgba(255, 255, 255, 0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; font-size: 13px; border: 1px solid rgba(255, 255, 255, 0.25); margin: 0; border-radius: 6px;">
-                                <span style="color: var(--gray-dark);">Loading live air quality...</span>
+                        <div style="position: relative; margin-top: 20px; border-radius: 8px; overflow: hidden; height: 140px; border: 1px solid rgba(11, 99, 229, 0.25); background: #0c182f; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);">
+                            <canvas id="clean-air-canvas" style="position: absolute; inset: 0; width:100%; height:100%; pointer-events:none; z-index:1;"></canvas>
+                            <div id="live-aqi-widget" style="position: absolute; bottom: 0; left: 0; right: 0; z-index:2; padding: 12px; background: rgba(10, 24, 47, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; font-size: 13px; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 0;">
+                                <span style="color: #94A3B8;">Loading Air Index...</span>
+                            </div>
+                            <div style="position: absolute; top: 15px; left: 15px; z-index: 2; pointer-events: none; display: flex; flex-direction: column; gap: 4px;">
+                                <span style="font-size: 11px; font-weight: 700; color: #38BDF8; letter-spacing: 1px; text-transform: uppercase;">IAQ Monitor</span>
+                                <span style="font-size: 14px; font-weight: 600; color: #FFFFFF; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">Real-Time Air Particle Flow</span>
                             </div>
                         </div>
                     </div>
@@ -617,7 +621,15 @@
                                 <span>Years Since Last Duct Cleaning:</span>
                                 <span id="duct-slider-lbl" style="color:var(--primary); font-weight: 800;">0 Years (Clean)</span>
                             </label>
-                            <input type="range" id="duct-slider" min="0" max="10" value="0" style="width:100%; cursor: pointer;">
+                            <input type="range" id="duct-slider" min="0" max="10" value="0" style="width:100%; cursor: pointer; margin-bottom: 2px;">
+                            <div style="display: flex; justify-content: space-between; padding: 0 4px; margin-bottom: 12px; font-size: 10.5px; color: var(--gray-dark); font-weight: 600; letter-spacing: 0.5px;">
+                                <span>0 (Clean)</span>
+                                <span>2</span>
+                                <span>4</span>
+                                <span>6</span>
+                                <span>8</span>
+                                <span>10 (Max)</span>
+                            </div>
                             <p style="font-size:11.5px; color:var(--gray-dark); margin-top:5px;">Typically, standard residential air systems accumulate 40 lbs of dust annually.</p>
                         </div>
 
@@ -650,16 +662,18 @@
                             <rect id="duct-dirt-top" x="11" y="11" width="178" height="2" fill="#78350F" opacity="0.0" rx="2" />
                             <rect id="duct-dirt-bottom" x="11" y="67" width="178" height="2" fill="#78350F" opacity="0.0" rx="2" />
                             <!-- Spore/Allergen dots -->
-                            <g id="duct-spores" opacity="0.0">
+                            <g id="duct-allergens" opacity="0.0">
+                                <circle cx="45" cy="45" r="2.8" fill="#D97706" />
+                                <circle cx="95" cy="45" r="2.0" fill="#D97706" />
+                                <circle cx="130" cy="45" r="2.5" fill="#D97706" />
+                            </g>
+                            <g id="duct-mold-spores" opacity="0.0">
                                 <circle cx="30" cy="25" r="1.8" fill="#0B7A53" />
                                 <circle cx="55" cy="55" r="2.2" fill="#0B7A53" />
                                 <circle cx="80" cy="30" r="1.8" fill="#0B7A53" />
                                 <circle cx="115" cy="55" r="2.2" fill="#0B7A53" />
                                 <circle cx="140" cy="25" r="1.8" fill="#0B7A53" />
                                 <circle cx="165" cy="50" r="2.2" fill="#0B7A53" />
-                                <circle cx="45" cy="45" r="2.8" fill="#D97706" />
-                                <circle cx="95" cy="45" r="2.0" fill="#D97706" />
-                                <circle cx="130" cy="45" r="2.5" fill="#D97706" />
                             </g>
                         </svg>
                     </div>

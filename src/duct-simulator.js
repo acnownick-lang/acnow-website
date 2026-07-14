@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const dirtTop = document.getElementById("duct-dirt-top");
     const dirtBottom = document.getElementById("duct-dirt-bottom");
-    const spores = document.getElementById("duct-spores");
+    const allergens = document.getElementById("duct-allergens");
+    const moldSpores = document.getElementById("duct-mold-spores");
     const airflow = document.getElementById("duct-airflow");
     
     const outRestrict = document.getElementById("duct-restrict");
@@ -46,10 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
             dirtBottom.setAttribute("height", thickness.toString());
         }
 
-        if (spores) {
-            // Spore visibility
-            const opSpores = val === 0 ? 0.0 : (0.2 + (val / 10) * 0.8);
-            spores.setAttribute("opacity", opSpores.toString());
+        if (allergens) {
+            const opAllergens = val === 0 ? 0.0 : (0.25 + (val / 10) * 0.7);
+            allergens.setAttribute("opacity", opAllergens.toString());
+        }
+
+        if (moldSpores) {
+            // Mold spores (green) only show up at year 8+
+            const opMold = val < 8 ? 0.0 : (0.45 + ((val - 8) / 2) * 0.5);
+            moldSpores.setAttribute("opacity", opMold.toString());
         }
 
         if (airflow) {

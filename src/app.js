@@ -1959,14 +1959,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Inject services page card widget
         if (servicesAqiWidget) {
+            const isServicesPage = window.location.pathname.includes("services.html");
+            const textColor = isServicesPage ? "#FFFFFF" : "var(--dark)";
+            const descColor = isServicesPage ? "#CBD5E1" : "var(--gray-dark)";
+            const alertColor = isServicesPage ? "#FBBF24" : "#B45309";
+            const alertPoorColor = isServicesPage ? "#F87171" : "#B91C1C";
+            
+            const servicesAlertHtml = aqiVal > 50 && aqiVal <= 100 
+                ? `<div style="margin-top: 8px; font-size:11.5px; color:${alertColor};">⚠️ Moderate AQI: We recommend a <strong>Guardian UV air purifier</strong> or duct check.</div>`
+                : aqiVal > 100
+                ? `<div style="margin-top: 8px; font-size:11.5px; color:${alertPoorColor}; font-weight:600;">🚨 Poor AQI Alert: High allergen count. We highly recommend a <strong>HEPA filtration upgrade</strong>.</div>`
+                : "";
+
             servicesAqiWidget.innerHTML = `
                 <div style="width: 100%;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-                        <span style="font-weight:700; color:var(--dark);">${city} Air Index</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                        <span style="font-weight:700; color:${textColor};">${city} Air Index</span>
                         <span style="background:${color}; color:#fff; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">${category} (${aqiVal})</span>
                     </div>
-                    <div style="font-size:12.5px; color:var(--gray-dark); margin:0; line-height:1.5;">${desc} ${isSimulated ? '(Local seasonal average)' : ''}</div>
-                    ${alertHtml}
+                    <div style="font-size:12px; color:${descColor}; margin:0; line-height:1.4;">${desc} ${isSimulated ? '(Local seasonal average)' : ''}</div>
+                    ${servicesAlertHtml}
                 </div>
             `;
         }
@@ -2033,10 +2045,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 this.speed = Math.random() * 0.4 + 0.15;
                 this.wobble = Math.random() * 0.02;
                 const colors = [
-                    "rgba(96, 165, 250, 0.25)",
-                    "rgba(147, 197, 253, 0.2)",
-                    "rgba(255, 255, 255, 0.35)",
-                    "rgba(167, 243, 208, 0.2)"
+                    "rgba(96, 165, 250, 0.6)",
+                    "rgba(147, 197, 253, 0.55)",
+                    "rgba(255, 255, 255, 0.7)",
+                    "rgba(167, 243, 208, 0.5)"
                 ];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
             }
