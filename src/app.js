@@ -1,6 +1,65 @@
 window.__appJsRan = true;
 // Dashboard Logic for A/C Now Redesign & SEO Audit Showcase
 
+// Premium toast notification system loaded sitewide
+window.showToast = window.showToast || function(message, type = 'info') {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.position = 'fixed';
+        container.style.bottom = '20px';
+        container.style.right = '20px';
+        container.style.zIndex = '1000';
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.gap = '10px';
+        container.style.maxWidth = '350px';
+        document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement('div');
+    toast.style.padding = '12px 18px';
+    toast.style.borderRadius = '8px';
+    toast.style.fontSize = '13.5px';
+    toast.style.fontWeight = '600';
+    toast.style.color = '#fff';
+    toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+    toast.style.transition = 'all 0.3s ease';
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    toast.style.display = 'flex';
+    toast.style.alignItems = 'center';
+    toast.style.gap = '8px';
+    
+    if (type === 'success') {
+        toast.style.background = '#0B7A53';
+        toast.style.borderLeft = '4px solid #10B981';
+    } else if (type === 'warning' || type === 'error') {
+        toast.style.background = '#C22A36';
+        toast.style.borderLeft = '4px solid #EF4444';
+    } else {
+        toast.style.background = '#1E293B';
+        toast.style.borderLeft = '4px solid #3B82F6';
+    }
+    
+    toast.textContent = message;
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+    }, 10);
+    
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 4000);
+};
+
 // Helper: Show visual submit feedback
 function setSubmitState(button, isLoading, text = "Submitting...") {
     if (!button) return;

@@ -501,7 +501,7 @@
                                 <div>
                                     <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800;">Storm Preparedness Index</h3>
                                     <div style="text-align:center; margin-bottom:25px;">
-                                        <div id="storm-score" style="font-size:48px; font-weight:800; color:#64748b; font-family:var(--font-heading);">0%</div>
+                                        <div id="storm-score" style="font-size:48px; font-weight:800; color:#64748b; font-family:var(--font-heading);">—</div>
                                         <div id="storm-score-text" style="font-size:13.5px; color:#64748b; font-weight:600; text-transform:uppercase; margin-top:5px;">Awaiting Assessment</div>
                                         <div class="progress-track" style="background: var(--gray-light); height: 8px; border-radius: 4px; overflow: hidden; margin: 15px auto 0; max-width: 200px;">
                                             <div id="storm-progress-fill" style="background: #9ca3af; width: 0%; height: 100%; transition: width 0.3s ease, background-color 0.3s ease;"></div>
@@ -524,6 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (stormForm) {
         const checks = stormForm.querySelectorAll("input[type='checkbox']");
+        let userInteracted = false;
 
         // Restore from localStorage
         checks.forEach(c => {
@@ -539,10 +540,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(c.checked) checkedCount++;
                 localStorage.setItem(`storm_check_${c.id}`, c.checked);
             });
+
+            // Restore interaction state if there are checks saved in localStorage
+            if (checkedCount > 0) {
+                userInteracted = true;
+            }
+
             const pct = Math.round((checkedCount / checks.length) * 100);
             if (stormScore) {
-                stormScore.textContent = `${pct}%`;
-                stormScore.style.color = checkedCount === 0 ? "#64748b" : (pct === 100 ? "#0B7A53" : (pct >= 60 ? "#F59E0B" : "var(--secondary)"));
+                if (userInteracted) {
+                    stormScore.textContent = `${pct}%`;
+                    stormScore.style.color = checkedCount === 0 ? "#64748b" : (pct === 100 ? "#0B7A53" : (pct >= 60 ? "#F59E0B" : "var(--secondary)"));
+                } else {
+                    stormScore.textContent = "—";
+                    stormScore.style.color = "#64748b";
+                }
             }
 
             if (progressFill) {
@@ -588,7 +600,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
-        checks.forEach(c => c.addEventListener("change", updateStormScore));
+        
+        checks.forEach(c => c.addEventListener("change", () => {
+            userInteracted = true;
+            updateStormScore();
+        }));
+        
         updateStormScore();
     }
 });

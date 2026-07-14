@@ -51,18 +51,69 @@ exports.handler = async (event, context) => {
 
     try {
         const data = JSON.parse(event.body);
-        
         const crypto = require('crypto');
+        
+        // Define a secret key strictly server-side
+        const SERVER_SECRET = process.env.JWT_SECRET || "acnow-internal-server-secret-key-2026-9f8a";
+
+        // Action 1: Token verification
+        if (data.action === "verify_token") {
+            const token = String(data.token || '');
+            if (!token.includes('.')) {
+                return {
+                    statusCode: 200,
+                    headers,
+                    body: JSON.stringify({ valid: false })
+                };
+            }
+            
+            const [payloadB64, sig] = token.split('.');
+            try {
+                const computedSig = crypto.createHmac('sha256', SERVER_SECRET).update(payloadB64).digest('hex');
+                if (computedSig !== sig) {
+                    return {
+                        statusCode: 200,
+                        headers,
+                        body: JSON.stringify({ valid: false })
+                    };
+                }
+                
+                const payload = JSON.parse(Buffer.from(payloadB64, 'base64').toString('utf8'));
+                if (payload.exp && payload.exp > Date.now()) {
+                    return {
+                        statusCode: 200,
+                        headers,
+                        body: JSON.stringify({ valid: true })
+                    };
+                }
+            } catch (err) {
+                // Invalid JSON or base64 decoding error
+            }
+            
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({ valid: false })
+            };
+        }
+
+        // Action 2: PIN unlocking
         const submittedPin = String(data.pin || '');
         const pinHash = crypto.createHash('sha256').update(submittedPin).digest('hex');
         
         if (pinHash === 'a78f19952edd18bf02b3c9eb704b088e2120941d6acb22f6f795c42796e60252') {
+            // Generate a stateless, signed JSON Web Token (valid for 8 hours)
+            const payloadObj = { authorized: true, exp: Date.now() + 8 * 60 * 60 * 1000 };
+            const payloadB64 = Buffer.from(JSON.stringify(payloadObj)).toString('base64');
+            const signature = crypto.createHmac('sha256', SERVER_SECRET).update(payloadB64).digest('hex');
+            const token = `${payloadB64}.${signature}`;
+
             return {
                 statusCode: 200,
                 headers,
                 body: JSON.stringify({
                     success: true,
-                    token: 'override-session-active-token-1981'
+                    token: token
                 })
             };
         } else {
