@@ -2142,7 +2142,7 @@ img {
 
 /* Give about-image-column room for the -20px offset badge to breathe */
 .about-image-column {
-    padding-bottom: 120px;
+    padding-bottom: 0;
     overflow: visible; /* Ensure absolutely-positioned badge is not clipped */
 }
 
