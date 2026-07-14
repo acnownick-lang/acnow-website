@@ -17,7 +17,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0B63E5">
     <title>3D Comfort Diagnostics & Airflow Workspace | A/C Now LLC</title>
     <link rel="manifest" href="../manifest.json">
@@ -33,6 +33,7 @@
         window.jsErrors = [];
         window.onerror = function(message, source, lineno, colno, error) {
             window.jsErrors.push({ message, source, line: lineno, col: colno, error: error ? error.stack : null });
+            if (localStorage.getItem('acnow_dev_mode') !== 'true') return false;
             const div = document.createElement('div');
             div.style.position = 'absolute';
             div.style.top = '10px';
@@ -53,6 +54,7 @@
         };
         window.addEventListener('unhandledrejection', function(event) {
             window.jsErrors.push({ message: "Unhandled Rejection", reason: event.reason ? (event.reason.stack || event.reason) : null });
+            if (localStorage.getItem('acnow_dev_mode') !== 'true') return;
             const div = document.createElement('div');
             div.style.position = 'absolute';
             div.style.top = '100px';

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v51'; // Bumped: Security Audit - removed restricted pages from precache list
+const CACHE_NAME = 'acnow-cache-v52'; // Bumped: Security Audit - gated visual errors & star ratings fill override
 const DEBUG = true;
 
 // Helper function for structured logging

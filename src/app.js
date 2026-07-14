@@ -2336,6 +2336,13 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
         const currentPhase = localStorage.getItem('acnow_phase') || '1';
         const isDev = localStorage.getItem('acnow_dev_mode') === 'true';
 
+        // Gated: only show on local dev hosts, Netlify deploy previews, or staging
+        const devHosts = ["localhost", "127.0.0.1", "deploy-preview", "acnow-staging.netlify.app"];
+        const isDevHost = devHosts.some(host => window.location.hostname.includes(host));
+
+        // Allow on production if Phase 2 mascot unlock is active
+        if (currentPhase !== '2' && !isDevHost) return;
+
         // Get saved checkbox states
         let checklistStates = {};
         try {

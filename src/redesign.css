@@ -3189,6 +3189,10 @@ section.trust-bar {
     letter-spacing: 1px;
 }
 
+.ticker-author .icon-inline {
+    fill: var(--gold) !important;
+}
+
 .ticker-nav-btn {
     width: 32px;
     height: 32px;
