@@ -4,6 +4,7 @@
     "deploy": "npx netlify-cli@17 deploy --dir=. --prod"
   },
   "dependencies": {
+    "puppeteer": "^25.3.0",
     "ws": "^8.21.0"
   },
   "devDependencies": {
