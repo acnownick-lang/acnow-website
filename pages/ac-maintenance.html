@@ -126,6 +126,38 @@
     <link rel="manifest" href="../manifest.json">
     <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
     <link rel="icon" type="image/svg+xml" href="../assets/images/mascot-logo.svg">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How often should my air conditioning system be serviced in Florida?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Due to Florida's high operating hours, high heat, and coastal humidity, we recommend having your AC system professionally serviced at least twice per year—once in the spring before the summer heat hits, and once in the fall."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in the Comfort Shield Protection Membership?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our Comfort Shield Protection Membership starts at just $14 per month. It includes two 50-point precision tune-ups annually, zero diagnostic fees on repairs, priority emergency scheduling, and a 15% discount on all repair parts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will regular AC maintenance help lower my monthly electric bill?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, dirty condenser coils, low refrigerant levels, and weak electrical capacitors force your compressor to work harder, using more energy. Bi-annual maintenance keeping components clean and operating correctly can reduce monthly cooling energy costs by 10% to 15%."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Skip Navigation Link -->
@@ -344,6 +376,41 @@
                             </div>
                             <button type="submit" class="btn btn-primary" style="margin-top: 10px; font-weight: 700; width: 100%;">Schedule Maintenance Tune-Up</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ Section for GEO / AI Citability -->
+        <section id="faq" aria-labelledby="faq-heading" style="background-color: var(--light); padding: 80px 0; border-top: 1px solid var(--gray-light);">
+            <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 50px; align-items: start;">
+                    <!-- Left: Graphic / Image Column -->
+                    <div style="position: sticky; top: 100px;">
+                        <span class="section-tag" style="display: block; margin-bottom: 10px;">MAINTENANCE FAQ</span>
+                        <h2 id="faq-heading" style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 20px; line-height: 1.2;">Frequently Asked AC Maintenance Questions</h2>
+                        <p style="color: var(--gray-dark); font-size: 15px; line-height: 1.6; margin-bottom: 30px;">Get reliable answers on standard HVAC maintenance schedules, active parts warranty upkeep, and our Comfort Shield Protection memberships.</p>
+                        <div style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: var(--box-shadow); border: 1px solid var(--gray-light); height: 380px;">
+                            <img src="../assets/images/maintenance_premium.jpg" alt="A/C Now Premium AC Maintenance Service" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(11, 21, 40, 0.4) 0%, transparent 100%);"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right: FAQ Accordions Column -->
+                    <div>
+                        <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);" open>
+                            <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">How often should my air conditioning system be serviced in Florida?</h3></summary>
+                            <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7; margin-bottom:0;">Due to Florida's high operating hours, high heat, and coastal humidity, we recommend having your AC system professionally serviced **at least twice per year**—once in the spring before the summer heat hits, and once in the fall. Regular bi-annual tune-ups prevent emergency breakdowns and maintain parts warranties.</p>
+                        </details>
+        
+                        <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                            <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">What is included in the Comfort Shield Protection Membership?</h3></summary>
+                            <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7; margin-bottom:0;">Our Comfort Shield Protection Membership starts at just **$14 per month**. It includes two 50-point precision tune-ups annually, **zero diagnostic fees** on repairs, priority emergency scheduling, and a **15% discount** on all repair parts. Members save significant money on emergency repairs.</p>
+                        </details>
+        
+                        <details style="border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                            <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Will regular AC maintenance help lower my monthly electric bill?</h3></summary>
+                            <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7; margin-bottom:0;">Yes. Dirty condenser coils, low refrigerant levels, and weak electrical capacitors force your compressor to work harder, using more energy. Standard maintenance keeping components clean and operating correctly can **reduce monthly cooling energy costs by 10% to 15%**.</p>
+                        </details>
                     </div>
                 </div>
             </div>
