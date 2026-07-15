@@ -8,13 +8,13 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 let urlPhase = params.get('phase');
-                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
                 
                 if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                     phase = urlPhase;
-                    localStorage.setItem('acnow_phase', phase);
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
                 } else {
-                    phase = localStorage.getItem('acnow_phase') || '1';
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
                 }
             } catch (e) {
                 console.warn('Storage blocked: defaulting to guest phase 1', e);
@@ -858,8 +858,6 @@
 
             function checkAuthState() {
                 const memberState = localStorage.getItem("acnow_member");
-                const headerEl = document.querySelector("header");
-                const footerEl = document.querySelector("footer");
                 if (memberState === "true") {
                     const tier = localStorage.getItem("acnow_member_tier") || "Premium";
                     if (tier === "Premium") {
@@ -873,13 +871,9 @@
                     viewDashboard.classList.add("active");
                     renderLogs();
                     renderSpecs();
-                    if (headerEl) headerEl.removeAttribute("inert");
-                    if (footerEl) footerEl.removeAttribute("inert");
                 } else {
                     viewDashboard.classList.remove("active");
                     viewPromo.classList.add("active");
-                    if (headerEl) headerEl.setAttribute("inert", "");
-                    if (footerEl) footerEl.setAttribute("inert", "");
                 }
             }
 

@@ -10,13 +10,13 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 let urlPhase = params.get('phase');
-                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
                 
                 if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                     phase = urlPhase;
-                    localStorage.setItem('acnow_phase', phase);
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
                 } else {
-                    phase = localStorage.getItem('acnow_phase') || '1';
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
                 }
             } catch (e) {
                 console.warn('Storage blocked: defaulting to guest phase 1', e);

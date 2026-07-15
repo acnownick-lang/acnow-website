@@ -10,13 +10,13 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 let urlPhase = params.get('phase');
-                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
                 
                 if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                     phase = urlPhase;
-                    localStorage.setItem('acnow_phase', phase);
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
                 } else {
-                    phase = localStorage.getItem('acnow_phase') || '1';
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
                 }
             } catch (e) {
                 console.warn('Storage blocked: defaulting to guest phase 1', e);
@@ -346,7 +346,7 @@
                                 <textarea id="message" rows="4" placeholder="Briefly describe your cooling or heating needs (e.g. AC repair, system replacement, preventative maintenance)..." name="message"></textarea>
                             </div>
                             <div class="form-group" style="margin-bottom:20px;">
-                                <div id="dispatch-calendar-container"></div>
+                                <div id="dispatch-calendar-container" style="max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;"></div>
                             </div>
                              <p style="font-size: 11px; color: var(--gray-dark); margin: 15px 0 20px 0; line-height: 1.5; text-align: left;">
                                  By submitting, you consent to receive calls and text messages (SMS/MMS) from A/C Now LLC at the number provided, including automated, pre-recorded, and promotional messages. Consent is not a condition of purchase. Message and data rates may apply. Message frequency varies. Reply STOP to cancel or HELP for help. View our <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>.
@@ -374,7 +374,7 @@
                                     <input autocomplete="name" type="radio" name="ac-issue" value="loud-noise"> Unit makes squealing or loud rattling noises
                                 </label>
                             </div>
-                            <button onclick="runDiagnosticAssessment()" class="btn btn-primary btn-full">Run System Diagnostics</button>
+                            <button type="button" onclick="runDiagnosticAssessment()" class="btn btn-primary btn-full">Run System Diagnostics</button>
                         </div>
                         
                         <div id="wizard-pane-2" style="display: none; border-top: 1px solid var(--gray-light); padding-top: 20px;">

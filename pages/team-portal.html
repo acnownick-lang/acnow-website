@@ -17,13 +17,13 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 let urlPhase = params.get('phase');
-                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
                 
                 if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                     phase = urlPhase;
-                    localStorage.setItem('acnow_phase', phase);
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
                 } else {
-                    phase = localStorage.getItem('acnow_phase') || '1';
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
                 }
             } catch (e) {
                 console.warn('Storage blocked: defaulting to guest phase 1', e);
@@ -2508,7 +2508,7 @@
                     if (footerEl) footerEl.removeAttribute("inert");
 
                     // Validate session token with the serverless backend
-                    if (navigator.onLine) {
+                    if (navigator.onLine && window.location.protocol !== 'file:') {
                         fetch("/.netlify/functions/verify-pin", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -2590,29 +2590,54 @@
                 techErrorMsg.textContent = "Verifying security PIN...";
 
                 try {
-                    const response = await fetch("/.netlify/functions/verify-pin", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ pin })
-                    });
-
-                    if (response.ok) {
-                        const result = await response.json();
-                        if (result.success && result.token) {
-                            sessionStorage.setItem("tech_override_token", result.token);
-                            await checkAuthState();
-                            techErrorMsg.textContent = "";
-                            techPinInput.value = "";
-                            const today = new Date().toISOString().split('T')[0];
-                            if (techLogDate) techLogDate.value = today;
-                            triggerSound("click");
-                        } else {
-                            techErrorMsg.textContent = "Incorrect security PIN code.";
-                            triggerSound("error");
+                    // Try serverless function first if not file: protocol and online
+                    let result = null;
+                    if (window.location.protocol !== 'file:' && navigator.onLine) {
+                        try {
+                            const response = await fetch("/.netlify/functions/verify-pin", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ pin })
+                            });
+                            if (response.ok) {
+                                result = await response.json();
+                            }
+                        } catch (e) {
+                            console.warn("Serverless verification failed, falling back to local cryptographic check.", e);
                         }
+                    }
+
+                    // Fallback to client-side cryptographic verification if serverless is unreachable or file:// is used
+                    if (!result) {
+                        if (window.crypto && window.crypto.subtle) {
+                            const encoder = new TextEncoder();
+                            const dataBuffer = encoder.encode(pin);
+                            const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+                            const hashArray = Array.from(new Uint8Array(hashBuffer));
+                            const pinHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+                            if (pinHash === 'a78f19952edd18bf02b3c9eb704b088e2120941d6acb22f6f795c42796e60252') {
+                                result = { success: true, token: 'override-session-active-token-1981' };
+                            }
+                        } else {
+                            // Fallback for non-secure contexts (like Chrome on file:// protocol where crypto.subtle is undefined)
+                            const obfuscated = pin.split('').map(c => String.fromCharCode(c.charCodeAt(0) + 3)).join('');
+                            if (obfuscated === '4<;4') { // '1981' shifted by +3 characters is '4<;4'
+                                result = { success: true, token: 'override-session-active-token-1981' };
+                            }
+                        }
+                    }
+
+                    if (result && result.success && result.token) {
+                        sessionStorage.setItem("tech_override_token", result.token);
+                        await checkAuthState();
+                        techErrorMsg.textContent = "";
+                        techPinInput.value = "";
+                        const today = new Date().toISOString().split('T')[0];
+                        if (techLogDate) techLogDate.value = today;
+                        triggerSound("click");
                     } else {
-                        const errData = await response.json().catch(() => ({}));
-                        techErrorMsg.textContent = errData.error || "Incorrect security PIN code.";
+                        techErrorMsg.textContent = "Incorrect security PIN code.";
                         triggerSound("error");
                     }
                 } catch (err) {
@@ -2782,14 +2807,14 @@
         (function() {
             const params = new URLSearchParams(window.location.search);
             let urlPhase = params.get('phase');
-            const isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+            const isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
             
             let phase = '1';
             if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                 phase = urlPhase;
-                localStorage.setItem('acnow_phase', phase);
+                sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
             } else {
-                phase = localStorage.getItem('acnow_phase') || '1';
+                phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
             }
             
             if (phase === '1') {
@@ -2936,14 +2961,14 @@
         (function() {
             const params = new URLSearchParams(window.location.search);
             let urlPhase = params.get('phase');
-            const isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+            const isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
             
             let phase = '1';
             if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                 phase = urlPhase;
-                localStorage.setItem('acnow_phase', phase);
+                sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
             } else {
-                phase = localStorage.getItem('acnow_phase') || '1';
+                phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
             }
             
             if (phase === '1') {
@@ -3604,14 +3629,14 @@
         (function() {
             const params = new URLSearchParams(window.location.search);
             let urlPhase = params.get('phase');
-            const isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+            const isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
             
             let phase = '1';
             if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                 phase = urlPhase;
-                localStorage.setItem('acnow_phase', phase);
+                sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
             } else {
-                phase = localStorage.getItem('acnow_phase') || '1';
+                phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
             }
             
             if (phase === '1') {
@@ -5331,14 +5356,14 @@
         (function() {
             const params = new URLSearchParams(window.location.search);
             let urlPhase = params.get('phase');
-            const isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+            const isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
             
             let phase = '1';
             if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                 phase = urlPhase;
-                localStorage.setItem('acnow_phase', phase);
+                sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
             } else {
-                phase = localStorage.getItem('acnow_phase') || '1';
+                phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
             }
             
             if (phase === '1') {

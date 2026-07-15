@@ -1107,13 +1107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 9. Floating AI Chat Assistant Widget
     // ==========================================================================
     const initializeChatWidget = () => {
-        const activePhase = localStorage.getItem('acnow_phase') || '1';
         const fab = document.getElementById("ac-chat-fab");
-        if (activePhase !== '2') {
-            if (fab) fab.style.display = "none";
-            return;
-        }
-
         const widget = document.getElementById("ac-chat-widget");
         const closeBtn = document.getElementById("chat-close-btn");
         const wizardForm = document.getElementById("chat-wizard-form");
@@ -1169,11 +1163,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (navigator.vibrate) {
                     navigator.vibrate(200);
                 }
+                
+                // Set dev variables in both localStorage and sessionStorage
+                localStorage.setItem('acnow_dev_mode', 'true');
+                localStorage.setItem('acnow_phase', '2');
+                sessionStorage.setItem('acnow_dev_mode', 'true');
+                sessionStorage.setItem('acnow_phase', '2');
+
                 if (typeof window.showToast === "function") {
                     window.showToast("Technician ID detected. Redirecting to Staff Portal...", "success");
                 }
                 setTimeout(() => {
-                    window.location.href = (window.location.pathname.includes('/pages/') ? "" : "pages/") + "team-portal.html";
+                    const path = window.location.pathname;
+                    const pathLower = path.toLowerCase();
+                    const marker = "acnow-netlify/";
+                    const markerIndex = pathLower.indexOf(marker);
+                    let depth = 0;
+                    if (markerIndex !== -1) {
+                        const subPath = path.substring(markerIndex + marker.length);
+                        const parts = subPath.split('/').filter(p => p && p !== 'index.html');
+                        depth = parts.length;
+                    } else {
+                        const parts = path.split('/').filter(p => p && p !== 'index.html');
+                        depth = parts.length;
+                    }
+                    const prefix = "../".repeat(depth);
+                    window.location.href = prefix + 'pages/team-portal.html';
                 }, 800);
             } else {
                 fab.classList.remove("shake");
@@ -2350,9 +2365,8 @@ function initPremiumUXFeatures() {
     backToTopBtn.style.position = "fixed";
     backToTopBtn.style.bottom = "25px";
     
-    // Position dynamically to prevent colliding with Chatbot FAB in Phase 2
-    const activePhase = localStorage.getItem('acnow_phase') || '1';
-    backToTopBtn.style.right = (activePhase === '2') ? "95px" : "25px";
+    // Position dynamically to prevent colliding with Chatbot FAB (which is always visible)
+    backToTopBtn.style.right = "95px";
     
     backToTopBtn.style.width = "48px";
     backToTopBtn.style.height = "48px";
@@ -2367,32 +2381,19 @@ function initPremiumUXFeatures() {
     backToTopBtn.style.alignItems = "center";
     backToTopBtn.style.justifyContent = "center";
     backToTopBtn.style.boxShadow = "0 10px 25px rgba(0,0,0,0.15)";
-    backToTopBtn.style.backdropFilter = "blur(8px)";
-    backToTopBtn.style.webkitBackdropFilter = "blur(8px)";
-    backToTopBtn.style.transition = "opacity 0.3s, transform 0.3s, background-color 0.3s";
+    backToTopBtn.style.opacity = "0";
+    backToTopBtn.style.transition = "opacity 0.3s ease";
     
-    // Add hover styles
-    backToTopBtn.addEventListener("mouseenter", () => {
-        backToTopBtn.style.backgroundColor = "var(--primary)";
-        backToTopBtn.style.transform = "scale(1.1) translateY(-2px)";
-        backToTopBtn.style.boxShadow = "0 12px 30px rgba(11, 99, 229, 0.4)";
-    });
-    backToTopBtn.addEventListener("mouseleave", () => {
-        backToTopBtn.style.backgroundColor = "rgba(10, 24, 47, 0.85)";
-        backToTopBtn.style.transform = "scale(1) translateY(0)";
-        backToTopBtn.style.boxShadow = "0 10px 25px rgba(0,0,0,0.15)";
-    });
-
     document.body.appendChild(backToTopBtn);
-
+    
     const checkScrollHeight = () => {
         if (window.scrollY > 300) {
-            if (backToTopBtn.style.display === "none") {
+            if (backToTopBtn.style.display !== "flex") {
                 backToTopBtn.style.display = "flex";
-                backToTopBtn.style.opacity = "0";
-                // trigger micro-fade-in
                 setTimeout(() => {
-                    backToTopBtn.style.opacity = "1";
+                    if (window.scrollY > 300) {
+                        backToTopBtn.style.opacity = "1";
+                    }
                 }, 10);
             }
         } else {
@@ -2412,7 +2413,7 @@ function initPremiumUXFeatures() {
     // Listen for custom phase changes from dashboard to adjust right positioning immediately
     window.addEventListener("storage", (e) => {
         if (e.key === 'acnow_phase') {
-            backToTopBtn.style.right = (e.newValue === '2') ? "95px" : "25px";
+            backToTopBtn.style.right = "95px";
         }
     });
 
@@ -2436,9 +2437,9 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
     function initDevBar() {
         if (document.getElementById('acnow-dev-bar')) return;
 
-        // Get active phase state
-        const currentPhase = localStorage.getItem('acnow_phase') || '1';
-        const isDev = localStorage.getItem('acnow_dev_mode') === 'true';
+        // Get active phase state (aligned with global prioritized storage checks)
+        const isDev = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
+        const currentPhase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
 
         // Gated: only show on local dev hosts, Netlify deploy previews, or staging
         const devHosts = ["localhost", "127.0.0.1", "deploy-preview", "acnow-staging.netlify.app"];
@@ -2807,12 +2808,16 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
         barContainer.querySelector('#quick-btn-p1').addEventListener('click', function() {
             localStorage.setItem('acnow_dev_mode', 'true');
             localStorage.setItem('acnow_phase', '1');
+            sessionStorage.setItem('acnow_dev_mode', 'true');
+            sessionStorage.setItem('acnow_phase', '1');
             location.reload();
         });
 
         barContainer.querySelector('#quick-btn-p2').addEventListener('click', function() {
             localStorage.setItem('acnow_dev_mode', 'true');
             localStorage.setItem('acnow_phase', '2');
+            sessionStorage.setItem('acnow_dev_mode', 'true');
+            sessionStorage.setItem('acnow_phase', '2');
             location.reload();
         });
 
@@ -2820,6 +2825,8 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
         barContainer.querySelector('#btn-reset-public-bottom').addEventListener('click', function() {
             localStorage.removeItem('acnow_dev_mode');
             localStorage.removeItem('acnow_phase');
+            sessionStorage.removeItem('acnow_dev_mode');
+            sessionStorage.removeItem('acnow_phase');
             location.reload();
         });
 

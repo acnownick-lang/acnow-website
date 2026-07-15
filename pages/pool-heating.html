@@ -10,13 +10,13 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 let urlPhase = params.get('phase');
-                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
                 
                 if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                     phase = urlPhase;
-                    localStorage.setItem('acnow_phase', phase);
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
                 } else {
-                    phase = localStorage.getItem('acnow_phase') || '1';
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
                 }
             } catch (e) {
                 console.warn('Storage blocked: defaulting to guest phase 1', e);
@@ -319,7 +319,7 @@
                         <a href="contact.html" class="btn btn-gold" style="padding: 10px 24px; font-size: 14px; font-weight: 700; text-decoration: none; display: inline-block;">Claim Free Pool Heat Pump Quote →</a>
                     </div>
                 </div>
-                <p style="font-size: 11px; color: #94A3B8; margin-top: 15px; line-height: 1.4; text-align: center;">
+                <p class="disclaimer" style="font-size: 12px !important; color: #94A3B8; margin-top: 25px !important; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; line-height: 1.4; text-align: center;">
                     *Disclaimer: Pool heating cost estimates and savings are projections based on thermodynamic models, average Florida utility rates, and typical seasonal operating parameters. Actual heating efficiency (COP) and energy costs depend on local weather, ambient humidity, heat pump size, set temperatures, and wind exposure.
                 </p>
             </div>
@@ -418,7 +418,7 @@
 
                         <a href="contact.html" class="btn btn-secondary btn-full" style="font-size:13.5px; font-weight:700; margin-top:20px;">Protect Your Pool. Consult Sean or Chris</a>
                     </div>
-                    <p style="font-size: 12px; color: var(--gray-dark); margin: 15px; line-height: 1.4; text-align: left; border-top: 1px solid var(--gray-light); padding-top: 15px;">
+                    <p class="disclaimer" style="font-size: 12px !important; color: var(--gray-dark); margin: 25px 15px 15px 15px !important; line-height: 1.4; text-align: left; border-top: 1px solid var(--gray-light); padding-top: 15px;">
                         *Disclaimer: Evaporative water and heat loss estimates are calculated based on surface area, wind speeds, and temperature differentials. Actual cover performance and cost-offset savings will vary based on cover fit, direct sunlight exposure, pool usage patterns, and geographic variables.
                     </p>
                 </div>

@@ -10,13 +10,13 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 let urlPhase = params.get('phase');
-                isDevMode = localStorage.getItem('acnow_dev_mode') === 'true';
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
                 
                 if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                     phase = urlPhase;
-                    localStorage.setItem('acnow_phase', phase);
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
                 } else {
-                    phase = localStorage.getItem('acnow_phase') || '1';
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
                 }
             } catch (e) {
                 console.warn('Storage blocked: defaulting to guest phase 1', e);
@@ -467,6 +467,16 @@
     <!-- Main Content Container -->
     <section class="reveal" style="padding: 130px 0 60px; background: var(--white); scroll-margin-top: 110px;">
         <div class="container">
+            <!-- Cache notification banner -->
+            <div id="storm-cache-banner" style="display: none; background: #FFFBEB; border: 1px solid #FCD34D; border-radius: var(--border-radius); padding: 15px 20px; margin-bottom: 25px; align-items: center; gap: 15px; text-align: left; box-shadow: var(--box-shadow);">
+                <span style="font-size: 20px; color: #D97706;" aria-hidden="true">⚠️</span>
+                <div style="flex: 1;">
+                    <strong style="font-size: 13.5px; color: #92400E; display: block;">Showing Cached Results</strong>
+                    <span id="storm-cache-date-text" style="font-size: 12px; color: #B45309;">These options were loaded from your last session. Reset the checklist or modify any item to start fresh.</span>
+                </div>
+                <button type="button" onclick="document.getElementById('btn-reset-storm').click()" style="background: #D97706; color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s; white-space: nowrap;" onmouseover="this.style.background='#B45309'" onmouseout="this.style.background='#D97706'">Reset Checklist</button>
+            </div>
+
             <div class="toolbox-panel-container"><div class="tool-grid-2col">
                             <div class="planner-card">
                                 <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 15px; font-weight: 800; margin-top: 0;">Treasure Coast Storm Checklist</h2>
@@ -560,6 +570,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const stormPriority = document.getElementById("storm-priority-badge");
     const progressFill = document.getElementById("storm-progress-fill");
     const resumeNote = document.getElementById("storm-resume-note");
+    const cacheBanner = document.getElementById("storm-cache-banner");
+    const cacheDateText = document.getElementById("storm-cache-date-text");
 
     if (stormForm) {
         const checks = stormForm.querySelectorAll("input[type='checkbox']");
@@ -573,13 +585,20 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Show resume note on load if any boxes were checked in previous session
+        // Show cache warning banner on load if any boxes were checked in a previous session
         let initialChecked = 0;
         checks.forEach(c => {
             if (c.checked) initialChecked++;
         });
-        if (resumeNote && initialChecked > 0) {
-            resumeNote.style.display = "block";
+        const lastSaved = localStorage.getItem("storm_check_last_saved");
+        if (initialChecked > 0 && lastSaved) {
+            if (cacheBanner && cacheDateText) {
+                cacheDateText.textContent = `Showing cached results from your last session on ${lastSaved}. Reset the checklist or change any option to recalculate.`;
+                cacheBanner.style.display = "flex";
+            }
+            if (resumeNote) {
+                resumeNote.style.display = "block";
+            }
         }
 
         function updateStormScore() {
@@ -588,6 +607,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(c.checked) checkedCount++;
                 localStorage.setItem(`storm_check_${c.id}`, c.checked);
             });
+
+            // Store timestamp when user interacts and checks items, or clean up if empty
+            if (userInteracted) {
+                if (checkedCount > 0) {
+                    const now = new Date();
+                    const dateString = now.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    });
+                    localStorage.setItem("storm_check_last_saved", dateString);
+                } else {
+                    localStorage.removeItem("storm_check_last_saved");
+                }
+            }
 
             // Restore interaction state if there are checks saved in localStorage
             if (checkedCount > 0) {
@@ -665,6 +701,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (resumeNote) {
                 resumeNote.style.display = "none";
             }
+            if (cacheBanner) {
+                cacheBanner.style.display = "none";
+            }
             updateStormScore();
         }));
         
@@ -675,9 +714,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     c.checked = false;
                     localStorage.removeItem(`storm_check_${c.id}`);
                 });
+                localStorage.removeItem("storm_check_last_saved");
                 userInteracted = false;
                 if (resumeNote) {
                     resumeNote.style.display = "none";
+                }
+                if (cacheBanner) {
+                    cacheBanner.style.display = "none";
                 }
                 updateStormScore();
                 if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {

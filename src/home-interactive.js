@@ -148,9 +148,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const city = dispatchCityEl ? dispatchCityEl.value : "your city";
         const slotTimeText = document.getElementById("slot-time-text");
         if (slotTimeText) {
+            let cityIndex = 0;
+            if (city) {
+                for (let i = 0; i < city.length; i++) {
+                    cityIndex += city.charCodeAt(i);
+                }
+            }
             const hours = ["1:00 PM - 3:00 PM", "3:00 PM - 5:00 PM", "5:00 PM - 7:00 PM"];
-            const randomHour = hours[Math.floor(Math.random() * hours.length)];
-            slotTimeText.textContent = `Next Dispatch Slot in ${city}: Today between ${randomHour}`;
+            const selectedHour = hours[cityIndex % hours.length];
+            slotTimeText.textContent = `Next Dispatch Slot in ${city}: Today between ${selectedHour}`;
         }
 
         const step2Heading = pane2.querySelector("h3") || pane2.querySelector(".success-slot-box");
@@ -491,7 +497,6 @@ document.addEventListener("DOMContentLoaded", () => {
             window.updateHomeMoldMap();
         }
     };
-    initializeSmartClimateTabs();
 
     window.updateHomeMoldMap = function() {
         const seasonSelect = document.getElementById("moldmap-season");
@@ -530,6 +535,7 @@ document.addEventListener("DOMContentLoaded", () => {
             recommendation.innerHTML = "🌀 <strong>Saturated Air Warning:</strong> Tropical storms cause absolute outdoor air saturation. Run HVAC staging controls to prevent crawlspace/wall sweat.";
         }
     };
+    initializeSmartClimateTabs();
 
     // 6. Progressive Web Share API (Quotes & Calibration Sharing)
     const initializeShareButtons = () => {
@@ -627,7 +633,11 @@ document.addEventListener("DOMContentLoaded", () => {
         let touchStartPos = null;
 
         const startPress = (e) => {
-            if (e.type === 'mousedown' && e.button !== 0) return;
+            console.log('[Mascot Backdoor] mousedown/touchstart detected.');
+            if (e.type === 'mousedown' && e.button !== 0) {
+                console.log('[Mascot Backdoor] Ignored non-left-click mousedown.');
+                return;
+            }
             isLongPress = false;
 
             if (e.touches && e.touches[0]) {
@@ -641,9 +651,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Immediate visual hold feedback
             mascotEl.classList.add('mascot-holding');
+            console.log('[Mascot Backdoor] Starting 3-second hold timer.');
 
             pressTimer = setTimeout(() => {
                 isLongPress = true;
+                console.log('[Mascot Backdoor] 3-second hold complete. Triggering redirect flow.');
                 mascotEl.classList.remove('mascot-holding');
                 
                 if (window.ComfortAudio && typeof window.ComfortAudio.playClick === 'function') {
@@ -658,15 +670,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Automatically set dev mode and Phase 2 to allow route guard entry
                 localStorage.setItem('acnow_dev_mode', 'true');
                 localStorage.setItem('acnow_phase', '2');
+                sessionStorage.setItem('acnow_dev_mode', 'true');
+                sessionStorage.setItem('acnow_phase', '2');
                 
                 setTimeout(() => {
-                    window.location.href = 'team-portal.html';
+                    const path = window.location.pathname;
+                    const pathLower = path.toLowerCase();
+                    const marker = "acnow-netlify/";
+                    const markerIndex = pathLower.indexOf(marker);
+                    let depth = 0;
+                    if (markerIndex !== -1) {
+                        const subPath = path.substring(markerIndex + marker.length);
+                        const parts = subPath.split('/').filter(p => p && p !== 'index.html');
+                        depth = parts.length;
+                    } else {
+                        const parts = path.split('/').filter(p => p && p !== 'index.html');
+                        depth = parts.length;
+                    }
+                    const prefix = "../".repeat(depth);
+                    const targetUrl = prefix + 'pages/team-portal.html';
+                    console.log('[Mascot Backdoor] Redirecting to:', targetUrl);
+                    window.location.href = targetUrl;
                 }, 300);
             }, 3000);
         };
 
         const cancelPress = () => {
+            console.log('[Mascot Backdoor] Mouseup/touchend detected. cancelPress run.');
             if (pressTimer) {
+                console.log('[Mascot Backdoor] Clearing active hold timer.');
                 clearTimeout(pressTimer);
                 pressTimer = null;
             }

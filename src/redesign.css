@@ -2203,12 +2203,21 @@ section.trust-bar {
     border-radius: 4px;
 }
 
-/* Secondary button: border too faint at rgba(255,255,255,0.4) — raise to 0.65 */
-.btn-secondary {
+/* Secondary button: border too faint at rgba(255,255,255,0.4) — raise to 0.65.
+   Scope to dark background contexts to prevent white-on-white contrast issues on light backgrounds. */
+.split-hero-side .btn-secondary,
+.footer .btn-secondary,
+.dark-bg .btn-secondary,
+.hero-content .btn-secondary,
+.dark-section .btn-secondary {
     border-color: rgba(255, 255, 255, 0.65) !important;
 }
 
-.btn-secondary:hover {
+.split-hero-side .btn-secondary:hover,
+.footer .btn-secondary:hover,
+.dark-bg .btn-secondary:hover,
+.hero-content .btn-secondary:hover,
+.dark-section .btn-secondary:hover {
     border-color: rgba(255, 255, 255, 0.9) !important;
     background-color: rgba(255, 255, 255, 0.12) !important;
 }
@@ -4363,7 +4372,7 @@ section.trust-bar {
 }
 .services-grid.four-cols .service-card {
     aspect-ratio: auto !important;
-    min-height: 280px;
+    min-height: 400px;
 }
 @media(max-width: 1024px) {
     .services-grid.four-cols {
@@ -5519,6 +5528,93 @@ input[type="range"]::-moz-range-thumb {
     outline: 3px solid var(--primary) !important;
     outline-offset: 3px !important;
 }
+
+/* ── Billing Toggle Switch Aesthetics ────────────────────────────────── */
+.switch-toggle {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.switch-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-round {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #cbd5e1; /* Clear light slate background */
+    border-radius: 34px;
+    transition: 0.4s;
+}
+
+.slider-round:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.switch-toggle input:checked + .slider-round {
+    background-color: var(--primary);
+}
+
+.switch-toggle input:checked + .slider-round:before {
+    transform: translateX(22px);
+}
+
+.switch-toggle input:focus-visible + .slider-round {
+    outline: 3px solid var(--primary) !important;
+    outline-offset: 3px !important;
+}
+
+/* Active and inactive states for Bill Monthly / Bill Annually text labels */
+.billing-toggle-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-dark);
+    transition: color 0.3s;
+    user-select: none;
+}
+
+.billing-toggle-label.active {
+    color: var(--primary) !important;
+}
+
+/* ── Form Symptom Quick-Fill Button Styling ───────────────────────────── */
+.quick-fill-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white !important;
+    font-size: 11.5px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.quick-fill-btn:hover {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    border-color: white !important;
+    transform: translateY(-1px);
+}
+
+.quick-fill-btn:active {
+    transform: translateY(0);
+}
+
 
 
 
