@@ -58,7 +58,7 @@ function initDiagnoseWizard() {
             {
                 id: "power_breaker",
                 title: "Inspect Circuit Breaker",
-                desc: "Locate your electrical breaker panel. Check if the switches labeled 'A/C', 'Condenser', or 'Furnace' have tripped to the middle 'OFF' position.",
+                desc: "Locate your electrical breaker panel. Check if the switches labeled 'A/C', 'Condenser', or 'Air Handler' have tripped to the middle 'OFF' position.",
                 diy: true
             },
             {

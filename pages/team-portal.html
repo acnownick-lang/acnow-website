@@ -4224,7 +4224,7 @@
                 }
 
                 // 1. Calculate Power Draw (kW) - assuming standard power factor of 0.86 for the outdoor unit
-                // and a typical blower fan power of 150 Watts per ton (standard residential air handler/furnace)
+                // and a typical blower fan power of 150 Watts per ton (standard residential air handler)
                 const blowerWatts = tons * 150;
                 const totalInputWatts = (volts * amps * 0.86) + blowerWatts;
                 const kwDraw = totalInputWatts / 1000;
