@@ -2530,6 +2530,7 @@
                         heroEl.style.display = "";
                     }
                     document.body.style.background = "";
+                    document.documentElement.style.backgroundColor = "";
 
                     // Validate session token with the serverless backend
                     if (navigator.onLine && window.location.protocol !== 'file:') {
@@ -2558,6 +2559,7 @@
                                     heroEl.style.display = "none";
                                 }
                                 document.body.style.background = "#0a192f";
+                                document.documentElement.style.backgroundColor = "#0a192f";
                                 if (typeof window.showToast === "function") {
                                     window.showToast("Session expired. Please re-enter your PIN.", "error");
                                 }
@@ -2582,6 +2584,7 @@
                         heroEl.style.display = "none";
                     }
                     document.body.style.background = "#0a192f";
+                    document.documentElement.style.backgroundColor = "#0a192f";
                 }
             }
 
