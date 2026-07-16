@@ -713,53 +713,149 @@ pilot_page_data = {
         "faq2_q": "How much does it cost to operate an electric pool heat pump in Port St. Lucie?",
         "faq2_a": "Electric pool heat pumps cost significantly less to run than gas heaters, typically averaging between $50 to $150 per month depending on pool size and target temperature."
     },
+    "/pool-heating/pool-heater-installation-and-repair-in-palm-beach-gardens/": {
+        "intro": "Resort-style pools along the PGA corridor in Palm Beach Gardens require sizing pool heaters against actual surface area and wind exposure, rather than using default guidelines. Sizing is key to consistent temperatures.",
+        "prose": "Given the area's 66 inches of annual rainfall, drainage planning around the pool heater pad is just as critical as the machinery itself. We elevate equipment pads, verify chemical feeder check valves protect the heat exchanger, and check electrical supply lines.",
+        "faq1_q": "Why does wind exposure matter when sizing a Palm Beach Gardens pool heater?",
+        "faq1_a": "Wind is the main cause of heat loss from a pool surface; open golf-course exposures require higher BTU heaters to maintain target temperatures.",
+        "faq2_q": "Do you install pool heaters in gated communities in Palm Beach Gardens?",
+        "faq2_a": "Yes, we handle all permitting and coordinate with golf community HOAs to ensure all noise and placement guidelines are met."
+    },
+    "/pool-heating/pool-heater-installation-repair-in-fort-pierce/": {
+        "intro": "Fort Pierce salt air reaches further inland than typical coastal estimates suggest, forcing pool heater cabinets and heat exchangers to degrade prematurely. We specify materials engineered for port-city exposure.",
+        "prose": "For repairs in established Lincoln Park areas, diagnostics prioritize electrical contacts and cabinets first. Salt air destroys wiring terminals and cabinet panels before the compressor fails; we check and seal these enclosures during every repair call.",
+        "faq1_q": "Why is salt-air protection essential for Fort Pierce pool heaters?",
+        "faq1_a": "Sustained port-city winds carry corrosive salt spray that degrades steel casings and copper lines; we use heavy-duty composite cabinets.",
+        "faq2_q": "Can you repair older pool heaters in Fort Pierce?",
+        "faq2_a": "Yes, we carry replacement parts for major brands, restoring wiring and controls to extend the life of your existing heater."
+    },
+    "/pool-heating/pool-heater-installation-repair-in-jupiter/": {
+        "intro": "Sustained salt air at Jupiter's easternmost coastal point means heat exchangers and cabinet hardware can fail years ahead of their expected lifespan. We prioritize corrosion resistance in all repair and install designs.",
+        "prose": "When diagnosing a Jupiter pool heater, we check for metal fatigue and coil pitting first rather than assuming a control or gas-valve issue. We use heavy titanium tube heat exchangers to withstand aggressive pool chemistry and coastal atmosphere.",
+        "faq1_q": "How does Jupiter's geography impact pool heaters?",
+        "faq1_a": "Intense ocean wind concentrates salt spray, causing standard pool heater cabinets to rust out quickly unless marine-grade composite is used.",
+        "faq2_q": "Why do you recommend titanium heat exchangers in Jupiter?",
+        "faq2_a": "Titanium is impervious to corrosion from pool chemicals and salt air, preventing costly heat exchanger leaks and replacement needs."
+    },
+    "/pool-heating/pool-heater-installation-repair-in-palm-city/": {
+        "intro": "Palm City's average 7-foot elevation near the river makes flood exposure a primary planning concern. We design installations with elevated pad heights, proper drainage slope, and safe electrical disconnect placement.",
+        "prose": "For country-club pools featuring integrated spas or water fountains, we size heating capacity against total water volume and layout features. We ensure your pool heater satisfies local HOA aesthetic rules while delivering fast heat times.",
+        "faq1_q": "How does Palm City's low elevation affect my pool heater install?",
+        "faq1_a": "We use elevated risers to keep the pool heater high and dry during seasonal downpours, protecting electrical components from standing water.",
+        "faq2_q": "How is a pool heater sized for a pool-spa combo in Palm City?",
+        "faq2_a": "We calculate spa heat-up time separately to ensure the heater can rapidly bring the spa to temperature without wasting energy."
+    },
+    "/pool-heating/pool-heater-installation-repair-in-port-saint-lucie/": {
+        "intro": "A/C Now LLC services the widest range of pool heating systems in Port St. Lucie. From builder-grade setups in Tradition and St. Lucie West to decade-old repairs in established neighborhoods, we have the community covered.",
+        "prose": "Builder-grade pool heaters are often undersized for winter usage patterns, causing them to run continuously. We run calculations to size replacements correctly, repair electrical controls damaged by afternoon storms, and replace worn heat exchangers.",
+        "faq1_q": "Are builder-grade pool heaters in Tradition and St. Lucie West undersized?",
+        "faq1_a": "Frequently, yes. Many builders install minimum BTU units; we evaluate your pool's actual requirements to suggest efficient upgrades.",
+        "faq2_q": "Can you add a pool heat pump to my existing pool plumbing in Port St. Lucie?",
+        "faq2_a": "Yes, we retrofit pool heat pumps into existing pool filtration loops, managing all electrical and plumbing permitting."
+    },
+    "/pool-heating/pool-heater-installation-repair-in-stuart/": {
+        "intro": "Stuart's confluence of the river, lagoon, and ocean subjects pool heaters to salt air from multiple directions. We factor cabinet materials, fastener grade, and mounting orientation into every repair and installation plan.",
+        "prose": "In historic Stuart neighborhoods, plumbing and electrical infrastructure can be outdated. We evaluate your main panel capacity and upgrade pool plumbing loops to ensure seamless operation and code compliance for your new heater.",
+        "faq1_q": "How does salt exposure from multiple Stuart waterways affect pool heaters?",
+        "faq1_a": "It accelerates galvanic corrosion on cabinet hardware and coils; we specify stainless steel fasteners and marine-grade coatings.",
+        "faq2_q": "Do older homes in Stuart have enough electrical capacity for a pool heat pump?",
+        "faq2_a": "We verify your panel capacity during the site survey; if needed, we coordinate panel upgrades or suggest alternative options."
+    },
+    "/pool-heating/": {
+        "intro": "A/C Now LLC installs and services high-efficiency electric pool heat pumps and gas heaters across Florida's Treasure Coast. We size heating systems against your pool's surface area and wind exposure to extend your swimming season year-round.",
+        "prose": "Whether you want to repair an existing pool heater or install a new system, we design options built for Florida's harsh coastal environment. Our EPA-certified technicians evaluate your electrical capacity, plumbing configuration, and local water exposure to specify the perfect system.",
+        "faq1_q": "What types of pool heaters does A/C Now LLC service?",
+        "faq1_a": "We install and repair electric pool heat pumps, gas (propane/natural gas) heaters, and custom multi-unit systems for large pools.",
+        "faq2_q": "How does living near salt water affect pool heater choice?",
+        "faq2_a": "We recommend titanium heat exchangers and coated condenser coils to prevent rapid rust and pitting from salt air."
+    },
     "/hvac-maintenance/air-conditioner-maintenance-service-in-fort-pierce/": {
-        "intro": "Fort Pierce homeowners know keeping a system running well here means fighting two things at once: relentless summer humidity and salt air rolling in off the port.",
-        "prose": "With roughly 51 inches of annual rainfall concentrated in June-September, tune-ups are timed to get ahead of that stretch — checking refrigerant charge and airflow before humidity peaks, inspecting coils that collect grit faster near the coast. A/C Now LLC delivers military-grade preventative maintenance.",
-        "faq1_q": "How often should I schedule HVAC maintenance living this close to the water in Fort Pierce?",
-        "faq1_a": "We generally recommend twice a year — once before humid season ramps up, again in fall to catch summer wear.",
-        "faq2_q": "Does A/C Now LLC service homes near Fort Pierce Inlet?",
-        "faq2_a": "Yes, we route technicians daily through all of Fort Pierce, including waterfront and historic districts."
+        "intro": "Fort Pierce homeowners know keeping an AC running here means fighting relentless humidity and salt air off the port. Maintenance focuses on coil corrosion, cabinet condition, and drainage given 51 in/yr rain.",
+        "prose": "Salt-laden port air corrodes coils and cabinets gradually year-round, not just during storm season. Our maintenance clearing flushes algae and sediment buildup from drain lines, protects contacts, and keeps the system breathing freely.",
+        "faq1_q": "How does Fort Pierce's port air affect my AC maintenance?",
+        "faq1_a": "Salt-laden air accelerates corrosion on coil fins and copper lines, making regular rinsing and electrical contact checks critical to prevent leaks.",
+        "faq2_q": "Why does rain require extra maintenance in Fort Pierce?",
+        "faq2_a": "51 inches of annual rainfall leads to rapid biological growth in condensate lines, which we flush to prevent drain pan overflows."
     },
     "/hvac-maintenance/air-conditioner-maintenance-service-in-jupiter/": {
-        "intro": "Jupiter sits at the easternmost point of Florida — homes here take on more sustained humidity and coastal exposure than almost any other market.",
-        "prose": "Near the Jupiter Inlet, where the 1860 lighthouse still shows effects of salt-laden air, we see the same corrosion patterns on much younger HVAC equipment. Our technicians check electrical contacts, coils, and drain lines with extra care against salt air degradation.",
-        "faq1_q": "Does living near the Jupiter Inlet actually affect how my HVAC system ages?",
-        "faq1_a": "Yes — the same salt-laden air that has weathered the lighthouse for 150+ years accelerates corrosion on coil fins and electrical contacts.",
-        "faq2_q": "What is included in A/C Now LLC's 21-point maintenance audit in Jupiter?",
-        "faq2_a": "We perform coil washing, condensate line flushing, electrical checkups, and compressor run-load tests."
+        "intro": "Jupiter sits at Florida's easternmost point, exposing systems to sustained ocean humidity. Maintenance checks dehumidification performance, not just cooling temperature, alongside coastal wear inspection near the inlet.",
+        "prose": "Salt air and heavy moisture force your AC to run long cycles. We inspect electrical contacts, measure compressor amp draw under load, and check that indoor humidity levels remain in a safe, comfortable range.",
+        "faq1_q": "Why is dehumidification checked during Jupiter AC maintenance?",
+        "faq1_a": "Because high indoor humidity causes mold growth and makes the air feel warmer, meaning the system must dehumidify effectively to keep you comfortable.",
+        "faq2_q": "How often should coastal Jupiter units be maintained?",
+        "faq2_a": "Twice a year is recommended for properties near the beach or inlet to catch salt-air wear before it ruins components."
     },
     "/hvac-maintenance/air-conditioner-maintenance-service-in-palm-beach-gardens/": {
-        "intro": "Palm Beach Gardens sees roughly 66 inches of rain a year, June-September often bringing 8-9+ inches monthly — real strain on outdoor units and condensate drainage.",
-        "prose": "We also factor in that homes here lost power for multiple days after 2004-05 hurricanes, so we check electrical connections and start-up capacitors carefully for storm resilience. A/C Now LLC keeps your cooling system prepared for extreme weather.",
-        "faq1_q": "With this much summer rainfall, is there anything specific I should watch for between maintenance visits?",
-        "faq1_a": "Keep an eye on the condensate drain line and standing water near the outdoor unit — clogged drainage is common here during peak wet season.",
-        "faq2_q": "Do you offer priority service scheduling for membership plan owners in Palm Beach Gardens?",
-        "faq2_a": "Yes, our Comfort Shield Protection members receive priority diagnostic routing and 15% discount on repair parts."
+        "intro": "Palm Beach Gardens averages 66 inches of rain concentrated June-September, matching peak power-outage risk from summer storms. Maintenance checks backup/restart behavior and condensate drainage before the wet season peaks.",
+        "prose": "Grid fluctuations and outages from heavy summer storms stress compressor motors. We inspect start capacitors, test float switch safety limits, and clear drainage lines to ensure storm-resilient operation.",
+        "faq1_q": "Why is storm readiness part of Palm Beach Gardens AC maintenance?",
+        "faq1_a": "Frequent summer blackouts and brownouts can burn out compressor windings and control boards; we test startup components to handle these spikes.",
+        "faq2_q": "When is the best time for maintenance in Palm Beach Gardens?",
+        "faq2_a": "Late spring, right before the heavy June-September rains and high heat load stress the system."
     },
     "/hvac-maintenance/air-conditioner-maintenance-service-in-palm-city/": {
-        "intro": "Palm City's golf-course communities are full of larger homes with multi-zone systems working overtime against Martin County humidity.",
-        "prose": "Given the area's roughly 7-foot elevation, we pay close attention to condensate drainage and pad/pan condition on outdoor units. We customize maintenance to suit sprawling layouts in Harbour Ridge, Cobblestone, and Martin Downs.",
-        "faq1_q": "I have a home with three separate A/C zones in a Harbour Ridge or Islesworth-style layout — do you service all of them in one visit?",
-        "faq1_a": "Yes — multi-zone maintenance is standard here; each zone's air handler and outdoor unit are inspected separately.",
-        "faq2_q": "Does Palm City's low elevation affect condensate drain operation?",
-        "faq2_a": "Yes, high humidity can cause lines to clog quickly, which can lead to backup flooding if the primary float switch is not regularly checked."
+        "intro": "Palm City's average 7-foot elevation poses standing-water and flood risks for outdoor equipment. Maintenance checks outdoor unit drainage and standing water exposure, alongside airflow/zone-balance checks for sprawling country-club homes.",
+        "prose": "Sprawling multi-zone homes in communities like Harbour Ridge and Cobblestone rely on complex damper systems. We check every zone for correct airflow, test electrical connections for moisture damage, and verify outdoor pad drainage.",
+        "faq1_q": "How does Palm City's low elevation affect AC maintenance?",
+        "faq1_a": "Low-lying areas accumulate standing water after heavy rain; we check that outdoor pads remain level and clear of debris to prevent rust.",
+        "faq2_q": "Do you check multi-zone dampers during Palm City maintenance?",
+        "faq2_a": "Yes, we test individual zone dampers to ensure correct airflow is delivered to every room in larger homes."
     },
     "/hvac-maintenance/air-conditioner-maintenance-service-in-port-saint-lucie/": {
-        "intro": "As the company's home market, our maintenance visits are informed by patterns across the whole city — from older established sections to newer growth like Tradition and St. Lucie West.",
-        "prose": "After 2004-05's direct hurricane hits, we know a well-maintained system is better positioned to be inspected and restarted quickly post-storm. We keep Port St. Lucie systems running cleanly and efficiently.",
-        "faq1_q": "Does it matter that my Tradition or St. Lucie West home is newer — do I still need regular maintenance?",
-        "faq1_a": "Yes — newer systems still accumulate dust and drainage buildup, especially given how hard this area runs its A/C.",
-        "faq2_q": "How can I reduce my monthly electric bill in Port St. Lucie?",
-        "faq2_a": "Maintaining clean coils and fresh filters can reduce your system's energy consumption by 10% to 15%."
+        "intro": "With our headquarters in Port St. Lucie, our technicians see patterns across a large number of local systems by neighborhood and development era. Maintenance checks cover standard refrigerant, coils, and drainage.",
+        "prose": "Whether your home is in newer Tradition builds or established neighborhoods, we tailor our 21-point check to local conditions. We verify electrical terminals, flush drain lines, and inspect coils for wear from high runtime.",
+        "faq1_q": "Does my newer Port St. Lucie home really need maintenance?",
+        "faq1_a": "Yes — new systems have sensitive electronics and high-efficiency coils that require clean airflow to maintain their SEER2 ratings.",
+        "faq2_q": "How does local familiarity help with my Port St. Lucie maintenance?",
+        "faq2_a": "We know which neighborhood water supplies or grid patterns tend to stress systems, letting us catch specific issues early."
     },
     "/hvac-maintenance/air-conditioner-maintenance-service-in-stuart/": {
-        "intro": "Stuart sits where the St. Lucie River, Indian River Lagoon, and Atlantic converge, with historic downtown homes dating from the 1880s-1940s.",
-        "prose": "Older homes often have retrofitted ductwork adapted to a house it wasn't originally designed for. Our technicians evaluate airflow and coil conditions carefully to optimize legacy configurations.",
-        "faq1_q": "My house in downtown Stuart is from the 1920s with older ductwork — can you still perform standard maintenance on it?",
-        "faq1_a": "Yes — maintenance on older homes involves a closer look at how ductwork was adapted over time; we work with what's actually there.",
-        "faq2_q": "Do you perform coil cleaning near Stuart's historic waterfront?",
-        "faq2_a": "Yes, we prioritize rinsing outdoor coils to protect them from coastal salt spray accumulation."
+        "intro": "Stuart averages 81 days a year above 90°F, driving near-constant system cycling. Maintenance checks refrigerant charge, coil cleanliness, and electrical wear, with special focus on retrofitted ductwork in historic downtown homes.",
+        "prose": "Historic Stuart homes often run modern AC systems on adapted duct networks. We measure duct static pressure, clean dirt-prone coils, and verify that contacts aren't pitted from continuous cycling under heavy thermal load.",
+        "faq1_q": "Why does Stuart's heat stress electrical components?",
+        "faq1_a": "81 days above 90 degrees means your AC cycles on and off constantly; the high start-up current pits contacts and wears capacitors rapidly.",
+        "faq2_q": "How do you handle maintenance for historic Stuart homes?",
+        "faq2_a": "We pay close attention to air handler static pressure and duct integrity, identifying if restricted airflow is bottlenecking performance."
+    },
+    "/hvac-maintenance/heating-in-fort-pierce/": {
+        "intro": "Fort Pierce heat pumps typically sit idle for 8 to 9 months of the year. Fall maintenance provides a critical pre-winter check of the reversing valve, defrost cycle, and electrical connections before the cold snaps arrive.",
+        "prose": "Older Lincoln Park homes may have retrofitted ductwork or electrical setups that weren't originally engineered for the heating cycle's high airflow. We verify that auxiliary heating strips and control wiring engage safely without overloading your panel.",
+        "faq1_q": "Why does a heat pump need maintenance if it sits idle all summer?",
+        "faq1_a": "Reversing valves can seize and electrical contacts can oxidize during months of non-use; a checkup ensures they shift to heating when needed.",
+        "faq2_q": "Are Fort Pierce electrical panels checked during heating maintenance?",
+        "faq2_a": "Yes — electric heat strips draw significant current, so we inspect breakers and terminals to ensure safe, fire-free winter operation."
+    },
+    "/hvac-maintenance/heating-in-jupiter/": {
+        "intro": "Jupiter's mild dry season from November through April means heating runs only intermittently. Fall maintenance checks that the heating cycle engages properly before the first cold night caught off guard.",
+        "prose": "We test the heat pump's reversing valve, inspect backup electric heat coils for dust and rust, and confirm the thermostat communicates correctly in heat mode. We ensure your system transitions smoothly between seasons.",
+        "faq1_q": "When should I test my Jupiter heating system?",
+        "faq1_a": "In late October or November, right before the occasional winter cold snaps move down the coast.",
+        "faq2_q": "Does my heat pump use gas for heating in Jupiter?",
+        "faq2_a": "Most Jupiter systems are all-electric heat pumps that reverse the refrigerant loop to heat, occasionally using electric backup strips."
+    },
+    "/hvac-maintenance/heating-in-palm-beach-gardens/": {
+        "intro": "Larger multi-zone homes in Palm Beach Gardens need each zone checked independently in heating mode. Uneven heating between rooms is a common sign of sticking dampers or failing sensors.",
+        "prose": "During our winter check, we verify that zone boards direct airflow correctly when heating is called. We clean heating elements, verify temperature rise across coils, and check electrical connections to handle the load.",
+        "faq1_q": "Why does my Palm Beach Gardens home heat unevenly?",
+        "faq1_a": "Usually a zone damper issue or unbalanced duct system; we check these controls during winter maintenance.",
+        "faq2_q": "Is electric heat expensive to run in Palm Beach Gardens?",
+        "faq2_a": "Heat pump heating is very efficient, but if the system relies on auxiliary backup heat strips due to a malfunction, utility costs will spike."
+    },
+    "/hvac-maintenance/heating-in-palm-city/": {
+        "intro": "Palm City's low-lying outdoor units near river and golf-course water features are highly exposed to winter moisture. Maintenance checks the outdoor coil, base, and electrical connections for water exposure before the cool season.",
+        "prose": "Standing moisture and winter morning dew accelerate corrosion on base pans and compressor wiring terminals. We inspect and seal electrical compartments, verify defrost control board operation, and check heat pump efficiency.",
+        "faq1_q": "How does Palm City's humidity affect winter heating?",
+        "faq1_a": "High humidity causes frost to build on the outdoor coil during cold nights; we test the defrost cycle to ensure it clears automatically.",
+        "faq2_q": "Why should I service my Palm City heater if I rarely use it?",
+        "faq2_a": "Infrequent use makes component failures hard to detect until you need them most; pre-season checks prevent emergency winter calls."
+    },
+    "/hvac-maintenance/": {
+        "intro": "A/C Now LLC provides comprehensive, military-grade HVAC maintenance across the Treasure Coast. Since most local homes rely on heat pumps, our maintenance programs protect both the cooling and heating capabilities of your system.",
+        "prose": "We perform complete 21-point audits covering refrigerant levels, electrical contact wear, condensate drainage safety, and coil condition. We keep systems running efficiently through intense summer humidity and occasional winter cold snaps.",
+        "faq1_q": "What is covered in your HVAC maintenance program?",
+        "faq1_a": "We clean coils, flush drains, inspect electrical terminals, test safety float switches, measure motor amperage, and verify thermostat accuracy.",
+        "faq2_q": "Do you offer maintenance plans for Treasure Coast homeowners?",
+        "faq2_a": "Yes, our Comfort Shield Protection plan includes two scheduled visits per year, priority booking, waived diagnostic fees, and parts discounts."
     },
     "/hvac-installation/hvac-installation-fort-pierce/": {
         "intro": "Fort Pierce homes work their air conditioning harder than most. Between the port city's salt-laden coastal air, a humid subtropical climate sliding into full tropical territory, and roughly 51 inches of rain a year concentrated in June-September, HVAC equipment here contends with corrosion, moisture load, and near-constant runtime inland systems never see.",
@@ -1234,6 +1330,47 @@ pilot_page_data = {
         "faq1_a": "Failed startup capacitors, clogged condensate lines (which trip safety float switches), and slow refrigerant leaks from corroded coils.",
         "faq2_q": "Why is my AC clicking but the outdoor fan isn't spinning?",
         "faq2_a": "This is typically a sign of a failed dual-run capacitor or a worn electrical contactor, both of which are straightforward same-day repairs."
+    },
+    # --- SINGLETON CITY SERVICES LANDING PAGES (5 pages) ---
+    "/hvac-services-fort-pierce/": {
+        "intro": "Salt air is hard on equipment. We know Fort Pierce, servicing local housing stock, salt and storm wear from Lincoln Park to newer construction near US-1.",
+        "prose": "A/C Now LLC delivers fast, veteran-owned HVAC installation, repair, and maintenance services across Fort Pierce. We protect your home from South Florida's heat.",
+        "faq1_q": "Why is salt-air protection critical in Fort Pierce?",
+        "faq1_a": "Sustained port winds carry moisture and salt that pit coils; we specify marine-grade coatings to extend equipment life.",
+        "faq2_q": "Do you offer emergency AC repair in Fort Pierce?",
+        "faq2_a": "Yes, our technicians are dispatched daily for rapid, same-day cooling restoration."
+    },
+    "/hvac-services-jupiter/": {
+        "intro": "Jupiter sits at the easternmost point in Florida, bringing the toughest conditions on your AC with intense coastal humidity and salt air.",
+        "prose": "We deliver professional heating and cooling services tailored to Jupiter's demanding climate. From lighthouse-adjacent homes to inland neighborhoods, we've got you covered.",
+        "faq1_q": "How does Jupiter's geography affect my AC system?",
+        "faq1_a": "High ocean winds concentrate salt spray, accelerating metal fatigue and corrosion on outdoor condensers.",
+        "faq2_q": "When should I schedule AC maintenance in Jupiter?",
+        "faq2_a": "We recommend pre-season maintenance in spring before the long, humid summer runtime begins."
+    },
+    "/hvac-services-palm-beach-gardens/": {
+        "intro": "Golf-course living deserves AC that doesn't quit mid-round. We serve PGA National and the PGA corridor, keeping cooling systems running at capacity.",
+        "prose": "A/C Now LLC provides expert installation, repair, and maintenance services in Palm Beach Gardens. We size and install equipment to meet strict HOA rules and storm codes.",
+        "faq1_q": "Do you coordinate installations with Palm Beach Gardens HOAs?",
+        "faq1_a": "Yes, we handle all necessary permitting and HOA design reviews for outdoor units.",
+        "faq2_q": "How do you protect AC units from local storm surges?",
+        "faq2_a": "We elevate condensers on heavy composite pads and install whole-home surge protection to absorb voltage spikes."
+    },
+    "/hvac-services-palm-city/": {
+        "intro": "Low elevation, high humidity — your AC feels it. Palm City's low-lying ground and water proximity affect ductwork and indoor humidity levels.",
+        "prose": "We specialize in zoning and high-efficiency cooling for sprawling country-club estates and waterfront properties in Palm City, ensuring quiet, balanced comfort.",
+        "faq1_q": "How does Palm City's elevation affect my AC system?",
+        "faq1_a": "High groundwater and runoff require elevating outdoor condensers to prevent water intrusion and premature rusting.",
+        "faq2_q": "Do you service multi-system homes in Palm City?",
+        "faq2_a": "Yes, our technicians are experts in multi-zone dampers, smart thermostats, and complex ductwork layouts."
+    },
+    "/hvac-services-port-saint-lucie/": {
+        "intro": "Port St. Lucie is our home base. We provide faster response times and local expertise across established neighborhoods and newer Tradition areas.",
+        "prose": "A/C Now LLC delivers military-grade heating and cooling services, including same-day repairs, replacements, and preventative checkups to our fellow Port St. Lucie neighbors.",
+        "faq1_q": "Where is A/C Now LLC headquartered?",
+        "faq1_a": "Our office and dispatch center are based locally in Port St. Lucie, allowing us to reach you quickly.",
+        "faq2_q": "Do you service both Tradition and older parts of town?",
+        "faq2_a": "Yes, we customize our service to fit both the older infrastructure of established areas and the modern codes of Tradition."
     }
 }
 
