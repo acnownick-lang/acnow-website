@@ -118,6 +118,22 @@
             color: var(--gray-dark);
             line-height: 1.5;
         }
+        .directions-hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: center;
+            width: 100%;
+        }
+        @media (max-width: 991px) {
+            .directions-hero-grid {
+                grid-template-columns: 1fr !important;
+                gap: 30px !important;
+            }
+            .directions-hero-img-box {
+                height: 250px !important;
+            }
+        }
     </style>
     <link rel="manifest" href="../manifest.json">
     <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
@@ -167,15 +183,22 @@
     </header>
 
     <main id="main-content">
-        <section class="hero" style="background-image: linear-gradient(90deg, rgba(10, 24, 47, 0.95) 0%, rgba(10, 24, 47, 0.45) 100%), url('../assets/images/actual-billboard.jpg'); background-size: cover; background-position: right center; min-height: 50vh; display: flex; align-items: center; justify-content: flex-start; position: relative;">
-            <div class="container" style="text-align: left; width: 100%;">
-                <div style="max-width: 600px;">
-                    <span class="section-tag" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">ROAD CONTRACTORS & VANS</span>
-                    <h1 style="font-family: var(--font-heading); font-size: 40px; color: #fff; margin-top: 15px; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.5); line-height: 1.2;">Spot Our Billboard & Visit Our Office</h1>
-                    <p style="color: var(--gray-light); margin: 15px 0 0 0; font-size: 16.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); line-height:1.6;">Heading down I-95 or Florida's Turnpike? Look for our mascot billboard just before Exit 121 (St. Lucie West Blvd) and follow the simple route directions below!</p>
+        <section class="hero" style="padding: 160px 0 80px !important; min-height: 50vh; display: flex; align-items: center; justify-content: center; position: relative; background: #0A182F; overflow: hidden;">
+            <div class="container">
+                <div class="directions-hero-grid">
+                    <!-- Left Column: HTML Text Content -->
+                    <div style="z-index: 2;">
+                        <span class="section-tag" style="background: rgba(11, 99, 229, 0.2); color: #60A5FA; border-color: rgba(11, 99, 229, 0.4); display: inline-block;">ROAD CONTRACTORS & VANS</span>
+                        <h1 style="font-family: var(--font-heading); font-size: 40px; color: #fff; margin-top: 15px; font-weight: 800; line-height: 1.2; text-shadow: none;">Spot Our Billboard & Visit Our Office</h1>
+                        <p style="color: #94A3B8; margin: 15px 0 0 0; font-size: 16.5px; line-height:1.6; text-shadow: none;">Heading down I-95 or Florida's Turnpike? Look for our mascot billboard just before Exit 121 (St. Lucie West Blvd) and follow the simple route directions below!</p>
+                    </div>
+                    <!-- Right Column: Visual Billboard Image -->
+                    <div class="directions-hero-img-box" style="position: relative; border-radius: var(--border-radius); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); height: 300px; z-index: 2; width: 100%;">
+                        <div style="background-image: url('../assets/images/actual-billboard.jpg'); background-size: cover; background-position: center; width: 100%; height: 100%;"></div>
+                    </div>
                 </div>
             </div>
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);"></div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%); z-index: 3;"></div>
         </section>
 
         <!-- Directions Layout -->
