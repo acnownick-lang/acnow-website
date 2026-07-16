@@ -116,9 +116,14 @@
 /residential-air-conditioning/unveiling-comfort-a-c-nows-expertise-in-residential-air-conditioning/  /pages/services.html  301
 /areas-we-serve/best-hvac-company-near-port-saint-lucie/  /pages/areas.html  301
 /hvac-services-palm-city/  /pages/hvac-services-palm-city.html  301
-/hvac-services-jupiter/  /pages/services.html  301
-/hvac-services-palm-beach-gardens/  /pages/services.html  301
-/hvac-services-fort-pierce/  /pages/services.html  301
+/hvac-services-stuart/  /pages/hvac-services-stuart.html  301
+/hvac-services-port-st-lucie/  /pages/hvac-services-port-st-lucie.html  301
+/hvac-services-jensen-beach/  /pages/hvac-services-jensen-beach.html  301
+/hvac-services-hobe-sound/  /pages/hvac-services-hobe-sound.html  301
+/hvac-services-north-palm-beach/  /pages/hvac-services-north-palm-beach.html  301
+/hvac-services-fort-pierce/  /pages/hvac-services-fort-pierce.html  301
+/hvac-services-jupiter/  /pages/hvac-services-jupiter.html  301
+/hvac-services-palm-beach-gardens/  /pages/hvac-services-palm-beach-gardens.html  301
 /hvac-repair/air-quality-monitoring-service/  /pages/services.html  301
 /hvac-services/air-conditioning-contractors-in-jupiter/  /pages/services.html  301
 /hvac-installation/hvac-installation-jupiter/air-conditioning-installation-in-jupiter/  /pages/ac-installation.html  301
@@ -203,6 +208,13 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /ac-installation        /pages/ac-installation.html         200
 /hvac-services-palm-city /pages/hvac-services-palm-city.html 200
 /hvac-services-stuart    /pages/hvac-services-stuart.html    200
+/hvac-services-port-st-lucie /pages/hvac-services-port-st-lucie.html 200
+/hvac-services-jensen-beach /pages/hvac-services-jensen-beach.html 200
+/hvac-services-hobe-sound /pages/hvac-services-hobe-sound.html 200
+/hvac-services-north-palm-beach /pages/hvac-services-north-palm-beach.html 200
+/hvac-services-fort-pierce /pages/hvac-services-fort-pierce.html 200
+/hvac-services-jupiter /pages/hvac-services-jupiter.html 200
+/hvac-services-palm-beach-gardens /pages/hvac-services-palm-beach-gardens.html 200
 /privacy                /pages/privacy.html                 200
 /accessibility          /pages/accessibility.html           200
 /members                /pages/members.html                 200
@@ -229,6 +241,13 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /ac-installation.html        /pages/ac-installation.html         200
 /hvac-services-palm-city.html /pages/hvac-services-palm-city.html 200
 /hvac-services-stuart.html    /pages/hvac-services-stuart.html    200
+/hvac-services-port-st-lucie.html /pages/hvac-services-port-st-lucie.html 200
+/hvac-services-jensen-beach.html /pages/hvac-services-jensen-beach.html 200
+/hvac-services-hobe-sound.html /pages/hvac-services-hobe-sound.html 200
+/hvac-services-north-palm-beach.html /pages/hvac-services-north-palm-beach.html 200
+/hvac-services-fort-pierce.html /pages/hvac-services-fort-pierce.html 200
+/hvac-services-jupiter.html /pages/hvac-services-jupiter.html 200
+/hvac-services-palm-beach-gardens.html /pages/hvac-services-palm-beach-gardens.html 200
 /privacy.html                /pages/privacy.html                 200
 /accessibility.html          /pages/accessibility.html           200
 /members.html                /pages/members.html                 200
@@ -254,7 +273,6 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /ac-repair/             /pages/ac-repair.html               301
 /ac-maintenance/        /pages/ac-maintenance.html          301
 /ac-installation/       /pages/ac-installation.html         301
-/hvac-services-palm-city/ /pages/hvac-services-palm-city.html 301
-/hvac-services-stuart/  /pages/hvac-services-stuart.html    301
+# Trailing slash redirects handled in main redirects section above
 /privacy/               /pages/privacy.html                 301
 /accessibility/         /pages/accessibility.html           301

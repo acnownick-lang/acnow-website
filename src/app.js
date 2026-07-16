@@ -238,7 +238,7 @@ async function configurePushNotifications() {
             const registration = await navigator.serviceWorker.ready;
             let subscription = await registration.pushManager.getSubscription();
             if (!subscription) {
-                const VAPID_PUBLIC_KEY = 'BI7Yn7d6d54s321dFGHJKLuio9876543210qwertyuiopasdfghjklzxcvbnm1234567890qwertyuiop'; // Mock key
+                const VAPID_PUBLIC_KEY = 'BEl62iUZGse7yMm085m7HpGP1T5J94kDwJ4_fE9zL4x97yK-aO3u9P1s5F1J5m7nB_k-5yG_d5wzN7aQ9h_fE2c'; // Valid mock key
                 const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
                 if (!applicationServerKey) {
                     console.log('[PWA Client] Skipping push registration due to invalid VAPID key.');

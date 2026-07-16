@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" class="phase-1">
+<head>
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('../index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Services in Fort Pierce, FL | AC Repair & Installation | A/C Now</title>
+    <meta name="description" content="Premium HVAC services in Fort Pierce, FL. Same-day AC repair, system installations, air quality & maintenance by A/C Now — trusted veteran-owned service.">
+    <link rel="canonical" href="https://acnowllc.com/hvac-services-fort-pierce.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://acnowllc.com/hvac-services-fort-pierce.html">
+    <meta property="og:title" content="HVAC Services in Fort Pierce, FL | AC Repair &amp; Installation | A/C Now">
+    <meta property="og:description" content="Premium HVAC services in Fort Pierce, FL. Same-day AC repair, system installations, air quality &amp; maintenance by A/C Now — trusted veteran-owned service.">
+    <meta property="og:image" content="https://acnowllc.com/../assets/images/mascot-logo.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+    </noscript>
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=108">
+    <!-- LCP Preloads -->
+    <link rel="preload" as="image" href="../assets/images/banner-areas.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="../assets/images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HVACBusiness",
+  "name": "A/C Now LLC",
+  "@id": "https://acnowllc.com/#hvacbusiness",
+  "url": "https://acnowllc.com/",
+  "image": "https://acnowllc.com/../assets/images/mascot-logo.svg",
+  "telephone": "(772) 521-3568",
+  "email": "info@acnowllc.com",
+  "priceRange": "$$",
+  "description": "A/C Now LLC is a veteran-owned HVAC contractor in Port St. Lucie, FL delivering same-day residential AC repair, commercial HVAC systems, pool heat pumps, and preventive maintenance across the Treasure Coast. Florida License #CAC1820542.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
+    "addressLocality": "Port St. Lucie",
+    "addressRegion": "FL",
+    "postalCode": "34986",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 27.3138016,
+    "longitude": -80.3954409
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "6"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Fort Pierce",
+    "sameAs": "https://en.wikipedia.org/wiki/Fort_Pierce,_Florida"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://acnowllc.com/"},
+    {"@type":"ListItem","position":2,"name":"Service Areas","item":"https://acnowllc.com/areas.html"},
+    {"@type":"ListItem","position":3,"name":"HVAC Services Fort Pierce","item":"https://acnowllc.com/hvac-services-fort-pierce.html"}
+  ]
+}
+</script>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/mascot-logo.svg">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span class="top-bar-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo-link">
+                <img src="../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            </a>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+            <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="ac-installation.html" class="nav-link">AC Installation</a>
+                <a href="ac-repair.html" class="nav-link">AC Repair</a>
+                <a href="ac-maintenance.html" class="nav-link">AC Maintenance</a>
+                <a href="commercial.html" class="nav-link">Commercial</a>
+                <a href="pool-heating.html" class="nav-link">Pool Heating</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" onclick="return false;">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="diagnose.html" class="">DIY Troubleshooter</a>
+                        <a href="planner.html" class="">AC Lifespan Planner</a>
+                        <a href="configurator.html" class="">Build HVAC System</a><a href="storm-prep.html" class="">Storm Prep Checklist</a>
+                        <a href="3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
+                    </div>
+                </div>
+                <a href="members.html" class="nav-link phase-2-only">Members Area</a>
+            </nav>
+            <a href="contact.html" class="btn btn-primary nav-cta">Get Free Estimate</a>
+        </div>
+    </header>
+    <main id="main-content">
+
+    <!-- Subpage Banner -->
+    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('../assets/images/fort_pierce_local_hero.jpg'); min-height: 40vh; padding: 80px 0;">
+        <div class="container">
+            <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
+                <span class="hero-subtitle">FORT PIERCE, FLORIDA</span>
+                <h1 class="hero-title" style="font-size: 48px; margin-bottom: 12px;">Fort Pierce, FL HVAC Services</h1>
+                <p class="hero-text" style="margin-bottom: 0;">A/C Now LLC delivers reliable AC repair, new system installations, and preventative maintenance to Fort Pierce homeowners, historic downtown businesses, and properties near the Fort Pierce Inlet. We bring military-grade discipline and flat-rate pricing to every service call. Call <a href="tel:7725213568" style="color:#60A5FA;font-weight:700;">(772) 521-3568</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Services Breakdown -->
+    <section class="reveal" style="background-color: var(--white); padding: 140px 0 90px; scroll-margin-top: 110px;">
+        <div class="container">
+            <!-- Service 1: Repair -->
+            <div style="margin-bottom: 90px;" class="about-grid grid-about">
+                <div>
+                    <span class="section-tag">24/7 EMERGENCY FIXES</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 16px;">AC & Heating Repairs</h2>
+                    <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">Losing cooling in the Florida heat is an emergency. Our licensed Fort Pierce technicians arrive with fully stocked service trucks, ready to diagnose and repair your system quickly. We serve all major brands with upfront, flat-rate pricing and no hidden fees throughout Lakewood Park, Indian River Estates, and local neighborhoods.</p>
+                    <ul style="list-style: none; margin-bottom: 24px;">
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Same-Day Diagnostic Dispatch</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Fan Motors, Compressors, & Electrical Fixes</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Leak Detection & R-410A/R-32 Recharging</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-primary">Schedule Same-Day Repair</a>
+                </div>
+                <div>
+                    <img src="../assets/images/split_com_repair.webp" alt="AC Repair Service" class="about-main-img" style="border: 1px solid var(--gray-light);" loading="lazy" width="600" height="450">
+                </div>
+            </div>
+
+            <!-- Service 2: Installation -->
+            <div style="margin-bottom: 90px;" class="about-grid grid-about-reverse">
+                <div>
+                    <img src="../assets/images/split_com_install.webp" alt="AC Installation Service" class="about-main-img" style="border: 1px solid var(--gray-light);" loading="lazy" width="600" height="450">
+                </div>
+                <div>
+                    <span class="section-tag">ENERGY EFFICIENCY</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 16px;">AC Installation & Replacement</h2>
+                    <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">Upgrade to a high-efficiency system and slash your monthly utility bills. A/C Now LLC custom-designs replacement HVAC systems based on your home's square footage and airflow requirements. We install premium, high-SEER brands with military-grade precision and offer low-interest financing programs.</p>
+                    <ul style="list-style: none; margin-bottom: 24px;">
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Free System Diagnostics & Estimates</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Energy Star Certified Installations</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Full Factory Warranties & Permit Handling</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-primary">Request Free System Quote</a>
+                </div>
+            </div>
+
+            <!-- Service 3: Maintenance -->
+            <div style="margin-bottom: 90px;" class="about-grid grid-about">
+                <div>
+                    <span class="section-tag">PREVENTATIVE SAVINGS</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 16px;">HVAC Preventative Maintenance</h2>
+                    <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">Annual tune-ups reduce system wear-and-tear, extend unit life, and prevent emergency breakdowns. Join our **AC Now Service Club Membership** for seasonal maintenance checks, priority routing, and exclusive discounts on parts and labor.</p>
+                    <ul style="list-style: none; margin-bottom: 24px;">
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Coil Cleaning & Condensate Line Flushing</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Electrical Circuitry & Capacitor Tuning</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Priority Scheduling & Diagnostic Waivers</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-primary">Join our Service Club</a>
+                </div>
+                <div>
+                    <img src="../assets/images/cta-services.webp" width="1376" height="768" loading="lazy" alt="HVAC Maintenance" class="about-main-img" style="border: 1px solid var(--gray-light); object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Other Services Mini-Grid -->
+            <div class="section-header centered" style="margin-top: 60px; margin-bottom: 50px;">
+                <span class="section-tag">SPECIALIZED CAPABILITIES</span>
+                <h2>Climate & Comfort Add-ons</h2>
+                <p>From high-performance vertical air handlers to whisper-quiet ductless layouts, we deliver reliable cooling for St. Lucie County homes.</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Card 1 -->
+                <div class="service-card">
+                    <div class="service-img-wrapper">
+                        <img src="../assets/images/media-filter.webp" alt="Indoor Air Quality" class="service-img" loading="lazy" width="400" height="300">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Indoor Air Quality</h3>
+                        <p>Breathe cleaner air with whole-house HEPA filtration, active UV air sanitizers, and whole-house dehumidifier installations.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-card">
+                    <div class="service-img-wrapper">
+                        <img src="../assets/images/treated-coil.webp" alt="Ductless Mini Splits" class="service-img" loading="lazy" width="400" height="300">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Ductless Mini-Splits</h3>
+                        <p>Perfect for cooling Florida rooms, guest wings, garages, or spaces without standard duct routing.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-card">
+                    <div class="service-img-wrapper">
+                        <img src="../assets/images/pool-inno-replace.webp" alt="Pool Heating" class="service-img" loading="lazy" width="400" height="300">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Pool Heat Pumps</h3>
+                        <p>Enjoy comfortable swimming all year long with professional heat pump sales, installations, and seasonal servicing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Fort Pierce Local Content -->
+<section style="background:#f6f8fc;padding:60px 0;border-top:1px solid #e2e8f0;">
+    <div class="container">
+        <div style="max-width:800px;margin:0 auto;">
+            <h2 style="font-size:28px;color:var(--dark,#0a182f);margin-bottom:16px;">Fort Pierce's Trusted HVAC Specialists</h2>
+            <p style="color:#4a5568;line-height:1.8;margin-bottom:16px;">Fort Pierce's combination of historical architecture, riverfront humidity, and coastal salt air creates unique HVAC challenges. A/C Now LLC specializes in servicing Fort Pierce properties, from downtown commercial offices and historic theater structures to residential homes in Lakewood Park and Indian River Estates.</p>
+            <p style="color:#4a5568;line-height:1.8;margin-bottom:16px;">Salt spray near the Fort Pierce Inlet can cause rapid coil degradation. Our certified technicians use premium corrosion coatings and heavy-duty parts to protect your units. We route our trucks daily along US Highway 1, South Delaware Avenue, and Kings Highway for prompt diagnostic visits.</p>
+            <div style="background:#fff;border-radius:12px;padding:32px;margin-top:24px;border:1px solid #e2e8f0;">
+                <div style="font-size:22px;color:#945203;margin-bottom:12px;">★★★★★</div>
+                <p style="color:#374151;font-size:16px;line-height:1.7;font-style:italic;margin-bottom:16px;">"Our commercial building in historic downtown Fort Pierce lost its main split system AC. A/C Now responded same-day, provided a clear explanation, and replaced the failed compressor within a few hours. Military-grade efficiency at a fair rate!"</p>
+                <strong style="color:#0a182f;">Sarah L.</strong> <span style="color:#6b7280;font-size:13px;">— Fort Pierce, FL</span>
+            </div>
+            <div style="margin-top:24px;text-align:center;">
+                <a href="tel:7725213568" class="btn btn-primary">Call (772) 521-3568 for Fort Pierce Service</a>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+<footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
+                <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
+                    <strong>A/C Now LLC</strong><br>
+                    <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
+                    Port St. Lucie, FL 34986<br>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
+                </address>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Our Services</div>
+                <a href="ac-repair.html">AC Repair</a>
+                <a href="ac-installation.html">AC Installation</a>
+                <a href="ac-maintenance.html">AC Maintenance</a>
+                <a href="commercial.html">Commercial Services</a>
+                <a href="pool-heating.html">Pool Heating</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Quick Links</div>
+                <a href="about.html">About Us</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="diagnose.html">DIY Troubleshooter</a>
+                <a href="planner.html">AC Lifespan Planner</a>
+                <a href="configurator.html">Build HVAC System</a>
+                <a href="storm-prep.html">Storm Prep Checklist</a>
+                <a href="areas.html">Service Areas</a>
+                <a href="members.html" class="phase-2-only">Members Area</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Service Cities</div>
+                <a href="../index.html">Port St. Lucie</a>
+                <a href="hvac-services-palm-city.html">Palm City</a>
+                <a href="hvac-services-stuart.html">Stuart</a>
+                <a href="areas.html">All Service Areas</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>&copy; 2026 A/C Now LLC. EPA 608 Certified • Florida License #CAC1820542</p>
+                <div style="font-size: 12.5px; display: flex; gap: 15px;">
+                    <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../assets/js/app.js?v=101" defer></script>
+</body>
+</html>

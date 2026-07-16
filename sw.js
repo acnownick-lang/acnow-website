@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v63'; // Bumped: Fixes for diagnose troubleshooter form 400 errors and inline error banners
+const CACHE_NAME = 'acnow-cache-v65'; // Bumped: Local SEO landing pages deployment and image assets update
 const DEBUG = true;
 
 // Helper function for structured logging
