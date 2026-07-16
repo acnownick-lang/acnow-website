@@ -380,7 +380,7 @@ function initDiagnoseWizard() {
                 tel: phoneVal,
                 email: document.getElementById("email_diag").value.trim(),
                 city: document.getElementById("city_diag").value.trim(),
-                message: `[Interactive Troubleshooter Report] ${diagSummaryInput.value} ${notesText}`,
+                message: `[DIY Troubleshooter Lead] Customer completed DIY troubleshooting checklist. ${notesText}`,
                 honeypot: document.getElementById("honeypot_diag").value
             };
 
