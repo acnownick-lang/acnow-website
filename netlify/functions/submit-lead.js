@@ -304,7 +304,7 @@ export async function handler(event, context) {
           },
           body: JSON.stringify({
             from: "A/C Now Site Alerts <alerts@acnowllc.com>",
-            to: ["chris@acnowllc.com", "sean@acnowllc.com"],
+            to: ["acnowpsl@gmail.com"],
             subject: emailSubject,
             html: emailHtml,
           }),
