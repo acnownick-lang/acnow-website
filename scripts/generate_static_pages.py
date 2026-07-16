@@ -904,6 +904,134 @@ pilot_page_data = {
         "faq1_a": "Homes from the 1880s-1940s often have ductwork/layouts not designed for modern HVAC — we assess both current system condition and suitability to original construction.",
         "faq2_q": "How do I know if my system just needs a repair?",
         "faq2_a": "Depends on age, condition, performance through Stuart's 90-plus-degree stretch, and whether underlying ductwork can support it."
+    },
+    "/hvac-installation/ensure-your-air-quality-and-comfort-in-saint-lucie-west/": {
+        "intro": "Saint Lucie West homes have an advantage most of Port St. Lucie doesn't: newer ductwork and electrical systems built to more current standards — meaning less time fighting old infrastructure and more time tuning the system to how your household lives.",
+        "prose": "We treat air quality and comfort as one conversation — humidity control, filtration, airflow balance between rooms, whether equipment is sized to keep up with South Florida's moisture load.",
+        "faq1_q": "Does newer construction mean I can skip regular HVAC checkups?",
+        "faq1_a": "No — filters still load up, coils still need cleaning, humidity still stresses equipment year-round regardless of house age.",
+        "faq2_q": "Can you improve air quality without replacing my whole system?",
+        "faq2_a": "Often yes, depending on whether the issue is filtration, humidity, or airflow."
+    },
+    "/hvac-installation/get-commercial-air-quality-services-in-jensen-beach/": {
+        "intro": "Jensen Beach sits pressed against the Indian River Lagoon — humidity, salt air, and moisture load that residential-grade thinking doesn't solve for commercial spaces.",
+        "prose": "We assess how commercial HVAC systems handle humidity, ventilation, and filtration given lagoon-adjacent air, whether equipment matches square footage/use, and whether ventilation keeps pace with occupancy.",
+        "faq1_q": "Do commercial buildings near the lagoon need different air quality solutions than inland businesses?",
+        "faq1_a": "Elevated humidity and salt-air exposure put more strain on filtration and moisture control than further inland.",
+        "faq2_q": "How often should a commercial property here have air quality systems evaluated?",
+        "faq2_a": "Higher-traffic environments generally benefit from more frequent evaluation than typical residential."
+    },
+    "/hvac-installation/hvac-equipment-repair-in-jensen-beach/": {
+        "intro": "Jensen Beach sits at ~7 ft elevation where Martin County meets the lagoon, having taken direct hits from Hurricanes Frances and Jeanne in 2004.",
+        "prose": "With median age north of 55, reliable comfort is essential. Low elevation and lagoon-side humidity mean equipment works harder, accelerating wear on coils, compressors, electrical components.",
+        "faq1_q": "Does Jensen Beach's low elevation affect repair frequency?",
+        "faq1_a": "Proximity to the lagoon and low elevation raise ambient humidity, straining coils and drainage more than homes further from water.",
+        "faq2_q": "What are signs my unit needs repair rather than a filter change?",
+        "faq2_a": "Persistent indoor humidity, uneven cooling, unusual noises, or constant running without maintaining temperature."
+    },
+    "/hvac-installation/hvac-equipment-repair-in-martin-county/": {
+        "intro": "Martin County spans Stuart, Palm City, Hobe Sound, and Jensen Beach — shared coastal pressures (heat, humidity, salt air), but housing stock and issues vary town to town.",
+        "prose": "Stuart's older/newer mix near the river differs from Palm City's newer developments; Hobe Sound's wooded pockets mean different debris/airflow considerations than lagoon-front Jensen Beach.",
+        "faq1_q": "Do you cover repair across all of Martin County?",
+        "faq1_a": "Yes — Stuart, Palm City, Hobe Sound, and Jensen Beach.",
+        "faq2_q": "Why would the same problem show up differently across towns?",
+        "faq2_a": "Water proximity, tree coverage, home age, and construction style all vary, affecting humidity load and debris buildup."
+    },
+    "/hvac-installation/hvac-equipment-repair-in-port-saint-lucie/": {
+        "intro": "Port St. Lucie is FL's 6th-most-populous city; ~53.5 in/yr rain means equipment spends much of its life managing moisture, not just temperature.",
+        "prose": "Drainage, humidity control, and coil condition are recurring repair themes across the city's mix of older and newer neighborhoods, all at ~23 ft elevation.",
+        "faq1_q": "Why does rainfall matter for repair here?",
+        "faq1_a": "Drainage lines, coil condition, and humidity control get tested constantly.",
+        "faq2_q": "How do I know if it's a quick repair or something bigger?",
+        "faq2_a": "A clogged drain line or failing capacitor is often simple; compressor failure or major refrigerant loss usually means a bigger decision."
+    },
+    "/hvac-installation/hvac-equipment-repair-in-saint-lucie-county/": {
+        "intro": "Between Fort Pierce's coastal humidity and Port St. Lucie's long summers, compressors and coils wear out faster than manuals account for.",
+        "prose": "Repairs range from capacitors and refrigerant leaks to blower motors and control boards, on older Fort Pierce units and newer Port St. Lucie systems alike.",
+        "faq1_q": "Why does my AC need repairs more often than a few years ago?",
+        "faq1_a": "Coastal moisture accelerates corrosion on coils and contacts as components age.",
+        "faq2_q": "Do you work in both Fort Pierce and Port St. Lucie?",
+        "faq2_a": "Yes, throughout St. Lucie County."
+    },
+    "/hvac-installation/hvac-equipment-repair-in-saint-lucie-west/": {
+        "intro": "Saint Lucie West runs newer equipment than much of the surrounding area — repairs here more often mean electronic control failures or early warranty-era component issues than aging compressors.",
+        "prose": "Consistent construction standards mean diagnosis often isolates a single faulty part rather than untangling decades of prior modifications.",
+        "faq1_q": "My system is only a few years old — why would it need repair?",
+        "faq1_a": "Often a specific component like a control board or sensor, possibly still under warranty.",
+        "faq2_q": "Does a newer community need a different kind of technician?",
+        "faq2_a": "Not different, but familiarity with electronically controlled systems helps."
+    },
+    "/hvac-installation/hvac-installation-services-in-jensen-beach/": {
+        "intro": "Jensen Beach's low elevation and 2004 storm history (Frances, Jeanne) mean installation accounts for more than square footage — equipment placement, mounting, salt-air-resistant materials.",
+        "prose": "Median age over 55 means much of our work replaces long-serving systems near the historic core, close to All Saints Episcopal Church.",
+        "faq1_q": "Does the coastal location affect what system you'd recommend?",
+        "faq1_a": "Mostly material/component choices — coastal exposure accelerates wear on certain parts.",
+        "faq2_q": "Will a replacement be a like-for-like swap?",
+        "faq2_a": "Not necessarily — we run a fresh load calculation rather than assume old sizing was correct."
+    },
+    "/hvac-installation/hvac-installation-services-in-martin-county/": {
+        "intro": "Martin County spans Stuart's older riverfront neighborhoods to Palm City's newer developments, Hobe Sound's quieter streets, and coastal Jensen Beach.",
+        "prose": "A compact system for a Palm City townhome differs from a larger Stuart property; coastal installs in Hobe Sound/Jensen Beach need different material considerations than inland homes.",
+        "faq1_q": "Do installation needs really differ that much between towns?",
+        "faq1_a": "Yes — housing age, construction style, coastal proximity all affect sizing.",
+        "faq2_q": "Do you install throughout the county or mainly Stuart?",
+        "faq2_a": "Throughout — Stuart, Palm City, Hobe Sound, Jensen Beach."
+    },
+    "/hvac-installation/hvac-installation-services-in-port-saint-lucie/": {
+        "intro": "As our home city, Port St. Lucie is where we install the widest range of systems — decades-old ductwork to newer developments, all managing ~53.5 in/yr rain at low, flat elevation.",
+        "prose": "Every installation starts with a home-specific load calculation since construction era varies house to house even on the same street.",
+        "faq1_q": "Does being locally based mean faster scheduling?",
+        "faq1_a": "Helps with logistics/familiarity, though scheduling depends on workload.",
+        "faq2_q": "Does an older neighborhood change what gets installed?",
+        "faq2_a": "Possibly — ductwork/electrical may need evaluation before a straightforward swap works."
+    },
+    "/hvac-installation/hvac-installation-services-in-saint-lucie-county/": {
+        "intro": "A county spanning a working port city (Fort Pierce) and one of Florida's fastest-growing residential areas (Port St. Lucie) doesn't have one 'typical' house.",
+        "prose": "Fort Pierce's older homes often need duct/insulation-era considerations; newer Port St. Lucie construction shifts focus toward efficiency and humidity control.",
+        "faq1_q": "Does it matter if my home is in Fort Pierce or Port St. Lucie?",
+        "faq1_a": "Older Fort Pierce homes may need duct modifications; newer Port St. Lucie builds are often ready for a straightforward swap.",
+        "faq2_q": "How does county rainfall affect installation?",
+        "faq2_a": "Drainage and condensate handling are part of every plan given 51-53+ in/yr rain."
+    },
+    "/hvac-installation/hvac-installation-services-in-saint-lucie-west/": {
+        "intro": "A newer, more planned corner of Port St. Lucie — consistent construction standards, tighter building envelopes, layouts designed with modern HVAC in mind.",
+        "prose": "Better-sealed ductwork and consistent insulation reduce surprises versus older housing stock, though orientation and shade still change the load calculation.",
+        "faq1_q": "Is installation faster in newer construction?",
+        "faq1_a": "Often more straightforward, but we still run a full on-site evaluation.",
+        "faq2_q": "Do HOA rules affect equipment placement?",
+        "faq2_a": "Many communities have guidelines around outdoor unit visibility, which we factor into the plan."
+    },
+    "/hvac-installation/improve-your-air-quality-with-ac-now-in-saint-lucie-county/": {
+        "intro": "Salt air, humidity, and Florida's pollen season mean St. Lucie County homes work harder to keep indoor air clean than drier climates.",
+        "prose": "Filtration, ventilation, and humidity control tie directly into installation design — an undersized or mismatched system leaves a home feeling damp despite comfortable temperature readings.",
+        "faq1_q": "Can a new installation actually improve indoor air, or is that marketing?",
+        "faq1_a": "Legitimate — filtration options, correct duct sizing, and balanced airflow are installation-time decisions, not add-ons.",
+        "faq2_q": "Is air quality a bigger concern in Fort Pierce vs. Port St. Lucie?",
+        "faq2_a": "Largely countywide, driven by climate; individual home age/insulation/duct condition varies more."
+    },
+    "/hvac-installation/optimize-your-humidity-indoors-in-martin-county/": {
+        "intro": "From Stuart to Hobe Sound, Martin County living means managing humidity as much as embracing coastal life — humidity control is a core system function, not a side effect of cooling.",
+        "prose": "Jensen Beach and Palm City's water proximity makes humidity management matter as much as temperature; oversized systems cool fast without dehumidifying properly.",
+        "faq1_q": "Why does a house feel humid even with the AC running?",
+        "faq1_a": "Usually an oversized or short-cycling system satisfying the thermostat before pulling enough moisture out.",
+        "faq2_q": "Is humidity control different for waterfront Hobe Sound/Jensen Beach vs. inland Stuart/Palm City?",
+        "faq2_a": "Proximity to water can mean higher ambient humidity, though construction quality and ductwork condition matter just as much."
+    },
+    "/hvac-installation/professional-air-quality-monitoring-in-port-saint-lucie/": {
+        "intro": "Port St. Lucie's growth has brought a wide mix of home ages into one city — indoor air quality varies significantly neighborhood to neighborhood.",
+        "prose": "We pair installations with air quality monitoring so homeowners get real data — humidity levels, filtration effectiveness, airflow — rather than assumptions, especially given ~53.5 in/yr rain.",
+        "faq1_q": "What does monitoring add on top of standard installation?",
+        "faq1_a": "An ongoing picture of real-home performance vs. design specs from installation day.",
+        "faq2_q": "Is monitoring more useful in some neighborhoods than others?",
+        "faq2_a": "Older sections can catch duct/insulation issues; newer neighborhoods can confirm a correctly designed system performs as expected."
+    },
+    "/hvac-installation/": {
+        "intro": "A/C Now installs heating and cooling systems throughout Florida's Treasure Coast, where humid subtropical conditions, seasonal storms, and coastal exposure shape what a good installation needs to accomplish.",
+        "prose": "Installations account for load calculations specific to each home, drainage/condensate planning for high rainfall, and equipment placement considering storm exposure — no 'typical' Treasure Coast home.",
+        "faq1_q": "What makes installation here different from elsewhere in the country?",
+        "faq1_a": "Near-constant humidity, heavy seasonal rainfall, and hurricane exposure all affect sizing, condensate management, and mounting.",
+        "faq2_q": "Do you handle both older homes and new construction?",
+        "faq2_a": "Yes — each gets its own on-site evaluation; older homes need closer ductwork/insulation attention, newer construction focuses on precise sizing."
     }
 }
 
