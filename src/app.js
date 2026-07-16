@@ -287,11 +287,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const cityInput = document.getElementById("city");
         const cityError = document.getElementById("city-error");
         
-        // 1. Prefill from nf_city cookie if available and not default
+        // 1. Prefill from nf_city cookie if available and is a whitelisted service city
         const match = document.cookie.match(/(?:^|; )nf_city=([^;]*)/);
         if (match && cityInput) {
             const market = decodeURIComponent(match[1]);
-            if (market && market !== "Default" && !cityInput.value) {
+            const serviceCities = ["Port St. Lucie", "Stuart", "Palm City", "Jensen Beach", "Fort Pierce", "Jupiter", "Hobe Sound", "Palm Beach Gardens", "North Palm Beach"];
+            if (market && market !== "Default" && serviceCities.includes(market) && !cityInput.value) {
                 cityInput.value = market;
                 console.log(`[City Prefill] Auto-populated city field with: ${market}`);
             }
@@ -2137,7 +2138,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "Port St. Lucie": { lat: 27.2858, lon: -80.3582, fallbackAqi: 42 },
             "Stuart": { lat: 27.1975, lon: -80.2528, fallbackAqi: 35 },
             "Palm City": { lat: 27.1698, lon: -80.2684, fallbackAqi: 38 },
-            "Jupiter": { lat: 26.9342, lon: -80.0942, fallbackAqi: 31 }
+            "Jupiter": { lat: 26.9342, lon: -80.0942, fallbackAqi: 31 },
+            "Fort Pierce": { lat: 27.4467, lon: -80.3256, fallbackAqi: 38 },
+            "Jensen Beach": { lat: 27.2542, lon: -80.2298, fallbackAqi: 36 },
+            "Hobe Sound": { lat: 27.0598, lon: -80.1364, fallbackAqi: 33 },
+            "Palm Beach Gardens": { lat: 26.8320, lon: -80.1287, fallbackAqi: 32 },
+            "North Palm Beach": { lat: 26.8092, lon: -80.0592, fallbackAqi: 30 }
         };
 
         const coords = CITY_COORDS[city] || CITY_COORDS["Port St. Lucie"];
