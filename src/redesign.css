@@ -1839,9 +1839,15 @@ section {
 }
 /* Ensure above-the-fold hero sections render instantly to prevent perceived load lag and optimize LCP */
 .reveal.hero,
-.reveal.split-hero {
+.reveal.split-hero,
+.reveal.hero.animating,
+.reveal.hero.active,
+.reveal.split-hero.animating,
+.reveal.split-hero.active {
     opacity: 1 !important;
     transform: translate3d(0, 0, 0) !important;
+    transition: none !important;
+    transition-duration: 0s !important;
 }
 /* GPU promotion only during animation window — app.js adds/removes .animating class */
 .reveal.animating {

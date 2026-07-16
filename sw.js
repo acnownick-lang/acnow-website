@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v61'; // Bumped: Correct offline fallback match key, accessibility, and backdoor updates
+const CACHE_NAME = 'acnow-cache-v62'; // Bumped: Correct offline fallback match key, accessibility, backdoor updates, and QA fixes
 const DEBUG = true;
 
 // Helper function for structured logging

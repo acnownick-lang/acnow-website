@@ -275,6 +275,43 @@ function urlBase64ToUint8Array(base64String) {
    Mobile Nav — Close on tap-outside, close on link-click, aria-expanded
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
+    // Dedicated handler for the city field (prefill and custom inline validation)
+    function setupCityFieldHandlers() {
+        const cityInput = document.getElementById("city");
+        const cityError = document.getElementById("city-error");
+        
+        // 1. Prefill from nf_city cookie if available and not default
+        const match = document.cookie.match(/(?:^|; )nf_city=([^;]*)/);
+        if (match && cityInput) {
+            const market = decodeURIComponent(match[1]);
+            if (market && market !== "Default" && !cityInput.value) {
+                cityInput.value = market;
+                console.log(`[City Prefill] Auto-populated city field with: ${market}`);
+            }
+        }
+        
+        // 2. Custom inline validation
+        if (cityInput) {
+            cityInput.addEventListener("invalid", (e) => {
+                e.preventDefault(); // Suppress default browser tooltip
+                cityInput.style.borderColor = "#C22A36";
+                if (cityError) {
+                    cityError.style.display = "block";
+                    cityError.style.visibility = "visible";
+                }
+            });
+            cityInput.addEventListener("input", () => {
+                if (cityInput.value.trim() !== "") {
+                    cityInput.style.borderColor = "";
+                    if (cityError) {
+                        cityError.style.display = "none";
+                    }
+                }
+            });
+        }
+    }
+    setupCityFieldHandlers();
+
     // 0. Client-side Geotargeting Fallback via Cookies
     function applyClientGeotargeting() {
         const match = document.cookie.match(/(?:^|; )nf_city=([^;]*)/);
@@ -370,14 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-
-        // Pre-populate city input fields on contact forms if geotargeting is active and not default
-        const cityInputs = document.querySelectorAll('input[name="city"], input[id="city"]');
-        cityInputs.forEach(input => {
-            if (market && market !== "Default" && !input.value) {
-                input.value = market;
-            }
-        });
     }
     applyClientGeotargeting();
 
@@ -1434,27 +1463,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (typeof window.showToast === "function") { window.showToast("Your service request has been transmitted. Technicians have been notified.", "success"); } else { alert("Your service request has been transmitted. Technicians have been notified."); }
                 configurePushNotifications();
             });
-        });
-    }
-
-    // 2b. Custom inline validation for city field on contact pages
-    const cityInput = document.getElementById("city");
-    const cityError = document.getElementById("city-error");
-    if (cityInput) {
-        cityInput.addEventListener("invalid", (e) => {
-            e.preventDefault(); // Suppress default browser tooltip
-            cityInput.style.borderColor = "#C22A36";
-            if (cityError) {
-                cityError.style.display = "block";
-            }
-        });
-        cityInput.addEventListener("input", () => {
-            if (cityInput.value.trim() !== "") {
-                cityInput.style.borderColor = "";
-                if (cityError) {
-                    cityError.style.display = "none";
-                }
-            }
         });
     }
 
