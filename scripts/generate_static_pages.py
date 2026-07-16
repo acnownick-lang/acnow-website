@@ -938,14 +938,21 @@ for path in paths:
     # 8.7. Localize image paths for regional pages
     if path in page_image_map:
         img1, img2 = page_image_map[path]
-        content = content.replace("../assets/images/install_premium.webp", f"../assets/images/generated/{img1}.webp")
-        content = content.replace("../assets/images/install_premium.jpg", f"../assets/images/generated/{img2}.jpg")
-        content = content.replace("../assets/images/maintenance_premium.webp", f"../assets/images/generated/{img1}.webp")
-        content = content.replace("../assets/images/hvac-maintenance-img.webp", f"../assets/images/generated/{img2}.webp")
-        content = content.replace("../assets/images/repair_premium.webp", f"../assets/images/generated/{img1}.webp")
-        content = content.replace("../assets/images/generated/compressor_install.jpg", f"../assets/images/generated/{img2}.jpg")
-        content = content.replace("../assets/images/hvac-repair-img.webp", f"../assets/images/generated/{img1}.webp")
-        content = content.replace("../assets/images/hvac-install-img-1.webp", f"../assets/images/generated/{img2}.webp")
+        if template_name == "ac-installation.html":
+            content = content.replace("../assets/images/install_premium.webp", f"../assets/images/generated/{img1}.webp")
+            content = content.replace("../assets/images/hvac-install-img-1.webp", f"../assets/images/generated/{img2}.webp")
+        elif template_name == "ac-maintenance.html":
+            content = content.replace("../assets/images/maintenance_premium.webp", f"../assets/images/generated/{img1}.webp")
+            content = content.replace("../assets/images/hvac-maintenance-img.webp", f"../assets/images/generated/{img2}.webp")
+        elif template_name == "ac-repair.html":
+            content = content.replace("../assets/images/repair_premium.webp", f"../assets/images/generated/{img1}.webp")
+            content = content.replace("../assets/images/generated/compressor_install.jpg", f"../assets/images/generated/{img2}.jpg")
+        elif template_name == "pool-heating.html":
+            content = content.replace("../assets/images/pool-inno-install.webp", f"../assets/images/generated/{img1}.webp")
+            content = content.replace("../assets/images/pool-faq-graphic.webp", f"../assets/images/generated/{img2}.webp")
+        elif template_name == "services.html":
+            content = content.replace("../assets/images/hvac-repair-img.webp", f"../assets/images/generated/{img1}.webp")
+            content = content.replace("../assets/images/hvac-install-img-1.webp", f"../assets/images/generated/{img2}.webp")
 
     # 9. Create target directory and write index.html
     relative_dir = path.strip("/")
