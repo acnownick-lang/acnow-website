@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v67'; // Bumped for FAQ Safari rendering overlap bug fix
+const CACHE_NAME = 'acnow-cache-v68'; // Bumped for synchronizing pricing plan details across all regional landing pages and members portal
 const DEBUG = true;
 
 // Helper function for structured logging
