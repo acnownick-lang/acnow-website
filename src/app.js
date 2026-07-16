@@ -1270,7 +1270,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (err) {
                 removeLoading(loadingId);
                 console.error(err);
-                appendMessage("ai", "We encountered a transmission error sending your details to the dispatch system. Please call us directly at (772) 521-3568 so Chris or Sean can book your appointment immediately!");
+                appendMessage("ai", "We encountered a transmission error sending your details to the dispatch system. Please call us directly at (772) 521-3568 so our team can book your appointment immediately!");
             }
         });
 
@@ -1380,7 +1380,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, hpContactForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Chris or Sean will contact you shortly.", "success"); } else { alert(`Estimate request submitted successfully! Chris or Sean will contact you shortly.`); }
+                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Our team will contact you shortly.", "success"); } else { alert(`Estimate request submitted successfully! Our team will contact you shortly.`); }
                 configurePushNotifications(); // Ask for notification permission after a high-value action
             });
         });
@@ -1463,7 +1463,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, commercialForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Chris or Sean will contact you within 15 minutes.", "success"); } else { alert("Estimate request submitted successfully! Chris or Sean will contact you within 15 minutes."); }
+                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Our team will contact you as soon as possible.", "success"); } else { alert("Estimate request submitted successfully! Our team will contact you as soon as possible."); }
                 configurePushNotifications();
             });
         });
@@ -1489,7 +1489,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, corrosionForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Corrosion protection audit requested successfully! Chris or Sean will contact you shortly.", "success"); } else { alert("Corrosion protection audit requested successfully! Chris or Sean will contact you shortly."); }
+                if (typeof window.showToast === "function") { window.showToast("Corrosion protection audit requested successfully! Our team will contact you shortly.", "success"); } else { alert("Corrosion protection audit requested successfully! Our team will contact you shortly."); }
                 configurePushNotifications();
             });
         });
@@ -1888,9 +1888,80 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (e) {
                 console.warn("[Web Audio] Wind stop error:", e);
             }
+        },
+
+        playSuccess() {
+            if (this.isMuted || !this.ctx) return;
+            try {
+                const now = this.ctx.currentTime;
+                const chimeFrequencies = [523.25, 659.25, 783.99, 1046.50];
+                chimeFrequencies.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(freq, now + (idx * 0.07));
+                    gainNode.gain.setValueAtTime(0, now + (idx * 0.07));
+                    gainNode.gain.linearRampToValueAtTime(0.08, now + (idx * 0.07) + 0.02);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, now + (idx * 0.07) + 0.3);
+                    osc.connect(gainNode);
+                    gainNode.connect(this.ctx.destination);
+                    osc.start(now + (idx * 0.07));
+                    osc.stop(now + (idx * 0.07) + 0.35);
+                });
+            } catch (e) {
+                console.warn("[Web Audio] Failed success sound:", e);
+            }
+        },
+
+        playFailure() {
+            if (this.isMuted || !this.ctx) return;
+            try {
+                const now = this.ctx.currentTime;
+                const osc1 = this.ctx.createOscillator();
+                const osc2 = this.ctx.createOscillator();
+                const gainNode = this.ctx.createGain();
+                osc1.type = "sawtooth";
+                osc2.type = "triangle";
+                osc1.frequency.setValueAtTime(115, now);
+                osc2.frequency.setValueAtTime(118, now);
+                gainNode.gain.setValueAtTime(0.12, now);
+                gainNode.gain.linearRampToValueAtTime(0.12, now + 0.12);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc1.connect(gainNode);
+                osc2.connect(gainNode);
+                gainNode.connect(this.ctx.destination);
+                osc1.start(now);
+                osc2.start(now);
+                osc1.stop(now + 0.3);
+                osc2.stop(now + 0.3);
+            } catch (e) {
+                console.warn("[Web Audio] Failed failure sound:", e);
+            }
         }
     };
     window.ComfortAudio = ComfortAudio;
+
+    window.triggerSound = function(type) {
+        if (window.ComfortAudio) {
+            if (type === "click") {
+                window.ComfortAudio.playClick();
+            } else if (type === "tick") {
+                window.ComfortAudio.playTick();
+            } else if (type === "success") {
+                if (typeof window.ComfortAudio.playSuccess === "function") {
+                    window.ComfortAudio.playSuccess();
+                } else {
+                    window.ComfortAudio.playClick();
+                }
+            } else if (type === "error") {
+                if (typeof window.ComfortAudio.playFailure === "function") {
+                    window.ComfortAudio.playFailure();
+                } else {
+                    window.ComfortAudio.playTick();
+                }
+            }
+        }
+    };
 
     // Initialize AudioContext on first page interaction
     document.addEventListener("click", () => {
@@ -2222,7 +2293,7 @@ window.verifyVeteranStatus = function() {
         if (typeof window.showToast === "function") {
             window.showToast("Please check the self-certification box to proceed.", "warning");
         } else {
-            if (typeof window.showToast === "function") { window.showToast("Please check the self-certification box to proceed.", "warning"); } else { alert("Please check the self-certification box to proceed."); }
+            alert("Please check the self-certification box to proceed.");
         }
         return;
     }
@@ -2231,26 +2302,33 @@ window.verifyVeteranStatus = function() {
     if (inputFields) inputFields.style.display = "none";
     if (successBanner) successBanner.style.display = "block";
     
+    // Set form flags for Netlify submission
+    const flagInput = document.getElementById("military-discount-flag");
+    if (flagInput) flagInput.value = "Yes";
+    const flagInputWizard = document.getElementById("military-discount-flag-wizard");
+    if (flagInputWizard) flagInputWizard.value = "Yes";
+    
+    const messageField = document.getElementById("message");
+    if (messageField && !messageField.value.includes("[5% MILITARY DISCOUNT]")) {
+        messageField.value = "[5% MILITARY DISCOUNT APPLIED TO INVOICE]\n" + messageField.value;
+    }
+    
     if (typeof triggerSound === "function") triggerSound("success");
     if (typeof window.showToast === "function") {
-        window.showToast("Veteran self-certification complete! 5% discount code applied.", "success");
+        window.showToast("Veteran self-certification complete! 5% honor discount applied to invoice.", "success");
     } else {
-        if (typeof window.showToast === "function") { window.showToast("Veteran credentials verified! 5% discount checkout code applied.", "success"); } else { alert("Veteran credentials verified! 5% discount checkout code applied."); }
+        alert("Veteran status confirmed! Your 5% discount will be applied directly to your service invoice.");
     }
 };
 
 window.toggleBillingPeriod = function(isYearly) {
-    const preferredPrices = document.querySelectorAll('.pricing-tier-card:nth-child(1) .price-num, .tier-card:nth-child(1) .price-num');
-    const preferredPeriods = document.querySelectorAll('.pricing-tier-card:nth-child(1) .price-period, .tier-card:nth-child(1) .price-period');
-    const preferredBtns = document.querySelectorAll('#btn-preferred-tier, .tier-card:nth-child(1) .btn');
+    const goldPrices = document.querySelectorAll('.pricing-tier-card:nth-child(1) .price-num, .tier-card:nth-child(1) .price-num');
+    const goldPeriods = document.querySelectorAll('.pricing-tier-card:nth-child(1) .price-period, .tier-card:nth-child(1) .price-period');
+    const goldBtns = document.querySelectorAll('#btn-preferred-tier, .tier-card:nth-child(1) .btn, .pricing-tier-card:nth-child(1) .btn-tier, .tier-card:nth-child(1) .btn-signup');
     
-    const comfortPrices = document.querySelectorAll('.pricing-tier-card:nth-child(2) .price-num, .tier-card:nth-child(2) .price-num');
-    const comfortPeriods = document.querySelectorAll('.pricing-tier-card:nth-child(2) .price-period, .tier-card:nth-child(2) .price-period');
-    const comfortBtns = document.querySelectorAll('#btn-comfort-tier, .tier-card:nth-child(2) .btn');
-    
-    const elitePrices = document.querySelectorAll('.pricing-tier-card:nth-child(3) .price-num, .tier-card:nth-child(3) .price-num');
-    const elitePeriods = document.querySelectorAll('.pricing-tier-card:nth-child(3) .price-period, .tier-card:nth-child(3) .price-period');
-    const eliteBtns = document.querySelectorAll('#btn-elite-tier, .tier-card:nth-child(3) .btn');
+    const platinumPrices = document.querySelectorAll('.pricing-tier-card:nth-child(2) .price-num, .tier-card:nth-child(2) .price-num');
+    const platinumPeriods = document.querySelectorAll('.pricing-tier-card:nth-child(2) .price-period, .tier-card:nth-child(2) .price-period');
+    const platinumBtns = document.querySelectorAll('#btn-comfort-tier, .tier-card:nth-child(2) .btn, .pricing-tier-card:nth-child(2) .btn-tier, .tier-card:nth-child(2) .btn-signup');
 
     const labelMonthly = document.getElementById('toggle-label-monthly');
     const labelYearly = document.getElementById('toggle-label-yearly');
@@ -2259,32 +2337,24 @@ window.toggleBillingPeriod = function(isYearly) {
         if (labelYearly) labelYearly.classList.add('active');
         if (labelMonthly) labelMonthly.classList.remove('active');
         
-        preferredPrices.forEach(el => el.textContent = "$149.50");
-        preferredPeriods.forEach(el => el.textContent = "/year");
-        preferredBtns.forEach(el => el.setAttribute('href', "contact.html?plan=preferred_annual"));
+        goldPrices.forEach(el => el.textContent = "$155");
+        goldPeriods.forEach(el => el.textContent = "/year");
+        goldBtns.forEach(el => el.setAttribute('href', "contact.html?plan=gold_annual"));
         
-        comfortPrices.forEach(el => el.textContent = "$199.50");
-        comfortPeriods.forEach(el => el.textContent = "/year");
-        comfortBtns.forEach(el => el.setAttribute('href', "contact.html?plan=comfort_annual"));
-        
-        elitePrices.forEach(el => el.textContent = "$299.50");
-        elitePeriods.forEach(el => el.textContent = "/year");
-        eliteBtns.forEach(el => el.setAttribute('href', "contact.html?plan=elite_annual"));
+        platinumPrices.forEach(el => el.textContent = "$295");
+        platinumPeriods.forEach(el => el.textContent = "/year");
+        platinumBtns.forEach(el => el.setAttribute('href', "contact.html?plan=platinum_annual"));
     } else {
         if (labelMonthly) labelMonthly.classList.add('active');
         if (labelYearly) labelYearly.classList.remove('active');
         
-        preferredPrices.forEach(el => el.textContent = "$14.95");
-        preferredPeriods.forEach(el => el.textContent = "/mo");
-        preferredBtns.forEach(el => el.setAttribute('href', "contact.html?plan=preferred"));
+        goldPrices.forEach(el => el.textContent = "$13.60");
+        goldPeriods.forEach(el => el.textContent = "/month");
+        goldBtns.forEach(el => el.setAttribute('href', "contact.html?plan=gold_monthly"));
         
-        comfortPrices.forEach(el => el.textContent = "$19.95");
-        comfortPeriods.forEach(el => el.textContent = "/mo");
-        comfortBtns.forEach(el => el.setAttribute('href', "contact.html?plan=comfort"));
-        
-        elitePrices.forEach(el => el.textContent = "$29.95");
-        elitePeriods.forEach(el => el.textContent = "/mo");
-        eliteBtns.forEach(el => el.setAttribute('href', "contact.html?plan=elite"));
+        platinumPrices.forEach(el => el.textContent = "$25.88");
+        platinumPeriods.forEach(el => el.textContent = "/month");
+        platinumBtns.forEach(el => el.setAttribute('href', "contact.html?plan=platinum_monthly"));
     }
 };
 
@@ -3190,3 +3260,483 @@ document.addEventListener('mouseover', (event) => {
         }
     }
 }, { passive: true });
+
+/**
+ * Copies a promo code to the clipboard and handles interactive accessibility states.
+ * @param {HTMLButtonElement} btnElement - The button clicked.
+ * @param {string} textToCopy - The discount code text.
+ */
+window.copyCouponCode = function(btnElement, textToCopy) {
+    if (!btnElement || !textToCopy) return;
+
+    const originalHTML = btnElement.innerHTML;
+    const announcer = document.getElementById('vet-copy-announcer');
+
+    // Modern Clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => handleSuccess())
+            .catch(() => handleFallback());
+    } else {
+        handleFallback();
+    }
+
+    function handleFallback() {
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                handleSuccess();
+            } else {
+                console.error('Fallback copy command was unsuccessful');
+            }
+        } catch (err) {
+            console.error('Fallback copy failed', err);
+        }
+        document.body.removeChild(textarea);
+    }
+
+    function handleSuccess() {
+        btnElement.classList.add('copied');
+        btnElement.innerHTML = `
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:1.1em; height:1.1em; color:#10B981; margin-right:4px;">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span class="copy-btn-text" style="color:#10B981; font-weight:700;">Copied!</span>
+        `;
+        btnElement.setAttribute('aria-label', `Discount code ${textToCopy} copied successfully`);
+
+        if (typeof triggerSound === 'function' && window.ComfortAudio && !window.ComfortAudio.isMuted) {
+            triggerSound('success');
+        }
+
+        if (announcer) {
+            announcer.textContent = `Promo code ${textToCopy} copied to clipboard.`;
+        }
+
+        setTimeout(() => {
+            btnElement.classList.remove('copied');
+            btnElement.innerHTML = originalHTML;
+            btnElement.setAttribute('aria-label', `Copy discount code ${textToCopy}`);
+            if (announcer) announcer.textContent = '';
+        }, 2000);
+    }
+};
+
+/**
+ * Verification state management for the veteran coupon in the footer.
+ */
+window.initVetCouponState = function() {
+    const isVerified = localStorage.getItem('acnow_military_verified') === 'true';
+    const lockedEl = document.getElementById('vet-coupon-locked');
+    const unlockedEl = document.getElementById('vet-coupon-unlocked');
+    const formEl = document.getElementById('vet-verification-form');
+    
+    if (isVerified) {
+        if (lockedEl) lockedEl.style.display = 'none';
+        if (formEl) formEl.style.display = 'none';
+        if (unlockedEl) unlockedEl.style.display = 'flex';
+    } else {
+        if (lockedEl) lockedEl.style.display = 'flex';
+        if (formEl) formEl.style.display = 'none';
+        if (unlockedEl) unlockedEl.style.display = 'none';
+    }
+};
+
+window.openVetVerification = function() {
+    const lockedEl = document.getElementById('vet-coupon-locked');
+    const formEl = document.getElementById('vet-verification-form');
+    
+    if (lockedEl && formEl) {
+        lockedEl.style.display = 'none';
+        formEl.style.display = 'flex';
+        formEl.style.opacity = '0';
+        setTimeout(() => formEl.style.opacity = '1', 10);
+        if (typeof triggerSound === 'function') triggerSound('tick');
+    }
+};
+
+window.onVetVerifyCheckboxChange = function(checkbox) {
+    if (checkbox.checked) {
+        localStorage.setItem('acnow_military_verified', 'true');
+        const formEl = document.getElementById('vet-verification-form');
+        const unlockedEl = document.getElementById('vet-coupon-unlocked');
+        
+        if (formEl && unlockedEl) {
+            formEl.style.display = 'none';
+            unlockedEl.style.display = 'flex';
+            unlockedEl.style.opacity = '0';
+            setTimeout(() => unlockedEl.style.opacity = '1', 10);
+            
+            if (typeof triggerSound === 'function') {
+                triggerSound('success');
+            }
+        }
+    }
+};
+
+// Auto-run on DOM load
+document.addEventListener("DOMContentLoaded", () => {
+    window.initVetCouponState();
+    initGlobalSearchTrigger();
+});
+
+/* ==========================================================================
+   SITE-WIDE SPOTLIGHT SEARCH SYSTEM
+   ========================================================================== */
+
+let searchIndexData = null;
+let searchIndexLoading = false;
+let activeHighlightIndex = -1;
+let currentSearchResults = [];
+
+// 1. Create and inject Search Modal HTML dynamically
+function injectSearchSystem() {
+    if (document.getElementById('search-modal')) return;
+
+    const modal = document.createElement('div');
+    modal.id = 'search-modal';
+    modal.className = 'search-overlay';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.innerHTML = `
+        <div class="search-modal-card">
+            <div class="search-input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 20px; height: 20px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="search-input" placeholder="Search pages, cities, services, or tools..." autocomplete="off">
+                <button class="search-close-btn" id="close-search-btn">ESC</button>
+            </div>
+            <div class="search-results-panel" id="search-results-panel">
+                <div class="search-empty-state">Type a query above to search the site, or press <strong>ESC</strong> to close.</div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    const input = document.getElementById('search-input');
+    const closeBtn = document.getElementById('close-search-btn');
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeSearchModal();
+    });
+    closeBtn.addEventListener('click', closeSearchModal);
+
+    input.addEventListener('input', (e) => {
+        performSearch(e.target.value.trim());
+    });
+
+    input.addEventListener('keydown', handleSearchNavigation);
+    input.addEventListener('focus', loadSearchIndex);
+}
+
+// 2. Load index asynchronously
+async function loadSearchIndex() {
+    if (searchIndexData || searchIndexLoading) return;
+    searchIndexLoading = true;
+    
+    try {
+        const currentPath = window.location.pathname;
+        const pathParts = currentPath.split('/').filter(Boolean);
+        let depth = 0;
+        if (pathParts.length > 0) {
+            depth = pathParts.length - 1;
+        }
+        let prefix = '';
+        for (let i = 0; i < depth; i++) {
+            prefix += '../';
+        }
+        
+        const response = await fetch(prefix + 'assets/data/search-index.json');
+        if (!response.ok) throw new Error('Search index failed to load');
+        searchIndexData = await response.json();
+    } catch (err) {
+        console.error('Failed to load search index:', err);
+    } finally {
+        searchIndexLoading = false;
+    }
+}
+
+// 3. Search and scoring logic
+function performSearch(query) {
+    const resultsPanel = document.getElementById('search-results-panel');
+    if (!resultsPanel) return;
+
+    if (!query) {
+        resultsPanel.innerHTML = '<div class="search-empty-state">Type a query above to search the site, or press <strong>ESC</strong> to close.</div>';
+        currentSearchResults = [];
+        activeHighlightIndex = -1;
+        return;
+    }
+
+    if (!searchIndexData) {
+        resultsPanel.innerHTML = '<div class="search-empty-state">Loading search index...</div>';
+        loadSearchIndex().then(() => performSearch(query));
+        return;
+    }
+
+    const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+    if (terms.length === 0) {
+        resultsPanel.innerHTML = '<div class="search-empty-state">Type a query above to search the site, or press <strong>ESC</strong> to close.</div>';
+        currentSearchResults = [];
+        activeHighlightIndex = -1;
+        return;
+    }
+
+    const matchedResults = [];
+    searchIndexData.forEach(doc => {
+        let score = 0;
+        const title = doc.title.toLowerCase();
+        const headings = doc.headings.toLowerCase();
+        const description = doc.description.toLowerCase();
+        const body = doc.body.toLowerCase();
+        
+        let matchesAllTerms = true;
+        
+        terms.forEach(term => {
+            let termScore = 0;
+            if (title.includes(term)) {
+                termScore += 100;
+                if (title.startsWith(term)) termScore += 50;
+            }
+            if (headings.includes(term)) termScore += 40;
+            if (description.includes(term)) termScore += 20;
+            if (body.includes(term)) termScore += 5;
+            
+            if (termScore === 0) {
+                matchesAllTerms = false;
+            } else {
+                score += termScore;
+            }
+        });
+        
+        if (matchesAllTerms && score > 0) {
+            matchedResults.push({ doc, score });
+        }
+    });
+
+    currentSearchResults = matchedResults.sort((a, b) => b.score - a.score).slice(0, 8);
+    activeHighlightIndex = currentSearchResults.length > 0 ? 0 : -1;
+
+    renderSearchResults(terms);
+}
+
+// 4. Render results list
+function renderSearchResults(terms) {
+    const resultsPanel = document.getElementById('search-results-panel');
+    if (!resultsPanel) return;
+
+    if (currentSearchResults.length === 0) {
+        resultsPanel.innerHTML = '<div class="search-empty-state">No matches found for "<strong>' + escapeHTML(terms.join(' ')) + '</strong>".<br>Try checking spelling or search another service.</div>';
+        return;
+    }
+
+    resultsPanel.innerHTML = '';
+    currentSearchResults.forEach((result, idx) => {
+        const doc = result.doc;
+        const catInfo = getCategoryInfoForSearch(doc.id);
+        const relativeUrl = getRelativeUrlForSearch(doc.id);
+        const highlightedSnippet = highlightTextForSearch(doc.body || doc.description, terms);
+        
+        const item = document.createElement('a');
+        item.href = relativeUrl;
+        item.className = `search-result-item ${idx === activeHighlightIndex ? 'highlighted' : ''}`;
+        item.innerHTML = `
+            <div class="search-result-content">
+                <h4 class="search-result-title">${escapeHTML(doc.title)}</h4>
+                <p class="search-result-snippet">${highlightedSnippet}</p>
+            </div>
+            <span class="search-category-badge" style="background: ${catInfo.color};">${catInfo.label}</span>
+        `;
+        
+        item.addEventListener('click', (e) => {
+            closeSearchModal();
+        });
+        
+        resultsPanel.appendChild(item);
+    });
+}
+
+function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#39;');
+}
+
+function getCategoryInfoForSearch(urlPath) {
+    if (urlPath.includes('/planner') || urlPath.includes('/diagnose') || urlPath.includes('/configurator') || urlPath.includes('/storm-prep') || urlPath.includes('/3d-airflow')) {
+        return { label: 'Interactive Tool', color: '#8B5CF6' };
+    } else if (urlPath.includes('/hvac-services-') || urlPath.includes('/services') || urlPath.includes('/ac-') || urlPath.includes('/commercial') || urlPath.includes('/pool-heating')) {
+        return { label: 'Service / Area', color: '#0B7A53' };
+    } else if (urlPath.includes('/members')) {
+        return { label: 'Members Area', color: '#F59E0B' };
+    } else {
+        return { label: 'Page', color: '#3B82F6' };
+    }
+}
+
+function getRelativeUrlForSearch(targetId) {
+    const currentPath = window.location.pathname;
+    const pathParts = currentPath.split('/').filter(Boolean);
+    
+    let depth = 0;
+    if (pathParts.length > 0) {
+        depth = pathParts.length - 1;
+    }
+    
+    let prefix = '';
+    for (let i = 0; i < depth; i++) {
+        prefix += '../';
+    }
+    
+    let relativeTarget = targetId.substring(1);
+    return prefix + relativeTarget;
+}
+
+function highlightTextForSearch(text, terms) {
+    if (!text) return '';
+    
+    const escapedTerms = terms.map(t => t.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+    const regex = new RegExp(`(${escapedTerms.join('|')})`, 'gi');
+    
+    let matchIdx = -1;
+    for (const term of terms) {
+        const idx = text.toLowerCase().indexOf(term.toLowerCase());
+        if (idx !== -1 && (matchIdx === -1 || idx < matchIdx)) {
+            matchIdx = idx;
+        }
+    }
+    
+    if (matchIdx !== -1) {
+        const start = Math.max(0, matchIdx - 40);
+        const end = Math.min(text.length, matchIdx + 100);
+        let snippet = text.substring(start, end);
+        if (start > 0) snippet = '...' + snippet;
+        if (end < text.length) snippet = snippet + '...';
+        
+        return escapeHTML(snippet).replace(regex, '<mark>$1</mark>');
+    }
+    
+    return escapeHTML(text.substring(0, 100)) + (text.length > 100 ? '...' : '');
+}
+
+// 5. Open / Close controls
+function openSearchModal() {
+    injectSearchSystem();
+    loadSearchIndex();
+    
+    const modal = document.getElementById('search-modal');
+    const input = document.getElementById('search-input');
+    
+    if (modal && input) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => input.focus(), 50);
+        
+        if (typeof triggerSound === 'function') {
+            triggerSound('tick');
+        }
+    }
+}
+
+function closeSearchModal() {
+    const modal = document.getElementById('search-modal');
+    const input = document.getElementById('search-input');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        if (input) {
+            input.value = '';
+        }
+        performSearch('');
+    }
+}
+
+// 6. Navigation support
+function handleSearchNavigation(e) {
+    if (currentSearchResults.length === 0) return;
+
+    const items = document.querySelectorAll('#search-results-panel .search-result-item');
+    if (items.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeHighlightIndex = (activeHighlightIndex + 1) % currentSearchResults.length;
+        updateItemHighlight(items);
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeHighlightIndex = (activeHighlightIndex - 1 + currentSearchResults.length) % currentSearchResults.length;
+        updateItemHighlight(items);
+    } else if (e.key === 'Enter') {
+        if (activeHighlightIndex !== -1) {
+            e.preventDefault();
+            items[activeHighlightIndex].click();
+        }
+    }
+}
+
+function updateItemHighlight(items) {
+    items.forEach((item, idx) => {
+        if (idx === activeHighlightIndex) {
+            item.classList.add('highlighted');
+            item.scrollIntoView({ block: 'nearest' });
+        } else {
+            item.classList.remove('highlighted');
+        }
+    });
+}
+
+// 7. Global key listeners
+window.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const modal = document.getElementById('search-modal');
+        if (modal && modal.classList.contains('active')) {
+            closeSearchModal();
+        } else {
+            openSearchModal();
+        }
+    }
+    
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('search-modal');
+        if (modal && modal.classList.contains('active')) {
+            closeSearchModal();
+        }
+    }
+});
+
+// 8. Add header trigger
+function initGlobalSearchTrigger() {
+    const nav = document.getElementById('primary-nav');
+    if (nav && !nav.querySelector('.nav-search-trigger')) {
+        const searchTrigger = document.createElement('a');
+        searchTrigger.href = '#';
+        searchTrigger.className = 'nav-link nav-search-trigger';
+        searchTrigger.setAttribute('aria-label', 'Open site search');
+        searchTrigger.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 1.15em; height: 1.15em; display: inline-block; vertical-align: middle; margin-right: 5px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            Search
+        `;
+        searchTrigger.style.cursor = 'pointer';
+        searchTrigger.style.display = 'inline-flex';
+        searchTrigger.style.alignItems = 'center';
+        
+        searchTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            openSearchModal();
+        });
+        
+        nav.appendChild(searchTrigger);
+    }
+}
+
