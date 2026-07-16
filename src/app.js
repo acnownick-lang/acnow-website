@@ -2741,9 +2741,10 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
                     <button class="quick-btn ${isDev && currentPhase === '2' ? 'active' : ''}" id="quick-btn-p2">Phase 2 (All Features)</button>
                 </div>
                 
-                <div class="bar-right">
+                <div class="bar-right" style="display: flex; align-items: center; gap: 8px;">
                     <button class="action-btn secondary" id="btn-export-quick">📋 Export Summary</button>
                     <button class="action-btn primary" id="btn-toggle-expand">▲ Expand Console</button>
+                    <button class="action-btn secondary" id="btn-toggle-minimize" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15);" title="Minimize to bottom-left corner">📍 Minimize</button>
                 </div>
             </div>
 
@@ -2797,23 +2798,35 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
                     </div>
                 </div>
             </div>
+            <!-- Minimized Floating Launcher State -->
+            <div class="bar-minimized-launcher">
+                <span class="launcher-gear">🛠️</span>
+                <a href="?dev=false" class="launcher-exit" title="Exit Dev Mode" onclick="event.stopPropagation();">❌</a>
+            </div>
         `;
         document.body.appendChild(barContainer);
 
         // --- Setup Drawer Layout Lock States ---
         const scroller = barContainer.querySelector('#drawer-scroller');
         const expandBtn = barContainer.querySelector('#btn-toggle-expand');
+        const minimizeBtn = barContainer.querySelector('#btn-toggle-minimize');
 
-        // Apply expanded state if open
-        if (localStorage.getItem('acnow_dev_drawer_open') === 'true') {
-            barContainer.classList.add('expanded');
-            document.body.classList.add('acnow-drawer-open');
-            expandBtn.innerHTML = '▼ Collapse Console';
-            
-            // Restore scroll position
-            const savedScroll = parseInt(localStorage.getItem('acnow_dev_drawer_scroll') || "0", 10);
-            if (savedScroll > 0) {
-                setTimeout(() => scroller.scrollTop = savedScroll, 50);
+        // Apply minimized state if active
+        if (localStorage.getItem('acnow_dev_drawer_minimized') === 'true') {
+            barContainer.classList.add('minimized');
+            document.body.classList.remove('has-dev-bar');
+        } else {
+            // Apply expanded state if open
+            if (localStorage.getItem('acnow_dev_drawer_open') === 'true') {
+                barContainer.classList.add('expanded');
+                document.body.classList.add('acnow-drawer-open');
+                expandBtn.innerHTML = '▼ Collapse Console';
+                
+                // Restore scroll position
+                const savedScroll = parseInt(localStorage.getItem('acnow_dev_drawer_scroll') || "0", 10);
+                if (savedScroll > 0) {
+                    setTimeout(() => scroller.scrollTop = savedScroll, 50);
+                }
             }
         }
 
@@ -2823,7 +2836,8 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
         });
 
         // Toggle Expand/Collapse
-        expandBtn.addEventListener('click', function() {
+        expandBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             if (barContainer.classList.contains('expanded')) {
                 barContainer.classList.remove('expanded');
                 document.body.classList.remove('acnow-drawer-open');
@@ -2834,6 +2848,31 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
                 document.body.classList.add('acnow-drawer-open');
                 this.innerHTML = '▼ Collapse Console';
                 localStorage.setItem('acnow_dev_drawer_open', 'true');
+            }
+        });
+
+        // Minimize to bottom-left corner
+        minimizeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            barContainer.classList.remove('expanded');
+            barContainer.classList.add('minimized');
+            document.body.classList.remove('acnow-drawer-open');
+            document.body.classList.remove('has-dev-bar');
+            localStorage.setItem('acnow_dev_drawer_minimized', 'true');
+        });
+
+        // Click on minimized bar restores it
+        barContainer.addEventListener('click', function() {
+            if (this.classList.contains('minimized')) {
+                this.classList.remove('minimized');
+                document.body.classList.add('has-dev-bar');
+                localStorage.setItem('acnow_dev_drawer_minimized', 'false');
+                
+                // If it was previously expanded, restore expanded layout
+                if (localStorage.getItem('acnow_dev_drawer_open') === 'true') {
+                    this.classList.add('expanded');
+                    document.body.classList.add('acnow-drawer-open');
+                }
             }
         });
 

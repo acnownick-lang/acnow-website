@@ -5822,6 +5822,65 @@ input[type="range"]::-moz-range-thumb {
     color: var(--dark);
 }
 
+/* minimized state of QA Review Console */
+#acnow-dev-bar.minimized {
+    bottom: 20px;
+    left: 20px;
+    right: auto;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 16, 30, 0.95) 100%);
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#acnow-dev-bar.minimized:hover {
+    transform: scale(1.05);
+    border-color: var(--primary);
+}
+#acnow-dev-bar.minimized > :not(.bar-minimized-launcher) {
+    display: none !important;
+}
+.bar-minimized-launcher {
+    display: none;
+}
+#acnow-dev-bar.minimized .bar-minimized-launcher {
+    display: flex !important;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.launcher-gear {
+    font-size: 24px;
+}
+.launcher-exit {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    background: var(--secondary);
+    color: #fff !important;
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+    z-index: 10;
+}
+.launcher-exit:hover {
+    transform: scale(1.15);
+    background: #ff4d4d;
+}
+
 
 
 
