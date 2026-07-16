@@ -417,72 +417,7 @@
         </div>
     </section>
 
-    <!-- Priority Emergency Dispatch Section -->
-    <section id="emergency-booking-section" class="reveal booking-section" style="background-color: var(--light); padding: 80px 0; border-bottom: 1px solid var(--gray-light); scroll-margin-top: 100px;">
-        <div class="container" style="max-width: 680px;">
-            <div class="section-header centered" style="margin-bottom: 35px;">
-                <span class="section-tag" style="background: rgba(220, 38, 38, 0.08); color: #DC2626; border: 1px solid rgba(220, 38, 38, 0.15); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px;">EMERGENCY DISPATCH</span>
-                <h2 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--dark); margin: 15px 0 10px 0;">AC Broken Down? Book Priority Dispatch</h2>
-                <p style="font-size: 15px; color: var(--gray-dark); max-width: 500px; margin: 0 auto;">Select your city and system status to secure the next available technician slot.</p>
-            </div>
-            
-            <div class="dispatch-wizard" style="background-color: var(--white); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04); border-radius: 20px;">
-                <div class="wizard-header">
-                    <div class="wizard-steps-indicator">
-                        <span class="step-num active" id="step-1-indicator">1</span>
-                        <span class="step-line"></span>
-                        <span class="step-num" id="step-2-indicator">2</span>
-                    </div>
-                    <h3 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; margin: 0; color: var(--dark);">Priority Repair Booking</h3>
-                </div>
-                <div class="wizard-body">
-                    <div class="wizard-pane active" id="pane-step-1">
-                        <div class="wizard-field">
-                            <label for="dispatch-city" style="font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: block;">1. Select Your Location</label>
-                            <select id="dispatch-city" name="dispatch-city" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-light); border-radius: 8px; font-size: 14px; color: var(--dark); outline: none; background-color: var(--light);">
-                                <option>Port St. Lucie</option>
-                                <option>Stuart</option>
-                                <option>Palm City</option>
-                                <option>Jupiter</option>
-                                <option>Jensen Beach / Fort Pierce</option>
-                            </select>
-                        </div>
-                        <div class="wizard-field" style="margin-top: 20px;">
-                            <label for="dispatch-status" style="font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: block;">2. Current System Status</label>
-                            <select id="dispatch-status" name="dispatch-status" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-light); border-radius: 8px; font-size: 14px; color: var(--dark); outline: none; background-color: var(--light);">
-                                <option>AC is completely dead / house is hot</option>
-                                <option>AC is blowing warm air</option>
-                                <option>System is leaking water / freezing up</option>
-                                <option>Requesting routine tune-up / maintenance</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-primary" style="margin-top: 30px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px;" onclick="goToWizardStep2()">Find Next Available Slot &rarr;</button>
-                    </div>
-                    <div class="wizard-pane" id="pane-step-2">
-                        <div class="success-slot-box" style="background-color: #f0fdf4; border: 1px dashed #bbf7d0; border-radius: 12px; padding: 20px; text-align: center;">
-                            <div class="slot-badge" style="display: inline-block; font-size: 10px; font-weight: 800; color: #166534; background-color: #dcfce7; padding: 4px 8px; border-radius: 4px; letter-spacing: 0.5px; margin-bottom: 10px;">CONFIRMED AVAILABILITY</div>
-                            <div id="slot-time-text" style="font-size: 18px; font-weight: 700; color: #166534; margin: 0;">Next Dispatch Slot: Today between 3:00 PM - 5:00 PM</div>
-                            <p style="font-size: 13px; color: var(--gray-dark); margin: 6px 0 0 0;">A technician is routing near your location. Enter your details to secure this priority slot.</p>
-                        </div>
-                        <div class="form-row" style="margin-top: 25px;">
-                            <div class="form-group">
-                                <label for="dispatch-name" style="font-size: 11px; font-weight: 700; color: var(--dark); text-transform: uppercase;">Name</label>
-                                <input autocomplete="name" type="text" id="dispatch-name" name="dispatch-name" placeholder="John Doe" style="padding: 12px 16px; border: 1px solid var(--gray-light); border-radius: 8px; font-size: 14px;">
-                            </div>
-                            <div class="form-group" style="margin-top: 0;">
-                                <label for="dispatch-phone" style="font-size: 11px; font-weight: 700; color: var(--dark); text-transform: uppercase;">Phone Number</label>
-                                <input autocomplete="tel" type="tel" id="dispatch-phone" name="dispatch-phone" placeholder="(772) 521-3568" style="padding: 12px 16px; border: 1px solid var(--gray-light); border-radius: 8px; font-size: 14px;">
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 15px; margin-top: 25px;">
-                            <button class="btn btn-secondary" onclick="goToWizardStep1()" style="color: var(--dark); border-color: #94A3B8; flex: 1;">Back</button>
-                            <button class="btn btn-primary" onclick="submitDispatch()" style="flex: 2;">Book Dispatch Slot Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Dual Service Card Grids Section -->
     <section id="services" class="reveal split-services-section">

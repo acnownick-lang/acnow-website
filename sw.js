@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v74'; // Bumped to invalidate stale app.js and image caches for returning users
+const CACHE_NAME = 'acnow-cache-v75'; // Bumped to invalidate stale app.js, images, and homepage widget caches for returning users
 const DEBUG = true;
 
 // Helper function for structured logging
