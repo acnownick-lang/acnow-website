@@ -232,9 +232,14 @@ async function configurePushNotifications() {
             let subscription = await registration.pushManager.getSubscription();
             if (!subscription) {
                 const VAPID_PUBLIC_KEY = 'BI7Yn7d6d54s321dFGHJKLuio9876543210qwertyuiopasdfghjklzxcvbnm1234567890qwertyuiop'; // Mock key
+                const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
+                if (!applicationServerKey) {
+                    console.log('[PWA Client] Skipping push registration due to invalid VAPID key.');
+                    return;
+                }
                 subscription = await registration.pushManager.subscribe({
                     userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+                    applicationServerKey: applicationServerKey
                 });
                 console.log('[PWA Client] Push subscription created:', subscription);
                 await fetch('/.netlify/functions/save-push-subscription', {
@@ -245,19 +250,24 @@ async function configurePushNotifications() {
             }
         }
     } catch (err) {
-        console.error('[PWA Client] Push configuration failed:', err);
+        console.warn('[PWA Client] Push configuration skipped or failed:', err);
     }
 }
 
 function urlBase64ToUint8Array(base64String) {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-    for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
+    try {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    } catch (e) {
+        // Fallback for invalid base64 string
+        return null;
     }
-    return outputArray;
 }
 
 /* ==========================================================================

@@ -1837,6 +1837,12 @@ section {
        permanently promoting all sections as GPU layers (high memory cost on mobile) */
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+/* Ensure above-the-fold hero sections render instantly to prevent perceived load lag and optimize LCP */
+.reveal.hero,
+.reveal.split-hero {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+}
 /* GPU promotion only during animation window — app.js adds/removes .animating class */
 .reveal.animating {
     will-change: transform, opacity;
