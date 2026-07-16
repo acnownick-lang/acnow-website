@@ -42,14 +42,15 @@ def get_city_info(path_lower):
     return ("Florida", "the local Treasure Coast region", "Florida")
 
 def get_template_and_intent(path_lower):
-    # 1. Specific matches
-    if "contact-us" in path_lower:
+    # 1. Specific matches (Clean/Handcrafted URLs)
+    path_stripped = path_lower.strip("/")
+    if path_stripped in ("contact-us", "contact", "contact.html", "pages/contact.html"):
         return ("contact.html", "Contact Us", "Get in touch with our veteran-led service team for a free estimate or emergency dispatch.")
-    if "about" in path_lower:
+    if path_stripped in ("about", "about.html", "pages/about.html"):
         return ("about.html", "About Our Team", "Learn about our veteran-owned HVAC business serving South Florida.")
-    if "reviews" in path_lower:
+    if path_stripped in ("reviews", "reviews.html", "pages/reviews.html"):
         return ("reviews.html", "Customer Reviews", "Read verified customer reviews and ratings for A/C Now LLC.")
-    if "partners-and-referrals" in path_lower:
+    if path_stripped in ("partners-and-referrals", "partners-and-referrals.html"):
         return ("about.html", "Partners & Referrals", "A/C Now LLC partners and trusted local vendor networks.")
     
     # 2. Topic/Service matches
@@ -335,6 +336,46 @@ pilot_page_data = {
         "faq1_a": "Being where the river, lagoon, and ocean meet means more humidity and airborne salt than most inland areas get, which is tough on coils and outdoor cabinets. Combined with 81+ days a year above 90°F, systems run longer and harder.",
         "faq2_q": "My home is in Stuart's historic district — does that affect a replacement?",
         "faq2_a": "Often, yes. We evaluate the actual house — not just the old unit's specs — so a replacement fits the home's age and layout instead of just swapping equipment box-for-box."
+    },
+    "/affordable-hvac-repair-services/affordable-hvac-repair-services-in-saint-lucie-county/": {
+        "intro": "St. Lucie County doesn't give your AC system much of a break — whether you're in a historic Fort Pierce neighborhood like Lincoln Park or a growing community like St. Lucie West in Port St. Lucie, the humid, storm-tested climate here keeps cooling equipment under constant load. When a system fails, we treat every call across the county with the same urgency, no matter which side of St. Lucie you're on.",
+        "prose": "We approach AC repair as a countywide service, because Fort Pierce and Port St. Lucie present genuinely different repair profiles. Fort Pierce, the county seat, has a mix of older housing where original ductwork and refrigerant lines often predate modern equipment standards, plus coastal exposure near the port that can accelerate wear on outdoor units. Port St. Lucie — now the sixth-most-populous city in Florida at over 120 square miles — has newer growth areas like Tradition and St. Lucie West where systems more commonly need repair as builder-installed equipment reaches its first major service milestones. Both cities also carry the lasting influence of the 2004-2005 hurricane seasons (Frances, Jeanne, and Wilma). Add in average annual rainfall north of 50 inches across the county and a humid subtropical-to-tropical climate, and it's clear why AC systems here work harder than most.",
+        "faq1_q": "Do you service both Fort Pierce and Port St. Lucie for AC repair?",
+        "faq1_a": "Yes — we cover St. Lucie County as a whole, from Fort Pierce's historic core near Lincoln Park to Port St. Lucie's newer developments around Tradition and St. Lucie West.",
+        "faq2_q": "Why do AC systems in St. Lucie County seem to need repairs so often?",
+        "faq2_a": "The county's humid subtropical-to-tropical climate is the main driver — Fort Pierce and Port St. Lucie both see 50+ inches of rain annually. On top of that, the area's hurricane history, including direct hits from Frances, Jeanne, and Wilma in 2004-2005, has left a legacy of equipment and infrastructure that periodically needs attention."
+    },
+    "/affordable-hvac-repair-services/best-hvac-maintenance-service-in-saint-lucie-west/": {
+        "intro": "St. Lucie West is one of Port St. Lucie's newer planned communities, and keeping a home comfortable here means staying ahead of Florida's humid subtropical climate — roughly 53.5 inches of rain a year and long stretches of heat that push any AC system to its limits. A/C Now LLC provides AC repair and maintenance service throughout the area, from the neighborhoods along Peacock Boulevard to the subdivisions near I-95.",
+        "prose": "Because St. Lucie West developed later than much of Port St. Lucie, most homes here run newer HVAC equipment — which changes how repairs should be handled. Newer systems are more likely to still be under manufacturer or installer warranty, so we check coverage status before recommending any work. These systems also tend to use current-generation refrigerants and variable-speed or inverter-driven components with electronic control boards, which call for different diagnostic tools than the older, fixed-speed equipment still common elsewhere in the city. We inspect the full system on every visit rather than assuming newer means problem-free.",
+        "faq1_q": "My AC unit in St. Lucie West is only a few years old — why is it already having problems?",
+        "faq1_a": "Newer equipment isn't maintenance-free. Systems here still work hard against South Florida's heat and humidity, and the area's exposure to direct hurricane hits from Frances, Jeanne, and Wilma in 2004-05 is a reminder outdoor units face real weather stress. Routine service catches small issues before they become larger repairs, and can help you stay within warranty terms.",
+        "faq2_q": "How does A/C Now LLC's approach differ for a newer community like St. Lucie West compared to older parts of Port St. Lucie?",
+        "faq2_a": "Newer systems typically involve electronic diagnostics, variable-speed components, and updated refrigerant types, which require different troubleshooting than mechanically-driven systems common in older neighborhoods."
+    },
+    "/affordable-hvac-repair-services/difficulties-with-hvac-repair-services-in-martin-county/": {
+        "intro": "When your air conditioner fails in Martin County, it rarely stays a small problem for long. Between the humidity settling over the St. Lucie River and Indian River Lagoon and the salt air rolling in off the Atlantic, a broken system in Stuart, Palm City, Hobe Sound, or Jensen Beach means moisture, mold risk, and discomfort building fast.",
+        "prose": "Martin County's four communities share more than proximity — they share the same coastal exposure, the same tropical rainforest climate (62.72 inches of rain a year, 81 days above 90°F in Stuart alone), and overlapping storm history: 19 hurricanes since 1871, including the 1928 storm near Hobe Sound and the 2004 back-to-back hits from Frances and Jeanne near Jensen Beach. Elevation varies enough to matter: Palm City and Jensen Beach average around 7 feet and carry more flood/storm-surge exposure, while Stuart sits near 10 feet and Hobe Sound closer to 20. A system's location, age, and storm history all shape what we check first — from grounding and pad-level corrosion in lower-lying areas to legacy wiring mismatches in Stuart's historic 1880s-1940s downtown core.",
+        "faq1_q": "Why does my AC in Palm City or Jensen Beach seem more prone to electrical issues than systems elsewhere in the county?",
+        "faq1_a": "Both areas sit at a lower average elevation (roughly 7 feet) and are more exposed to flooding and storm surge. That accelerates corrosion and moisture intrusion around outdoor units, so we check grounding and pad-level water exposure early.",
+        "faq2_q": "We're in Hobe Sound with an older home — should storm history factor into how you approach our repair?",
+        "faq2_a": "Yes. Hobe Sound has a higher median age (51) and many well-established homes, and the area has been affected by major storms dating back to the 1928 Okeechobee hurricane. Systems there often have a layered service history, so we look at how equipment has been maintained and modified over time."
+    },
+    "/affordable-hvac-repair-services/the-cares-you-should-take-with-your-hvac-in-port-saint-lucie/": {
+        "intro": "Most AC repairs in Port St. Lucie don't start as emergencies — they start as small warning signs that get overlooked until the system fails on a summer afternoon. As a company based right here in the city, we see the same early indicators over and over across neighborhoods from St. Lucie West to Tradition, and catching them early is usually the difference between a simple repair and a full breakdown.",
+        "prose": "The care an AC system needs in Port St. Lucie isn't generic — it's shaped by the local climate. With average annual rainfall around 53.5 inches and a humid subtropical-to-tropical environment, condensate lines clog faster, coils stay damp longer, and systems run extended high-load cycles through much of the year. Watch for ice forming on refrigerant lines, longer or more frequent run cycles, and rising indoor humidity despite normal thermostat settings — early signs of a problem that's still fixable before it becomes a bigger repair.",
+        "faq1_q": "Why does my AC seem to work harder here than systems I've had elsewhere?",
+        "faq1_a": "Port St. Lucie's number of high heat-index days combined with humidity means systems run longer and more often than in a milder climate, accelerating wear on duty-cycle-limited parts like capacitors and blower motors.",
+        "faq2_q": "Should storm season change how I take care of my AC here?",
+        "faq2_a": "Yes. Port St. Lucie has direct-hit history with Frances, Jeanne, and Wilma in 2004-2005. We recommend a check-up before hurricane season and another afterward if your area saw significant weather."
+    },
+    "/affordable-hvac-repair-services/things-about-hvac-repair-services-in-jensen-beach/": {
+        "intro": "A/C Now LLC's team repairs residential cooling systems throughout Jensen Beach, FL — a Martin County community of about 12,652 residents set along the Indian River Lagoon, between Stuart and Port St. Lucie. It's a town with a strong sense of continuity, home to All Saints Episcopal Church (built in 1898, the oldest church building in the county) and the annual Pineapple Festival.",
+        "prose": "Jensen Beach's median resident age of 55.2 reflects a community with a lot of long-established homes, many carrying HVAC systems older and more service-history-rich than newer developments nearby. At a low average elevation of roughly 7 feet along the lagoon, humidity and moisture exposure run higher here, straining coils, condensate drains, and electrical components over time. Jensen Beach took direct hits from Hurricane Frances (105 mph) and Hurricane Jeanne (120 mph) in 2004, and legacy systems still in service today may carry stress from those events that surfaces as unrelated-looking breakdowns years later.",
+        "faq1_q": "Does your team have experience with the older HVAC systems common in Jensen Beach's established neighborhoods?",
+        "faq1_a": "Yes. Given the area's median age and long-settled homes near landmarks like All Saints Episcopal Church, our technicians regularly diagnose systems spanning multiple equipment generations.",
+        "faq2_q": "How does Jensen Beach's coastal, low-elevation setting affect the AC repairs your team handles?",
+        "faq2_a": "Sitting near the Indian River Lagoon at an average elevation around 7 feet means sustained humidity pressure on cooling systems, which we account for when diagnosing recurring coil, drainage, or corrosion-related issues."
     }
 }
 
