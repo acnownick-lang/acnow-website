@@ -472,6 +472,150 @@ pilot_page_data = {
         "faq1_a": "Response time and building familiarity — a downtime issue in a customer-facing space affects business immediately.",
         "faq2_q": "How is servicing HVAC in Stuart's historic downtown different from a typical commercial building elsewhere in Martin County?",
         "faq2_a": "Buildings largely predate modern HVAC entirely, so a technician needs to account for aging electrical infrastructure and limited or absent ductwork."
+    },
+    "/areas-we-serve/best-hvac-company-near-fort-pierce/": {
+        "intro": "When your AC quits in Fort Pierce during a July afternoon, 'good enough' isn't good enough. Fort Pierce isn't a generic climate — it's 20 feet above sea level, humid subtropical sliding into tropical, with roughly 51 inches of rain a year concentrated in June-September.",
+        "prose": "A contractor who doesn't understand how salt air off the port and summer downpours load up a compressor isn't the best fit for this city. A/C Now LLC brings high-efficiency cooling and durable coastal installations to residential and commercial properties throughout Fort Pierce.",
+        "faq1_q": "What should I actually compare when picking an HVAC company near Fort Pierce?",
+        "faq1_a": "Ask how they handle humidity control specifically, since the rainy season pushes indoor moisture load harder than a lot of other Florida markets.",
+        "faq2_q": "Does A/C Now LLC serve all areas in and around Fort Pierce?",
+        "faq2_a": "Yes, we route service vehicles daily throughout Fort Pierce, historic downtown, and surrounding areas in St. Lucie County."
+    },
+    "/areas-we-serve/hvac-company-in-fort-pierce/": {
+        "intro": "A/C Now LLC provides HVAC installation, repair, and maintenance throughout Fort Pierce, the seat of St. Lucie County, across the city's roughly 29.84 square miles — from historic Lincoln Park to neighborhoods near the waterfront.",
+        "prose": "Our team of technicians is EPA-certified and veteran-led, delivering high-performance climate systems with flat-rate pricing and reliable same-day response.",
+        "faq1_q": "How does Fort Pierce's climate affect HVAC service needs?",
+        "faq1_a": "With around 51 inches of annual rainfall concentrated mostly in summer, Fort Pierce systems generally deal with higher humidity loads than drier inland markets.",
+        "faq2_q": "Do you offer emergency AC repairs in Fort Pierce?",
+        "faq2_a": "Yes, we provide same-day diagnostics and emergency AC restorations to get your home cooled down quickly."
+    },
+    "/areas-we-serve/fort-pierces-trusted-hvac-partner/": {
+        "intro": "Fort Pierce has weathered real challenges — the city still remembers the marina devastation from Hurricanes Frances and Jeanne back in 2004, a reminder this is a community that understands resilience.",
+        "prose": "That's the relationship we work to earn: consistent, honest service call after call, prioritizing long-term durability and equipment lifespan over quick fixes.",
+        "faq1_q": "Has A/C Now LLC serve the Fort Pierce community through difficult times?",
+        "faq1_a": "We understand this community's resilience, shaped in part by events like the 2004 hurricanes that hit the marina hard — our goal is to be a dependable presence regardless of what the season brings.",
+        "faq2_q": "What makes A/C Now LLC a trusted commercial and residential partner?",
+        "faq2_a": "Our commitment to military-grade accountability, upfront flat-rate pricing, and never selling you equipment you don't need."
+    },
+    "/areas-we-serve/best-hvac-company-near-jupiter/": {
+        "intro": "Not every HVAC company is built to handle what this stretch of the Atlantic coast throws at a cooling system. Jupiter's tropical rainforest climate puts sustained humidity load on systems that most manufacturers never anticipated for their standard duty cycles.",
+        "prose": "Because Jupiter projects further east into the Atlantic than any other point in Florida, salt air accelerates coil degradation and mechanical wear. We specialize in coastal-ready installations with coated components.",
+        "faq1_q": "What makes A/C Now LLC stand out compared to other HVAC companies serving Jupiter?",
+        "faq1_a": "We focus on doing the job right the first time, with technicians who understand how Jupiter's humidity and coastal exposure affect equipment differently than further inland.",
+        "faq2_q": "Do you provide financing for new HVAC systems in Jupiter?",
+        "faq2_a": "Yes, we offer flexible financing options to make new energy-efficient system replacements accessible for local property owners."
+    },
+    "/areas-we-serve/hvac-company-in-jupiter/": {
+        "intro": "A/C Now LLC provides HVAC services throughout Jupiter, a coastal community of roughly 61,047 residents across 23.12 square miles, 15 miles north of West Palm Beach — juts further into the Atlantic than any other point on Florida's coastline.",
+        "prose": "Our veteran-led crew delivers same-day repair, professional system installations, and military-grade maintenance contracts for both residential homes and commercial suites.",
+        "faq1_q": "Does Jupiter's climate affect how often HVAC systems need service?",
+        "faq1_a": "The hot, wet summer stretch from May through October puts more continuous demand on cooling systems than the milder winter months.",
+        "faq2_q": "Are your technicians certified to work on coastal HVAC units?",
+        "faq2_a": "Yes, our team is EPA-certified and highly experienced with high-efficiency systems designed to withstand the marine environment."
+    },
+    "/areas-we-serve/local-ac-company-in-jupiter/": {
+        "intro": "Even the Jupiter Inlet Lighthouse, built in 1860, has needed repainting over the years because of humidity-driven discoloration. If a 19th-century lighthouse isn't immune to that kind of environmental wear, an air conditioning condenser certainly isn't.",
+        "prose": "As a local contractor, we inspect coils, drain lines, and electrical connections with extra care to prevent salt air corrosion from causing premature system failure.",
+        "faq1_q": "Why choose a local AC company instead of a large national chain for service in Jupiter?",
+        "faq1_a": "A local company has hands-on familiarity with how Jupiter's coastal exposure and humidity affect HVAC systems specifically.",
+        "faq2_q": "How quickly can your local team respond to an AC outage in Jupiter?",
+        "faq2_a": "We prioritize local calls, routing our stocked service vehicles to deliver rapid, same-day diagnostic checks and repairs."
+    },
+    "/areas-we-serve/best-hvac-company-near-palm-beach-gardens/": {
+        "intro": "A community with 12 golf courses, a resort-caliber commercial corridor, and housing ranging from decades-old ranch homes to newer construction near PGA National needs contractors who can size and service equipment correctly for each.",
+        "prose": "A/C Now LLC delivers precision cooling audits, high-efficiency system replacements, and custom zoning to manage temperature variations across large properties.",
+        "faq1_q": "What makes one HVAC company 'better' than another in Palm Beach Gardens specifically?",
+        "faq1_a": "The best companies understand humidity control, not just cooling — this city sees roughly 66 inches of rain a year.",
+        "faq2_q": "Do you offer zoning solutions for multi-story homes in PGA National?",
+        "faq2_a": "Yes, we install advanced zoning systems and variable-speed compressors to balance comfort perfectly between levels."
+    },
+    "/areas-we-serve/hvac-company-in-palm-beach-gardens/": {
+        "intro": "A/C Now LLC provides HVAC service throughout Palm Beach Gardens, roughly 59,000-61,000 residents across nearly 60 square miles — from the PGA Boulevard corridor to residential neighborhoods around the golf courses.",
+        "prose": "We deliver comprehensive heating, ventilation, air conditioning services, and indoor air quality solutions designed to handle the region's humid climate.",
+        "faq1_q": "Why does Palm Beach Gardens' climate matter for HVAC service?",
+        "faq1_a": "The tropical rainforest climate and low 16-foot elevation mean high humidity is constant, especially June-September.",
+        "faq2_q": "Can you service commercial HVAC systems in Palm Beach Gardens?",
+        "faq2_a": "Yes, we handle commercial package units, split systems, and light commercial maintenance contracts along major retail corridors."
+    },
+    "/areas-we-serve/local-ac-company-in-palm-beach-gardens/": {
+        "intro": "Homeowners here remember what it's like to lose power and comfort for extended periods after the 2004-05 hurricane season — a local company that lives in this climate too tends to have a sharper sense of urgency.",
+        "prose": "Being local means we are here before the storm to check tie-downs, and right after to perform safe post-outage restarts and electrical evaluations.",
+        "faq1_q": "Does being a local company matter after severe weather in Palm Beach Gardens?",
+        "faq1_a": "Palm Beach Gardens experienced multi-day power outages following 2004-05 — communities like this often benefit from local contractors who understand regional recovery conditions.",
+        "faq2_q": "What should I check before turning my AC back on after a storm?",
+        "faq2_a": "Ensure the outdoor unit is clear of debris and has not been flooded. If in doubt, have a local technician perform a brief electrical safety audit first."
+    },
+    "/areas-we-serve/best-hvac-company-near-palm-city/": {
+        "intro": "Palm City is a mix of established single-family neighborhoods and larger homes inside golf-course communities like Cobblestone, Harbour Ridge, Martin Downs, Islesworth, and Orchid Bay — properties that often run bigger, multi-zone systems.",
+        "prose": "At A/C Now LLC, we specialize in high-efficiency system designs, multi-stage filtration, and noise-dampening condenser integrations that meet strict HOA guidelines.",
+        "faq1_q": "Does Palm City's flood-prone, low-elevation geography affect which HVAC company I should choose?",
+        "faq1_a": "With much of Palm City sitting around 7 feet of elevation near the St. Lucie River, outdoor equipment placement and moisture resilience matter more here.",
+        "faq2_q": "Are your systems compliant with local Palm City HOA regulations?",
+        "faq2_a": "Yes, we configure quiet, low-profile equipment to ensure full compliance with HOA aesthetic and noise requirements."
+    },
+    "/areas-we-serve/hvac-company-in-palm-city/": {
+        "intro": "A/C Now LLC serves Palm City, roughly 25,883 residents across 16.38 square miles along the South Fork of the St. Lucie River — from riverside neighborhoods to golf-course communities.",
+        "prose": "We deliver same-day diagnostic service, seasonal maintenance plans, and high-efficiency system replacements with military-grade precision and flat-rate pricing.",
+        "faq1_q": "What parts of Palm City does A/C Now LLC serve?",
+        "faq1_a": "Neighborhoods near the river and golf-course communities such as Cobblestone, Harbour Ridge, Martin Downs, Islesworth, and Orchid Bay.",
+        "faq2_q": "Do you install ductless mini-splits in Palm City homes?",
+        "faq2_a": "Yes, we design and install mini-splits for guest houses, garage conversions, and targeted single-room zoning."
+    },
+    "/areas-we-serve/local-ac-company-in-palm-city/": {
+        "intro": "Palm City's low, roughly 7-foot elevation makes parts of the area more susceptible to flooding and storm surge, affecting how outdoor units should be positioned and protected.",
+        "prose": "We prioritize elevated composite pads and robust electrical grounding to protect your HVAC investment from local water and moisture hazards.",
+        "faq1_q": "Why choose a local, independent HVAC company over a larger national chain for Palm City service?",
+        "faq1_a": "A local company understands Palm City's flood-susceptible geography and the demands of its golf-course community homes.",
+        "faq2_q": "How can I protect my outdoor AC condenser from local flooding?",
+        "faq2_a": "We recommend installing outdoor units on elevated hurricane-rated pads to keep sensitive electrical components above localized standing water."
+    },
+    "/areas-we-serve/best-hvac-company-near-port-saint-lucie/": {
+        "intro": "The best providers account for Port St. Lucie's 53+ inches of annual rainfall in every installation and repair, from correctly sizing units for coastal heat load to sealing ductwork against moisture.",
+        "prose": "Our veteran-led technicians focus on lowering your electric bills with high-efficiency SEER2 replacements and ensuring your system can handle the high humidity load.",
+        "faq1_q": "Does A/C Now LLC serve all parts of Port St. Lucie, including newer areas like Tradition?",
+        "faq1_a": "Yes — the full city footprint, including established neighborhoods and newer planned communities such as Tradition and St. Lucie West.",
+        "faq2_q": "Why is proper duct sealing critical in Port St. Lucie homes?",
+        "faq2_a": "Leaky ducts draw in hot, humid attic air, which spikes your energy consumption and can lead to mold development inside the system."
+    },
+    "/areas-we-serve/hvac-company-in-port-saint-lucie/": {
+        "intro": "Port St. Lucie is home to more than 204,000 residents across a city that covers over 120 square miles — A/C Now LLC provides HVAC installation, repair, and maintenance throughout that entire service area.",
+        "prose": "We deliver same-day diagnostics, flat-rate pricing, and EPA-certified expertise to keep local residential and commercial systems running reliably year-round.",
+        "faq1_q": "How does Port St. Lucie's climate affect HVAC system needs?",
+        "faq1_a": "The humid subtropical climate and roughly 53.5 inches of annual rainfall mean HVAC systems work harder to manage both temperature and indoor humidity.",
+        "faq2_q": "What is the typical lifespan of an AC unit in Port St. Lucie?",
+        "faq2_a": "Due to continuous usage and high humidity, outdoor units here typically last between 8 to 12 years before requiring replacement."
+    },
+    "/areas-we-serve/local-ac-company-in-port-saint-lucie/": {
+        "intro": "A/C Now LLC is headquartered in Port St. Lucie — a locally based, independent company with firsthand familiarity with the city's neighborhoods and weather patterns.",
+        "prose": "Because we live and work here, we respond faster to AC emergencies and stand behind our work with genuine, local accountability.",
+        "faq1_q": "Is A/C Now LLC actually based in Port St. Lucie, or just servicing the area?",
+        "faq1_a": "Headquartered here, making it a genuinely local, independent company rather than an outside provider that simply covers the area.",
+        "faq2_q": "Does being headquartered here improve emergency response times?",
+        "faq2_a": "Yes, our service trucks route directly from our Port St. Lucie base, helping us deliver rapid, same-day diagnostics and repairs."
+    },
+    "/areas-we-serve/best-hvac-company-near-stuart/": {
+        "intro": "A system that's merely 'good enough' gets exposed fast here — summer highs regularly sit at 88-91°F, 81 days a year climb past 90 degrees, air carries the humidity of a tropical rainforest climate off the confluence of the St. Lucie River, Indian River Lagoon, and Atlantic Ocean.",
+        "prose": "At A/C Now LLC, we spec corrosion-resistant coastal configurations and run professional load calculations to match Stuart's intense environment.",
+        "faq1_q": "Does Stuart's coastal location affect which HVAC company I should choose?",
+        "faq1_a": "Homes near the river, lagoon, or Atlantic deal with more airborne salt and humidity than inland properties, affecting how outdoor units and coils hold up over time.",
+        "faq2_q": "Do you offer energy-efficient upgrades for older Stuart homes?",
+        "faq2_a": "Yes, we specialize in high-efficiency SEER2 replacements and multi-zone duct configurations tailored for older properties."
+    },
+    "/areas-we-serve/hvac-company-in-stuart/": {
+        "intro": "A/C Now LLC provides HVAC service throughout Stuart, Martin County's seat, roughly 17,425 residents in just 9.53 square miles — from historic downtown's 1880s-1940s architecture to newer neighborhoods.",
+        "prose": "Our veteran-led technical team delivers emergency AC repairs, comprehensive change-outs, and preventive maintenance agreements.",
+        "faq1_q": "Why does Stuart's climate matter for HVAC service?",
+        "faq1_a": "Long, hot, humid summers — 81 days a year above 90°F — combined with heavy annual rainfall near 62.72 inches puts sustained demand on cooling and dehumidification.",
+        "faq2_q": "Can you install modern cooling systems in historic Stuart properties?",
+        "faq2_a": "Yes, we integrate ductless mini-splits and custom duct designs to upgrade historic homes without compromising their structural character."
+    },
+    "/areas-we-serve/local-ac-company-in-stuart/": {
+        "intro": "Being local in Stuart means understanding how a home near the confluence of the St. Lucie River and Indian River Lagoon deals with different humidity and salt exposure than one further inland, and how the historic character of downtown's 1880s-1940s buildings can affect ductwork and placement.",
+        "prose": "A/C Now LLC is based on the Treasure Coast, bringing local experience, upfront flat-rate pricing, and military-grade precision to every Stuart home.",
+        "faq1_q": "What's the advantage of hiring a local AC company instead of a larger chain for a home in Stuart?",
+        "faq1_a": "Firsthand familiarity with Stuart's coastal humidity, hurricane history, and the demands of a climate that sees temperatures above 90°F roughly 81 days a year.",
+        "faq2_q": "How has hurricane history shaped AC requirements in Stuart?",
+        "faq2_a": "Severe storm exposure means outdoor units require heavy-duty anchoring and elevated pads to withstand high winds and potential standing water."
     }
 }
 
@@ -593,6 +737,8 @@ for path in paths:
         
         content = content.replace("Managing multi-zone coastal condominiums or commercial properties requires clear communication, fast dispatch, and professional accountability. Our veteran-led team coordinates directly with property managers and condo boards across Stuart and Port St. Lucie to audit, repair, and replace complex HVAC systems.", intro_wrapped)
         content = content.replace("We specialize in commercial split system diagnostic repairs and complete facility change-outs. From crane-lifted rooftop package units to complex multi-compressor configurations, our EPA-certified and veteran-led team delivers military-grade HVAC engineering on time and on budget.", prose_wrapped)
+        
+        content = content.replace("A/C Now LLC is based in Port St. Lucie, but our service trucks actively route daily through neighborhoods across St. Lucie, Martin, and northern Palm Beach Counties. Because we are locally owned, we understand the local grid and neighborhood housing configurations, allowing us to perform fast, accurate air conditioner repairs and custom-designed system installations.", f"{intro_wrapped}\n                    <br><br>\n                    {prose_wrapped}")
 
 
     # 9. Create target directory and write index.html
