@@ -2806,7 +2806,7 @@ section.trust-bar {
     position: relative;
     width: 100%;
     aspect-ratio: 1.8 / 1;
-    background: linear-gradient(rgba(10, 24, 47, 0.78), rgba(10, 24, 47, 0.78)), url('../images/van_branded.jpg');
+    background: linear-gradient(rgba(10, 24, 47, 0.78), rgba(10, 24, 47, 0.78)), url('../images/van_branded.webp');
     background-size: cover;
     background-position: center;
     border-radius: var(--border-radius);
@@ -2815,6 +2815,14 @@ section.trust-bar {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .van-blueprint-container {
+        background: linear-gradient(rgba(10, 24, 47, 0.78), rgba(10, 24, 47, 0.78)), url('../images/van_branded_mobile.webp');
+        background-size: cover;
+        background-position: center;
+    }
 }
 
 .van-svg-blueprint {
