@@ -353,7 +353,7 @@ async function dispatchToResend(name, city, issue, briefing) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        from: "A/C Now Site Alerts <alerts@acnowllc.com>",
+        from: "A/C Now Site Alerts <alerts@mail.acnowllc.com>",
         to: ["acnowpsl@gmail.com"],
         subject: `[A/C Now Lead] - AI Pre-Qualified: ${safeName} (${safeCity})`,
         html: `
