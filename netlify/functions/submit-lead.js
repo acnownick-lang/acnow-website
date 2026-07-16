@@ -173,21 +173,15 @@ export async function handler(event, context) {
       const phone = getCleanString(data.tel, 30);
       const email = getCleanString(data.email, 100);
       const city = getCleanString(data.city, 100);
-      const message = getCleanString(data.message, 5000);
+      const rawMessage = getCleanString(data.message, 5000);
+      const message = rawMessage || "No additional details provided.";
 
-      // Require name, message, and at least one contact channel (phone or email)
+      // Require name and at least one contact channel (phone or email)
       if (!fname && !lname) {
         return {
           statusCode: 400,
           headers: corsHeaders,
           body: JSON.stringify({ error: "Customer name is required." }),
-        };
-      }
-      if (!message) {
-        return {
-          statusCode: 400,
-          headers: corsHeaders,
-          body: JSON.stringify({ error: "Message body is required." }),
         };
       }
       if (!phone && !email) {
