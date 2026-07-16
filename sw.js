@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v68'; // Bumped for synchronizing pricing plan details across all regional landing pages and members portal
+const CACHE_NAME = 'acnow-cache-v69'; // Bumped for veteran discount badge relative paths and copy normalization
 const DEBUG = true;
 
 // Helper function for structured logging
