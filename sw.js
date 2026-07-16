@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v70'; // Bumped for required message field, same-day scheduling notice, and deep page assets fix
+const CACHE_NAME = 'acnow-cache-v71'; // Bumped for semantic anchor-based veteran discount badges
 const DEBUG = true;
 
 // Helper function for structured logging
