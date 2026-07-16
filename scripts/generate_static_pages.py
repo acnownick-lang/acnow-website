@@ -851,8 +851,18 @@ for path in paths:
     
     # 2. Update sibling page links (no prefix originally, e.g. href="ac-repair.html")
     for sp in sibling_pages:
-        content = content.replace(f'href="{sp}"', f'href="{relative_prefix}pages/{sp}"')
-        content = content.replace(f'href=\'{sp}\'', f'href=\'{relative_prefix}pages/{sp}\'')
+        if sp == "contact.html":
+            content = content.replace('href="contact.html"', f'href="{relative_prefix}contact-us/"')
+            content = content.replace('href="contact.html?', f'href="{relative_prefix}contact-us/?')
+            content = content.replace('href=\'contact.html\'', f'href=\'{relative_prefix}contact-us/\'')
+            content = content.replace('href=\'contact.html?', f'href=\'{relative_prefix}contact-us/?')
+        else:
+            content = content.replace(f'href="{sp}"', f'href="{relative_prefix}pages/{sp}"')
+            content = content.replace(f'href="{sp}#', f'href="{relative_prefix}pages/{sp}#')
+            content = content.replace(f'href="{sp}?', f'href="{relative_prefix}pages/{sp}?')
+            content = content.replace(f'href=\'{sp}\'', f'href=\'{relative_prefix}pages/{sp}\'')
+            content = content.replace(f'href=\'{sp}#\'', f'href=\'{relative_prefix}pages/{sp}#\'')
+            content = content.replace(f'href=\'{sp}?\'', f'href=\'{relative_prefix}pages/{sp}?\'')
         
     # 3. Localize SEO Title
     if service_name.endswith("Services") or service_name.endswith("Systems") or service_name.endswith("Pumps") or service_name == "Service Areas":
