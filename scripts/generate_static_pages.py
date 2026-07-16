@@ -763,6 +763,49 @@ pilot_page_data = {
     }
 }
 
+page_image_map = {
+    # 24 heating-and-cooling-near-me subpages
+    "/heating-and-cooling-near-me/heating-and-cooling-installation-in-jensen-beach/": ("regional_img_26", "regional_img_27"),
+    "/heating-and-cooling-near-me/heating-and-cooling-installation-in-martin-county/": ("regional_img_28", "regional_img_29"),
+    "/heating-and-cooling-near-me/heating-and-cooling-installation-in-port-saint-lucie/": ("regional_img_30", "regional_img_31"),
+    "/heating-and-cooling-near-me/heating-and-cooling-installation-in-saint-lucie-county/": ("regional_img_32", "regional_img_33"),
+    "/heating-and-cooling-near-me/heating-and-cooling-installation-in-saint-lucie-west/": ("regional_img_34", "regional_img_35"),
+    "/heating-and-cooling-near-me/heating-cooling-solutions-for-homes-and-businesses-in-fort-pierce/": ("regional_img_36", "regional_img_37"),
+    "/heating-and-cooling-near-me/heating-cooling-solutions-for-homes-businesses-in-palm-city/": ("regional_img_38", "regional_img_39"),
+    "/heating-and-cooling-near-me/heating-cooling-solutions-near-you-jupiter/": ("regional_img_40", "regional_img_41"),
+    "/heating-and-cooling-near-me/heating-cooling-solutions-near-you-palm-beach-gardens/": ("regional_img_42", "regional_img_43"),
+    "/heating-and-cooling-near-me/heating-cooling-solutions-near-you-stuart/": ("regional_img_44", "regional_img_45"),
+    "/heating-and-cooling-near-me/hvac-preventive-maintenance-in-jensen-beach/": ("regional_img_46", "regional_img_47"),
+    "/heating-and-cooling-near-me/hvac-preventive-maintenance-in-martin-county/": ("regional_img_48", "regional_img_49"),
+    "/heating-and-cooling-near-me/hvac-preventive-maintenance-in-port-saint-lucie/": ("regional_img_50", "regional_img_51"),
+    "/heating-and-cooling-near-me/hvac-preventive-maintenance-in-saint-lucie-county/": ("regional_img_52", "regional_img_53"),
+    "/heating-and-cooling-near-me/hvac-preventive-maintenance-in-saint-lucie-west/": ("regional_img_54", "regional_img_55"),
+    "/heating-and-cooling-near-me/hvac-unit-installation-in-jensen-beach/": ("regional_img_56", "regional_img_57"),
+    "/heating-and-cooling-near-me/hvac-unit-installation-in-martin-county/": ("regional_img_58", "regional_img_59"),
+    "/heating-and-cooling-near-me/hvac-unit-installation-in-port-saint-lucie/": ("regional_img_60", "regional_img_61"),
+    "/heating-and-cooling-near-me/hvac-unit-installation-in-saint-lucie-county/": ("regional_img_62", "regional_img_63"),
+    "/heating-and-cooling-near-me/hvac-unit-installation-in-saint-lucie-west/": ("regional_img_64", "regional_img_65"),
+    "/heating-and-cooling-near-me/mini-split-system-maintenance-in-martin-county/": ("regional_img_66", "regional_img_67"),
+    "/heating-and-cooling-near-me/mini-split-system-maintenance-in-port-saint-lucie/": ("regional_img_68", "regional_img_69"),
+    "/heating-and-cooling-near-me/mini-split-system-maintenance-in-saint-lucie-county/": ("regional_img_70", "regional_img_71"),
+    "/heating-and-cooling-near-me/mini-split-system-maintenance-in-saint-lucie-west/": ("regional_img_72", "regional_img_73"),
+
+    # 6 ac-replacement subpages
+    "/ac-replacement/ac-replacement-in-fort-pierce/": ("regional_img_74", "regional_img_75"),
+    "/ac-replacement/ac-replacement-in-jupiter/": ("regional_img_76", "regional_img_77"),
+    "/ac-replacement/ac-replacement-in-palm-beach-gardens/": ("regional_img_78", "regional_img_79"),
+    "/ac-replacement/ac-replacement-in-palm-city/": ("regional_img_80", "regional_img_81"),
+    "/ac-replacement/ac-replacement-in-port-saint-lucie/": ("regional_img_82", "regional_img_83"),
+    "/ac-replacement/ac-replacement-in-stuart/": ("regional_img_84", "regional_img_85"),
+
+    # 5 affordable-hvac-repair-services subpages
+    "/affordable-hvac-repair-services/affordable-hvac-repair-services-in-saint-lucie-county/": ("regional_img_86", "regional_img_87"),
+    "/affordable-hvac-repair-services/best-hvac-maintenance-service-in-saint-lucie-west/": ("regional_img_88", "regional_img_89"),
+    "/affordable-hvac-repair-services/difficulties-with-hvac-repair-services-in-martin-county/": ("regional_img_90", "regional_img_91"),
+    "/affordable-hvac-repair-services/the-cares-you-should-take-with-your-hvac-in-port-saint-lucie/": ("regional_img_92", "regional_img_93"),
+    "/affordable-hvac-repair-services/things-about-hvac-repair-services-in-jensen-beach/": ("regional_img_94", "regional_img_95")
+}
+
 generated_count = 0
 
 
@@ -887,6 +930,18 @@ for path in paths:
         content = content.replace("Keep your pool comfortable from November through March. We diagnose, service, and install high-performance pool heat pumps that maximize heat exchange efficiency while keeping electricity consumption low.", intro_wrapped)
         content = content.replace("At A/C NOW LLC, we offer professional installation, repair, and replacements of pool heating systems. Our skilled and experienced technicians can help you find the right heater for your pool, make sure it is installed correctly for optimal water flow, and take care of any mechanical repairs.", prose_wrapped)
 
+
+    # 8.7. Localize image paths for regional pages
+    if path in page_image_map:
+        img1, img2 = page_image_map[path]
+        content = content.replace("../assets/images/install_premium.webp", f"../assets/images/generated/{img1}.webp")
+        content = content.replace("../assets/images/install_premium.jpg", f"../assets/images/generated/{img2}.jpg")
+        content = content.replace("../assets/images/maintenance_premium.webp", f"../assets/images/generated/{img1}.webp")
+        content = content.replace("../assets/images/maintenance_premium.jpg", f"../assets/images/generated/{img2}.jpg")
+        content = content.replace("../assets/images/repair_premium.webp", f"../assets/images/generated/{img1}.webp")
+        content = content.replace("../assets/images/generated/compressor_install.jpg", f"../assets/images/generated/{img2}.jpg")
+        content = content.replace("../assets/images/hvac-repair-img.webp", f"../assets/images/generated/{img1}.webp")
+        content = content.replace("../assets/images/hvac-install-img-1.webp", f"../assets/images/generated/{img2}.webp")
 
     # 9. Create target directory and write index.html
     relative_dir = path.strip("/")
