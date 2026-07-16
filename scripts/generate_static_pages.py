@@ -57,11 +57,11 @@ def get_template_and_intent(path_lower):
         return ("pool-heating.html", "Pool Heat Pumps", "Energy-efficient swimming pool heat pump installation, repairs, and maintenance.")
     if "commercial-hvac" in path_lower:
         return ("commercial.html", "Commercial HVAC", "Heavy commercial cooling, rooftop package units, and priority HVAC contracts.")
-    if "ac-replacement" in path_lower or "hvac-installation" in path_lower or "ac-installation" in path_lower:
+    if "installation" in path_lower or "replacement" in path_lower:
         return ("ac-installation.html", "AC Installation", "Professional, high-efficiency central air conditioning installation and system replacement.")
-    if "hvac-repair" in path_lower or "ac-repair" in path_lower or "affordable-hvac-repair-services" in path_lower:
+    if "repair" in path_lower or "affordable-hvac-repair-services" in path_lower:
         return ("ac-repair.html", "AC Repair", "Same-day diagnostics and 24/7 emergency air conditioning repair services.")
-    if "hvac-maintenance" in path_lower or "preventive-maintenance" in path_lower or "preventative-maintenance" in path_lower:
+    if "maintenance" in path_lower or "preventive" in path_lower or "preventative" in path_lower:
         return ("ac-maintenance.html", "AC Maintenance", "Regular maintenance tune-ups, filter cleaning, and system efficiency checkups.")
     if "mini-split" in path_lower or "ductless" in path_lower:
         return ("services.html", "Ductless Mini-Split Systems", "High-efficiency ductless mini-split installation and zone cooling solutions.")
@@ -395,7 +395,7 @@ for path in paths:
         prose_wrapped = f"<!-- START_LOCAL_PROSE -->{data['prose']}<!-- END_LOCAL_PROSE -->"
         
         content = content.replace("A/C Now LLC provides professional AC repair, HVAC installation, and preventive maintenance in Port St. Lucie, Palm City, Stuart, and Jupiter, FL. Our veteran technicians diagnose and repair all major HVAC brands same-day. We serve residential homes and commercial properties throughout Martin and St. Lucie counties.", intro_wrapped)
-        content = content.replace("A/C Now LLC is a veteran-owned, licensed HVAC contractor (License #CAC1820542) serving Port St. Lucie, Stuart, Palm City, Jupiter, Jensen Beach, Fort Pierce, and Hobe Sound, FL. Call (772) 521-3568 for same-day service across the Treasure Coast.", prose_wrapped)
+        content = content.replace('A/C Now LLC is a veteran-owned, licensed HVAC contractor (License #CAC1820542) serving Port St. Lucie, Stuart, Palm City, Jupiter, Jensen Beach, Fort Pierce, and Hobe Sound, FL. Call <a href="tel:7725213568" class="phone-link" style="color: var(--primary); font-weight: 700; text-decoration: none;">(772) 521-3568</a> for same-day service across the Treasure Coast.', prose_wrapped)
         
         content = content.replace("Under-sized air conditioners will run continuously, causing high utility bills and compressor burn-out. Over-sized units cycle on and off too fast, leaving high humidity and hot spots in your home. At A/C Now LLC, we run professional load calculations on your residence to match your system perfectly.", intro_wrapped)
         content = content.replace("Upgrading to a modern 15+ SEER2 cooling unit significantly reduces your monthly power consumption and improves overall indoor air comfort.", prose_wrapped)
