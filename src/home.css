@@ -675,3 +675,11 @@
         margin-top: 12px !important;
     }
 }
+
+/* FAQ Sticky Column on Desktop only */
+@media (min-width: 992px) {
+    .faq-sticky-col {
+        position: sticky;
+        top: 100px;
+    }
+}
