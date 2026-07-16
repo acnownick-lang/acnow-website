@@ -712,6 +712,54 @@ pilot_page_data = {
         "faq1_a": "Drainage and pad placement matter — equipment is sited so heavy summer rainfall doesn't pool around the unit.",
         "faq2_q": "How much does it cost to operate an electric pool heat pump in Port St. Lucie?",
         "faq2_a": "Electric pool heat pumps cost significantly less to run than gas heaters, typically averaging between $50 to $150 per month depending on pool size and target temperature."
+    },
+    "/hvac-maintenance/air-conditioner-maintenance-service-in-fort-pierce/": {
+        "intro": "Fort Pierce homeowners know keeping a system running well here means fighting two things at once: relentless summer humidity and salt air rolling in off the port.",
+        "prose": "With roughly 51 inches of annual rainfall concentrated in June-September, tune-ups are timed to get ahead of that stretch — checking refrigerant charge and airflow before humidity peaks, inspecting coils that collect grit faster near the coast. A/C Now LLC delivers military-grade preventative maintenance.",
+        "faq1_q": "How often should I schedule HVAC maintenance living this close to the water in Fort Pierce?",
+        "faq1_a": "We generally recommend twice a year — once before humid season ramps up, again in fall to catch summer wear.",
+        "faq2_q": "Does A/C Now LLC service homes near Fort Pierce Inlet?",
+        "faq2_a": "Yes, we route technicians daily through all of Fort Pierce, including waterfront and historic districts."
+    },
+    "/hvac-maintenance/air-conditioner-maintenance-service-in-jupiter/": {
+        "intro": "Jupiter sits at the easternmost point of Florida — homes here take on more sustained humidity and coastal exposure than almost any other market.",
+        "prose": "Near the Jupiter Inlet, where the 1860 lighthouse still shows effects of salt-laden air, we see the same corrosion patterns on much younger HVAC equipment. Our technicians check electrical contacts, coils, and drain lines with extra care against salt air degradation.",
+        "faq1_q": "Does living near the Jupiter Inlet actually affect how my HVAC system ages?",
+        "faq1_a": "Yes — the same salt-laden air that has weathered the lighthouse for 150+ years accelerates corrosion on coil fins and electrical contacts.",
+        "faq2_q": "What is included in A/C Now LLC's 21-point maintenance audit in Jupiter?",
+        "faq2_a": "We perform coil washing, condensate line flushing, electrical checkups, and compressor run-load tests."
+    },
+    "/hvac-maintenance/air-conditioner-maintenance-service-in-palm-beach-gardens/": {
+        "intro": "Palm Beach Gardens sees roughly 66 inches of rain a year, June-September often bringing 8-9+ inches monthly — real strain on outdoor units and condensate drainage.",
+        "prose": "We also factor in that homes here lost power for multiple days after 2004-05 hurricanes, so we check electrical connections and start-up capacitors carefully for storm resilience. A/C Now LLC keeps your cooling system prepared for extreme weather.",
+        "faq1_q": "With this much summer rainfall, is there anything specific I should watch for between maintenance visits?",
+        "faq1_a": "Keep an eye on the condensate drain line and standing water near the outdoor unit — clogged drainage is common here during peak wet season.",
+        "faq2_q": "Do you offer priority service scheduling for membership plan owners in Palm Beach Gardens?",
+        "faq2_a": "Yes, our Comfort Shield Protection members receive priority diagnostic routing and 15% discount on repair parts."
+    },
+    "/hvac-maintenance/air-conditioner-maintenance-service-in-palm-city/": {
+        "intro": "Palm City's golf-course communities are full of larger homes with multi-zone systems working overtime against Martin County humidity.",
+        "prose": "Given the area's roughly 7-foot elevation, we pay close attention to condensate drainage and pad/pan condition on outdoor units. We customize maintenance to suit sprawling layouts in Harbour Ridge, Cobblestone, and Martin Downs.",
+        "faq1_q": "I have a home with three separate A/C zones in a Harbour Ridge or Islesworth-style layout — do you service all of them in one visit?",
+        "faq1_a": "Yes — multi-zone maintenance is standard here; each zone's air handler and outdoor unit are inspected separately.",
+        "faq2_q": "Does Palm City's low elevation affect condensate drain operation?",
+        "faq2_a": "Yes, high humidity can cause lines to clog quickly, which can lead to backup flooding if the primary float switch is not regularly checked."
+    },
+    "/hvac-maintenance/air-conditioner-maintenance-service-in-port-saint-lucie/": {
+        "intro": "As the company's home market, our maintenance visits are informed by patterns across the whole city — from older established sections to newer growth like Tradition and St. Lucie West.",
+        "prose": "After 2004-05's direct hurricane hits, we know a well-maintained system is better positioned to be inspected and restarted quickly post-storm. We keep Port St. Lucie systems running cleanly and efficiently.",
+        "faq1_q": "Does it matter that my Tradition or St. Lucie West home is newer — do I still need regular maintenance?",
+        "faq1_a": "Yes — newer systems still accumulate dust and drainage buildup, especially given how hard this area runs its A/C.",
+        "faq2_q": "How can I reduce my monthly electric bill in Port St. Lucie?",
+        "faq2_a": "Maintaining clean coils and fresh filters can reduce your system's energy consumption by 10% to 15%."
+    },
+    "/hvac-maintenance/air-conditioner-maintenance-service-in-stuart/": {
+        "intro": "Stuart sits where the St. Lucie River, Indian River Lagoon, and Atlantic converge, with historic downtown homes dating from the 1880s-1940s.",
+        "prose": "Older homes often have retrofitted ductwork adapted to a house it wasn't originally designed for. Our technicians evaluate airflow and coil conditions carefully to optimize legacy configurations.",
+        "faq1_q": "My house in downtown Stuart is from the 1920s with older ductwork — can you still perform standard maintenance on it?",
+        "faq1_a": "Yes — maintenance on older homes involves a closer look at how ductwork was adapted over time; we work with what's actually there.",
+        "faq2_q": "Do you perform coil cleaning near Stuart's historic waterfront?",
+        "faq2_a": "Yes, we prioritize rinsing outdoor coils to protect them from coastal salt spray accumulation."
     }
 }
 
