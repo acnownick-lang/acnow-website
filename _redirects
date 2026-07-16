@@ -238,6 +238,9 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /offline                /pages/offline.html                 200
 
 # Redirect root .html requests to pages/ subfolder (internal rewrite 200)
+/pages/about.html                        /about/                                  301
+/pages/contact.html                      /contact-us/                             301
+/pages/reviews.html                      /reviews/                                301
 /about.html                              /about/                                  301
 /services.html               /pages/services.html                200
 /contact.html                            /contact-us/                             301
