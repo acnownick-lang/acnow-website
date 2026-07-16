@@ -941,7 +941,7 @@ for path in paths:
         content = content.replace("../assets/images/install_premium.webp", f"../assets/images/generated/{img1}.webp")
         content = content.replace("../assets/images/install_premium.jpg", f"../assets/images/generated/{img2}.jpg")
         content = content.replace("../assets/images/maintenance_premium.webp", f"../assets/images/generated/{img1}.webp")
-        content = content.replace("../assets/images/maintenance_premium.jpg", f"../assets/images/generated/{img2}.jpg")
+        content = content.replace("../assets/images/hvac-maintenance-img.webp", f"../assets/images/generated/{img2}.webp")
         content = content.replace("../assets/images/repair_premium.webp", f"../assets/images/generated/{img1}.webp")
         content = content.replace("../assets/images/generated/compressor_install.jpg", f"../assets/images/generated/{img2}.jpg")
         content = content.replace("../assets/images/hvac-repair-img.webp", f"../assets/images/generated/{img1}.webp")
