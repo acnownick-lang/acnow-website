@@ -1,11 +1,16 @@
 User-agent: *
 Allow: /
 
-# Block internal utility pages
+# Block internal utility and restricted pages
 Disallow: /offline.html
 Disallow: /members.html
 Disallow: /team-portal.html
 Disallow: /3d-airflow.html
 Disallow: /corrosion-predictor.html
+Disallow: /pages/offline.html
+Disallow: /pages/members.html
+Disallow: /pages/team-portal.html
+Disallow: /pages/3d-airflow.html
+Disallow: /pages/success.html
 
 Sitemap: https://acnowllc.com/sitemap.xml

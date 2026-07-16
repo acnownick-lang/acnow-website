@@ -42,8 +42,16 @@ function scanDirectory(dir) {
 
 function parseHtmlFile(filePath) {
     const relativePath = path.relative(rootDir, filePath);
-    // Ignore offline.html, 404.html, PWA manifests, etc.
-    if (relativePath === 'offline.html' || relativePath === '404.html' || relativePath.includes('pages/offline.html') || relativePath.includes('pages/404.html')) {
+    // Ignore offline, 404, members, team-portal, 3d-airflow, and success pages
+    const baseName = path.basename(filePath);
+    if (
+        baseName === 'offline.html' || 
+        baseName === '404.html' || 
+        baseName === 'members.html' || 
+        baseName === 'team-portal.html' || 
+        baseName === '3d-airflow.html' || 
+        baseName === 'success.html'
+    ) {
         return;
     }
 
