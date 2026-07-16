@@ -1032,6 +1032,208 @@ pilot_page_data = {
         "faq1_a": "Near-constant humidity, heavy seasonal rainfall, and hurricane exposure all affect sizing, condensate management, and mounting.",
         "faq2_q": "Do you handle both older homes and new construction?",
         "faq2_a": "Yes — each gets its own on-site evaluation; older homes need closer ductwork/insulation attention, newer construction focuses on precise sizing."
+    },
+    # --- HVAC SERVICES FAMILY (16 pages) ---
+    "/hvac-services/": {
+        "intro": "A/C Now LLC delivers comprehensive heating, ventilation, and air conditioning services throughout Florida's Treasure Coast. Our veteran-owned team is headquartered in Port St. Lucie, bringing military-grade precision to residential homes and commercial developments across Martin, St. Lucie, and northern Palm Beach counties.",
+        "prose": "We service all major brands, handling everything from new high-efficiency system installations and rapid diagnostic repairs to preventative maintenance agreements, ductless mini-splits, and indoor air quality upgrades. We engineer climate systems specifically built for coastal salt exposure and extreme humidity.",
+        "faq1_q": "What core HVAC services does A/C Now LLC offer?",
+        "faq1_a": "We offer complete residential and commercial services, including AC repair, system installation/replacements, seasonal maintenance, ductless mini-split setups, and indoor air quality solutions.",
+        "faq2_q": "Where are your HVAC technicians dispatched from?",
+        "faq2_a": "Our fleet is based in Port St. Lucie, allowing us to deliver rapid, same-day diagnostic service and cooling restorations throughout the local Treasure Coast region."
+    },
+    "/hvac-services/air-conditioning-contractors-in-fort-pierce/": {
+        "intro": "Hiring the right air conditioning contractor in Fort Pierce requires looking beyond generic estimates. Salt-laden port air works into condenser coils and electrical components faster than manufacturer warranties anticipate, making local experience a critical factor.",
+        "prose": "When comparing Fort Pierce HVAC contractors, ask directly how they design systems for coastal corrosion. We specify marine-grade coil coatings and run manual load calculations to match Fort Pierce's intense subtropical climate, drawing on our experience keeping local systems running post-storm since the 2004 hurricane season.",
+        "faq1_q": "What should I ask a contractor about Fort Pierce's coastal exposure?",
+        "faq1_a": "Ask what protective coatings they use on coils and cabinet hardware to prevent galvanic corrosion from saltwater spray and humidity.",
+        "faq2_q": "Why are load calculations important for new Fort Pierce installs?",
+        "faq2_a": "They ensure your new system is sized specifically to extract humidity, preventing the short-cycling and damp indoor air common with oversized units."
+    },
+    "/hvac-services/air-conditioning-service-in-fort-pierce/": {
+        "intro": "Fort Pierce sees roughly 51 inches of annual rainfall concentrated June-September, forcing air conditioning systems to fight near-constant moisture load. Professional service is what keeps condensation drains, blowers, and electrical contacts from failing prematurely.",
+        "prose": "Our ongoing maintenance service keeps Fort Pierce systems operating at peak efficiency. We flush algae and mineral buildup from condensate lines, clean salt-air residue off outdoor coils, and inspect run capacitors and electrical components to prevent hot-weather breakdowns.",
+        "faq1_q": "How does Fort Pierce's high rainfall affect my AC system?",
+        "faq1_a": "It increases biological buildup in condensate drain lines, making regular flushes essential to prevent water backups and attic flooding.",
+        "faq2_q": "How often should AC service be scheduled in Fort Pierce?",
+        "faq2_a": "We recommend twice-yearly checkups — once in spring before the humid wet season, and once in fall to clean out summer wear."
+    },
+    "/hvac-services/hvac-services-in-fort-pierce/": {
+        "intro": "A/C Now LLC provides full-service HVAC solutions throughout Fort Pierce, matching the port city's humid subtropical climate with veteran-caliber precision. From historic downtown to neighborhoods near the inlet, we service systems of all ages and sizes.",
+        "prose": "Our Fort Pierce service suite includes rapid diagnostic repairs for wet-season drain clogs, complete system replacements built with coastal-grade corrosion resistance, and military-grade preventative maintenance. We focus on durability, extending equipment life in a demanding environment.",
+        "faq1_q": "What areas of Fort Pierce does A/C Now LLC service?",
+        "faq1_a": "We service all neighborhoods, including historic Lincoln Park, coastal inlet communities, and surrounding St. Lucie County areas.",
+        "faq2_q": "Do you handle both residential and commercial HVAC services in Fort Pierce?",
+        "faq2_a": "Yes, we provide emergency repairs, installations, and custom preventative service agreements for both home and business accounts."
+    },
+    "/hvac-services/air-conditioning-contractors-in-jupiter/": {
+        "intro": "Jupiter projects further east into the Atlantic than any other point in Florida, bringing intense salt air and a stark wet-to-dry seasonal split. Finding an air conditioning contractor who understands this geography is key to a long-lasting system.",
+        "prose": "Before hiring a contractor in Jupiter, verify they run precise load calculations that account for the long, wet May-October stretch rather than sizing solely off peak heat. Our technical teams bring local experience servicing homes near the Jupiter Inlet Lighthouse, specifying corrosion-resistant hardware for every install.",
+        "faq1_q": "Why does Jupiter's geography affect contractor choice?",
+        "faq1_a": "The town's Atlantic exposure concentrates salt spray, meaning contractors must know how to properly protect outdoor condensers from rapid rusting.",
+        "faq2_q": "Do you service older homes near the Jupiter Inlet?",
+        "faq2_a": "Yes, we regularly retrofit older coastal properties with modern, high-efficiency cooling without compromising structural layouts."
+    },
+    "/hvac-services/air-conditioning-service-in-jupiter/": {
+        "intro": "Jupiter air conditioning systems live two distinct lives: a lighter dry-season load from November through April, followed by a relentless, heavy wet-season load from May through October. Professional service must be timed to prepare for this shift.",
+        "prose": "To keep Jupiter systems running smoothly, our service focus changes with the season. We perform thorough coil rinses to remove salt buildup, inspect electrical contactors worn by humidity, and verify refrigerant charge levels so your system is fully prepared before wet-season demand peaks.",
+        "faq1_q": "When is the best time to schedule AC service in Jupiter?",
+        "faq1_a": "Late winter or early spring — right before the humid May-to-October stretch begins and demand on your system surges.",
+        "faq2_q": "Does salt spray near the Jupiter coast require special service steps?",
+        "faq2_a": "Yes, it requires regular freshwater coil washes to dissolve salt deposits before they pit the aluminum fins and block heat transfer."
+    },
+    "/hvac-services/hvac-services-in-jupiter/": {
+        "intro": "A/C Now LLC delivers military-grade HVAC services to homeowners and businesses throughout Jupiter, where ocean winds and tropical humidity create unique demands. Our technical teams bring flat-rate pricing and same-day diagnostic service to every call.",
+        "prose": "Our Jupiter capabilities span the entire equipment lifecycle: high-efficiency system replacements sized for local coastal loads, rapid emergency repairs for low-lying coastal homes at 10 feet elevation, and regular preventative tune-ups to stop salt-air failures before they start.",
+        "faq1_q": "What services do you offer for Jupiter residential properties?",
+        "faq1_a": "We provide same-day diagnostic repair, SEER2 system replacements, multi-zone duct balancing, and ductless mini-split installations.",
+        "faq2_q": "Do you provide commercial HVAC support in Jupiter?",
+        "faq2_a": "Yes, we offer custom maintenance contracts, light commercial repairs, and rooftop package replacements for local business parks."
+    },
+    "/hvac-services/air-conditioning-contractors-in-palm-beach-gardens/": {
+        "intro": "Properties along the PGA Boulevard corridor demand air conditioning contractors who understand more than just mechanical codes. Sizing and installing systems near golf-course water features requires navigating strict HOA rules and storm-resilience needs.",
+        "prose": "When evaluating Palm Beach Gardens contractors, ask about their experience with gated communities and local power grids. We design installations with the area's 2004-05 hurricane history in mind, configuring whole-home surge protection and elevated condenser pads to protect your investment.",
+        "faq1_q": "Are there specific HOA rules for AC units in Palm Beach Gardens?",
+        "faq1_a": "Many golf communities have strict rules regarding outdoor unit visibility, decibel limits, and pad heights, which we navigate during planning.",
+        "faq2_q": "Why is surge protection critical for Palm Beach Gardens HVAC installs?",
+        "faq2_a": "Frequent afternoon storms along the Treasure Coast bring power spikes that can destroy sensitive inverter boards on modern high-efficiency systems."
+    },
+    "/hvac-services/air-conditioning-service-in-palm-beach-gardens/": {
+        "intro": "Palm Beach Gardens averages roughly 66 inches of rain a year, with June-September delivering 8-9+ inches monthly. Service scheduled before this deluge is what keeps condensate drainage systems from backing up.",
+        "prose": "Our maintenance service keeps local systems running reliably through the wet season. At 16 feet elevation, proper drainage is critical; we clear organic blockages from primary and secondary drain lines, test float switch safety controls, and inspect start-capacitors to handle high humidity runtime.",
+        "faq1_q": "How does Palm Beach Gardens' heavy rainfall impact my AC service?",
+        "faq1_a": "It accelerates algae growth in condensate lines; our service includes clearing lines and installing preventative drain pan tablets.",
+        "faq2_q": "Why does my compressor struggle during the peak wet season?",
+        "faq2_a": "High indoor humidity increases the heat load your system must remove, meaning the compressor runs longer and hotter unless regularly serviced."
+    },
+    "/hvac-services/hvac-services-in-palm-beach-gardens/": {
+        "intro": "A/C Now LLC provides expert residential and commercial HVAC services in Palm Beach Gardens, bringing veteran discipline and transparent pricing to local property owners. We service systems across the city's golf and residential communities.",
+        "prose": "We handle the entire range of heating and cooling needs: high-efficiency system changes sized for local humidity, rapid emergency repairs for storm-damaged or aging components, and military-grade preventative maintenance timed to get ahead of the heavy summer rainfall.",
+        "faq1_q": "Which communities in Palm Beach Gardens do you serve?",
+        "faq1_a": "We service properties throughout the PGA Boulevard corridor, PGA National, and surrounding residential neighborhoods.",
+        "faq2_q": "Do you offer priority diagnostic scheduling in Palm Beach Gardens?",
+        "faq2_a": "Yes, our Comfort Shield Protection plan members receive priority booking, waived diagnostic fees, and discounts on parts."
+    },
+    "/hvac-services/air-conditioning-contractors-in-palm-city/": {
+        "intro": "Sprawling estates in country-club communities like Harbour Ridge, Martin Downs, and Cobblestone require air conditioning contractors who respect layout scale. Rushed installations on larger multi-zone systems lead to uneven cooling and high energy bills.",
+        "prose": "Before hiring a Palm City contractor, ask if they run room-by-room Manual J load calculations rather than guessing tonnage. We assess local low-elevation drainage risk, select appropriate hurricane-rated tie-downs, and configure equipment to satisfy country-club HOA aesthetic guidelines.",
+        "faq1_q": "How do larger Palm City layouts affect contractor requirements?",
+        "faq1_a": "Sprawling homes often need multi-zone or zoned duct configurations, requiring advanced airflow calculations only experienced contractors handle.",
+        "faq2_q": "Do you elevate outdoor units in Palm City?",
+        "faq2_a": "Yes — Palm City sits at an average 7-foot elevation, so we use elevated composite risers to protect units from heavy standing water."
+    },
+    "/hvac-services/air-conditioning-service-in-palm-city/": {
+        "intro": "Multi-zone cooling systems are common in Palm City's larger homes, but they demand closer attention during ongoing service. If a technician only inspects one air handler on a multi-system property, you aren't getting a true safety check.",
+        "prose": "Our Palm City service program covers every component of your home's climate system. We check individual zone dampers for correct operation, flush separate condensate lines, rinse coastal salt residue off outdoor coils, and verify electrical contact integrity against South Florida humidity.",
+        "faq1_q": "Why does multi-zone AC require different ongoing service?",
+        "faq1_a": "Zoned systems use electronic dampers that direct airflow; if a single damper hangs up, it can cause the whole system to freeze up.",
+        "faq2_q": "How does St. Lucie River proximity affect my AC service?",
+        "faq2_a": "Low-lying riverfront properties deal with higher relative humidity, which accelerates electrical component oxidation and coil corrosion."
+    },
+    "/hvac-services/hvac-services-in-palm-city/": {
+        "intro": "A/C Now LLC is the trusted local provider of HVAC services in Palm City, bringing military-grade accountability and flat-rate pricing to Martin County families. We service homes ranging from riverfront estates to townhomes.",
+        "prose": "Our Palm City service capabilities meet the demands of large and small properties alike: precision system installations sized for Martin County humidity, rapid same-day repairs for system breakdowns, and comprehensive maintenance audits that keep utility bills low and systems running cleanly.",
+        "faq1_q": "Do you coordinate with Palm City golf community HOAs?",
+        "faq1_a": "Yes, we coordinate directly with property managers to ensure all installations meet community access and aesthetic requirements.",
+        "faq2_q": "Can you service older ductwork configurations in Palm City country-club estates?",
+        "faq2_a": "Yes, we evaluate duct insulation and airflow balance, performing retrofits and duct repairs where systems are losing efficiency."
+    },
+    "/hvac-services/air-conditioning-contractors-in-port-saint-lucie/": {
+        "intro": "As our home city, Port St. Lucie is where A/C Now LLC sets the standard for air conditioning contractors. Comparing local providers means choosing between out-of-county operations and a locally based company that knows the community first-hand.",
+        "prose": "Whether your property is in newer developments like Tradition and St. Lucie West or established neighborhoods, we configure installations to fit. We coordinate Martin and St. Lucie County permitting, execute load calculations for every zone, and back our work with genuine, local accountability.",
+        "faq1_q": "Why is hiring a locally based contractor in Port St. Lucie an advantage?",
+        "faq1_a": "Faster dispatch across the city's 120+ square miles, and direct familiarity with local municipal permitting and wind-load codes.",
+        "faq2_q": "Does St. Lucie West have different building codes than older parts of town?",
+        "faq2_a": "Permitting wind-load requirements are consistent, but newer homes are built with tighter envelopes, requiring different ventilation sizing."
+    },
+    "/hvac-services/air-conditioning-service-in-port-saint-lucie/": {
+        "intro": "Port St. Lucie's 53.5 inches of annual rain and high summer humidity put continuous stress on air conditioners. Regular service is the only way to prevent minor component wear from turning into full-system failure.",
+        "prose": "Our local service trucks route daily through Port St. Lucie neighborhoods. We verify refrigerant charges, clean indoor and outdoor coils, flush condensate lines, and test electrical control boards. We help homeowners extend system life, keeping cooling bills low in both older and newer developments.",
+        "faq1_q": "How does Port St. Lucie's humidity impact my AC service needs?",
+        "faq1_a": "High humidity means systems run longer cycles, which wears down start capacitors and contactors faster than in dry climates.",
+        "faq2_q": "Does my newer home in Tradition still need regular service?",
+        "faq2_a": "Yes, modern high-SEER systems have sensitive electronics and tight tolerances that require clean filters and coils to maintain efficiency."
+    },
+    "/hvac-services/hvac-services-in-stuart/": {
+        "intro": "Stuart's position at the confluence of the St. Lucie River, Indian River Lagoon, and Atlantic Ocean creates a demanding climate for heating and cooling. With 81 days a year above 90°F and roughly 63 inches of rain, HVAC systems here require specialized attention.",
+        "prose": "A/C Now LLC provides full-service HVAC support to historic and modern Stuart homes. We design custom installations (including ductless retrofits for older downtown properties), perform same-day diagnostic repairs under extreme summer heat, and deliver military-grade maintenance that prevents humidity damage.",
+        "faq1_q": "Do you provide HVAC services in historic downtown Stuart?",
+        "faq1_a": "Yes, we specialize in adapting modern cooling to homes built between the 1880s and 1940s without compromising architectural integrity.",
+        "faq2_q": "How does Stuart's river-and-ocean confluence affect AC systems?",
+        "faq2_a": "It brings more constant relative humidity and salt air, accelerating coil pitting and electrical failures unless regular maintenance is performed."
+    },
+    # --- HVAC REPAIR FAMILY (9 pages) ---
+    "/hvac-repair/": {
+        "intro": "A/C Now LLC provides same-day diagnostic air conditioning repairs across Florida's Treasure Coast, bringing veteran-owned discipline and flat-rate pricing to every service call. Our technical teams resolve cooling emergencies on all major HVAC brands.",
+        "prose": "Our repair solutions are tailored to local challenges: we address coastal salt-air corrosion in Jupiter, manage low-elevation drainage issues in Palm City, and service retrofitted ductwork in historic Stuart homes. We diagnose the root cause of failures to restore permanent, reliable indoor comfort.",
+        "faq1_q": "Do you offer emergency AC repair on weekends or holidays?",
+        "faq1_a": "Yes, we provide 24/7 emergency dispatch and same-day repair response to get your home cooled down quickly.",
+        "faq2_q": "What brands of air conditioners are your technicians certified to repair?",
+        "faq2_a": "Our EPA-certified technicians are trained to service all major manufacturers, including Trane, Carrier, Rheem, Lennox, and Daikin."
+    },
+    "/hvac-repair/ac-repair-service-in-ft-pierce-should-i-repair-or-replace-my-air-conditioner/": {
+        "intro": "When your AC breaks down in Fort Pierce, deciding whether to fix it or replace it starts with a corrosion check. Salt-laden port air corrodes outdoor coils and electrical contactors faster than inland climates, changing repair economics.",
+        "prose": "In older Fort Pierce neighborhoods like Lincoln Park, existing ductwork and electrical service may not support modern high-SEER equipment, meaning a replacement requires additional updates. We assess both the failed component and the overall system condition to help you choose the most cost-effective path.",
+        "faq1_q": "My Fort Pierce AC coil is leaking refrigerant — should I repair it?",
+        "faq1_a": "If the unit is older and has extensive salt-air corrosion, replacing the coil is often a temporary fix; a full system swap usually costs less over time.",
+        "faq2_q": "Can older homes near Lincoln Park support a new high-efficiency AC?",
+        "faq2_a": "Almost always, yes, though we check electrical panels and duct sizing first to make sure they can handle the air handler's airflow."
+    },
+    "/hvac-repair/ac-repair-service-in-jupiter-should-i-repair-or-replace-my-air-conditioner/": {
+        "intro": "Jupiter's position projecting further into the Atlantic means age-based rules of thumb for AC replacement don't apply. A five-year-old outdoor unit near the beach can carry more physical wear than a ten-year-old system fifteen miles inland.",
+        "prose": "When deciding whether to repair or replace your Jupiter AC, we look at the physical condition of the coil, cabinet, and electrical terminals. If the cabinet is corroded through and the coils are pitted, recurring component failures are inevitable, making replacement the better choice.",
+        "faq1_q": "Why do Jupiter AC units fail younger than standard averages?",
+        "faq1_a": "Sustained salt air off the ocean accelerates metal fatigue and coil leaks, meaning systems near the coast typically have shorter lifespans.",
+        "faq2_q": "Is a minor repair like a capacitor worth doing on an older, salt-exposed unit?",
+        "faq2_a": "Yes, electrical parts like capacitors or contactors are simple repairs that can buy you time, provided the compressor and coils are still sound."
+    },
+    "/hvac-repair/ac-repair-service-in-palm-beach-gardens-should-i-repair-or-replace-my-air-conditioner/": {
+        "intro": "Palm Beach Gardens sees roughly 66 inches of rain a year, with a history of multi-day power outages during major storm seasons. Deciding whether to repair or replace your AC requires evaluating how it has handled past storm surges and power spikes.",
+        "prose": "Repeated electrical drops and surges can degrade compressor insulation and blow variable-speed control boards. If your system has been through multiple storm outages and is showing motor or compressor strain, upgrading to a modern system with integrated surge protection is often the wiser path.",
+        "faq1_q": "Can power surges from storms destroy a newly repaired AC motor?",
+        "faq1_a": "Yes — unless you install dedicated surge protection, subsequent grid fluctuations can blow new components just as easily as old ones.",
+        "faq2_q": "How does Palm Beach Gardens' heavy rainfall affect my repair-vs-replace decision?",
+        "faq2_a": "Standing water and high humidity clog drain lines and rust electrical cabinets, making replacement more appealing if the outdoor unit is deeply weathered."
+    },
+    "/hvac-repair/ac-repair-service-in-palm-city-should-i-repair-or-replace-my-air-conditioner/": {
+        "intro": "Much of Palm City sits at an average 7-foot elevation near the St. Lucie River. Standing water from heavy rain or storm surge can submerge low-mounted condensers, causing electrical and corrosion damage that shows up months later as unexpected failures.",
+        "prose": "In golf-course communities like Harbour Ridge and Martin Downs, larger homes with recurring comfort issues may have systems that were originally undersized for the floorplan. We inspect your home's zoning and elevation to determine if a repair makes sense, or if a zoned replacement is needed.",
+        "faq1_q": "My Palm City outdoor unit was partially submerged in high water — is it repairable?",
+        "faq1_a": "It depends on how high the water rose; if electrical controls or the compressor terminal were flooded, replacement is usually necessary for safety.",
+        "faq2_q": "Does a larger Palm City home benefit from zoned replacements?",
+        "faq2_a": "Yes — replacing a single struggling unit with a multi-zone system solves uneven cooling between rooms and lowers your overall electric bill."
+    },
+    "/hvac-repair/ac-repair-service-in-port-saint-lucie-should-i-repair-or-replace-my-air-conditioner/": {
+        "intro": "Deciding whether to repair or replace your AC in Port St. Lucie comes down to runtime hours and maintenance history. With 53.5 inches of rain and long summers, Port St. Lucie systems run hard, making maintenance history a primary factor.",
+        "prose": "A well-maintained system in an established neighborhood may be worth repairing even if it's near ten years old; a neglected system of the same age in a newer Tradition build might be a better candidate for replacement if a major component like the compressor fails.",
+        "faq1_q": "What is the most common major AC repair in Port St. Lucie?",
+        "faq1_a": "Compressor failures and evaporator coil leaks, both driven by long runtime hours and coastal humidity.",
+        "faq2_q": "If my AC is 10 years old in Port St. Lucie, is replacement automatic?",
+        "faq2_a": "No — if the coils are clean and the compressor draws normal amperage, repairing minor electrical issues is a reasonable option."
+    },
+    "/hvac-repair/ac-repair-service-in-stuart-should-i-repair-or-replace-my-air-conditioner/": {
+        "intro": "Stuart averages 81 days a year above 90°F with 63 inches of rain. In historic downtown homes, deciding whether to repair or replace is often a question of ductwork compatibility rather than just equipment age.",
+        "prose": "Older homes built between the 1880s and 1940s often have retrofitted duct systems that are undersized for modern central AC. If your Stuart system suffers repeated failures, it may be due to a structural equipment-to-home mismatch, which we can solve with a zoned mini-split replacement.",
+        "faq1_q": "How does Stuart's historic home architecture affect the repair-vs-replace choice?",
+        "faq1_a": "Older plaster walls and tight spaces make replacing ductwork expensive; in these cases, ductless mini-splits are often a better replacement option.",
+        "faq2_q": "Does Stuart's high number of 90-degree days shorten AC lifespan?",
+        "faq2_a": "Yes — the constant high thermal load means components operate under higher pressure, increasing the rate of mechanical wear."
+    },
+    "/hvac-repair/air-quality-monitoring-service/": {
+        "intro": "Treasure Coast humidity creates ideal conditions for biological growth inside ductwork and air handlers. If your household is dealing with persistent allergies or musty odors, monitoring is the first step toward a solution.",
+        "prose": "Rather than guessing from symptoms, we assess relative humidity levels, check duct systems for signs of organic growth, and evaluate filtration efficiency. We design repairs and air quality upgrades that target the actual source of indoor air issues.",
+        "faq1_q": "How does high relative humidity affect indoor air quality?",
+        "faq1_a": "Indoor humidity above 60% allows dust mites and mold to propagate in carpets, walls, and ductwork, triggering respiratory symptoms.",
+        "faq2_q": "Can air quality monitoring detect issues with my current AC filtration?",
+        "faq2_a": "Yes — we measure particulate levels to determine if your filtration is adequate, or if media filters or UV purifiers are needed."
+    },
+    "/hvac-repair/hvac-equipment-repair/": {
+        "intro": "When an air conditioner fails, diagnosing the actual failure point is essential to prevent subsequent breakdowns. Standard symptoms like 'system blowing warm air' can stem from a blown capacitor, a refrigerant leak, or a seized compressor.",
+        "prose": "We analyze the entire operating loop, factoring in Florida climate stress like salt air corrosion, relative humidity load, and storm-related voltage drops. We identify why the part failed so we can execute a permanent repair.",
+        "faq1_q": "What are the most common reasons an AC stops blowing cold air in Florida?",
+        "faq1_a": "Failed startup capacitors, clogged condensate lines (which trip safety float switches), and slow refrigerant leaks from corroded coils.",
+        "faq2_q": "Why is my AC clicking but the outdoor fan isn't spinning?",
+        "faq2_a": "This is typically a sign of a failed dual-run capacitor or a worn electrical contactor, both of which are straightforward same-day repairs."
     }
 }
 
