@@ -1279,13 +1279,22 @@ document.addEventListener("DOMContentLoaded", () => {
         wizardForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const name = document.getElementById("chat-w-name").value.trim();
-            const city = document.getElementById("chat-w-city").value;
-            const issue = document.getElementById("chat-w-issue").value.trim();
-            const phone = document.getElementById("chat-w-phone").value.trim();
-            const email = document.getElementById("chat-w-email").value.trim();
+            const nameEl = document.getElementById("chat-w-name");
+            const cityEl = document.getElementById("chat-w-city");
+            const issueEl = document.getElementById("chat-w-issue");
+            const phoneEl = document.getElementById("chat-w-phone");
+            const emailEl = document.getElementById("chat-w-email");
 
-            if (!name || !city || !issue || !phone || !email) return;
+            if (!nameEl.value.trim() || !cityEl.value || !issueEl.value.trim() || !phoneEl.value.trim() || !emailEl.value.trim()) {
+                wizardForm.reportValidity();
+                return;
+            }
+
+            const name = nameEl.value.trim();
+            const city = cityEl.value;
+            const issue = issueEl.value.trim();
+            const phone = phoneEl.value.trim();
+            const email = emailEl.value.trim();
 
             const combinedIssue = `${issue} [Client Contact - Phone: ${phone}, Email: ${email}]`;
 
