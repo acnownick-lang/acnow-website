@@ -193,7 +193,7 @@
         <section style="background: var(--dark); padding: 16px 0;">
             <div class="container">
                 <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; align-items:center;">
-                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> $95 Diagnostic Dispatch</span>
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> $89 Diagnostic Dispatch</span>
                     <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(16,185,129,0.35); border:1px solid rgba(16,185,129,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Typical Repair: $150 - $600</span>
                     <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(11,99,229,0.35); border:1px solid rgba(11,99,229,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Same-Day Route Priority</span>
                     <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(230,57,70,0.35); border:1px solid rgba(230,57,70,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 2 22 22 22"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Flat-Rate Pricing</span>
@@ -318,156 +318,14 @@
         <!-- Pricing Section -->
         <section id="pricing" style="background-color: var(--white); padding: 80px 0; border-top: 1px solid var(--gray-light);">
             <div class="container">
-                <!-- Tiered Pricing Section -->
-                <div style="margin: 40px 0 60px 0;">
-                    <div style="text-align: center; margin-bottom: 30px;">
-                        <span class="section-tag" style="background: rgba(11,99,229,0.06); color: var(--primary); padding: 5px 15px; border-radius: 999px; font-size: 11px; font-weight:700;">PREVENTATIVE SAVINGS</span>
-                        <h3 style="font-family:var(--font-heading); font-size:28px; color:var(--dark); margin-top:10px;">Maintenance Protection Memberships</h3>
-                        <p style="color: var(--gray-dark); max-width: 600px; margin: 8px auto 0 auto; font-size:15px;">Prevent expensive Treasure Coast breakdowns and save on repairs with custom annual protection.</p>
-                    </div>
-
-                    <!-- Billing Switch Toggle -->
-                    <div class="billing-toggle-container" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px;">
-                        <span class="billing-toggle-label active" id="toggle-label-monthly">Bill Monthly</span>
-                        <label class="switch-toggle" style="margin: 0;">
-                            <input type="checkbox" id="billing-switch" onchange="toggleBillingPeriod(this.checked)" aria-label="Toggle billing period">
-                            <span class="slider-round"></span>
-                        </label>
-                        <span class="billing-toggle-label" id="toggle-label-yearly">Bill Annually <span class="annual-badge-discount">Save 17%</span></span>
-                    </div>
-
-                    <div class="pricing-section-container">
-                        <!-- Preferred Care -->
-                        <div class="pricing-tier-card">
-                            <div>
-                                <h4 class="tier-name" style="font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--dark); margin: 0 0 5px 0;">Preferred Care</h4>
-                                <div class="tier-price" style="margin: 15px 0;">
-                                    <span class="price-num" style="font-size: 38px; font-weight: 800; color: var(--primary);">$14.95</span>
-                                    <span class="price-period" style="font-size: 14px; color: var(--gray-dark);">/mo</span>
-                                </div>
-                                <p style="font-size: 13px; color: var(--gray-dark); line-height: 1.5; min-height: 40px;">Ideal for newer Central HVAC systems to maintain manufacturer warranties and prevent condensate drain line clogs.</p>
-                                <ul class="tier-features" style="list-style: none; padding: 0; margin: 20px 0;">
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>1 Annual Precision Tune-Up & Audit</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Condensate Drain Line Treatment</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>10% Discount on Parts & Labor Repairs</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Standard Priority Scheduling</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a href="contact.html?plan=preferred" class="btn btn-secondary btn-full btn-tier" id="btn-preferred-tier" style="margin-top: 15px; text-align: center;">Protect My System</a>
-                        </div>
-
-                        <!-- Comfort Club (Featured) -->
-                        <div class="pricing-tier-card featured">
-                            <span class="popular-badge">Best Value</span>
-                            <div>
-                                <h4 class="tier-name" style="font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--dark); margin: 0 0 5px 0;">Comfort Club</h4>
-                                <div class="tier-price" style="margin: 15px 0;">
-                                    <span class="price-num" style="font-size: 38px; font-weight: 800; color: var(--primary);">$19.95</span>
-                                    <span class="price-period" style="font-size: 14px; color: var(--gray-dark);">/mo</span>
-                                </div>
-                                <p style="font-size: 13px; color: var(--gray-dark); line-height: 1.5; min-height: 40px;">Recommended for family homes. Waives diagnostic fees and guarantees rapid priority dispatcher routing.</p>
-                                <ul class="tier-features" style="list-style: none; padding: 0; margin: 20px 0;">
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>2 Annual</strong> Precision Tune-Ups</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Condensate Drain Line Treatment</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>$95 Diagnostic Fee Waived</strong> on calls</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>15% Discount</strong> on Repairs</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>Priority Dispatch</strong> (Ahead of non-members)</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a href="contact.html?plan=comfort" class="btn btn-primary btn-full btn-tier" id="btn-comfort-tier" style="margin-top: 15px; text-align: center;">Waive Diagnostic Fee & Secure Priority</a>
-                        </div>
-
-                        <!-- Precision Elite -->
-                        <div class="pricing-tier-card">
-                            <div>
-                                <h4 class="tier-name" style="font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--dark); margin: 0 0 5px 0;">Precision Elite</h4>
-                                <div class="tier-price" style="margin: 15px 0;">
-                                    <span class="price-num" style="font-size: 38px; font-weight: 800; color: var(--primary);">$29.95</span>
-                                    <span class="price-period" style="font-size: 14px; color: var(--gray-dark);">/mo</span>
-                                </div>
-                                <p style="font-size: 13px; color: var(--gray-dark); line-height: 1.5; min-height: 40px;">VIP service for older systems or multi-zone properties. Includes chemical flushes and filter replacements.</p>
-                                <ul class="tier-features" style="list-style: none; padding: 0; margin: 20px 0;">
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>2 Annual</strong> Tune-Ups & Compressor Audits</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Drain Line Flush + <strong>Condenser Coil Chemical Wash</strong></span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>$95 Diagnostic Fee Waived</strong></span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>20% Discount</strong> on Repairs</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>VIP Front-of-Line Dispatch</strong> (24hr response)</span>
-                                    </li>
-                                    <li style="font-size: 13.5px; color: var(--gray-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#0B7A53" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span><strong>$100/yr Replacement Credit</strong> accrued</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a href="contact.html?plan=elite" class="btn btn-secondary btn-full btn-tier" id="btn-elite-tier" style="margin-top: 15px; text-align: center;">Upgrade to VIP Care</a>
-                        </div>
-                    </div>
-                    <div style="text-align: center; margin-top: -15px; margin-bottom: 40px;">
-                        <p style="font-size: 13px; color: var(--gray-dark);">
-                            🛡️ <strong>Risk-Free Trial:</strong> No setup fees. No long-term contracts. Cancel or upgrade your protection plan anytime.
-                        </p>
-                    </div>
-
-                    <!-- High-Margin Protective Add-on System Upsells -->
-                    <div style="background: var(--white); border: 1px solid var(--gray-light); border-radius: 12px; padding: 25px; margin-bottom: 30px; box-shadow: var(--box-shadow);">
-                        <h4 style="font-family: var(--font-heading); font-size: 18px; color: var(--dark); margin: 0 0 8px 0; font-weight: 700;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> High-Margin Protective System Upgrades</h4>
-                        <p style="font-size: 13.5px; color: var(--gray-dark); margin: 0 0 16px 0;">Protect your expensive HVAC condenser from South Florida's extreme weather and humidity with secondary safeguards:</p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div style="background: rgba(10,24,47,0.01); border: 1px solid var(--gray-light); border-radius: 8px; padding: 15px;">
-                                <h5 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> SurgeShield Protector ($189)</h5>
-                                <p style="margin: 0; font-size: 12px; color: var(--gray-dark); line-height: 1.4;">Protects your condenser's main electronic circuit boards from grid fluctuations and summer lightning. <strong><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Blocks a $2,500 compressor blowout repair.</strong> (Included in Elite)</p>
-                            </div>
-                            <div style="background: rgba(10,24,47,0.01); border: 1px solid var(--gray-light); border-radius: 8px; padding: 15px;">
-                                <h5 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700;">🌊 AquaBlock Float Switch ($125)</h5>
-                                <p style="margin: 0; font-size: 12px; color: var(--gray-dark); line-height: 1.4;">Instantly shuts down your system if the drain line clogs, blocking overflow. <strong><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Prevents a $5,000+ drywall repair from ceiling leaks.</strong> (Included in Elite)</p>
-                            </div>
-                            <div style="background: rgba(10,24,47,0.01); border: 1px solid var(--gray-light); border-radius: 8px; padding: 15px;">
-                                <h5 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700;">☀️ Guardian UV Air Sanitizer ($489)</h5>
-                                <p style="margin: 0; font-size: 12px; color: var(--gray-dark); line-height: 1.4;">Stops biological growth inside damp coils, eliminating mold spores and musty odors. <strong><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Improves indoor air quality by 99% — crucial for households with allergies.</strong></p>
-                            </div>
-                        </div>
-                    </div>
+                                <!-- Tiered Pricing Section Replacement (CTA to Memberships) -->
+                <div class="reveal-up" style="background: linear-gradient(135deg, rgba(11,99,229,0.05) 0%, rgba(11,99,229,0.02) 100%); border: 1.5px solid var(--primary); border-radius: 12px; padding: 40px; text-align: center; max-width: 800px; margin: 40px auto 60px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+                    <span class="section-tag" style="background: rgba(11,99,229,0.06); color: var(--primary); padding: 5px 15px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 12px;">Preventative Savings</span>
+                    <h3 style="font-family: var(--font-heading); font-size: 26px; font-weight: 800; color: var(--dark); margin: 0 0 10px 0;">Maintenance Protection Memberships</h3>
+                    <p style="color: var(--gray-dark); font-size: 15.5px; max-width: 600px; margin: 0 auto 24px auto; line-height: 1.6;">
+                        Prevent expensive system breakdowns, save 15% on all repairs, and waive diagnostic fees entirely with our annual protection plans starting at just $155/year.
+                    </p>
+                    <a href="ac-maintenance.html" class="btn btn-primary" style="padding: 14px 28px; font-weight: 700; display: inline-block;">View Membership Plans &amp; Save</a>
                 </div>
             </div>
         </section>
@@ -496,7 +354,7 @@
         
                         <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
                             <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">How much does AC repair cost in Port St. Lucie, FL?</h3></summary>
-                            <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">AC repair in Port St. Lucie, FL typically costs $150–$650 depending on the component replaced. A/C Now LLC charges a flat diagnostic fee of $95, waived for Service Club members. Capacitor replacements run $150–$300; compressor repairs and refrigerant recharging range $300–$650. All work is quoted flat-rate before any repairs begin. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a> for a same-day quote.</p>
+                            <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">AC repair in Port St. Lucie, FL typically costs $150–$650 depending on the component replaced. A/C Now LLC charges a flat diagnostic fee of $89, waived for Service Club members. Capacitor replacements run $150–$300; compressor repairs and refrigerant recharging range $300–$650. All work is quoted flat-rate before any repairs begin. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a> for a same-day quote.</p>
                         </details>
         
                         <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
@@ -546,7 +404,7 @@
               "name": "How much does AC repair cost in Port St. Lucie, FL?",
               "acceptedAnswer": { 
                 "@type": "Answer", 
-                "text": "AC repair in Port St. Lucie, FL typically costs $150–$650 depending on the component replaced. A/C Now LLC charges a flat diagnostic fee of $95, waived for Service Club members. Capacitor replacements run $150–$300; compressor repairs and refrigerant recharging range $300–$650. All work is quoted flat-rate before any repairs begin. Call (772) 521-3568 for a same-day quote." 
+                "text": "AC repair in Port St. Lucie, FL typically costs $150–$650 depending on the component replaced. A/C Now LLC charges a flat diagnostic fee of $89, waived for Service Club members. Capacitor replacements run $150–$300; compressor repairs and refrigerant recharging range $300–$650. All work is quoted flat-rate before any repairs begin. Call (772) 521-3568 for a same-day quote." 
               }
             },
             {
@@ -574,7 +432,16 @@
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>

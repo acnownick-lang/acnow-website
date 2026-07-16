@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sliderTonnage = document.getElementById("slider-tonnage");
     const labelAge = document.getElementById("label-age");
     const labelTonnage = document.getElementById("label-tonnage");
+    const tonnageValues = [1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 5.0];
     
     const maintButtons = document.querySelectorAll("div[aria-label='Maintenance Selector'] .toggle-btn");
     
@@ -44,7 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sliderTonnage.addEventListener("input", () => {
         userInteracted = true;
-        labelTonnage.textContent = `${parseFloat(sliderTonnage.value).toFixed(1)} Tons`;
+        const tonnage = tonnageValues[parseInt(sliderTonnage.value)] || 3.0;
+        labelTonnage.textContent = `${tonnage.toFixed(1)} Tons`;
         updatePlanner();
         triggerAudioTick();
     });
@@ -91,7 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const age = parseInt(sliderAge.value);
-        const tonnage = parseFloat(sliderTonnage.value);
+        const tonnageIdx = parseInt(sliderTonnage.value);
+        const tonnage = tonnageValues[tonnageIdx] || 3.0;
         
         // 1. Math Settings
         let decayRate = 0.015; // 1.5% loss per year (yearly)
@@ -110,8 +113,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const baseEffLoss = Math.round(age * decayRate * 100);
         const effLossPercent = remainingLife === 0 ? Math.min(100, Math.max(60, baseEffLoss + 20)) : Math.min(100, baseEffLoss);
         
-        // Replacement reserve base ($4500 minimum for 1.5 ton, scales to $9500 for 5 ton)
-        const capexCost = Math.round(4000 + (tonnage - 1) * 1400);
+        // Replacement reserve base by tonnage
+        const capexLookup = {
+            1.5: 6200,
+            2.0: 6250,
+            2.5: 6500,
+            3.0: 7200,
+            3.5: 7900,
+            4.0: 8700,
+            5.0: 9600
+        };
+        const capexCost = capexLookup[tonnage] || 7200;
         
         // Utility waste cost estimate: baseline cooling bill $250/ton per year * efficiency loss ratio
         const yearlyCoolingBase = tonnage * 300;
@@ -127,23 +139,39 @@ document.addEventListener("DOMContentLoaded", () => {
         let statusText = "Excellent";
         let statusBg = "#10B981"; // green
         
-        if (remainingLife > 10) {
-            statusText = "Excellent";
-            statusBg = "#10B981";
-        } else if (remainingLife > 5) {
-            statusText = "Good";
-            statusBg = "#0B7A53"; // dark green
-        } else if (remainingLife > 2) {
-            statusText = "Caution";
-            statusBg = "#F59E0B"; // orange
-        } else {
-            statusText = "Critical - Replace";
-            statusBg = "#EF4444"; // red
-        }
-
-        // Downgrade status if maintenance is neglected
-        if (maintenanceType === "none") {
-            if (statusText === "Excellent" || statusText === "Good") {
+        if (maintenanceType === "twice") {
+            if (age >= 15) {
+                statusText = "Critical - Replace";
+                statusBg = "#EF4444"; // red
+            } else if (age >= 10) {
+                statusText = "Caution";
+                statusBg = "#F59E0B"; // orange
+            } else if (age >= 6) {
+                statusText = "Good";
+                statusBg = "#0B7A53"; // dark green
+            } else {
+                statusText = "Excellent";
+                statusBg = "#10B981"; // green
+            }
+        } else if (maintenanceType === "yearly") {
+            if (age >= 13) {
+                statusText = "Critical - Replace";
+                statusBg = "#EF4444"; // red
+            } else if (age >= 10) {
+                statusText = "Caution";
+                statusBg = "#F59E0B"; // orange
+            } else if (age >= 6) {
+                statusText = "Good";
+                statusBg = "#0B7A53"; // dark green
+            } else {
+                statusText = "Excellent";
+                statusBg = "#10B981"; // green
+            }
+        } else { // none (neglected)
+            if (age >= 9) {
+                statusText = "Critical - Replace";
+                statusBg = "#EF4444"; // red
+            } else {
                 statusText = "Caution (Neglected)";
                 statusBg = "#F59E0B"; // orange
             }
@@ -259,9 +287,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (typeof window.submitFormWithSync === "function") {
                 window.submitFormWithSync(e, plannerForm, payload, () => {
                     if (typeof window.showToast === "function") {
-                        window.showToast("Consultation request secure! Chris or Sean will contact you to schedule an inspection.", "success");
+                        window.showToast("Consultation request secure! Our team will contact you to schedule an inspection.", "success");
                     } else {
-                        alert("Consultation request secure! Chris or Sean will contact you to schedule an inspection.");
+                        alert("Consultation request secure! Our team will contact you to schedule an inspection.");
                     }
                     plannerForm.reset();
                     

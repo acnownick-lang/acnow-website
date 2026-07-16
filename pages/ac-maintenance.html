@@ -257,81 +257,61 @@
                 <!-- Membership Tiers Section -->
                 <div style="text-align: center; margin-bottom: 60px;">
                     <span class="section-tag">MEMBERSHIP TIERS</span>
-                    <h2 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--dark);">Comfort Shield Protection Memberships</h2>
+                    <h2 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--dark);">Maintenance Protection Memberships</h2>
                     
-                    <!-- Billing Toggle Switch -->
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px;">
-                        <span class="billing-toggle-label active" id="toggle-label-monthly">Bill Monthly</span>
+                    <!-- Billing Switch Toggle -->
+                    <div class="billing-toggle-container" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; margin-bottom: 30px;">
+                        <span class="billing-toggle-label" id="toggle-label-monthly">Bill Monthly</span>
                         <label class="switch-toggle" style="margin: 0;">
-                            <input autocomplete="address-level2" type="checkbox" id="billing-switch" onchange="toggleBillingPeriod(this.checked)" aria-label="Toggle billing period">
+                            <input type="checkbox" id="billing-switch" onchange="toggleBillingPeriod(this.checked)" aria-label="Toggle billing period" checked>
                             <span class="slider-round"></span>
                         </label>
-                        <span class="billing-toggle-label" id="toggle-label-yearly">Bill Annually <span class="annual-badge-discount" style="background: var(--gold); color: var(--dark); font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-left: 4px;">Save 17%</span></span>
-                    </div>
-                </div>
-
-                <!-- Pricing Cards Grid -->
-                <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 90px; align-items: stretch;">
-                    <!-- Preferred Tier -->
-                    <div class="pricing-tier-card card-3d reveal-up" data-delay="0" style="display:flex; flex-direction:column; justify-content:space-between; background:var(--white); border:1px solid var(--gray-light); padding:32px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.03);">
-                        <div>
-                            <span style="font-size:12px; font-weight:800; color:var(--primary); letter-spacing:0.5px; text-transform:uppercase;">Preferred Program</span>
-                            <h3 style="font-family:var(--font-heading); font-size:24px; font-weight:800; color:var(--dark); margin:8px 0 16px 0;">Comfort Guard</h3>
-                            <div class="price-box" style="margin-bottom:20px;">
-                                <span class="price-num" style="font-size:42px; font-weight:800; color:var(--dark);">$14.95</span>
-                                <span class="price-period" style="font-size:14px; color:var(--gray-dark);">/mo</span>
-                            </div>
-                            <ul style="list-style:none; padding:0; margin:0 0 24px 0; font-size:14.5px; color:var(--gray-dark); line-height:1.8;">
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 1 Annual 21-Point Tune-Up</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 10% Discount on AC Repairs</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 Priority Dispatch Routing</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 Warranty Protection Records</li>
-                            </ul>
-                        </div>
-                        <a href="contact.html?plan=preferred" class="btn btn-secondary btn-full btn-tier" id="btn-preferred-tier" style="margin-top:15px; text-align:center; width:100%;">Protect My System</a>
+                        <span class="billing-toggle-label active" id="toggle-label-yearly">Bill Annually <span class="annual-badge-discount" style="background: var(--gold); color: var(--dark); font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-left: 4px;">Save 5%</span></span>
                     </div>
 
-                    <!-- Comfort Tier (Recommended) -->
-                    <div class="pricing-tier-card card-3d recommended-tier reveal-up" data-delay="150" style="display:flex; flex-direction:column; justify-content:space-between; background:var(--dark); color:white; border:2px solid var(--gold); padding:32px; border-radius:8px; box-shadow:0 10px 30px rgba(255,199,44,0.15); position:relative;">
-                        <span style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--gold); color:var(--dark); font-size:11px; font-weight:800; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:0.5px;">Most Popular Plan</span>
-                        <div>
-                            <span style="font-size:12px; font-weight:800; color:var(--gold); letter-spacing:0.5px; text-transform:uppercase;">Comfort Shield</span>
-                            <h3 style="font-family:var(--font-heading); font-size:24px; font-weight:800; color:white; margin:8px 0 16px 0;">Comfort Club</h3>
-                            <div class="price-box" style="margin-bottom:20px;">
-                                <span class="price-num" style="font-size:42px; font-weight:800; color:white;">$19.95</span>
-                                <span class="price-period" style="font-size:14px; color:rgba(255,255,255,0.7);">/mo</span>
+                    <!-- Pricing Cards Grid -->
+                    <div class="pricing-section-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 90px; align-items: stretch;">
+                        <!-- Gold Plan -->
+                        <div class="pricing-tier-card card-3d reveal-up" data-delay="0" style="display:flex; flex-direction:column; justify-content:space-between; background:var(--white); border:1px solid var(--gray-light); padding:32px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.03);">
+                            <div>
+                                <span style="font-size:12px; font-weight:800; color:var(--primary); letter-spacing:0.5px; text-transform:uppercase;">Standard Program</span>
+                                <h3 style="font-family:var(--font-heading); font-size:24px; font-weight:800; color:var(--dark); margin:8px 0 16px 0;">Gold Plan</h3>
+                                <div class="price-box" style="margin-bottom:20px;">
+                                    <span class="price-num" style="font-size:42px; font-weight:800; color:var(--dark);">$155</span>
+                                    <span class="price-period" style="font-size:14px; color:var(--gray-dark);">/year</span>
+                                </div>
+                                <ul style="list-style:none; padding:0; margin:0 0 24px 0; font-size:14.5px; color:var(--gray-dark); line-height:1.8;">
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>🟢</span><span>2 Annual 21-Point Precision Tune-Ups</span></li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>🟢</span><span>$89 Diagnostic Fee (Waived with repair)* — drops to $39 during normal business hours</span></li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>🟢</span><span>15% Discount on Parts &amp; Labor Repairs</span></li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>🟢</span><span>Priority Dispatch Routing</span></li>
+                                </ul>
                             </div>
-                            <ul style="list-style:none; padding:0; margin:0 0 24px 0; font-size:14.5px; color:rgba(255,255,255,0.85); line-height:1.8;">
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ 2 Annual 21-Point Tune-Ups</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ Waived Diagnostic Dispatch Fees</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ 15% Discount on AC Repairs</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ Same-Day Priority Dispatch</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ Condenser Coil Chemical Clean</li>
-                            </ul>
+                            <a href="contact.html?plan=gold_annual" class="btn btn-secondary btn-full btn-tier" id="btn-preferred-tier" style="margin-top:15px; text-align:center; width:100%;">Protect My System</a>
                         </div>
-                        <a href="contact.html?plan=comfort" class="btn btn-primary btn-full btn-tier" id="btn-comfort-tier" style="margin-top:15px; text-align:center; width:100%; background:var(--gold); color:var(--dark);">Waive Diagnostic Fee &amp; Secure Priority</a>
-                    </div>
 
-                    <!-- Elite Tier -->
-                    <div class="pricing-tier-card card-3d reveal-up" data-delay="300" style="display:flex; flex-direction:column; justify-content:space-between; background:var(--white); border:1px solid var(--gray-light); padding:32px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.03);">
-                        <div>
-                            <span style="font-size:12px; font-weight:800; color:var(--primary); letter-spacing:0.5px; text-transform:uppercase;">Elite Service Plan</span>
-                            <h3 style="font-family:var(--font-heading); font-size:24px; font-weight:800; color:var(--dark); margin:8px 0 16px 0;">Comfort Complete</h3>
-                            <div class="price-box" style="margin-bottom:20px;">
-                                <span class="price-num" style="font-size:42px; font-weight:800; color:var(--dark);">$29.95</span>
-                                <span class="price-period" style="font-size:14px; color:var(--gray-dark);">/mo</span>
+                        <!-- Platinum Plan (Recommended) -->
+                        <div class="pricing-tier-card card-3d recommended-tier reveal-up" data-delay="150" style="display:flex; flex-direction:column; justify-content:space-between; background:var(--dark); color:white; border:2px solid var(--gold); padding:32px; border-radius:8px; box-shadow:0 10px 30px rgba(255,199,44,0.15); position:relative;">
+                            <span style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--gold); color:var(--dark); font-size:11px; font-weight:800; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:0.5px;">Most Popular Plan</span>
+                            <div>
+                                <span style="font-size:12px; font-weight:800; color:var(--gold); letter-spacing:0.5px; text-transform:uppercase;">Premium Program</span>
+                                <h3 style="font-family:var(--font-heading); font-size:24px; font-weight:800; color:white; margin:8px 0 16px 0;">Platinum Plan</h3>
+                                <div class="price-box" style="margin-bottom:20px;">
+                                    <span class="price-num" style="font-size:42px; font-weight:800; color:white;">$295</span>
+                                    <span class="price-period" style="font-size:14px; color:rgba(255,255,255,0.7);">/year</span>
+                                </div>
+                                <ul style="list-style:none; padding:0; margin:0 0 24px 0; font-size:14.5px; color:rgba(255,255,255,0.85); line-height:1.8;">
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>★</span><span>4 Annual Precision Tune-Ups</span></li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>★</span><span>$89 Diagnostic Fee (Waived with repair)* — drops to $39 during normal business hours</span></li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>★</span><span>15% Discount on Parts &amp; Labor Repairs</span></li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>★</span><span>Guaranteed 2-Hour Emergency Response</span></li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>★</span><span>1 Free MERV 11 Filter per visit</span></li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:flex-start; gap:8px;"><span>★</span><span>$100/yr Accrued Replacement Credit</span></li>
+                                </ul>
                             </div>
-                            <ul style="list-style:none; padding:0; margin:0 0 24px 0; font-size:14.5px; color:var(--gray-dark); line-height:1.8;">
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 Unlimited Tune-Up Checks</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 Waived Diagnostic Dispatch Fees</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 20% Discount on AC Repairs</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 VIP Guaranteed Same-Day Servicing</li>
-                                <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 Blower Wheel Chemically Cleaned</li>
-                            </ul>
+                            <a href="contact.html?plan=platinum_annual" class="btn btn-primary btn-full btn-tier" id="btn-comfort-tier" style="margin-top:15px; text-align:center; width:100%; background:var(--gold); color:var(--dark);">Waive Diagnostic Fee &amp; Secure Priority</a>
                         </div>
-                        <a href="contact.html?plan=elite" class="btn btn-secondary btn-full btn-tier" id="btn-elite-tier" style="margin-top:15px; text-align:center; width:100%;">Upgrade to VIP Care</a>
                     </div>
-                </div>
 
                 <!-- Single-Visit Precision Tune-Up Option -->
                 <div style="background: linear-gradient(135deg, rgba(11,99,229,0.05) 0%, rgba(11,99,229,0.02) 100%); border: 1.5px solid var(--primary); border-radius: 12px; padding: 30px; margin-top: -50px; margin-bottom: 70px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
@@ -421,7 +401,16 @@
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>

@@ -193,6 +193,9 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /reviews                /pages/reviews.html                 200
 /commercial             /pages/commercial.html              200
 /pool-heating           /pages/pool-heating.html            200
+/ac-repair              /pages/ac-repair.html               200
+/ac-maintenance         /pages/ac-maintenance.html          200
+/ac-installation        /pages/ac-installation.html         200
 /hvac-services-palm-city /pages/hvac-services-palm-city.html 200
 /hvac-services-stuart    /pages/hvac-services-stuart.html    200
 /privacy                /pages/privacy.html                 200
@@ -216,6 +219,9 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /reviews.html                /pages/reviews.html                 200
 /commercial.html             /pages/commercial.html              200
 /pool-heating.html           /pages/pool-heating.html            200
+/ac-repair.html              /pages/ac-repair.html               200
+/ac-maintenance.html         /pages/ac-maintenance.html          200
+/ac-installation.html        /pages/ac-installation.html         200
 /hvac-services-palm-city.html /pages/hvac-services-palm-city.html 200
 /hvac-services-stuart.html    /pages/hvac-services-stuart.html    200
 /privacy.html                /pages/privacy.html                 200
@@ -240,6 +246,9 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /reviews/               /pages/reviews.html                 301
 /commercial/            /pages/commercial.html              301
 /pool-heating/          /pages/pool-heating.html            301
+/ac-repair/             /pages/ac-repair.html               301
+/ac-maintenance/        /pages/ac-maintenance.html          301
+/ac-installation/       /pages/ac-installation.html         301
 /hvac-services-palm-city/ /pages/hvac-services-palm-city.html 301
 /hvac-services-stuart/  /pages/hvac-services-stuart.html    301
 /privacy/               /pages/privacy.html                 301

@@ -43,7 +43,7 @@ function initCalendarWidget() {
     let html = `
         <div style="margin-bottom: 20px;">
             <label style="font-size: 13.5px; font-weight: 700; color: var(--dark); display: block; margin-bottom: 10px;">Select Live Dispatch Appointment Window</label>
-            <p style="font-size:12px; color:var(--gray-dark); margin:0 0 15px 0; line-height:1.4;">Reserve a priority time slot. Chris or Sean will call to confirm within 15 minutes.</p>
+            <p style="font-size:12px; color:var(--gray-dark); margin:0 0 15px 0; line-height:1.4;">Reserve a priority time slot. Our team will call to confirm as soon as possible.</p>
             
             <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; overflow-x: auto; padding-bottom: 5px;">
     `;

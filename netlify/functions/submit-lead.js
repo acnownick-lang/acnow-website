@@ -126,6 +126,8 @@ export async function handler(event, context) {
       };
     }
 
+    const isMilitary = data.military_discount === "Yes" || data.military_discount_wizard === "Yes";
+
     // 2. Identify Lead Type (General Form vs. AC Troubleshooter Wizard)
     const isWizard = data["w-name"] !== undefined || data["ac-issue"] !== undefined;
     let leadDetails = {};
@@ -162,7 +164,8 @@ export async function handler(event, context) {
         issueDescription: issueDescription,
         email: getCleanString(data.email, 100, "N/A"),
         city: getCleanString(data.city, 100, "N/A"),
-        message: getCleanString(data.message, 5000, `AC Diagnostics Run. System Behavior Reported: ${issueDescription}.`)
+        message: getCleanString(data.message, 5000, `AC Diagnostics Run. System Behavior Reported: ${issueDescription}.`),
+        militaryVerified: isMilitary
       };
     } else {
       const fname = getCleanString(data.fname, 50);
@@ -201,7 +204,8 @@ export async function handler(event, context) {
         phone: phone || "No Phone Provided",
         email: email || "No Email Provided",
         city: city || "Not Provided",
-        message: message
+        message: message,
+        militaryVerified: isMilitary
       };
     }
 
@@ -268,6 +272,12 @@ export async function handler(event, context) {
             <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee;">Service City:</td>
             <td style="padding: 8px; border-bottom: 1px solid #eee;">${safeCity}</td>
           </tr>` : ""}
+          <tr>
+            <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee;">Military/Veteran Discount:</td>
+            <td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; color: ${leadDetails.militaryVerified ? '#0B7A53' : '#333'};">
+              ${leadDetails.militaryVerified ? "Active (5% Discount Applied to Invoice)" : "None"}
+            </td>
+          </tr>
           ${isWizard ? `
           <tr>
             <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee; color: #b02a37;">Reported Symptom:</td>
@@ -341,6 +351,7 @@ export async function handler(event, context) {
                   inline: true 
                 },
                 { name: "📍 City", value: discordCity, inline: true },
+                { name: "🎖️ Military Discount", value: leadDetails.militaryVerified ? "✅ **Active (5% Discount Applied)**" : "❌ None", inline: true },
                 ...(isWizard ? [
                   { name: "⚠️ System Symptom", value: `**${discordIssueDesc}**`, inline: false }
                 ] : [

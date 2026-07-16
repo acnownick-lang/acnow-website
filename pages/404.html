@@ -10,7 +10,8 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 let urlPhase = params.get('phase');
-                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
+                const isStagingHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.endsWith('.netlify.app') || window.location.hostname === '';
+                isDevMode = isStagingHost && ((sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true'));
                 
                 if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                     phase = urlPhase;
@@ -49,7 +50,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/redesign.css?v=108">
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=109">
     <style>
         .error-page {
             min-height: 100vh;

@@ -8,7 +8,8 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 let urlPhase = params.get('phase');
-                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
+                const isStagingHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.endsWith('.netlify.app') || window.location.hostname === '';
+                isDevMode = isStagingHost && ((sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true'));
                 
                 if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
                     phase = urlPhase;
@@ -2551,6 +2552,7 @@
 
     <script src="../assets/lib/three.min.js"></script>
     <script src="../assets/lib/OrbitControls.js"></script>
+    <script src="../assets/js/hvac-math-engine.js"></script>
 
     <script>
         const OrbitControls = THREE.OrbitControls;
@@ -2657,11 +2659,8 @@
             
             const activeCount = (dampers.a ? 1 : 0) + (dampers.b ? 1 : 0) + (dampers.c ? 1 : 0);
             
-            // Calculate System Static Pressure based on restriction
-            let pressureVal = 0.5;
-            if (activeCount === 2) pressureVal = 0.75;
-            else if (activeCount === 1) pressureVal = 1.4;
-            else if (activeCount === 0) pressureVal = 2.5;
+            // Calculate System Static Pressure based on restriction using math engine
+            const pressureVal = window.HVACMathEngine.calculateStaticPressure(dampers);
             
             document.getElementById('pressure-val').innerText = pressureVal.toFixed(2) + ' in. wg';
             
@@ -2669,7 +2668,7 @@
             bar.style.width = (pressureVal / 2.5 * 100) + '%';
             if (pressureVal >= 1.4) {
                 bar.style.background = '#C22A36';
-            } else if (pressureVal >= 0.75) {
+            } else if (pressureVal >= 0.7) {
                 bar.style.background = '#ff9f0a';
             } else {
                 bar.style.background = '#00f2fe';
@@ -2703,6 +2702,9 @@
 
             // Redraw room overlays when dampers change to toggle visibility
             buildRoomsGeometry();
+            
+            // Recalculate sales ROI parameters instantly based on restriction
+            updateSalesROI();
         }
 
         // Room sizing controller logic
@@ -2967,10 +2969,10 @@
             spawnHotspots();
             initParticles();
 
-            // Bind custom pointer events for stable horizontal dragging
-            renderer.domElement.addEventListener('pointerdown', onPointerDown);
-            renderer.domElement.addEventListener('pointermove', onPointerMove);
-            window.addEventListener('pointerup', onPointerUp);
+            // Bind custom pointer events for stable horizontal dragging in capture phase
+            renderer.domElement.addEventListener('pointerdown', onPointerDown, { capture: true, passive: false });
+            renderer.domElement.addEventListener('pointermove', onPointerMove, { capture: true });
+            window.addEventListener('pointerup', onPointerUp, { capture: true });
 
             window.addEventListener('resize', onWindowResize);
             
@@ -3017,10 +3019,10 @@
         function destroySimulator() {
             // Remove bound global and DOM event listeners
             if (renderer && renderer.domElement) {
-                renderer.domElement.removeEventListener('pointerdown', onPointerDown);
-                renderer.domElement.removeEventListener('pointermove', onPointerMove);
+                renderer.domElement.removeEventListener('pointerdown', onPointerDown, { capture: true });
+                renderer.domElement.removeEventListener('pointermove', onPointerMove, { capture: true });
             }
-            window.removeEventListener('pointerup', onPointerUp);
+            window.removeEventListener('pointerup', onPointerUp, { capture: true });
             window.removeEventListener('resize', onWindowResize);
             window.removeEventListener('pagehide', destroySimulator);
             window.removeEventListener('unload', destroySimulator);
@@ -3073,6 +3075,8 @@
                     draggedGroup = parent;
                     controls.enabled = false; // Stop camera rotation
                     renderer.domElement.style.cursor = 'grabbing';
+                    event.stopPropagation();
+                    event.preventDefault();
                     
                     const planeY = draggedGroup.position.y;
                     dragPlane.constant = -planeY;
@@ -3091,6 +3095,8 @@
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
             
             if (isDragging && draggedGroup) {
+                event.stopPropagation();
+                event.preventDefault();
                 raycaster.setFromCamera(mouse, camera);
                 const intersection = new THREE.Vector3();
                 if (raycaster.ray.intersectPlane(dragPlane, intersection)) {
@@ -3118,13 +3124,14 @@
             }
         }
 
-        function onPointerUp() {
+        function onPointerUp(event) {
             if (isDragging) {
                 isDragging = false;
                 draggedGroup = null;
                 controls.enabled = true; // Resume camera orbit navigation
                 renderer.domElement.style.cursor = 'default';
                 saveSandboxState();
+                event.stopPropagation();
             }
         }
 
@@ -3514,10 +3521,7 @@
 
             // Damper solver configurations
             const activeCount = (dampers.a ? 1 : 0) + (dampers.b ? 1 : 0) + (dampers.c ? 1 : 0);
-            let velocityMultiplier = 1.0;
-            if (activeCount === 2) velocityMultiplier = 1.5;
-            else if (activeCount === 1) velocityMultiplier = 2.5;
-            else if (activeCount === 0) velocityMultiplier = 0.0;
+            const velocityMultiplier = window.HVACMathEngine.calculateVelocityMultiplier(dampers);
 
             // Blower fan rotation speed
             if (hvacFan) {
@@ -3556,71 +3560,25 @@
             if (ducts[3]) ducts[3].material.opacity = dampers.c ? 0.1 : 0.02;
 
             // Thermodynamic Room Comfort Solvers (Distance to Solar hotspots)
-            if (registers[0] && hotspot1) {
-                const d1 = registers[0].position.distanceTo(hotspot1.position);
-                const isReg1Cooling = (d1 < 5.0 && dampers.a && activeCount > 0);
-
-                if (isReg1Cooling) {
-                    roomTemps[0] = Math.max(72.0, roomTemps[0] - dt * 0.8);
-                    hotspot1.scale.setScalar(Math.max(0.4, hotspot1.scale.x - dt * 0.4));
-                    hotspot1.material.color.setHex(0x00f2fe); // Cool blue
-                } else {
-                    roomTemps[0] = Math.max(72.0, roomTemps[0] - dt * 0.2);
-                    hotspot1.scale.setScalar(Math.max(0.6, hotspot1.scale.x - dt * 0.2));
-                    hotspot1.material.color.setHex(0x00f2fe);
-                }
-            }
-
-            if (registers[1] && hotspot2) {
-                const d2 = registers[1].position.distanceTo(hotspot2.position);
-                const isReg2Cooling = (d2 < 5.0 && dampers.b && activeCount > 0);
-
-                if (isReg2Cooling) {
-                    roomTemps[1] = Math.max(72.0, roomTemps[1] - dt * 0.8);
-                    hotspot2.scale.setScalar(Math.max(0.4, hotspot2.scale.x - dt * 0.4));
-                    hotspot2.material.color.setHex(0x00f2fe);
-                } else {
-                    roomTemps[1] = Math.max(72.0, roomTemps[1] - dt * 0.2);
-                    hotspot2.scale.setScalar(Math.max(0.6, hotspot2.scale.x - dt * 0.2));
-                    hotspot2.material.color.setHex(0x00f2fe);
-                }
-            }
-
-            // Zone C (Kitchen) holds cool if its damper is open
-            if (registers[2]) {
-                if (dampers.c && activeCount > 0) {
-                    roomTemps[2] = Math.max(72.0, roomTemps[2] - dt * 0.4);
-                } else {
-                    roomTemps[2] = Math.min(76.0, roomTemps[2] + dt * 0.2);
-                }
-            }
+            const currentCFM = parseFloat(document.getElementById('cfm-range')?.value) || 1200;
+            const deltaT = getValidatedDeltaT();
+            window.HVACMathEngine.updateThermodynamics(dt, dampers, roomTemps, registers, hotspot1, hotspot2, roomDimensions, currentCFM, deltaT);
 
             // Sync HTML Comfort values
             document.getElementById('temp-zone-a').innerText = Math.round(roomTemps[0]) + '°F';
             document.getElementById('temp-zone-b').innerText = Math.round(roomTemps[1]) + '°F';
             document.getElementById('temp-zone-c').innerText = Math.round(roomTemps[2]) + '°F';
 
-            const targetTemp = 72.0;
-            const devA = Math.abs(roomTemps[0] - targetTemp);
-            const devB = Math.abs(roomTemps[1] - targetTemp);
-            const devC = Math.abs(roomTemps[2] - targetTemp);
-            const comfortScore = Math.max(0, Math.min(100, Math.round(100 - (devA + devB + devC) * 5)));
+            const comfortScore = window.HVACMathEngine.calculateComfortScore(roomTemps, deltaT);
             document.getElementById('comfort-score-val').innerText = comfortScore + '%';
 
             // Dynamic recommendations mapping based on score
             const reco = document.getElementById('comfort-reco');
-            if (comfortScore < 60) {
-                reco.innerHTML = `<strong>Significant imbalance detected:</strong> Large temperature splits exist between zones. A professional duct balancing audit is recommended to restore system equilibrium.`;
-                reco.style.color = '#ff6b6b';
-                reco.style.borderColor = 'rgba(239, 68, 68, 0.3)';
-            } else if (comfortScore < 90) {
-                reco.innerHTML = `<strong>Moderate imbalance:</strong> Adjust supply registers closer to window hotspots to even out the thermal load.`;
-                reco.style.color = '#ff9f0a';
-                reco.style.borderColor = 'rgba(255, 159, 10, 0.3)';
-            } else {
-                reco.innerHTML = `<strong>Zones are well balanced.</strong> Regular seasonal tune-ups will help maintain optimal distribution.`;
-                reco.style.color = '#10b981';
-                reco.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+            if (reco) {
+                const recommendation = window.HVACMathEngine.getRecommendation(comfortScore);
+                reco.innerHTML = recommendation.text;
+                reco.style.color = recommendation.color;
+                reco.style.borderColor = recommendation.borderColor;
             }
 
             // Particle flow animation
@@ -3975,24 +3933,7 @@
             let returnT = parseFloat(returnRaw);
             let supplyT = parseFloat(supplyRaw);
             
-            // If one is empty or invalid number, return incomplete error
-            if (isNaN(returnT) || isNaN(supplyT)) {
-                return { returnT: 75.0, supplyT: 57.0, splitVal: 0, error: "Incomplete Inputs" };
-            }
-            
-            // Programmatic range enforcement
-            if (returnT < 60 || returnT > 100) {
-                return { returnT, supplyT, splitVal: 0, error: "Range Err (60-100)" };
-            }
-            if (supplyT < 40 || supplyT > 80) {
-                return { returnT, supplyT, splitVal: 0, error: "Range Err (40-80)" };
-            }
-            if (returnT <= supplyT) {
-                return { returnT, supplyT, splitVal: 0, error: "Ret must be > Sup" };
-            }
-            
-            const splitVal = parseFloat((returnT - supplyT).toFixed(1));
-            return { returnT, supplyT, splitVal, error: null };
+            return window.HVACMathEngine.validateDeltaT(returnT, supplyT);
         }
 
         function updateSalesROI() {
@@ -4004,11 +3945,14 @@
             const totalArea = roomDimensions.reduce((sum, room) => sum + (room.width * room.length), 0);
             const cost = Math.round(1500 + totalArea * 2.2);
             const baseCoolingCost = totalArea * 3.73;
-            const savings = Math.round(baseCoolingCost * 0.28);
+            
+            const deltaT = getValidatedDeltaT();
+            const savingsPercent = window.HVACMathEngine.calculateSavingsPercent(roomDimensions, dampers, deltaT);
+            const savings = Math.round(baseCoolingCost * savingsPercent);
             const payback = (cost / savings).toFixed(1);
 
             costEl.innerText = `$${cost.toLocaleString()}`;
-            savingsEl.innerText = `28% ($${savings}/yr)`;
+            savingsEl.innerText = `${Math.round(savingsPercent * 100)}% ($${savings.toLocaleString()}/yr)`;
             paybackEl.innerText = `${payback} Years`;
         }
 
@@ -4043,6 +3987,9 @@
                 badge.style.borderColor = '#ff9f0a';
                 badge.style.color = '#ff9f0a';
             }
+            
+            // Recalculate sales ROI parameters instantly based on delta T changes
+            updateSalesROI();
         }
 
         function openReportModal() {
@@ -4227,6 +4174,6 @@
         initLinkPrefetching();
         init();
     </script>
-    <script src="../assets/js/app.js?v=101" defer></script>
+    <script src="../assets/js/app.js?v=102" defer></script>
 </body>
 </html>

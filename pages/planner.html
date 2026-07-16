@@ -480,7 +480,7 @@
                                 </div>
                                 <div class="slider-group">
                                     <label for="slider-tonnage">Equipment Sizing (Tons): <span id="label-tonnage">3.0 Tons</span></label>
-                                    <input type="range" id="slider-tonnage" class="input-slider" min="1.5" max="5.0" step="0.5" value="3.0">
+                                    <input type="range" id="slider-tonnage" class="input-slider" min="0" max="6" step="1" value="3">
                                 </div>
                                 <div class="slider-group" style="margin-bottom:25px;">
                                     <span style="font-size:13.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:10px;">Maintenance Frequency</span>
@@ -564,7 +564,7 @@
                                     <span style="font-size:13.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:10px;">Client Incentive Discounts</span>
                                     <div class="toggle-btn-group" id="rebate-disc" role="group" aria-label="Client Discounts Selector">
                                         <button class="toggle-btn active" aria-pressed="true" data-val="standard">Standard Pricing</button>
-                                        <button class="toggle-btn" aria-pressed="false" data-val="club">Comfort Club Member</button>
+                                        <button class="toggle-btn" aria-pressed="false" data-val="club">Protection Member</button>
                                         <button class="toggle-btn" aria-pressed="false" data-val="military">Active Military / Veteran</button>
                                     </div>
                                 </div>
@@ -597,42 +597,6 @@
                         </div>
     </div>
     
-    <div style="margin-top: 80px;">
-        <div class="tool-grid-2col">
-                            <div class="planner-card">
-                                 <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 25px; font-weight: 800; margin-top: 0;">Attic Parameters</h2>
-                                <div class="slider-group">
-                                    <label for="attic-temp-input">Peak Summer Attic Temperature: <span id="attic-temp-val">135°F</span></label>
-                                    <input type="range" id="attic-temp-input" min="100" max="150" value="135" class="input-slider">
-                                </div>
-                                <div class="slider-group">
-                                    <label for="attic-insulation-select">Insulation &amp; Barrier Type</label>
-                                    <select id="attic-insulation-select" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:13px; height:38px;">
-                                        <option value="r19">Standard R-19 Fiberglass (Older Code)</option>
-                                        <option value="r38">Enhanced R-38 Blown-In (Modern Code)</option>
-                                        <option value="r38shield">R-38 Blown-In + Radiant Heat Shield</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="planner-card">
-                                 <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800; margin-top: 0;">Estimated Attic Heat Load</h2>
-                                <div class="report-row">
-                                    <span>Ceiling Heat Entry:</span>
-                                    <span id="attic-heat-btu" style="color:var(--secondary-text); font-size:15px; font-weight:700;">14,000 BTU/hr</span>
-                                </div>
-                                <div class="report-row">
-                                    <span>Compressor Runtime Reduction:</span>
-                                    <span id="attic-runtime-pct" style="color:var(--primary); font-size:15px; font-weight:700;">0% Runtime Reduction</span>
-                                </div>
-                                <div class="report-row" style="border-bottom:none; font-size:16px; margin-top:10px; padding-top:15px; border-top:1px dashed var(--gray-light);">
-                                    <strong>Monthly Cooling Savings:</strong>
-                                    <strong id="attic-monthly-savings" style="color:#0B7A53; font-size:20px;">$0.00/month</strong>
-                                </div>
-                                <a href="contact.html" class="btn btn-secondary btn-full" style="font-size:12.5px; margin-top:20px;">Schedule Attic Insulation Assessment</a>
-                            </div>
-                        </div>
-    </div>
 </div>
 
         </div>
@@ -653,7 +617,7 @@
             
             <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
                 <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">How does salt spray affect coastal air conditioners?</h3></summary>
-                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">Salt air accelerates galvanic corrosion on copper lines and aluminum condenser coils. This causes micro-leaks and structural failure. Units within 5 miles of the beach decay significantly faster without specialized coil coatings or regular rinsing.</p>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">Salt air accelerates galvanic corrosion on copper lines and aluminum condenser coils. This causes micro-leaks and structural failure. Units within 5 miles of the beach decay significantly faster. To prevent premature failure, we offer specialized coastal system options engineered to be highly robust in harsh saltwater environments.</p>
             </details>
         </div>
     </section>
@@ -662,7 +626,16 @@
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>

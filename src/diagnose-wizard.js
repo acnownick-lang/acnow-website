@@ -378,7 +378,7 @@ function initDiagnoseWizard() {
             // Call global sync submission wrapper
             if (typeof window.submitFormWithSync === "function") {
                 window.submitFormWithSync(e, diagnoseForm, payload, () => {
-                    if (typeof window.showToast === "function") { window.showToast("Diagnostics secured! Technicians Chris or Sean will call you within 15 minutes.", "success"); } else { alert("Diagnostics secured! Technicians Chris or Sean will call you within 15 minutes."); }
+                    if (typeof window.showToast === "function") { window.showToast("Diagnostics secured! Our team will call you as soon as possible.", "success"); } else { alert("Diagnostics secured! Our team will call you as soon as possible."); }
                     diagnoseForm.reset();
                     // Clear sessionStorage states
                     sessionStorage.removeItem("diag_selected_symptom");

@@ -1530,9 +1530,14 @@
                                         
                                         <div style="background: rgba(0,0,0,0.15); padding:15px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); margin-bottom:15px;">
                                             <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px;">
-                                                <span>Preferred Care ($14.95/mo) signup:</span>
-                                                <strong style="color:#0B7A53;">+$15.00 Payout</strong>
+                                                <span>Gold Plan ($155/yr) signup:</span>
+                                                <strong style="color:#0B7A53;">+$25.00 Payout</strong>
                                             </div>
+                                            <div style="display:flex; justify-content:space-between; font-size:12px;">
+                                                <span>Platinum Plan ($295/yr) signup:</span>
+                                                <strong style="color:#0B7A53;">+$50.00 Payout</strong>
+                                            </div>
+                                        </div>
                                             <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px;">
                                                 <span>Comfort Club ($19.95/mo) signup:</span>
                                                 <strong style="color:#0B7A53;">+$25.00 Payout</strong>
@@ -1547,10 +1552,9 @@
                                             <div>
                                                 <label for="comm-plan-select" style="font-size: 10.5px; font-weight:700; color:rgba(255,255,255,0.8); display:block; margin-bottom:5px;">Select Plan Sold</label>
                                                 <select id="comm-plan-select" style="width:100%; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height: 36px; outline:none;" onchange="calculateCommissionTracker()">
-                                                    <option value="preferred">Preferred Care ($14.95/mo)</option>
-                                                    <option value="comfort" selected>Comfort Club ($19.95/mo)</option>
-                                                    <option value="elite">Precision Elite ($29.95/mo)</option>
-                                                </select>
+                                                     <option value="gold" selected>Gold Plan ($155/yr)</option>
+                                                     <option value="platinum">Platinum Plan ($295/yr)</option>
+                                                 </select>
                                             </div>
                                             <div>
                                                 <label for="comm-qty" style="font-size: 10.5px; font-weight:700; color:rgba(255,255,255,0.8); display:block; margin-bottom:5px;">Quantity Sold</label>
@@ -1569,9 +1573,9 @@
                                         <div style="display:flex; flex-direction:column; gap:12px; max-height:250px; overflow-y:auto; padding-right:4px;">
                                             <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
                                                 <strong style="color:var(--gold); font-size:11.5px; display:block; margin-bottom:4px;">🏷️ Script 1: The Diagnostic Offset Hook</strong>
-                                                <span style="font-size:10px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;">When customer faces a $95 service fee + parts.</span>
+                                                <span style="font-size:10px; color:rgba(255,255,255,0.5); display:block; margin-bottom:8px;">When customer faces a $89 service fee + parts.</span>
                                                 <p style="font-size:11.5px; line-height:1.5; color:rgba(255,255,255,0.9); margin:0; font-style:italic;">
-                                                    "Mr. Customer, I’ve diagnosed the problem: it’s a failed contactor. Today's standard diagnostic fee is $95. However, if we enroll you in our Comfort Club today for $19.95/month, I can waive that $95 fee entirely, plus you'll get 15% off the contactor replacement today. You actually save money on this invoice by joining the club right now."
+                                                    "Mr. Customer, I’ve diagnosed the problem: it’s a failed contactor. Today's standard diagnostic fee is $89. However, if we enroll you in our Comfort Club today for $19.95/month, I can waive that $89 fee entirely, plus you'll get 15% off the contactor replacement today. You actually save money on this invoice by joining the club right now."
                                                 </p>
                                             </div>
                                             <div style="background: rgba(255,255,255,0.03); padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
@@ -2087,7 +2091,16 @@
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
@@ -4438,28 +4451,20 @@
                 const resultBox = document.getElementById("comm-result-box");
 
                 let payoutPerUnit = 25.00;
-                let planPrice = 19.95;
-                let planName = "Comfort Club";
-                let serviceCostPerUnitYr = 40.00; // Comfort Club
+                let planPrice = 155.00;
+                let planName = "Gold Plan";
+                let serviceCostPerUnitYr = 40.00; 
                 
-                if (plan === "preferred") {
-                    payoutPerUnit = 15.00;
-                    planPrice = 14.95;
-                    planName = "Preferred Care";
-                    serviceCostPerUnitYr = 20.00;
-                } else if (plan === "elite") {
+                if (plan === "platinum") {
                     payoutPerUnit = 50.00;
-                    planPrice = 29.95;
-                    planName = "Precision Elite";
+                    planPrice = 295.00;
+                    planName = "Platinum Plan";
                     serviceCostPerUnitYr = 65.00;
                 }
 
                 const totalPayout = payoutPerUnit * qty;
-                const totalRevenueYr = planPrice * 12 * qty;
-                
-                // Variable company service delivery cost to reflect inspections and washes
+                const totalRevenueYr = planPrice * qty;
                 const serviceCostYr = serviceCostPerUnitYr * qty;
-                // Net company margin (gross revenue minus tech payout and service cost)
                 const companyProfitYr = totalRevenueYr - totalPayout - serviceCostYr;
                 const marginPct = (companyProfitYr / totalRevenueYr) * 100;
 
@@ -4477,7 +4482,7 @@
                             📋 Lifetime Value (LTV):
                         </div>
                         <div style="font-size: 10.5px; color: #CBD5E0; margin-top: 4px;">
-                            Every ${planName} client stays an average of 5.2 years. Your $${payoutPerUnit.toFixed(0)} signup commission unlocks $${(planPrice * 12 * 5.2).toFixed(0)} in contract LTV. Keep selling the protection!
+                            Every ${planName} client stays an average of 5.2 years. Your $${payoutPerUnit.toFixed(0)} signup commission unlocks $${(planPrice * 5.2).toFixed(0)} in contract LTV. Keep selling the protection!
                         </div>
                     </div>
                 `;

@@ -459,7 +459,7 @@
             <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
                 <span class="hero-subtitle" style="color: var(--gold); letter-spacing: 2px; font-weight: 700; text-transform: uppercase; font-size: 12px;">TREASURE COAST HURRICANE SAFETY</span>
                 <h1 class="hero-title" style="font-size: 42px; margin-bottom: 12px; color: var(--white); font-weight: 800; font-family: var(--font-heading);">Storm Safety Checklist</h1>
-                <p class="hero-text" style="color: var(--gray-light); max-width: 600px; margin: 0 auto; font-size: 15px;">Prepare your cooling system for a hurricane. Go through the checklist to secure your condenser, clear drain lines, and pre-book priority recovery visits.</p>
+                <p class="hero-text" style="color: var(--gray-light); max-width: 600px; margin: 0 auto; font-size: 15px;">Prepare your cooling system for a hurricane. Go through the checklist to secure your condenser, book a pre-storm safety inspection, and pre-book priority recovery visits.</p>
             </div>
         </div>
     </section>
@@ -506,11 +506,12 @@
                                             <span>Clear Backyard Objects &amp; Projectiles</span>
                                         </label>
                                     </div>
-                                    <div class="accessory-item">
-                                        <label for="storm-line">
+                                    <div class="accessory-item" style="padding-right: 15px;">
+                                        <label for="storm-line" style="width: auto; flex: 1; padding-right: 5px;">
                                             <input type="checkbox" id="storm-line" class="storm-check">
-                                            <span>Clear Drain Lines to Avoid Flooding</span>
+                                            <span>Pre-Storm Unit Security Inspection ($59)</span>
                                         </label>
+                                        <a href="contact.html?plan=pre-storm-inspection" class="btn btn-primary" style="font-size: 11px; padding: 6px 12px; height: auto; min-height: 28px; white-space: nowrap; border-radius: 4px; display: inline-flex; align-items: center; font-family: var(--font-heading); font-weight: 700; flex-shrink: 0; background: var(--primary); color: #fff; text-decoration: none;">Book Now</a>
                                     </div>
                                     <button type="button" id="btn-reset-storm" class="btn btn-secondary btn-full" style="margin-top: 10px; font-size: 12px; padding: 8px 12px; height: auto; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--gray-light); color: var(--gray-dark);">Reset Checklist</button>
                                 </form>
@@ -558,7 +559,7 @@
                             <li><strong>4. Flip the Breaker:</strong> If the unit is dry and clear, restore power at the main electrical breaker first, then wait 5-10 minutes before turning the thermostat cooling back on.</li>
                             <li><strong>5. Monitor System Behavior:</strong> Listen for unusual rattling or grinding noises, and verify that the indoor vents are blowing cold air. If you notice ice build-up or a warm air stream, shut down the system immediately.</li>
                         </ul>
-                        <a href="contact.html" class="btn btn-secondary btn-full" style="text-align: center;">Request Post-Storm Assessment</a>
+                        <a href="contact.html?plan=post-storm-assessment" class="btn btn-secondary btn-full" style="text-align: center;">Request Post-Storm Assessment ($79)</a>
                     </div>
                 </div>
             </div>
@@ -740,7 +741,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>

@@ -19,7 +19,8 @@ const files = [
     { src: 'src/pool-calculator.js', dest: 'assets/js/pool-calculator.js' },
     { src: 'src/rebate-estimator.js', dest: 'assets/js/rebate-estimator.js' },
     { src: 'src/soundboard.js', dest: 'assets/js/soundboard.js' },
-    { src: 'src/error-logger.js', dest: 'assets/js/error-logger.js' }
+    { src: 'src/error-logger.js', dest: 'assets/js/error-logger.js' },
+    { src: 'src/hvac-math-engine.js', dest: 'assets/js/hvac-math-engine.js' }
 ];
 const projectRoot = path.join(__dirname, '..');
 

@@ -118,11 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // 2. Client Discount calculations (Base system cost averages $7,500)
+        // 2. Client Discount calculations (Base system cost averages $7,000)
         if (discountType === "military") {
-            specialDiscount = 375; // 5% military discount
+            specialDiscount = 350; // flat military/veteran discount
         } else if (discountType === "club") {
-            specialDiscount = 150; // flat comfort club member discount
+            specialDiscount = 150; // flat membership discount
         } else {
             specialDiscount = 0;
         }

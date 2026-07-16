@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Service Club Membership ROI Builder Logic
     window.updateClubROI = function() {
         let yearlySavings = 0;
-        let memberCost = 239.40;
+        let memberCost = 155.00;
         
         const optCleanings = document.getElementById("opt-cleanings");
         const optRepairCost = document.getElementById("opt-repair-cost");
@@ -92,16 +92,16 @@ document.addEventListener("DOMContentLoaded", () => {
             yearlySavings += 180; // $90 per clean, twice a year
         }
         if (hasDiagnostic) {
-            yearlySavings += 95; // Saved service diagnostic callout
+            yearlySavings += 89; // Saved service diagnostic callout
         }
         if (hasRepairs) {
             yearlySavings += 45; // 15% discount on estimated $300 parts/labor ticket
         }
         if (hasMultiSystem) {
-            memberCost += 119.40; // +$9.95/mo for second system
+            memberCost += 105.00; // +$105/yr for second system
             yearlySavings += 180; // Saves another 2 maintenance cleanings ($180/yr)
             if (hasDiagnostic) {
-                yearlySavings += 95; // Second diagnostic waived if needed
+                yearlySavings += 89; // Second diagnostic waived if needed
             }
         }
         
@@ -148,15 +148,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const city = dispatchCityEl ? dispatchCityEl.value : "your city";
         const slotTimeText = document.getElementById("slot-time-text");
         if (slotTimeText) {
-            let cityIndex = 0;
-            if (city) {
-                for (let i = 0; i < city.length; i++) {
-                    cityIndex += city.charCodeAt(i);
-                }
+            const now = new Date();
+            const currentHour = now.getHours();
+            let selectedHour = "1:00 PM - 3:00 PM";
+            if (currentHour >= 17) {
+                selectedHour = "Tomorrow between 8:00 AM - 10:00 AM";
+            } else if (currentHour >= 15) {
+                selectedHour = "Today between 5:00 PM - 7:00 PM";
+            } else if (currentHour >= 13) {
+                selectedHour = "Today between 3:00 PM - 5:00 PM";
+            } else if (currentHour >= 10) {
+                selectedHour = "Today between 1:00 PM - 3:00 PM";
+            } else {
+                selectedHour = "Today between 10:00 AM - 12:00 PM";
             }
-            const hours = ["1:00 PM - 3:00 PM", "3:00 PM - 5:00 PM", "5:00 PM - 7:00 PM"];
-            const selectedHour = hours[cityIndex % hours.length];
-            slotTimeText.textContent = `Next Dispatch Slot in ${city}: Today between ${selectedHour}`;
+            slotTimeText.textContent = `Next Dispatch Slot in ${city}: ${selectedHour}`;
         }
 
         const step2Heading = pane2.querySelector("h3") || pane2.querySelector(".success-slot-box");

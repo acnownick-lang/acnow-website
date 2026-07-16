@@ -73,6 +73,7 @@ export async function handler(event, context) {
   if (origin && !allowedOrigin) {
     return {
       statusCode: 403,
+      headers: corsHeaders,
       body: JSON.stringify({ error: "Access Denied: Origin not allowed" }),
     };
   }

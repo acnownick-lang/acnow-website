@@ -750,8 +750,8 @@
                          tabindex="0">
                         <div class="calc-grid">
                             <div class="calc-inputs-pane">
-                                <h3>Comfort Club Membership ROI Builder</h3>
-                                <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 24px;">Select the regular service fees you face to calculate the cost-offset savings of our $19.95/mo Comfort Club agreement.</p>
+                                <h3>Gold Plan Membership ROI Builder</h3>
+                                <p style="font-size: 14px; color: var(--gray-dark); margin-bottom: 24px;">Select the regular service fees you face to calculate the cost-offset savings of our Gold Protection Plan ($155/year).</p>
                                 
                                 <div class="club-options-list">
                                     <label class="club-option-item">
@@ -765,7 +765,7 @@
                                         <input type="checkbox" id="opt-repair-cost" checked onchange="updateClubROI()">
                                         <div>
                                             <strong>Annual Repair Diagnostic Fee</strong>
-                                            <span>Normal Price: $95 (Saved with Membership)</span>
+                                            <span>Normal Price: $89 (Saved with Membership)</span>
                                         </div>
                                     </label>
                                     <label class="club-option-item">
@@ -790,7 +790,7 @@
                                     <div class="results-price" id="club-savings-val">$35.60</div>
                                     <div class="results-yearly">Annual Member Cost: <strong id="club-cost-val">$239.40</strong></div>
                                     <p class="results-note" style="margin-top: 15px;">Your savings covers the entire cost of membership, plus gives you priority front-of-the-line scheduling during peak summer hours!</p>
-                                    <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Join the Comfort Club Now</a>
+                                    <a href="#contact" class="btn btn-primary" style="margin-top: 15px;">Join Comfort Shield Protection</a>
                                     <button class="btn btn-secondary share-btn-club" style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--primary);"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                                         <span>Share Benefits Summary</span>
@@ -1191,26 +1191,50 @@
     </section>
 
     <!-- Service Areas -->
-    <section id="serve" class="reveal serve-section" style="background-image: linear-gradient(180deg, rgba(246, 248, 252, 0.95) 0%, rgba(246, 248, 252, 0.95) 100%), url('assets/images/banner-areas.webp');">
-        <div class="container serve-grid">
-            <div class="serve-text">
-                <span class="section-tag">SERVICE REGIONS</span>
-                <h2>Proudly Serving the Treasure Coast</h2>
-                <p>We bring premium climate services to communities across Martin County, St. Lucie County, and northern Palm Beach County, including:</p>
-                <div class="areas-list">
-                    <a href="pages/services.html" class="area-link" style="text-decoration: none; color: inherit;">Port St. Lucie</a>
-                    <a href="pages/hvac-services-stuart.html" class="area-link" style="text-decoration: none; color: inherit;">Stuart</a>
-                    <a href="pages/hvac-services-palm-city.html" class="area-link" style="text-decoration: none; color: inherit;">Palm City</a>
-                    <a href="pages/areas.html" class="area-link" style="text-decoration: none; color: inherit;">Jensen Beach</a>
-                    <a href="pages/areas.html" class="area-link" style="text-decoration: none; color: inherit;">Fort Pierce</a>
-                    <a href="pages/areas.html" class="area-link" style="text-decoration: none; color: inherit;">Jupiter</a>
-                    <a href="pages/areas.html" class="area-link" style="text-decoration: none; color: inherit;">Hobe Sound</a>
-                    <a href="pages/areas.html" class="area-link" style="text-decoration: none; color: inherit;">Palm Beach Gardens</a>
-                </div>
+    <section id="serve" class="reveal serve-section" style="background-image: linear-gradient(180deg, rgba(246, 248, 252, 0.95) 0%, rgba(246, 248, 252, 0.95) 100%), url('assets/images/banner-areas.webp'); padding: 80px 0; text-align: center;">
+        <div class="container" style="max-width: 960px; margin: 0 auto;">
+            <div style="margin-bottom: 40px;">
+                <span class="section-tag" style="margin: 0 auto 10px auto;">SERVICE REGIONS</span>
+                <h2 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--dark); margin: 0 0 12px 0;">Proudly Serving the Treasure Coast</h2>
+                <p style="color: var(--gray-dark); font-size: 16px; max-width: 600px; margin: 0 auto; line-height: 1.6;">We bring premium climate services to communities across Martin County, St. Lucie County, and northern Palm Beach County, including:</p>
             </div>
-            <div class="serve-map" style="position: relative; overflow: hidden; border-radius: 12px; box-shadow: var(--box-shadow); border: 1px solid var(--gray-light); height: 450px;">
-                <!-- Live scalable interactive Google Map centered on A/C Now -->
-                <iframe src="https://maps.google.com/maps?q=1391%20NW%20St.%20Lucie%20West%20Blvd,%20STE%20120,%20Port%20St.%20Lucie,%20FL%2034986&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-label="A/C Now LLC Interactive Google Map"></iframe>
+            <div class="homepage-areas-grid">
+                <a href="pages/services.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">Port St. Lucie</span>
+                    <span style="font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">Primary Hub</span>
+                </a>
+                <a href="pages/hvac-services-stuart.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">Stuart</span>
+                    <span style="font-size: 11px; color: var(--gray-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">Martin County</span>
+                </a>
+                <a href="pages/hvac-services-palm-city.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">Palm City</span>
+                    <span style="font-size: 11px; color: var(--gray-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">Martin County</span>
+                </a>
+                <a href="pages/areas.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">Jensen Beach</span>
+                    <span style="font-size: 11px; color: var(--gray-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">Martin / St. Lucie</span>
+                </a>
+                <a href="pages/areas.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">Fort Pierce</span>
+                    <span style="font-size: 11px; color: var(--gray-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">St. Lucie County</span>
+                </a>
+                <a href="pages/areas.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">Jupiter</span>
+                    <span style="font-size: 11px; color: var(--gray-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">Palm Beach County</span>
+                </a>
+                <a href="pages/areas.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">Hobe Sound</span>
+                    <span style="font-size: 11px; color: var(--gray-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">Martin County</span>
+                </a>
+                <a href="pages/areas.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">Palm Beach Gardens</span>
+                    <span style="font-size: 11px; color: var(--gray-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">Palm Beach County</span>
+                </a>
+                <a href="pages/areas.html" class="area-link-card">
+                    <span style="font-size: 16px; font-weight: 700; color: var(--dark); display: block;">North Palm Beach</span>
+                    <span style="font-size: 11px; color: var(--gray-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block;">Palm Beach County</span>
+                </a>
             </div>
         </div>
     </section>
@@ -1363,7 +1387,7 @@
                     <details class="faq-details">
                         <summary class="faq-summary"><h3 style="display:inline; font-size:16px;">What makes A/C Now different from standard HVAC companies?</h3></summary>
                         <div class="faq-answer">
-                            <p style="margin: 0; line-height: 1.6;">We stand apart through direct accountability. We offer a flat $95 diagnostic fee, transparent up-front quotes, and zero hidden markups. Our veteran-led team oversees operations directly, ensuring every installation meets manufacturer warrantied specifications. No subcontractors, no bait-and-switch pricing &mdash; just honest, veteran-led service built on military integrity.</p>
+                            <p style="margin: 0; line-height: 1.6;">We stand apart through direct accountability. We offer a flat $89 diagnostic fee, transparent up-front quotes, and zero hidden markups. Our veteran-led team oversees operations directly, ensuring every installation meets manufacturer warrantied specifications. No subcontractors, no bait-and-switch pricing &mdash; just honest, veteran-led service built on military integrity.</p>
                         </div>
                     </details>
                 </div>
@@ -1429,7 +1453,7 @@
           "name": "What makes A/C Now different from standard HVAC companies?",
           "acceptedAnswer": { 
             "@type": "Answer", 
-            "text": "We stand apart through direct accountability. We offer a flat $95 diagnostic fee, transparent up-front quotes, and zero hidden markups. Our veteran-led team oversees operations directly, ensuring every installation meets manufacturer warrantied specifications." 
+            "text": "We stand apart through direct accountability. We offer a flat $89 diagnostic fee, transparent up-front quotes, and zero hidden markups. Our veteran-led team oversees operations directly, ensuring every installation meets manufacturer warrantied specifications." 
           }
         }
       ]
@@ -1443,7 +1467,16 @@
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
-                <p>Comfort you can feel, service you can trust. Veteran-owned business — 5% military & veteran discount with code <strong>HONOR5</strong>.</p>
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='pages/contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
                 <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
                     <strong>A/C Now LLC</strong><br>
                     <a href="pages/directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
