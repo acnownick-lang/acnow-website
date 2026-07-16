@@ -376,6 +376,102 @@ pilot_page_data = {
         "faq1_a": "Yes. Given the area's median age and long-settled homes near landmarks like All Saints Episcopal Church, our technicians regularly diagnose systems spanning multiple equipment generations.",
         "faq2_q": "How does Jensen Beach's coastal, low-elevation setting affect the AC repairs your team handles?",
         "faq2_a": "Sitting near the Indian River Lagoon at an average elevation around 7 feet means sustained humidity pressure on cooling systems, which we account for when diagnosing recurring coil, drainage, or corrosion-related issues."
+    },
+    "/commercial-hvac/commercial-air-conditioning-services-in-fort-pierce/": {
+        "intro": "Fort Pierce runs on water — a working port with active commercial and industrial traffic, marine-adjacent operators, and a retail corridor that leans on every truckload and every tide. Commercial cooling here has to keep pace with that, standing up to salt air, near-constant humidity, and buildings that range from dockside warehouses to storefronts a block from St. Lucie County's busiest waterfront.",
+        "prose": "Port-adjacent commercial space asks more of an HVAC system than a typical office build-out. Warehouses near the waterfront deal with high-volume air exchange and equipment that has to shrug off salt-laden air without corroding out early. Marine-adjacent businesses often run mixed-use spaces where a single system has to condition both work floor and customer-facing areas. Retail operators near the port corridor are managing foot traffic and Fort Pierce's humid subtropical climate, where the June-through-September rain season pushes humidity loads well past what a standard residential-grade unit is built to handle.",
+        "faq1_q": "Does a warehouse near the Fort Pierce port need a different kind of cooling system than a retail storefront downtown?",
+        "faq1_a": "Generally, yes — a dockside warehouse deals with large open volumes and salt-heavy coastal air exposure, while a retail space is more concerned with storefront comfort and humidity control against heavy rain-season moisture.",
+        "faq2_q": "How does Fort Pierce's climate affect commercial HVAC systems for marine-adjacent or industrial buildings?",
+        "faq2_a": "With roughly 51 inches of annual rainfall concentrated in June-September, moisture control is constant here, especially near the water where salt air adds to equipment wear."
+    },
+    "/commercial-hvac/commercial-hvac-companies-in-fort-pierce/": {
+        "intro": "Choosing a commercial HVAC provider in Fort Pierce means choosing a partner your business can't afford to have go quiet at the wrong moment. Whether you're running a modern facility or operating out of one of the older commercial buildings near historic Lincoln Park, the standard is the same: fast response and a provider that treats a system failure as your business continuity problem.",
+        "prose": "In a city of just under 48,000 spread across roughly 30 square miles, response time matters. That matters even more in a district like historic Lincoln Park, where commercial buildings predate modern HVAC standards entirely — retrofitting cooling into older structures takes a provider who understands how to integrate a modern system into existing ductwork and electrical capacity rather than forcing a standard install onto a building that needs a more considered approach.",
+        "faq1_q": "What should a business look for when choosing a commercial HVAC company in Fort Pierce versus just hiring a residential contractor?",
+        "faq1_a": "Faster response times, since a down system in a business setting usually has an immediate operational impact — and, in Fort Pierce, experience with older commercial buildings that need retrofit-minded solutions.",
+        "faq2_q": "Are older commercial buildings in areas like Lincoln Park harder to retrofit with modern HVAC systems?",
+        "faq2_a": "They can require more planning — ductwork routing, electrical load, and equipment placement often need to adapt to the existing building rather than the other way around."
+    },
+    "/commercial-hvac/commercial-air-conditioning-services-in-jupiter/": {
+        "intro": "Jupiter sits at the point where Florida's coastline juts farthest east into the Atlantic — more coastal exposure than anywhere else in the state. For businesses running rooftop units and outdoor package systems along that shoreline, salt-laden air moves inland constantly, going to work on unprotected metal coils, fasteners, and cabinets long before the equipment is due for replacement.",
+        "prose": "Retail plazas, office parks, and marine-adjacent businesses along Jupiter's exposed coast run systems that sit directly in the path of salt air, through a climate that's mild and dry November-April and hot and wet the rest of the year. That combination accelerates corrosion on coil fins, cabinet seams, and electrical contacts faster than standard maintenance schedules assume.",
+        "faq1_q": "Does salt air actually shorten the life of commercial AC equipment in Jupiter, or is that overstated?",
+        "faq1_a": "It's real and measurable — Jupiter's position, projecting further into the Atlantic than any other point on the Florida coast, means salt exposure is more constant here than at inland locations.",
+        "faq2_q": "We manage a small office park a few blocks from the water — how is servicing that different from an inland commercial account?",
+        "faq2_a": "Coastal accounts get closer attention to coil condition, electrical connections, and cabinet integrity — the components salt air degrades first."
+    },
+    "/commercial-hvac/commercial-hvac-companies-in-jupiter/": {
+        "intro": "Choosing a commercial HVAC provider in Jupiter isn't the same decision it would be in West Palm Beach. This town extends farther into the Atlantic than any other point on Florida's coast, and that geography shapes what 'reliable service' actually requires.",
+        "prose": "The Jupiter Inlet Lighthouse, standing since 1860, has needed repainting over the years specifically because of humidity- and salt-driven discoloration on its exterior — a visible, long-documented example of what this environment does to anything left exposed. Commercial rooftop units and condensers face the same conditions, just less visibly, until a coil fails or a cabinet corrodes through.",
+        "faq1_q": "What should a business near the Jupiter coastline actually ask a prospective HVAC company before hiring them?",
+        "faq1_a": "Ask how they handle equipment exposed to salt air specifically — coil corrosion patterns, inspection frequency for units near the water, and preventive steps during Jupiter's hot, wet summer months.",
+        "faq2_q": "How much does minimizing downtime really matter for a small commercial account, versus a large facility?",
+        "faq2_a": "Proportionally more for smaller operations, which often don't have backup cooling capacity or staffing flexibility to absorb a multi-day outage."
+    },
+    "/commercial-hvac/commercial-air-conditioning-services-in-palm-beach-gardens/": {
+        "intro": "Along PGA Boulevard and the retail, office, and resort-adjacent corridors around it, Palm Beach Gardens businesses run their AC against a climate that rarely lets up — a tropical rainforest zone with roughly 66 inches of rain a year, most landing June-September at 8-9+ inches a month.",
+        "prose": "A storefront on PGA Boulevard, a multi-tenant office building, or a hospitality space near PGA National Resort each puts different stress on a cooling system than a single-family home. Resort-adjacent businesses often run extended hours and have to keep guest-facing comfort solid regardless of the afternoon storm outside.",
+        "faq1_q": "Why does humidity affect commercial AC differently than heat alone?",
+        "faq1_a": "Undersized dehumidification capacity shows up as clammy air and shortened equipment life even when the thermostat reads the 'right' temperature — sizing here has to account for moisture load, not just BTUs per square foot.",
+        "faq2_q": "Do commercial spaces near PGA National Resort have different AC needs than a standalone office?",
+        "faq2_a": "Generally yes — hospitality spaces run longer occupied hours and can't tolerate the temperature drift an empty office might absorb overnight."
+    },
+    "/commercial-hvac/commercial-hvac-companies-in-palm-beach-gardens/": {
+        "intro": "Choosing a commercial HVAC provider in Palm Beach Gardens is, in large part, a decision about risk. This is a hurricane-exposed coastal market — the 2004 and 2005 storm seasons left parts of the region without power for multiple days — and a business without a reliable HVAC partner in that kind of event faces spoiled inventory and lost operating days.",
+        "prose": "For a market of roughly 59,000-61,000 residents across nearly 60 square miles, the practical questions worth asking a prospective company are: how quickly can you respond to a failure, and do you understand post-outage restart procedures for equipment sitting without power?",
+        "faq1_q": "Why does Palm Beach Gardens' storm history matter when choosing a commercial HVAC company?",
+        "faq1_a": "The documented multi-day outages after 2004-05 showed how quickly properties can lose climate control — a provider familiar with that history is more likely to prioritize business continuity planning.",
+        "faq2_q": "What should a business look for beyond routine maintenance when comparing commercial HVAC companies?",
+        "faq2_a": "Response speed during high-demand periods and experience with post-storm system checks, which this area's hurricane exposure makes a recurring concern."
+    },
+    "/commercial-hvac/commercial-air-conditioning-services-in-palm-city/": {
+        "intro": "Palm City sits at just 7 feet of elevation along the South Fork of the St. Lucie River, which means every commercial property here carries different cooling considerations than a building further inland.",
+        "prose": "Palm City's commercial landscape leans toward professional offices, medical suites, and small service-based businesses supporting its surrounding golf-course communities — not large industrial operations. The rooftop-versus-ground-mount question isn't academic: a ground-mounted condenser at 7 feet sits closer to flood risk during heavy storm events, while a rooftop unit avoids standing water but faces different wind-exposure considerations.",
+        "faq1_q": "Should a small office building in Palm City use a rooftop or ground-mounted commercial AC unit?",
+        "faq1_a": "It depends on the site — ground-mounted units in low-lying spots face more flood exposure, while rooftop units need roof structural capacity assessed for hurricane wind exposure.",
+        "faq2_q": "Do you work with the smaller professional offices around Palm City, or mainly larger commercial buildings?",
+        "faq2_a": "Palm City's commercial footprint is largely smaller offices and service-based businesses, which is exactly the type of property we work with regularly here."
+    },
+    "/commercial-hvac/commercial-hvac-companies-in-palm-city/": {
+        "intro": "Choosing a commercial HVAC provider in Palm City means finding a company that understands the area's flood-prone, low-elevation terrain and the kind of businesses that actually operate here.",
+        "prose": "At just over 25,800 residents across 16.38 square miles, much of the local economy runs on smaller, service-based businesses — professional offices, medical practices, firms supporting country-club communities like Martin Downs and Harbour Ridge. A small office can't function for days waiting on a technician, so reliability matters more than scale.",
+        "faq1_q": "What should I look for in a commercial HVAC company if my business is in a flood-prone part of Palm City?",
+        "faq1_a": "A provider that accounts for the area's low elevation when recommending equipment placement, weighing ground-mount versus rooftop against your property's specific drainage and flood history.",
+        "faq2_q": "Are commercial HVAC companies in Palm City used to working with small offices, or mostly larger commercial accounts?",
+        "faq2_a": "Palm City's commercial base is largely smaller, service-based businesses — a company with real local experience should be just as comfortable working with a small office as a larger facility."
+    },
+    "/commercial-hvac/commercial-air-conditioning-services-in-port-st-lucie/": {
+        "intro": "Port St. Lucie sprawls across more than 120 square miles, the sixth-most-populous city in Florida. Our commercial technicians are just as likely to be servicing a rooftop unit above a retail strip in an older corridor as commissioning new equipment in a medical office in Tradition.",
+        "prose": "A small professional office in a decades-old strip center has different airflow and electrical load characteristics than a build-to-suit space in Tradition, where systems are newer but often tied into building automation or zoned for multiple tenants. We work across both ends of that spectrum.",
+        "faq1_q": "Does A/C Now LLC service commercial buildings throughout all of Port St. Lucie, or just certain areas?",
+        "faq1_a": "We cover the full city — from established commercial districts to newer developments like Tradition and St. Lucie West.",
+        "faq2_q": "How does Port St. Lucie's climate affect commercial HVAC systems specifically?",
+        "faq2_a": "With average annual rainfall above 53 inches, commercial systems here run near-constant duty cycles and face higher moisture loads than in drier climates."
+    },
+    "/commercial-hvac/commercial-hvac-companies-in-port-saint-lucie/": {
+        "intro": "When comparing commercial HVAC companies in Port St. Lucie, one thing worth weighing is who's actually local. A/C Now LLC is headquartered right here — not dispatching from a neighboring county.",
+        "prose": "Being headquartered here means our team has worked across a wide range of the city's commercial properties over time: retail and office space in established parts of town, buildings that weathered direct hits from Frances, Jeanne, and Wilma in 2004-05, and newer commercial construction in Tradition and St. Lucie West.",
+        "faq1_q": "Why does it matter that A/C Now LLC is headquartered in Port St. Lucie rather than just servicing the area?",
+        "faq1_a": "Shorter travel times across the city's 120+ square miles, and accumulated familiarity with the specific mix of building ages and construction styles found throughout the city.",
+        "faq2_q": "What should a business consider when comparing commercial HVAC companies in Port St. Lucie?",
+        "faq2_a": "Whether a provider understands the local climate and storm-prone environment — a locally headquartered provider has that context built in rather than having to learn it."
+    },
+    "/commercial-hvac/commercial-air-conditioning-services-in-stuart/": {
+        "intro": "Stuart sits at a rare confluence — the St. Lucie River, the Indian River Lagoon, and the Atlantic Ocean all meet right here — and that closeness to water shapes everything about how an AC system ages in this town. Salt air and near-constant humidity are hard on outdoor units, and if your system feels like it's working harder here than it did somewhere else, that's not in your head.",
+        "prose": "Downtown Stuart's commercial core wasn't built for the cooling loads it carries today. Storefronts and restaurant spaces in buildings dating from the 1880s through the 1940s were designed for cross-ventilation and shade, not ductwork — every commercial AC install here is really a retrofit problem first. Stuart sits where the St. Lucie River meets the Indian River Lagoon and the Atlantic, meaning near-constant humidity and salt-laden air. Condenser coils and electrical contacts on commercial units corrode faster than they would twenty miles inland, so we spec coated coils and corrosion-resistant fasteners rather than a generic install.",
+        "faq1_q": "Our building is one of the older storefronts in downtown Stuart — can it even support a modern commercial AC system?",
+        "faq1_a": "In most cases yes, but it takes planning — we typically evaluate ductless or mini-split commercial systems alongside traditional package units to preserve the building's structure.",
+        "faq2_q": "Why does our commercial AC unit seem to corrode or lose efficiency faster than we'd expect for its age?",
+        "faq2_a": "Stuart's confluence location means more moisture and salt in the air than most inland commercial districts, accelerating corrosion on coils and electrical components."
+    },
+    "/commercial-hvac/commercial-hvac-companies-in-stuart/": {
+        "intro": "Choosing a commercial HVAC company in Stuart isn't the same decision it would be in a newer commercial corridor. Downtown's mix of small retail shops and restaurants operates out of buildings standing since the 1880s-1940s, and when the AC goes down, customers notice immediately.",
+        "prose": "A restaurant with a dining room pushing 85°F, or a boutique where shoppers linger only as long as the space stays comfortable, doesn't have room for a slow response. Much of Stuart's commercial stock predates modern HVAC infrastructure — older electrical panels, tight mechanical spaces, duct routing that a technician used to new-construction builds won't be prepared for.",
+        "faq1_q": "What should we look for in a commercial HVAC company if we run a restaurant or retail shop in downtown Stuart?",
+        "faq1_a": "Response time and building familiarity — a downtime issue in a customer-facing space affects business immediately.",
+        "faq2_q": "How is servicing HVAC in Stuart's historic downtown different from a typical commercial building elsewhere in Martin County?",
+        "faq2_a": "Buildings largely predate modern HVAC entirely, so a technician needs to account for aging electrical infrastructure and limited or absent ductwork."
     }
 }
 
@@ -494,6 +590,9 @@ for path in paths:
         
         content = content.replace("South Florida's heat forces your air conditioner to run up to 10 hours a day. Without regular maintenance, efficiency drops by 5% annually, inflating your monthly electric bill. Our military-grade tune-ups keep your unit running cleanly, stop breakdown emergencies before they happen, and protect your manufacturer’s warranty.", intro_wrapped)
         content = content.replace("We perform coil cleaning, drain line flushing, capacitor audits, and contactor inspections to verify your system is running at optimum coefficient of performance (COP) specs.", prose_wrapped)
+        
+        content = content.replace("Managing multi-zone coastal condominiums or commercial properties requires clear communication, fast dispatch, and professional accountability. Our veteran-led team coordinates directly with property managers and condo boards across Stuart and Port St. Lucie to audit, repair, and replace complex HVAC systems.", intro_wrapped)
+        content = content.replace("We specialize in commercial split system diagnostic repairs and complete facility change-outs. From crane-lifted rooftop package units to complex multi-compressor configurations, our EPA-certified and veteran-led team delivers military-grade HVAC engineering on time and on budget.", prose_wrapped)
 
 
     # 9. Create target directory and write index.html
