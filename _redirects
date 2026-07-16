@@ -9,17 +9,16 @@
 /corrosion-predictor                    /index.html?redirected=phase2-restricted  302
 
 # Estimate request redirects
-/estimate/                               /pages/contact.html                      301
-/estimate                                /pages/contact.html                      301
-/estimate.html                           /pages/contact.html                      301
-/request-estimate/                       /pages/contact.html                      301
-/request-estimate                        /pages/contact.html                      301
-/request-estimate.html                   /pages/contact.html                      301
-/free-estimate/                          /pages/contact.html                      301
-/free-estimate                           /pages/contact.html                      301
-/free-estimate.html                      /pages/contact.html                      301
+/estimate/                               /contact-us/                             301
+/estimate                                /contact-us/                             301
+/estimate.html                           /contact-us/                             301
+/request-estimate/                       /contact-us/                             301
+/request-estimate                        /contact-us/                             301
+/request-estimate.html                   /contact-us/                             301
+/free-estimate/                          /contact-us/                             301
+/free-estimate                           /contact-us/                             301
+/free-estimate.html                      /contact-us/                             301
 
-/about/  /pages/about.html  301
 /ac-replacement/ac-replacement-in-fort-pierce/  /pages/ac-installation.html  301
 /ac-replacement/ac-replacement-in-palm-beach-gardens/  /pages/ac-installation.html  301
 /affordable-hvac-repair-services/best-hvac-maintenance-service-in-saint-lucie-west/  /pages/ac-repair.html  301
@@ -182,7 +181,6 @@
 /hvac-installation/hvac-installation-port-st-lucie/air-conditioning-installation-in-port-saint-lucie/  /pages/ac-installation.html  301
 /hvac-repair/hvac-equipment-repair/  /pages/ac-repair.html  301
 /commercial-hvac/commercial-hvac-companies-in-palm-beach-gardens/  /pages/commercial.html  301
-/reviews/  /pages/reviews.html  301
 /hvac-services/  /pages/services.html  301
 /hvac-installation/  /pages/services.html  301
 /hvac-maintenance/  /pages/services.html  301
@@ -195,7 +193,6 @@
 /heating-and-cooling-near-me/  /pages/services.html  301
 /pool-heating/  /pages/pool-heating.html  301
 /areas-we-serve/  /pages/areas.html  301
-/contact-us/  /pages/contact.html  301
 
 # Netlify _redirects
 # -------------------------------------------------------------------------
@@ -208,11 +205,11 @@ https://www.acnowllc.com/*  https://acnowllc.com/:splat   301!
 http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 
 # Redirect clean endpoints to structured subpages (internal rewrite 200)
-/about                  /pages/about.html                   200
+/about                                   /about/                                  301
 /services               /pages/services.html                200
-/contact                /pages/contact.html                 200
+/contact                                 /contact-us/                             301
 /areas                  /pages/areas.html                   200
-/reviews                /pages/reviews.html                 200
+/reviews                                 /reviews/                                301
 /commercial             /pages/commercial.html              200
 /pool-heating           /pages/pool-heating.html            200
 /ac-repair              /pages/ac-repair.html               200
@@ -241,11 +238,11 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 /offline                /pages/offline.html                 200
 
 # Redirect root .html requests to pages/ subfolder (internal rewrite 200)
-/about.html                  /pages/about.html                   200
+/about.html                              /about/                                  301
 /services.html               /pages/services.html                200
-/contact.html                /pages/contact.html                 200
+/contact.html                            /contact-us/                             301
 /areas.html                  /pages/areas.html                   200
-/reviews.html                /pages/reviews.html                 200
+/reviews.html                            /reviews/                                301
 /commercial.html             /pages/commercial.html              200
 /pool-heating.html           /pages/pool-heating.html            200
 /ac-repair.html              /pages/ac-repair.html               200
@@ -275,11 +272,9 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 
 
 # Legacy slash-appended paths → subpages (301 redirect)
-/about/                 /pages/about.html                   301
 /services/              /pages/services.html                301
-/contact/               /pages/contact.html                 301
+/contact/                                /contact-us/                             301
 /areas/                 /pages/areas.html                   301
-/reviews/               /pages/reviews.html                 301
 /commercial/            /pages/commercial.html              301
 /pool-heating/          /pages/pool-heating.html            301
 /ac-repair/             /pages/ac-repair.html               301

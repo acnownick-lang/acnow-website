@@ -1224,6 +1224,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem('acnow_phase', '2');
                 sessionStorage.setItem('acnow_dev_mode', 'true');
                 sessionStorage.setItem('acnow_phase', '2');
+                document.cookie = "acnow_auth=phase2; path=/; max-age=86400; SameSite=Strict";
 
                 if (typeof window.showToast === "function") {
                     window.showToast("Technician ID detected. Redirecting to Staff Portal...", "success");
@@ -2667,6 +2668,7 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
         if (params.get('dev') === 'true' || params.get('admin') === 'true') {
             localStorage.setItem('acnow_dev_mode', 'true');
             sessionStorage.setItem('acnow_dev_mode', 'true');
+            document.cookie = "acnow_auth=phase2; path=/; max-age=86400; SameSite=Strict";
             // Clean up the URL query parameter and reload
             const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.location.replace(cleanUrl);
@@ -2676,6 +2678,7 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
             sessionStorage.removeItem('acnow_dev_mode');
             localStorage.removeItem('acnow_phase');
             sessionStorage.removeItem('acnow_phase');
+            document.cookie = "acnow_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
             // Clean up the URL query parameter and reload
             const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.location.replace(cleanUrl);
@@ -3093,6 +3096,7 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
             localStorage.setItem('acnow_phase', '1');
             sessionStorage.setItem('acnow_dev_mode', 'true');
             sessionStorage.setItem('acnow_phase', '1');
+            document.cookie = "acnow_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
             location.reload();
         });
 
@@ -3101,6 +3105,7 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
             localStorage.setItem('acnow_phase', '2');
             sessionStorage.setItem('acnow_dev_mode', 'true');
             sessionStorage.setItem('acnow_phase', '2');
+            document.cookie = "acnow_auth=phase2; path=/; max-age=86400; SameSite=Strict";
             location.reload();
         });
 
@@ -3110,6 +3115,7 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
             localStorage.removeItem('acnow_phase');
             sessionStorage.removeItem('acnow_dev_mode');
             sessionStorage.removeItem('acnow_phase');
+            document.cookie = "acnow_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
             location.reload();
         });
 

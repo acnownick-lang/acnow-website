@@ -907,12 +907,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://acnowllc.com/pages/about.html</loc>
-    <lastmod>2026-07-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://acnowllc.com/pages/ac-installation.html</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
@@ -944,12 +938,6 @@
   </url>
   <url>
     <loc>https://acnowllc.com/pages/commercial.html</loc>
-    <lastmod>2026-07-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://acnowllc.com/pages/contact.html</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1034,12 +1022,6 @@
   </url>
   <url>
     <loc>https://acnowllc.com/pages/privacy.html</loc>
-    <lastmod>2026-07-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://acnowllc.com/pages/reviews.html</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

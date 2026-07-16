@@ -12,3 +12,27 @@
 [[edge_functions]]
   path = "/"
   function = "localize-geo"
+
+[[edge_functions]]
+  path = "/pages/*"
+  function = "check-auth"
+
+[[edge_functions]]
+  path = "/members"
+  function = "check-auth"
+
+[[edge_functions]]
+  path = "/team-portal"
+  function = "check-auth"
+
+[[edge_functions]]
+  path = "/3d-airflow"
+  function = "check-auth"
+
+[[edge_functions]]
+  path = "/configurator"
+  function = "check-auth"
+
+[[edge_functions]]
+  path = "/corrosion-predictor"
+  function = "check-auth"

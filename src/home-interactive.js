@@ -559,6 +559,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem('acnow_phase', '2');
                 sessionStorage.setItem('acnow_dev_mode', 'true');
                 sessionStorage.setItem('acnow_phase', '2');
+                document.cookie = "acnow_auth=phase2; path=/; max-age=86400; SameSite=Strict";
                 
                 setTimeout(() => {
                     const path = window.location.pathname;
