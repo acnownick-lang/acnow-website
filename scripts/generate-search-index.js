@@ -42,7 +42,7 @@ function scanDirectory(dir) {
 
 function parseHtmlFile(filePath) {
     const relativePath = path.relative(rootDir, filePath);
-    // Ignore offline, 404, members, team-portal, 3d-airflow, and success pages
+    // Ignore offline, 404, members, team-portal, 3d-airflow, configurator, and success pages
     const baseName = path.basename(filePath);
     if (
         baseName === 'offline.html' || 
@@ -50,6 +50,7 @@ function parseHtmlFile(filePath) {
         baseName === 'members.html' || 
         baseName === 'team-portal.html' || 
         baseName === '3d-airflow.html' || 
+        baseName === 'configurator.html' || 
         baseName === 'success.html'
     ) {
         return;
