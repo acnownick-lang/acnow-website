@@ -2281,7 +2281,7 @@ section.trust-bar {
     /* Let height adapt naturally on mobile so contents have plenty of room */
     .split-hero-side {
         min-height: auto !important;
-        padding: 60px 20px !important;
+        padding: 60px 20px 90px !important;
     }
 
     /* Stacks as the middle row of a 3x1 vertical layout between Residential and Commercial */
