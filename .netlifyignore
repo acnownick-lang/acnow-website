@@ -1,0 +1,17 @@
+# Exclude development, source, and config directories from production builds
+node_modules/
+src/
+scripts/
+scratch/
+publish_ready_blocks/
+audit_reports/
+dashboard-backup/
+.agents/
+.git/
+.github/
+.gitignore
+.netlifyignore
+package.json
+package-lock.json
+netlify.toml
+test_configurator.mjs

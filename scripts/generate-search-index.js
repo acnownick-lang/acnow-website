@@ -27,7 +27,11 @@ function scanDirectory(dir) {
                 !relativeDir.startsWith('assets') && 
                 !relativeDir.startsWith('src') &&
                 !relativeDir.startsWith('scripts') &&
-                !relativeDir.startsWith('preview')) {
+                !relativeDir.startsWith('preview') &&
+                !relativeDir.startsWith('scratch') &&
+                !relativeDir.startsWith('publish_ready_blocks') &&
+                !relativeDir.startsWith('audit_reports') &&
+                !relativeDir.startsWith('dashboard-backup')) {
                 scanDirectory(fullPath);
             }
         } else if (file.endsWith('.html')) {

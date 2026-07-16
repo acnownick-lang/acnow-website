@@ -11,6 +11,8 @@ node_modules/
 dashboard-backup/
 audits/
 scratch/
+publish_ready_blocks/
+audit_reports/
 *.zip
 *.bak
 
