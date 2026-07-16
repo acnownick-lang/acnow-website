@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v71'; // Bumped for semantic anchor-based veteran discount badges
+const CACHE_NAME = 'acnow-cache-v72'; // Bumped to invalidate stale app.js caches for returning users
 const DEBUG = true;
 
 // Helper function for structured logging
@@ -18,6 +18,7 @@ function log(level, message, ...args) {
 const STATIC_ASSETS = [
   'index.html',
   'pages/contact.html',
+  'pages/success.html',
   'pages/about.html',
   'pages/services.html',
   'pages/ac-installation.html',

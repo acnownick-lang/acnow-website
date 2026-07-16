@@ -175,8 +175,8 @@ export default async (request: Request, context: Context) => {
 
   // 5. Replace serving area description
   html = html.replace(
-    /<p>Serving Port St\. Lucie &amp; Stuart\.<\/p>/i,
-    `<p>${copy.serving}</p>`
+    /<p id="serving-areas-text">Serving Port St\. Lucie &amp; Stuart\.<\/p>/i,
+    `<p id="serving-areas-text">${copy.serving}</p>`
   );
 
   // 6. Replace phone numbers and hrefs dynamically for non-default markets

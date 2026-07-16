@@ -1434,8 +1434,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, hpContactForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Our team will contact you shortly.", "success"); } else { alert(`Estimate request submitted successfully! Our team will contact you shortly.`); }
-                configurePushNotifications(); // Ask for notification permission after a high-value action
+                window.location.href = "/pages/success.html";
             });
         });
     }
@@ -1467,8 +1466,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, contactGeneralForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Your service request has been transmitted. Technicians have been notified.", "success"); } else { alert("Your service request has been transmitted. Technicians have been notified."); }
-                configurePushNotifications();
+                window.location.href = "/pages/success.html";
             });
         });
     }
@@ -1488,11 +1486,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, contactWizardForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Priority dispatch secured! A technician will contact you shortly.", "success"); } else { alert("Priority dispatch secured! A technician will contact you shortly."); }
-                if (typeof window.resetDiagnosticWizard === "function") {
-                    window.resetDiagnosticWizard();
-                }
-                configurePushNotifications();
+                window.location.href = "/pages/success.html";
             });
         });
     }
@@ -1517,8 +1511,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, commercialForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Our team will contact you as soon as possible.", "success"); } else { alert("Estimate request submitted successfully! Our team will contact you as soon as possible."); }
-                configurePushNotifications();
+                window.location.href = "/pages/success.html";
             });
         });
     }
@@ -1543,8 +1536,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, acInstallForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Our team will contact you shortly.", "success"); } else { alert("Estimate request submitted successfully! Our team will contact you shortly."); }
-                configurePushNotifications();
+                window.location.href = "/pages/success.html";
             });
         });
     }
@@ -1569,8 +1561,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, acMaintenanceForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Tune-up request submitted successfully! Our team will contact you shortly.", "success"); } else { alert("Tune-up request submitted successfully! Our team will contact you shortly."); }
-                configurePushNotifications();
+                window.location.href = "/pages/success.html";
             });
         });
     }
@@ -1595,8 +1586,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, acRepairForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Repair dispatch request submitted successfully! Our team will contact you shortly.", "success"); } else { alert("Repair dispatch request submitted successfully! Our team will contact you shortly."); }
-                configurePushNotifications();
+                window.location.href = "/pages/success.html";
             });
         });
     }
@@ -1621,8 +1611,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             submitFormWithSync(e, poolHeatingForm, payload, () => {
-                if (typeof window.showToast === "function") { window.showToast("Pool heating estimate request submitted successfully! Our team will contact you shortly.", "success"); } else { alert("Pool heating estimate request submitted successfully! Our team will contact you shortly."); }
-                configurePushNotifications();
+                window.location.href = "/pages/success.html";
             });
         });
     }
