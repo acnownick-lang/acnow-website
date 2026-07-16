@@ -201,9 +201,16 @@ async function submitFormWithSync(event, formElement, payload, successCallback) 
         }
 
         if (res.status === 200 && result.success) {
+            const errorBanner = formElement.querySelector(".form-error-banner") || document.getElementById(formElement.id + "-error");
+            if (errorBanner) errorBanner.style.display = "none";
             formElement.reset();
             if (successCallback) successCallback();
         } else {
+            const errorBanner = formElement.querySelector(".form-error-banner") || document.getElementById(formElement.id + "-error");
+            if (errorBanner) {
+                errorBanner.textContent = result.error || result.message || "Please check your inputs and try again.";
+                errorBanner.style.display = "block";
+            }
             // Display validation error or server failure without clearing the form!
             if (typeof window.showToast === "function") { window.showToast(`Validation Error: ${result.error || result.message || "Please check your inputs and try again."}`, "error"); } else { alert(`Validation Error: ${result.error || result.message || "Please check your inputs and try again."}`); }
         }

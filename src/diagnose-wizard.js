@@ -362,16 +362,25 @@ function initDiagnoseWizard() {
             const nameParts = nameVal.split(" ");
             const fname = nameParts[0] || "";
             const lname = nameParts.slice(1).join(" ") || "";
+            const phoneVal = document.getElementById("phone_diag").value.trim();
+
+            const slotField = diagnoseForm.querySelector("input[name='reserved_appointment_slot']");
+            const slotVal = slotField ? slotField.value : "None";
+            const userNotes = document.getElementById("notes_diag").value.trim();
+            const notesText = slotVal !== "None" && slotVal !== ""
+                ? `| [Reserved Slot] ${slotVal} | [Notes] ${userNotes}`
+                : (userNotes ? `| [Notes] ${userNotes}` : "");
 
             const payload = {
                 fname,
                 lname,
                 "w-name": nameVal,
+                "w-phone": phoneVal,
                 "ac-issue": "diagnose-wizard",
-                tel: document.getElementById("phone_diag").value.trim(),
+                tel: phoneVal,
                 email: document.getElementById("email_diag").value.trim(),
                 city: document.getElementById("city_diag").value.trim(),
-                message: `[Interactive Troubleshooter Report] ${diagSummaryInput.value} [Notes] ${document.getElementById("notes_diag").value.trim()}`,
+                message: `[Interactive Troubleshooter Report] ${diagSummaryInput.value} ${notesText}`,
                 honeypot: document.getElementById("honeypot_diag").value
             };
 
