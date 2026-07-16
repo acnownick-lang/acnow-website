@@ -1,7 +1,7 @@
 import os
 import re
 
-paths_file = "/Users/nicholaselia/.gemini/antigravity/brain/eacfa3ad-ed2a-48b3-b7cb-8323a4b25d77/scratch/old_paths.txt"
+paths_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "old_paths.txt")
 site_dir = "/Users/nicholaselia/Desktop/Clients/acnow-netlify"
 
 with open(paths_file, "r") as f:
@@ -760,6 +760,150 @@ pilot_page_data = {
         "faq1_a": "Yes — maintenance on older homes involves a closer look at how ductwork was adapted over time; we work with what's actually there.",
         "faq2_q": "Do you perform coil cleaning near Stuart's historic waterfront?",
         "faq2_a": "Yes, we prioritize rinsing outdoor coils to protect them from coastal salt spray accumulation."
+    },
+    "/hvac-installation/hvac-installation-fort-pierce/": {
+        "intro": "Fort Pierce homes work their air conditioning harder than most. Between the port city's salt-laden coastal air, a humid subtropical climate sliding into full tropical territory, and roughly 51 inches of rain a year concentrated in June-September, HVAC equipment here contends with corrosion, moisture load, and near-constant runtime inland systems never see.",
+        "prose": "Fort Pierce isn't one uniform installation job. A 20-foot average elevation close to the Indian River Lagoon means salt-air exposure is a real factor almost everywhere in the city. Add neighborhoods like Lincoln Park, where housing stock skews older and ductwork/electrical panels weren't built with modern high-SEER systems in mind, and a proper installation starts with an honest look at the structure, not just the equipment catalog.",
+        "faq1_q": "Does Fort Pierce's coastal location affect what kind of AC system should be installed?",
+        "faq1_a": "Yes — salt air accelerates corrosion on outdoor condenser coils and cabinets faster than inland, so equipment selection and placement matter more here.",
+        "faq2_q": "I live in an older home near Lincoln Park — can a modern HVAC system even be installed?",
+        "faq2_a": "Almost always, yes, though it typically requires more upfront evaluation of ductwork, insulation, and electrical service."
+    },
+    "/hvac-installation/hvac-installation-fort-pierce/air-conditioning-installation-in-fort-pierce/": {
+        "intro": "Installing a new air conditioner in Fort Pierce is fundamentally a sizing and equipment-selection problem before it's anything else. Get the load calculation wrong in a climate that runs humid subtropical toward tropical, with ~51 in/yr rain concentrated in summer, and a homeowner ends up with a unit straining to keep up or short-cycling.",
+        "prose": "Correct sizing here isn't just square footage math — a system sized for a dry inland region often runs too long removing humidity, while an oversized unit cools quickly but leaves moisture behind. We select equipment — condenser, air handler, coil — rated for both heat and moisture load, weighing corrosion-resistant coil coatings given salt-laden air off the port and lagoon.",
+        "faq1_q": "How do you decide what size AC unit a Fort Pierce home actually needs?",
+        "faq1_a": "A load calculation specific to the home — square footage, insulation, window exposure, humidity — not sizing off the old unit's capacity.",
+        "faq2_q": "Does equipment brand or model matter more here than elsewhere in Florida?",
+        "faq2_a": "Less than making sure components — coil coating, cabinet construction — suit sustained humidity and coastal salt exposure."
+    },
+    "/hvac-installation/hvac-installation-fort-pierce/hvac-install-and-repair-in-fort-pierce/": {
+        "intro": "Every aging HVAC system in Fort Pierce eventually forces the same question: fix it again, or replace it. Because A/C Now LLC handles both installation and repair, we look at the system's actual condition rather than steering toward one answer.",
+        "prose": "Homes near Lincoln Park's older housing stock may have units nearing the end of their practical life; homes closer to the waterfront often see components fail earlier due to salt-air corrosion even on newer systems. We also factor in storm history — Fort Pierce's marina took real damage from Hurricanes Frances and Jeanne in 2004 — since systems that weathered that exposure sometimes carry hidden wear.",
+        "faq1_q": "My AC keeps needing small repairs — how do I know if it's time to replace instead?",
+        "faq1_a": "If repairs exceed once or twice a season, especially with an aging compressor or coastal-corroded coil, replacement often costs less over time.",
+        "faq2_q": "Can you repair storm-damaged equipment rather than replace it?",
+        "faq2_a": "Depends what failed — some issues are repairable if the rest checks out; older equipment that's been through multiple storm seasons often favors replacement."
+    },
+    "/hvac-installation/hvac-installation-jupiter/": {
+        "intro": "Jupiter sits at the easternmost bend of Florida's coastline, jutting further into the Atlantic than any other point in the state — homes here take on salt air and humidity inland Palm Beach County properties don't deal with.",
+        "prose": "Jupiter's tropical rainforest climate splits into a mild, dry Nov-April stretch and a hot, wet May-Oct run where humidity pushes cooling systems hard for months. A properly installed system needs correct sizing for wet-season load and proper drainage for a low-lying city at just 10 feet elevation.",
+        "faq1_q": "Does Jupiter's location on the coast actually change how a system should be installed?",
+        "faq1_a": "Yes — Jupiter extends further into the Atlantic than anywhere else on the Florida coast, affecting component protection and placement choices.",
+        "faq2_q": "How long does a typical installation take once on site?",
+        "faq2_a": "Depends on scope — a straightforward swap moves faster than new ductwork or reconfiguration."
+    },
+    "/hvac-installation/hvac-installation-jupiter/air-conditioning-installation-in-jupiter/": {
+        "intro": "Installing new AC in Jupiter isn't just matching tonnage to square footage. At 10 feet elevation with the Atlantic pressing in, the equipment's casing, coil coatings, and exposed hardware face different stress than fifty miles inland.",
+        "prose": "Even the 1860-built Jupiter Inlet Lighthouse has needed repainting from humidity-driven discoloration — exposed materials degrade faster here. Condenser units with corrosion-resistant coatings hold up better against Jupiter's salt content than standard inland-spec equipment; sizing accounts for the sustained May-October humidity load.",
+        "faq1_q": "Why does equipment choice matter more in Jupiter than further inland?",
+        "faq1_a": "Jupiter juts further into the Atlantic than any other point on the Florida coast, so components face more concentrated salt exposure.",
+        "faq2_q": "Is a bigger AC unit always better for Jupiter's humidity?",
+        "faq2_a": "Not necessarily — oversized units can struggle with humidity control by cooling too fast without dehumidifying properly."
+    },
+    "/hvac-installation/hvac-installation-jupiter/hvac-install-and-repair-in-jupiter/": {
+        "intro": "Not every HVAC problem in a Jupiter home ends with full replacement. Because A/C Now LLC does both repair and installation, the advice is based on what the system needs, not which service is on offer.",
+        "prose": "Jupiter homeowners often reach a fork right as the mild dry winter ends and the humid May-October stretch begins. An older unit fighting coastal air and seasonal humidity for years may be patchable once more, or closer to end-of-life than the next repair bill suggests.",
+        "faq1_q": "How do I know if my Jupiter home's AC problem is a repair or something bigger?",
+        "faq1_a": "Often the age/condition combined with what's failing — a single-component issue on a newer unit is usually a repair; repeated breakdowns on an older, salt-exposed system often mean replacement.",
+        "faq2_q": "Does timing in the year matter for addressing an aging system?",
+        "faq2_a": "Yes — addressing it before the hot, wet May-October season avoids relying on a compromised unit when it's working hardest."
+    },
+    "/hvac-installation/hvac-installation-palm-city/": {
+        "intro": "Palm City sits along the South Fork of the St. Lucie River in Martin County — roughly 25,883 residents across 16.38 square miles of golf-course neighborhoods and riverfront streets.",
+        "prose": "The town's low elevation, averaging just 7 feet, puts outdoor condenser units at real risk during heavy rain and storm surge, so placement, elevation stands, and drainage planning are part of every installation conversation. Housing stock ranges from established country-club estates (Harbour Ridge, Martin Downs) to newer construction near town center.",
+        "faq1_q": "Why does elevation matter for AC installation in Palm City?",
+        "faq1_a": "Much of Palm City sits at or near 7 feet above sea level, making standing water and storm surge legitimate concerns for ground-mounted units.",
+        "faq2_q": "Do golf-course community homes need anything different?",
+        "faq2_a": "Homes in communities like Islesworth or Orchid Bay tend to be larger with layouts built around outdoor living space, changing airflow and ductwork planning."
+    },
+    "/hvac-installation/hvac-installation-palm-city/air-conditioning-installation-in-palm-city/": {
+        "intro": "Installing new AC in Palm City means designing for square footage, not just swapping boxes — many homes in Cobblestone, Harbour Ridge, and Martin Downs are built at a generous scale for a retirement and country-club market.",
+        "prose": "An undersized system runs constantly without catching up on humid days; an oversized one short-cycles, leaving rooms clammy despite climbing energy bills. We run load calculations accounting for square footage, ceiling height, window exposure, and insulation, and site outdoor units with Palm City's flood-prone low elevation in mind.",
+        "faq1_q": "How do you size a new AC system for a larger Palm City home?",
+        "faq1_a": "A room-by-room load calculation rather than matching the current unit's size — larger homes often need multi-stage or zoned solutions.",
+        "faq2_q": "Will my new outdoor unit be protected from flood risk?",
+        "faq2_a": "We account for Palm City's roughly 7-foot elevation using elevated stands and drainage-conscious placement."
+    },
+    "/hvac-installation/hvac-installation-palm-city/hvac-install-and-repair-in-palm-city/": {
+        "intro": "Not every HVAC problem in Palm City ends in full installation. A/C Now LLC handles both repair and installation, giving homeowners a straight answer on which makes sense.",
+        "prose": "An aging system in an established community like Orchid Bay showing strain from years of humid, coastal-adjacent operation may be a better replacement candidate than another repair round; a newer system with an isolated issue is often better served by targeted repair.",
+        "faq1_q": "How do I know if my Palm City home needs a repair or full replacement?",
+        "faq1_a": "Depends on age, frequency of past breakdowns, and condition of key components — we inspect in person before recommending.",
+        "faq2_q": "Can you handle both repair and installation if we end up replacing?",
+        "faq2_a": "Yes — the same team can pivot from inspection to a full installation without starting over with someone new."
+    },
+    "/hvac-installation/hvac-installation-plam-beach-gardens/": {
+        "intro": "Palm Beach Gardens homes and businesses along the PGA Boulevard corridor put real demand on air conditioning. A tropical rainforest climate pushes rainfall to 66 inches a year, with June-September delivering 8-9+ inches monthly.",
+        "prose": "We work with homeowners near PGA National Resort and the golf communities ringing the city's 12 courses, where cooling and dehumidification both matter. At 16 feet elevation and roughly 59.9 square miles, the city sees consistent heat and moisture rather than dramatic swings.",
+        "faq1_q": "Does Palm Beach Gardens' humidity affect what kind of system gets installed?",
+        "faq1_a": "Yes — we weight dehumidification performance, not just cooling capacity, especially for the June-September stretch.",
+        "faq2_q": "I live near PGA National — does that affect installation planning?",
+        "faq2_a": "Not fundamentally, but golf-course communities sometimes have HOA or landscaping considerations we account for."
+    },
+    "/hvac-installation/hvac-installation-plam-beach-gardens/air-conditioning-installation-in-palm-beach-gardens/": {
+        "intro": "A new AC installation in Palm Beach Gardens has to handle the town's unique wet-season load. With roughly 66 inches of annual rainfall concentrated in June-September downpours, a system must be sized for both cooling and heavy moisture extraction.",
+        "prose": "We run detailed manual load calculations for homes along the PGA Boulevard corridor and golf communities near PGA National Resort. Our installations prioritize marine-grade coil coatings and proper surge protection to withstand coastal humidity and frequent storm-induced power fluctuations.",
+        "faq1_q": "How does A/C Now LLC size new air conditioning units for larger homes near PGA National?",
+        "faq1_a": "We perform room-by-room load calculations that analyze insulation, windows, ceiling height, and local humidity, ensuring the new unit dehumidifies properly without short-cycling.",
+        "faq2_q": "What type of surge protection is recommended for new installs in Palm Beach Gardens?",
+        "faq2_a": "We install whole-home or unit-specific surge protectors to protect high-efficiency inverter compressors from power spikes during local storm seasons."
+    },
+    "/hvac-installation/hvac-installation-plam-beach-gardens/hvac-install-and-repair-in-palm-beach-gardens/": {
+        "intro": "Not every AC problem in Palm Beach Gardens ends with a full system swap. Because we handle both repair and installation, the first question is whether your current unit is worth fixing.",
+        "prose": "An aging unit struggling with humidity control, even if still blowing cold air, is often a replacement candidate; a newer system with an isolated issue — failed capacitor, refrigerant leak — is usually a straightforward repair. Given the region's history of multi-day outages after 2004-05 hurricanes, surge protection is worth discussing during either repair or install.",
+        "faq1_q": "My AC is still cooling but the house feels humid — repair or new system?",
+        "faq1_a": "Depends on age/condition — a fixable issue like a dirty coil is a repair; declining compressor capacity may mean replacement.",
+        "faq2_q": "Should I consider surge protection when repairing or installing?",
+        "faq2_a": "Worth discussing, given Palm Beach Gardens' history of multi-day outages after 2004-05 hurricanes."
+    },
+    "/hvac-installation/hvac-installation-port-st-lucie/": {
+        "intro": "A/C Now LLC is headquartered in Port St. Lucie — our crews work in the same humid subtropical climate that soaks the region in roughly 53.5 inches of rain a year. Across 120.83 square miles, cooling loads vary from newer construction near Tradition to established neighborhoods near St. Lucie West.",
+        "prose": "At only 23 feet average elevation, humidity works into duct systems, attics, and equipment cabinets year-round — installation accounts for moisture load, airflow balance, and drainage, not just tonnage.",
+        "faq1_q": "Why does elevation matter for installation in Port St. Lucie?",
+        "faq1_a": "At 23 feet with heavy rainfall, drainage and moisture management around the outdoor unit need extra attention.",
+        "faq2_q": "Does A/C Now serve older and newer parts of the city the same way?",
+        "faq2_a": "Fundamentals are the same, but older areas like St. Lucie West often need ductwork/electrical updates; newer builds near Tradition usually just need correct sizing."
+    },
+    "/hvac-installation/hvac-installation-port-st-lucie/air-conditioning-installation-in-port-saint-lucie/": {
+        "intro": "A brand-new system needs to keep up with a climate at the edge of tropical, where humidity and near-daily rain chances strain compressors and coils. Installation starts with the home itself — square footage, insulation, sun exposure, duct condition.",
+        "prose": "An oversized unit cools fast but cycles too often to wring humidity out, leaving rooms clammy despite ~53 in/yr rain; an undersized unit runs nonstop. We measure rather than guess, sizing for both square footage and moisture load.",
+        "faq1_q": "How does Port St. Lucie's climate affect what size AC system I need?",
+        "faq1_a": "Sizing accounts for humidity removal, not just square footage — properly sized units run longer, gentler cycles that pull moisture out.",
+        "faq2_q": "Is installation different for St. Lucie West versus Tradition?",
+        "faq2_a": "Older St. Lucie West homes more often need ductwork modified; newer Tradition builds are usually straightforward tie-ins."
+    },
+    "/hvac-installation/hvac-installation-port-st-lucie/hvac-install-and-repair-in-port-saint-lucie/": {
+        "intro": "Not every HVAC problem here ends with full installation. Because we're based in Port St. Lucie, technicians already know how this area's weather and building stock wear on equipment over time.",
+        "prose": "A city that's taken direct hits from Frances, Jeanne, and Wilma sees real wear on outdoor components, on top of heavy rainfall and constant humidity. We evaluate the whole system before recommending repair or replacement.",
+        "faq1_q": "How do I know if my system needs repair or full replacement?",
+        "faq1_a": "Generally comes down to age/condition of major components — failing compressor or coils on an older, storm-exposed unit often mean repairs cost more over time than replacement.",
+        "faq2_q": "Can storm damage from past hurricanes still affect repair needs today?",
+        "faq2_a": "Yes — equipment exposed to Frances, Jeanne, or Wilma stress can show accelerated wear showing up later as recurring issues."
+    },
+    "/hvac-installation/hvac-installation-stuart/": {
+        "intro": "Stuart sits where the St. Lucie River meets the Indian River Lagoon and the Atlantic. With summer highs at 88-91°F and 81 days a year above 90°F, HVAC here is the difference between a livable home and a miserable one for roughly a third of the year.",
+        "prose": "Just 9.53 square miles at ~10 feet elevation, Stuart holds a wide mix of housing from waterfront to inland. Drainage, condensate routing, and equipment placement need to account for 62+ inches of annual rain.",
+        "faq1_q": "Why does Stuart's climate require different installation choices?",
+        "faq1_a": "Sustained high humidity plus 81+ days above 90°F puts extra load on both cooling and dehumidification.",
+        "faq2_q": "Does Stuart's low elevation affect installation?",
+        "faq2_a": "Yes — condensate drainage and equipment placement matter, particularly near the river or lagoon."
+    },
+    "/hvac-installation/hvac-installation-stuart/air-conditioning-installation-in-stuart/": {
+        "intro": "A new AC in Stuart faces constant proximity to salt water — the Atlantic, Indian River Lagoon, and St. Lucie River all send salt-laden air through the city daily, working on unprotected outdoor equipment almost immediately.",
+        "prose": "We factor in coil coating options, condenser placement relative to coastal winds, and mounting choices accounting for salt air and 62+ in/yr rainfall, combined with summer highs of 88-91°F.",
+        "faq1_q": "Does living near the lagoon or river affect my new AC installation?",
+        "faq1_a": "Yes — closer proximity to Stuart's waterways means more salt-laden air accelerating corrosion, factored into equipment protection and placement.",
+        "faq2_q": "How does Stuart's rainfall affect a new installation?",
+        "faq2_a": "Drainage and outdoor unit placement matter to avoid water pooling around equipment."
+    },
+    "/hvac-installation/hvac-installation-stuart/hvac-install-and-repair-in-stuart/": {
+        "intro": "Not every HVAC decision in Stuart is clear-cut. This comes up often in historic downtown, where homes built 1880s-1940s were never designed with modern ductwork or central air in mind.",
+        "prose": "Existing ductwork may be undersized or poorly routed; aging equipment in a climate pushing 81 days above 90°F tends to fail at the worst time. We evaluate the system, the home's construction era, and how it's holding up before recommending a direction.",
+        "faq1_q": "My home is in Stuart's historic downtown — does that change repair vs. replace?",
+        "faq1_a": "Homes from the 1880s-1940s often have ductwork/layouts not designed for modern HVAC — we assess both current system condition and suitability to original construction.",
+        "faq2_q": "How do I know if my system just needs a repair?",
+        "faq2_a": "Depends on age, condition, performance through Stuart's 90-plus-degree stretch, and whether underlying ductwork can support it."
     }
 }
 
