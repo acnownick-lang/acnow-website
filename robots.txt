@@ -11,6 +11,7 @@ Disallow: /pages/offline.html
 Disallow: /pages/members.html
 Disallow: /pages/team-portal.html
 Disallow: /pages/3d-airflow.html
+Disallow: /pages/corrosion-predictor.html
 Disallow: /pages/success.html
 
 Sitemap: https://acnowllc.com/sitemap.xml

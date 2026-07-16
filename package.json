@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "node scripts/generate-search-index.js && node scripts/minify.js",
+    "build": "node scripts/generate-search-index.js && node scripts/generate-sitemap.js && node scripts/minify.js",
     "deploy": "npx netlify-cli@17 deploy --dir=. --prod"
   },
   "dependencies": {
