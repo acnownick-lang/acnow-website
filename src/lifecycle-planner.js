@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (maintenanceType === "twice") {
             if (age >= 15) {
                 statusText = "Critical - Replace";
-                statusBg = "#EF4444"; // red
+                statusBg = "#DC2626"; // darker red (accessible with white text)
             } else if (age >= 10) {
                 statusText = "Caution";
                 statusBg = "#F59E0B"; // orange
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (maintenanceType === "yearly") {
             if (age >= 13) {
                 statusText = "Critical - Replace";
-                statusBg = "#EF4444"; // red
+                statusBg = "#DC2626"; // darker red
             } else if (age >= 10) {
                 statusText = "Caution";
                 statusBg = "#F59E0B"; // orange
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else { // none (neglected)
             if (age >= 9) {
                 statusText = "Critical - Replace";
-                statusBg = "#EF4444"; // red
+                statusBg = "#DC2626"; // darker red
             } else {
                 statusText = "Caution (Neglected)";
                 statusBg = "#F59E0B"; // orange
@@ -179,6 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         statusBadge.textContent = statusText;
         statusBadge.style.background = statusBg;
+        // High-luminance backgrounds (#10B981 green, #F59E0B orange) get dark text; low-luminance gets white text.
+        statusBadge.style.color = (statusBg === "#10B981" || statusBg === "#F59E0B") ? "#0f172a" : "#ffffff";
 
         // Set form lead details payload
         plannerMetricsInput.value = `[System Age: ${age} Years | Tonnage: ${tonnage} Tons | Maintenance: ${maintenanceType} | Remaining Life: ${remainingLife.toFixed(1)} Yrs | Eff Loss: ${effLossPercent}%]`;
