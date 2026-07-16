@@ -373,19 +373,9 @@
                 </div>
 
                 <div class="pricing-tier-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px;">
-                    <!-- Billing Switch Toggle -->
-                <div class="billing-toggle-container" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; margin-bottom: 30px;">
-                    <span class="billing-toggle-label" id="toggle-label-monthly">Bill Monthly</span>
-                    <label class="switch-toggle" style="margin: 0;">
-                        <input type="checkbox" id="billing-switch" onchange="toggleBillingPeriod(this.checked)" aria-label="Toggle billing period" checked>
-                        <span class="slider-round"></span>
-                    </label>
-                    <span class="billing-toggle-label active" id="toggle-label-yearly">Bill Annually <span class="annual-badge-discount" style="background: var(--primary); color: var(--white); font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-left: 4px;">Save 5%</span></span>
-                </div>
-
-                <div class="pricing-tier-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px;">
-                    <!-- Gold Plan -->
-                    <div class="tier-card" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                    <!-- Gold Plan (Featured / Highlighted) -->
+                    <div class="tier-card featured" style="background: var(--white); border: 2px solid var(--primary); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 10px 30px rgba(11,99,229,0.15);">
+                        <div class="tier-badge" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: var(--white); padding: 4px 15px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Best Value</div>
                         <div>
                             <h3 style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--dark); margin: 0 0 5px 0;">Gold Plan</h3>
                             <div style="font-size: 36px; font-weight: 800; color: var(--primary); margin: 15px 0;">
@@ -399,34 +389,30 @@
                                 <li>Anti-Algae Drain Line Treatment & Flush</li>
                                 <li>$89 Diagnostic Fee (Waived with repair)* — drops to $39 during normal business hours</li>
                                 <li>15% Discount on Parts &amp; Labor Repairs</li>
-                                <li>Standard Service Scheduling Priority</li>
                              </ul>
                         </div>
-                        <a href="contact.html?plan=gold_annual" class="btn btn-secondary btn-full btn-signup" style="margin-top: 25px; text-align: center;" data-tier="Gold">Deploy Gold Protection</a>
+                        <a href="contact.html?plan=gold_annual" class="btn btn-primary btn-full btn-signup" style="margin-top: 25px; text-align: center;" data-tier="Gold">Deploy Gold Protection</a>
                     </div>
 
-                    <!-- Platinum Plan (Featured) -->
-                    <div class="tier-card featured" style="background: var(--white); border: 2px solid var(--primary); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 10px 30px rgba(11,99,229,0.15);">
-                        <div class="tier-badge" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: var(--white); padding: 4px 15px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Best Value</div>
+                    <!-- Platinum Plan -->
+                    <div class="tier-card" style="background: var(--white); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
                         <div>
                             <h3 style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--dark); margin: 0 0 5px 0;">Platinum Plan</h3>
                             <div style="font-size: 36px; font-weight: 800; color: var(--primary); margin: 15px 0;">
                                 <span class="price-num">$295</span>
                                 <span class="price-period" style="font-size: 14px; color: var(--gray-dark); font-weight: 400;">/year</span>
                             </div>
-                            <p style="font-size: 13px; color: var(--gray-dark); margin: 0; line-height: 1.5;">Our most popular tactical coverage for Treasure Coast homes. Guarantees priority dispatch routing and waives diagnostics.</p>
+                            <p style="font-size: 13px; color: var(--gray-dark); margin: 0; line-height: 1.5;">Our premium protection plan. Guarantees priority dispatch routing and waives diagnostics.</p>
                             
                             <ul class="tier-features" style="margin-top: 20px; padding-left: 20px; font-size: 13.5px; line-height: 1.6;">
                                 <li><strong>4 Annual</strong> Precision Tune-Ups (Quarterly checks)</li>
                                 <li>Anti-Algae Drain Line Treatment & Flush</li>
                                 <li>$89 Diagnostic Fee (Waived with repair)* — drops to $39 during normal business hours</li>
                                 <li><strong>15% Discount</strong> on Repair Parts &amp; Labor</li>
-                                <li>Guaranteed 2-Hour Emergency Response</li>
-                                <li>1 Free MERV 11 Filter per visit</li>
                                 <li>$100/yr Accrued Replacement Credit</li>
                             </ul>
                         </div>
-                        <a href="contact.html?plan=platinum_annual" class="btn btn-primary btn-full btn-signup" style="margin-top: 25px; text-align: center;" data-tier="Platinum">Deploy Platinum Protection</a>
+                        <a href="contact.html?plan=platinum_annual" class="btn btn-secondary btn-full btn-signup" style="margin-top: 25px; text-align: center;" data-tier="Platinum">Deploy Platinum Protection</a>
                     </div>
                 </div>
                 <p style="font-size: 12px; color: var(--gray-dark); margin-top: 20px; margin-bottom: 20px; text-align: center;">*Waived only upon system installation (details supplied)</p>
