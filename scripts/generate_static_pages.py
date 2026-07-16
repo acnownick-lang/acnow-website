@@ -181,7 +181,7 @@ pilot_page_data = {
         "prose": "Serving Jensen Beach's active retiree communities, we prioritize system reliability and indoor air quality. Our bi-annual visits include chemical coil cleaning to wash away corrosive salt and deep sanitization of the condensate drain system.",
         "faq1_q": "How does salt accumulation affect Jensen Beach AC units?",
         "faq1_a": "Salt air deposits a fine residue on condenser coils, blocking heat transfer and accelerating rust. Bi-annual maintenance washes away these corrosive deposits.",
-        "faq2_q": "What indoor air quality checks are included in Hobe Sound / Jensen Beach maintenance?",
+        "faq2_q": "What indoor air quality checks are included in Jensen Beach maintenance?",
         "faq2_a": "We test all filtration systems, inspect ductwork for mold growth, and sanitize the drain lines to keep indoor air clean and healthy."
     },
     "/heating-and-cooling-near-me/hvac-preventive-maintenance-in-martin-county/": {
