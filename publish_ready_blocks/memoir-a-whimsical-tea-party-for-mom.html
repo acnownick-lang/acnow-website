@@ -1,0 +1,231 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat&display=swap');
+  
+  .memoir-body {
+    font-family: 'Georgia', serif;
+    line-height: 1.9;
+    color: #2c2a29;
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #faf9f6; /* warm paper background */
+    box-sizing: border-box;
+  }
+  
+  /* Drop Cap styling */
+  .drop-cap {
+    float: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 78px;
+    line-height: 58px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-left: 2px;
+    color: #1b365d;
+    font-weight: 700;
+  }
+  
+  /* Paragraphs */
+  .memoir-body p {
+    margin-bottom: 26px;
+    text-align: justify;
+  }
+  
+  /* Links style */
+  .memoir-body a.jorj-pantry-link {
+    color: #8A7D6A;
+    text-decoration: none;
+    border-bottom: 1px dotted #8A7D6A;
+    transition: all 0.3s ease;
+    font-weight: inherit;
+  }
+  .memoir-body a.jorj-pantry-link:hover {
+    color: #1b365d;
+    border-bottom: 1px solid #1b365d;
+  }
+  
+  /* Museum card picture frame styles */
+  .museum-card {
+    background: #ffffff;
+    border: 1px solid #D4CDC1;
+    padding: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.02);
+    box-sizing: border-box;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    z-index: 2;
+  }
+  .museum-card:hover {
+    transform: translateY(-4px);
+  }
+  .museum-card-inner {
+    border: 1px solid #D4CDC1;
+    padding: 8px;
+    background: #faf9f6;
+  }
+  .museum-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #D4CDC1;
+  }
+  .museum-card-caption {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 16px 0 0 0;
+    color: #8A7D6A;
+    line-height: 1.5;
+  }
+  
+  /* Floating / Positioning classes */
+  .museum-card.float-left {
+    float: left;
+    margin: 15px 30px 25px -30px;
+    transform: rotate(-1.5deg);
+  }
+  .museum-card.float-right {
+    float: right;
+    margin: 15px -30px 25px 30px;
+    transform: rotate(1.5deg);
+  }
+  
+  /* Quotes */
+  .memoir-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: #8A7D6A;
+    text-align: center;
+    margin: 48px auto;
+    padding: 0 40px;
+    line-height: 1.6;
+    max-width: 85%;
+    position: relative;
+    border: none !important;
+  }
+  .memoir-quote::before {
+    content: "“";
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: rgba(212, 205, 193, 0.3);
+    position: absolute;
+    top: -40px;
+    left: 0;
+  }
+  
+  /* Handshake Box styling */
+  .handshake-box {
+    background: #faf9f6;
+    border: 1px solid #D4CDC1;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    margin-top: 60px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+    clear: both;
+  }
+  .handshake-box::before {
+    content: "";
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid #D4CDC1;
+    pointer-events: none;
+  }
+  .handshake-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #1b365d;
+    margin-top: 0;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+  }
+  .handshake-box p {
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555555;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .handshake-cta {
+    display: inline-block;
+    background: #1b365d;
+    color: #ffffff !important;
+    padding: 16px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 10px rgba(27, 54, 93, 0.2);
+    border-radius: 2px;
+  }
+  .handshake-cta:hover {
+    background: #8A7D6A;
+    box-shadow: 0 6px 15px rgba(138, 125, 106, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Headings */
+  .memoir-body h2, .memoir-body h3, .memoir-body h4 {
+    font-family: 'Playfair Display', serif;
+    color: #1b365d;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+  .memoir-body h2 { font-size: 30px; }
+  .memoir-body h3 { font-size: 24px; }
+  
+  /* Clearfix */
+  .clear-flow {
+    clear: both;
+  }
+  
+  @media (max-width: 768px) {
+    .museum-card.float-left, .museum-card.float-right {
+      float: none;
+      margin: 20px 0;
+      width: 100% !important;
+      transform: none;
+    }
+    .memoir-quote {
+      font-size: 20px;
+      max-width: 100%;
+      padding: 0 15px;
+    }
+  }
+</style>
+<div class="memoir-body">
+<!-- THEMATIC TAGLINE -->
+
+<!-- ESSAY TITLE (NARRATIVE SEO) -->
+
+
+<!-- THE LORE -->
+<p><span class="drop-cap">I</span>’ve been watching a lot of Downton Abbey in preparation for this blog post, and what I came away with is the very British idea that there’s no right or wrong here, there’s just afternoon tea.</p>
+<!-- FLOATING POLAROID IMAGE 1 (RIGHT) -->
+<div class="museum-card float-left" style="width: 45%; max-width: 480px;"><div class="museum-card-inner"><img alt="A tilted polaroid-style photography shot of a vintage watering can repurposed as a charming vase, overflowing with freshly picked pink spring flowers." decoding="async" src="https://jorj.com/wp-content/smush-webp/2026/04/tea-party-floral-polaroid.jpg.webp"/><p class="museum-card-caption">WATERING CAN BOUQUET</p></div></div>
+<p>This is an excellent time to mix and match flower patterned china and silverware. Be whimsical when you set a table for Mom! Fill an old watering can with pretty, fresh picked flowers or a seasonal bouquet. Set out a photo of the two of you together, propped up with a teddy bear or two.</p>
+<div style="clear: both;"></div>
+<!-- FLOATING POLAROID IMAGE 2 (LEFT) -->
+<div class="museum-card float-right" style="width: 45%; max-width: 620px;"><div class="museum-card-inner"><img alt="A whimsical, Downton Abbey-inspired afternoon tea table setting." decoding="async" src="https://jorj.com/wp-content/smush-webp/2026/04/tea-party-table-prep.jpg.webp"/><p class="museum-card-caption">DOWNTON TEA TABLE</p></div></div>
+<p>When you load up a tiered platter with goodies, it’s completely acceptable to use boxed or store-bought treats (like crustless <a class="jorj-pantry-link" href="/pantry?ingredient=cucumber" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">cucumber</a> sandwiches and cupcakes), so long as there’s at least one thing on the table that your heart and precious time really went into. A well-made cake or yummy berry-loaded parfaits in cute glasses make perfect centerpieces.</p>
+<p>As for beverages, pink lemonade makes a fine beverage in addition to the teas, alongside a bottle of champagne in case Mom wants to indulge. If you are serving tea, keep in mind that green teas pair well with starchy breads, and black teas are best with fruit cakes and scones. Garnish cold Italian sodas or your tea service with fresh <a class="jorj-pantry-link" href="/pantry?ingredient=mint" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">mint</a>!</p>
+<div style="clear: both;"></div>
+<!-- FLOATING POLAROID IMAGE 3 (RIGHT) -->
+<div class="museum-card" style="width: 100%; max-width: 780px; clear: both;"><div class="museum-card-inner"><img alt="A beautiful slice of Meyer lemon olive oil loaf cake resting on a dainty vintage floral china dessert plate." decoding="async" src="https://jorj.com/wp-content/smush-webp/2026/04/meyer-lemon-cake-slice.jpg.webp"/><p class="museum-card-caption">A SLICE OF LEMON HEAVEN</p></div></div>
+<p>I went combing through my most delicate pastry recipes and scones, and what I decided should be the premier recipe at my Mother’s Day Tea is a great big cake! And not just any cake—a Meyer <a class="jorj-pantry-link" href="/pantry?ingredient=lemon" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">lemon</a> <a class="jorj-pantry-link" href="/pantry?ingredient=olive" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">olive</a> oil one, which appears in the sweets chapter of my upcoming book Canvas &amp; Cuisine. It takes me to my own personal happy place: Sorento, Italy. I remember sitting in an orchard there, glass of wine in hand, watching the sun dip in the blue sky, and breathing the air scented with fresh lemons. Meyer lemons are the closest ones I’ve found to remind me of the rich, fragrant lemons grown there. I can’t speak for your Mom’s own happy place, but she can borrow mine on May 13th!</p>
+<div style="clear: both;"></div>
+<hr style="border: none; border-top: 1px solid #D4CDC1; margin: 50px 0;"/>
+<!-- THE ARCHITECT'S HANDSHAKE (No Box, Pure Conversational Transition) -->
+<div class="handshake-box"><h3>From the Memoir to the Kitchen</h3><p>To bring this memory to your table, explore the Master Blueprints that inspired this story.</p><a class="handshake-cta" href="https://jorj.com/meyer-lemon-olive-oil-cake">View Meyer Lemon Olive Oil Cake in The Estate Vault</a></div>
+</div>

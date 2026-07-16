@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" class="phase-1">
+<head>
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('../index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Services Services in Fort Pierce, FL | A/C Now LLC</title>
+    <meta name="description" content="HVAC Services in Fort Pierce, FL near Fort Pierce Inlet and Historic Downtown. Comprehensive residential and commercial air conditioning and heating services. Veteran-owned, 24/7 same-day service.">
+    <link rel="canonical" href="https://acnowllc.com/heating-and-cooling-near-me/heating-cooling-solutions-for-homes-and-businesses-in-fort-pierce/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://acnowllc.com/heating-and-cooling-near-me/heating-cooling-solutions-for-homes-and-businesses-in-fort-pierce/">
+    <meta property="og:title" content="HVAC Services Services in Fort Pierce, FL | A/C Now LLC">
+    <meta property="og:description" content="HVAC Services in Fort Pierce, FL near Fort Pierce Inlet and Historic Downtown. Comprehensive residential and commercial air conditioning and heating services. Veteran-owned, 24/7 same-day service.">
+    <meta property="og:image" content="https://acnowllc.com/../assets/images/mascot-logo.svg">
+    <!-- Google Fonts: Non-blocking (CWV fix) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+    </noscript>
+    <link rel="stylesheet" href="../../assets/css/redesign.css?v=108">
+    <!-- HVACBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HVACBusiness",
+      "name": "A/C Now LLC",
+      "@id": "https://acnowllc.com/#hvacbusiness",
+      "url": "https://acnowllc.com/heating-and-cooling-near-me/heating-cooling-solutions-for-homes-and-businesses-in-fort-pierce/",
+      "image": "https://acnowllc.com/../assets/images/mascot-logo.svg",
+      "telephone": "(772) 521-3568",
+      "email": "info@acnowllc.com",
+      "priceRange": "$$",
+      "description": "A/C Now LLC is a veteran-owned, licensed HVAC contractor serving Port St. Lucie, Stuart, Palm City, Jupiter, Jensen Beach, Fort Pierce, and Hobe Sound, FL. We provide residential and commercial AC repair, installation, and maintenance with military-grade precision. License #CAC1820542.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
+        "addressLocality": "Fort Pierce",
+        "addressRegion": "FL",
+        "postalCode": "34986",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 27.3138016,
+        "longitude": -80.3954409
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "08:00",
+          "closes": "18:00"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "6"
+      }
+    }
+    </script>
+    <!-- LCP Preload -->
+    <link rel="preload" as="image" href="../../assets/images/banner-services.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="../../assets/images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
+
+    <style>
+        /* Dual-Gate Split Hero layout aesthetics */
+        :root {
+            --primary: #0B63E5;
+            --secondary: #E63946;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);
+        }
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+            border: none !important;
+        }
+    </style>
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="apple-touch-icon" href="../../assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/images/mascot-logo.svg">
+</head>
+<body>
+    <!-- WCAG 2.4.1: Skip Navigation Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span class="top-bar-item">
+                <!-- WCAG 1.1.1: Decorative SVG must be aria-hidden -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="../../index.html" class="logo-link">
+                <img src="../../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            </a>
+            <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+                                    <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="../../pages/ac-installation.html" class="nav-link">AC Installation</a>
+                <a href="../../pages/ac-repair.html" class="nav-link">AC Repair</a>
+                <a href="../../pages/ac-maintenance.html" class="nav-link">AC Maintenance</a>
+                <a href="../../pages/commercial.html" class="nav-link">Commercial</a>
+                <a href="../../pages/pool-heating.html" class="nav-link">Pool Heating</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" onclick="return false;">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="../../pages/diagnose.html" class="">DIY Troubleshooter</a>
+                        <a href="../../pages/planner.html" class="">AC Lifespan Planner</a>
+                        <a href="../../pages/configurator.html" class="">Build HVAC System</a>
+                        <a href="corrosion-predictor.html" class="phase-2-only">Corrosion Risk Predictor</a>
+                        <a href="../../pages/storm-prep.html" class="">Storm Prep Checklist</a>
+                        <a href="../../pages/3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
+                    </div>
+                </div>
+                <a href="../../pages/members.html" class="nav-link phase-2-only">Members Area</a>
+            </nav>
+            <a href="../../pages/contact.html" class="btn btn-primary nav-cta">Get Free Estimate</a>
+        </div>
+    </header>
+    <main id="main-content">
+
+
+    <!-- Subpage Banner -->
+    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('../assets/images/banner-services.webp'); min-height: 40vh; padding: 80px 0;">
+        <div class="container">
+            <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
+                <span class="hero-subtitle">HVAC SERVICE WITH MILITARY-GRADE PRECISION</span>
+                <h1 class="hero-title" style="font-size: 48px; margin-bottom: 12px;">Port St. Lucie HVAC Services</h1>
+                <p class="hero-text" style="margin-bottom: 0;">Providing residential and commercial climate-control solutions to keep you cool, calm, and collected.</p>
+                <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:28px;">
+                    <a href="tel:7725213568" class="btn btn-primary btn-large" style="background: var(--primary);"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call (772) 521-3568</a>
+                    <a href="../../pages/contact.html" class="btn btn-secondary btn-large">Get Free Estimate</a>
+                </div>
+                <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:20px; font-size:12px; color:rgba(255,255,255,0.7); font-weight:600; letter-spacing:0.5px; text-transform:uppercase;">
+                    <span><svg class="icon-inline" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5-Star Rated</span>
+                    <span><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><circle cx="12" cy="8" r="7"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg> Veteran Owned</span>
+                    <span><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Same-Day Service</span>
+                    <span><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> 24/7 Emergency</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Pills Row -->
+    <section style="background: var(--dark); padding: 16px 0;">
+        <div class="container">
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; align-items:center;">
+                <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> $89 Diagnostic Fee</span>
+                <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(11,99,229,0.35); border:1px solid rgba(11,99,229,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> From $14.95/mo Maintenance Plans</span>
+                <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(230,57,70,0.35); border:1px solid rgba(230,57,70,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> 0% Financing Available</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Sub-Nav Anchor Bar -->
+    <div style="position: sticky; top: 65px; z-index: 90; background: var(--white); border-bottom: 1px solid var(--gray-light); box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 12px 0;">
+        <div class="container" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <a href="#repair" style="color: var(--dark); font-weight: 700; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">AC Repair</a>
+            <a href="#installation" style="color: var(--dark); font-weight: 700; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">AC Installation</a>
+            <a href="#maintenance" style="color: var(--dark); font-weight: 700; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">AC Maintenance</a>
+            <a href="#pricing" style="color: var(--dark); font-weight: 700; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Pricing Protection</a>
+            <a href="#faq" style="color: var(--dark); font-weight: 700; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">FAQ</a>
+        </div>
+    </div>
+
+    <!-- Detailed Services Breakdown -->
+    <section class="reveal" style="background-color: var(--white); padding: 140px 0 90px; scroll-margin-top: 110px;">
+        <div class="container">
+            <!-- Service-definition prose for GEO / AI indexing -->
+            <p style="color:var(--gray-dark); font-size:15px; margin-bottom:16px; line-height:1.7; border-left:3px solid var(--primary); padding-left:16px;">
+                A/C Now LLC provides AC repair, HVAC installation, and preventive maintenance in Port St. Lucie, Palm City, Stuart, and Jupiter, FL. Our veteran technicians diagnose and repair all major HVAC brands same-day. We serve residential homes and commercial properties throughout Martin and St. Lucie counties.
+            </p>
+            <p style="color:var(--gray-dark); font-size:15px; margin-bottom:50px; line-height:1.7; border-left:3px solid var(--primary); padding-left:16px;">
+                A/C Now LLC is a veteran-owned, licensed HVAC contractor (License #CAC1820542) serving Port St. Lucie, Stuart, Palm City, Jupiter, Jensen Beach, Fort Pierce, and Hobe Sound, FL. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a> for same-day service across the Treasure Coast.
+            </p>
+
+            <!-- Service 1: Repair -->
+            <div id="repair" style="margin-bottom: 90px;" class="about-grid grid-about">
+                <div>
+                    <span class="section-tag">24/7 EMERGENCY FIXES</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 16px;">AC &amp; Heating Repairs</h2>
+                    <p style="color:var(--gray-dark); font-size:14px; font-style:italic; margin-bottom:12px; line-height:1.6;"><strong>What is AC repair in Port St. Lucie, FL?</strong> AC repair is the professional diagnosis and restoration of a residential or commercial air conditioning system by licensed, military-trained technicians. A/C Now LLC services all major brands — Carrier, Trane, Lennox, Rheem, Goodman — across Martin County and St. Lucie County, FL.</p>
+                    <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">When your air conditioning malfunctions, getting it restored fast is our top priority. We offer a full range of cooling services, from quick diagnostic calls and minor component fixes to complete system rebuilds. Our technicians are fully equipped to resolve issues on the spot.</p>
+                    <ul style="list-style: none; margin-bottom: 24px;">
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Same-Day Service Appointments</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Thermostats, Compressors, & Fan Motors</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Refrigerant Leak Detection & Recharging</li>
+                    </ul>
+                    <a href="../../pages/contact.html" class="btn btn-primary">Schedule Same-Day Repair</a>
+                </div>
+                <div>
+                    <img src="../../assets/images/hvac-repair-img.webp" alt="AC Repair Service" class="about-main-img" loading="lazy" width="600" height="450" style="border: 1px solid var(--gray-light);">
+                </div>
+            </div>
+
+            <!-- Service 2: Installation -->
+            <div id="installation" style="margin-bottom: 90px;" class="about-grid grid-about-reverse">
+                <div>
+                    <img src="../../assets/images/hvac-install-img-1.webp" alt="AC Installation Service" class="about-main-img" loading="lazy" width="600" height="450" style="border: 1px solid var(--gray-light);">
+                </div>
+                <div>
+                    <span class="section-tag">ENERGY EFFICIENCY</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 16px;">AC Installation & Replacement</h2>
+                    <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">Upgrade to a high-efficiency HVAC system and cut your monthly energy bills. We custom-size AC replacements based on your home's square footage, duct configuration, and shade levels, guaranteeing uniform cooling across all rooms. Ask about our low-interest financing plans.</p>
+                    <ul style="list-style: none; margin-bottom: 24px;">
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Free Diagnostics & System Estimates</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Leading SEER-rated Brands</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Complete Factory Warranties & Duct Checks</li>
+                    </ul>
+                    <a href="../../pages/contact.html" class="btn btn-primary">Request Free System Quote</a>
+                </div>
+            </div>
+
+            <!-- Service 3: Maintenance -->
+            <div id="maintenance" style="margin-bottom: 90px;" class="about-grid grid-about">
+                <div>
+                    <span class="section-tag">PREVENTATIVE SAVINGS</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 16px;">HVAC Preventative Maintenance</h2>
+                    <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">South Florida's heat forces your air conditioner to run up to 10 hours a day. Without regular maintenance, efficiency drops by 5% annually, inflating your monthly electric bill. Our military-grade tune-ups keep your unit running cleanly, stop breakdown emergencies before they happen, and protect your manufacturer’s warranty.</p>
+                    <ul style="list-style: none; margin-bottom: 24px;">
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Coil Cleaning & Drain Line Flushing</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Electrical Connection & Capacitor Audits</li>
+                        <li style="margin-bottom: 8px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Priority Call Scheduling & Repair Discounts</li>
+                    </ul>
+                    <a href="../../pages/contact.html" class="btn btn-primary">Join our Service Club</a>
+                </div>
+                <div>
+                    <img src="../../assets/images/hvac-maintenance-img.webp" alt="HVAC Maintenance" class="about-main-img" style="border: 1px solid var(--gray-light);">
+                </div>
+            </div>
+
+            <!-- Snowbird Care Guide Subsection -->
+            <div style="background: rgba(11,99,229,0.02); border: 1px solid var(--gray-light); border-radius: 12px; padding: 30px; margin-bottom: 90px; box-shadow: var(--box-shadow);">
+                <div class="about-grid grid-about" style="align-items: center; gap: 30px;">
+                    <div>
+                        <span class="section-tag" style="background: rgba(11,99,229,0.06); color: var(--primary); padding: 5px 15px; border-radius: 999px; font-size: 11px; font-weight:700;">SEASONAL RESIDENT SPECIALTY</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--dark); margin-top: 10px; margin-bottom: 12px;">The Snowbird Home Watch AC Guide</h3>
+                        <p style="color: var(--gray-dark); font-size: 14.5px; line-height: 1.6; margin-bottom: 15px;">
+                            Leaving your Florida home vacant for the hot, humid summer months carries significant risk if your HVAC system fails. Elevated indoor relative humidity (above 60%) quickly fosters mold growth, potentially causing thousands of dollars in property damage.
+                        </p>
+                        <p style="color: var(--gray-dark); font-size: 14.5px; line-height: 1.6; margin-bottom: 0;">
+                            Our specialty **Snowbird Pre-Departure Inspection** includes clearing condensate lines to prevent blockages, setting programmable thermostats to vacant humidity levels (typically 78°F or humidistat settings), and installing secondary safety float switches. We also coordinate with local home-watch services to verify system status, ensuring total peace of mind while you are away.
+                        </p>
+                    </div>
+                    <div style="text-align: center;">
+                        <a href="contact.html?reason=snowbird" class="btn btn-secondary" style="display: inline-block; min-width: 220px;">Book Departure Inspection</a>
+                    </div>
+                </div>
+            </div>
+
+                            <!-- Tiered Pricing Section Replacement (CTA to Memberships) -->
+                <div class="reveal-up" style="background: linear-gradient(135deg, rgba(11,99,229,0.05) 0%, rgba(11,99,229,0.02) 100%); border: 1.5px solid var(--primary); border-radius: 12px; padding: 40px; text-align: center; max-width: 800px; margin: 40px auto 60px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+                    <span class="section-tag" style="background: rgba(11,99,229,0.06); color: var(--primary); padding: 5px 15px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 12px;">Preventative Savings</span>
+                    <h3 style="font-family: var(--font-heading); font-size: 26px; font-weight: 800; color: var(--dark); margin: 0 0 10px 0;">Maintenance Protection Memberships</h3>
+                    <p style="color: var(--gray-dark); font-size: 15.5px; max-width: 600px; margin: 0 auto 24px auto; line-height: 1.6;">
+                        Prevent expensive system breakdowns, save 15% on all repairs, and waive diagnostic fees entirely with our annual protection plans starting at just $155/year.
+                    </p>
+                    <a href="../../pages/ac-maintenance.html" class="btn btn-primary" style="padding: 14px 28px; font-weight: 700; display: inline-block;">View Membership Plans &amp; Save</a>
+                </div>
+                    <div style="font-weight: 700; font-size: 14px;">
+                        <span style="color: var(--primary); margin-right: 15px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> Free Quotes on New Systems</span>
+                        <span style="color: var(--primary);"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> 0% Financing Options Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOA Condenser Screening & Clearance Checklist Section -->
+            <div style="margin: 80px 0 20px 0; border-top: 1px solid var(--gray-light); padding-top: 60px;">
+                <div class="section-header centered" style="margin-bottom: 50px; text-align: center;">
+                    <span class="section-tag">HOA COMPLIANCE</span>
+                    <h2>HOA Condenser Screening & Clearances</h2>
+                    <p>Are you installing decorative fencing or matching landscape shrubs? Review regional Treasure Coast clearance rules to keep your system code-compliant and running at peak performance.</p>
+                </div>
+
+                <div class="planner-grid" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; text-align: left; align-items: center;">
+                    
+                    <!-- Left: Checklist requirements -->
+                    <div style="background: var(--light); padding: 35px; border-radius: var(--border-radius); border: 1px solid var(--gray-light); box-shadow: var(--box-shadow);">
+                        <h4 style="font-family: var(--font-heading); color: var(--dark); font-size: 16px; margin: 0 0 20px 0; font-weight: 800; border-bottom: 1px solid var(--gray-light); padding-bottom: 10px;">Clearance Compliance Guide</h4>
+                        
+                        <div style="display:flex; flex-direction:column; gap:16px; font-size:13.5px;">
+                            <div style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="background:#0B7A53; color:#fff; font-size:11px; padding:2px 6px; border-radius:4px; font-weight:700; margin-top:2px;">18"+</span>
+                                <div>
+                                    <strong>Side Clearance Limits:</strong>
+                                    <span style="display:block; color:var(--gray-dark); margin-top:2px; font-size:12.5px;">Keep decorative fences and plants at least 18 to 24 inches away from condenser sides to prevent heat buildup recirculations.</span>
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:12px; align-items:flex-start; border-top:1px solid var(--gray-light); padding-top:15px;">
+                                <span style="background:#0B7A53; color:#fff; font-size:11px; padding:2px 6px; border-radius:4px; font-weight:700; margin-top:2px;">5 FT</span>
+                                <div>
+                                    <strong>Overhead Clearance Limits:</strong>
+                                    <span style="display:block; color:var(--gray-dark); margin-top:2px; font-size:12.5px;">Ensure at least 5 feet of clear space directly above the outdoor fan grille. Never block top discharge air with patio roofs or deck overhangs.</span>
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:12px; align-items:flex-start; border-top:1px solid var(--gray-light); padding-top:15px;">
+                                <span style="background:#0B7A53; color:#fff; font-size:11px; padding:2px 6px; border-radius:4px; font-weight:700; margin-top:2px;">CODE</span>
+                                <div>
+                                    <strong>Electrical Disconnect Access:</strong>
+                                    <span style="display:block; color:var(--gray-dark); margin-top:2px; font-size:12.5px;">Municipal codes require a 36-inch clear path in front of the electrical switchbox. Include a gate panel or removable screen slats.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Branded photo showing compliance fence -->
+                    <div style="position: relative; border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--box-shadow); height: 380px;">
+                        <img src="../../assets/images/hoa-screening.jpg" width="1376" height="768" loading="lazy" alt="Neatly screened outdoor AC condenser with grey composite fencing and lush garden landscaping" style="width:100%; height:100%; object-fit:cover;">
+                        <div style="position: absolute; inset:0; background: linear-gradient(180deg, transparent 50%, rgba(10,24,47,0.7) 100%);"></div>
+                        <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; color:#fff; font-size:11px; font-weight:700; text-align:center; background:rgba(10,24,47,0.6); padding:8px 12px; border-radius:4px;">
+                            <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Approved PVC vinyl privacy screening in Port St. Lucie.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+            <!-- Other Services Mini-Grid -->
+            <div class="section-header centered" style="margin-top: 60px; margin-bottom: 50px;">
+                <span class="section-tag">SPECIALIZED CAPABILITIES</span>
+                <h2>Climate & Comfort Add-ons</h2>
+                <p>From heavy-tonnage vertical AC units to multi-zone ductless layouts, we deliver whisper-quiet cooling for estate mansions and high-rise residences.</p>
+            </div>
+
+            <div class="services-grid four-cols card-3d-perspective">
+                <!-- Card 1 -->
+                <div class="service-card card-3d reveal-up" data-delay="0">
+                    <div class="service-img-wrapper">
+                        <img src="../../assets/images/iaq-ecobee.webp" alt="Indoor Air Quality" class="service-img" loading="lazy" width="400" height="300">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Indoor Air Quality</h3>
+                        <p>Improve respiratory health and allergen filtration with HEPA filter systems, UV sanitizing lamps, and advanced dehumidifier installations.</p>
+                        <!-- Live AQI Detector Widget with Particle Canvas -->
+                        <div style="position: relative; margin-top: 20px; border-radius: 8px; overflow: hidden; height: 140px; border: 1px solid rgba(11, 99, 229, 0.25); background: #0c182f; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); width: 100%;">
+                            <canvas id="clean-air-canvas" style="position: absolute; inset: 0; width:100%; height:100%; pointer-events:none; z-index:1;"></canvas>
+                            <div id="live-aqi-widget" style="position: absolute; bottom: 0; left: 0; right: 0; z-index:2; padding: 12px; background: rgba(10, 24, 47, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; font-size: 13px; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 0;">
+                                <span style="color: #94A3B8;">Loading Air Index...</span>
+                            </div>
+                            <div style="position: absolute; top: 15px; left: 15px; z-index: 2; pointer-events: none; display: flex; flex-direction: column; gap: 4px;">
+                                <span style="font-size: 11px; font-weight: 700; color: #38BDF8; letter-spacing: 1px; text-transform: uppercase;">IAQ Monitor</span>
+                                <span style="font-size: 14px; font-weight: 600; color: #FFFFFF; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">Real-Time Air Particle Flow</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-card card-3d reveal-up" data-delay="150">
+                    <div class="service-img-wrapper">
+                        <img src="../../assets/images/ductless-img.webp" alt="Ductless Mini Splits" class="service-img" loading="lazy" width="400" height="300">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Ductless Mini-Splits</h3>
+                        <p>Ideal for cooling target rooms, garages, or structural expansions without installing expensive or leaky duct configurations.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-card card-3d reveal-up" data-delay="300">
+                    <div class="service-img-wrapper">
+                        <img src="../../assets/images/pool-inno-install.webp" alt="Pool Heating" class="service-img" loading="lazy" width="400" height="300">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Pool Heat Pumps</h3>
+                        <p>Extend your swim season through winter with professional, energy-efficient pool water heater sales, setups, and seasonal servicing.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Duct Cleaning & Sanitization -->
+                <div class="service-card card-3d reveal-up" data-delay="450">
+                    <div class="service-img-wrapper">
+                        <img src="../../assets/images/maintenance_premium.webp" alt="Duct Cleaning and Sanitization" class="service-img" loading="lazy" width="400" height="300">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Duct Cleaning</h3>
+                        <p>Purge accumulated mold spores, pollen, pet dander, and dust from your vents using negative-pressure vacuums and sanitizing foggers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ventilation Health & Cleanliness Simulator Section -->
+    <section class="reveal-up" style="background-color: var(--light); padding: 80px 0; border-top: 1px solid var(--gray-light); border-bottom: 1px solid var(--gray-light);">
+        <div class="container" style="max-width: 1150px;">
+            <div class="section-header centered" style="margin-bottom: 50px;">
+                <span class="section-tag">HEALTH & COMFORT INTERACTIVE</span>
+                <h2>Ventilation Cleanliness Simulator</h2>
+                <p>Home ventilation ducts act as the lungs of your house. Use the neglect slider below to see how dust, mold, and pet dander accumulate inside ductwork over years without cleaning, choking airflow and triggering respiratory allergies.</p>
+            </div>
+
+            <!-- Two Column Interactive Layout (high contrast) -->
+            <div class="planner-grid" style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; text-align: left;">
+                <!-- Left: Controls (Light background card) -->
+                <div class="planner-card" style="background: var(--white); padding: 35px; border-radius: var(--border-radius); border: 1px solid var(--gray-light); box-shadow: var(--box-shadow); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin: 0 0 25px 0; font-weight: 800;">Buildup Controls</h3>
+                        
+                        <div style="margin-bottom: 25px;">
+                            <label for="duct-slider" style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; color:var(--dark); margin-bottom:8px;">
+                                <span>Years Since Last Duct Cleaning:</span>
+                                <span id="duct-slider-lbl" style="color:var(--primary); font-weight: 800;">0 Years (Clean)</span>
+                            </label>
+                            <input type="range" id="duct-slider" min="0" max="10" value="0" style="width:100%; cursor: pointer; margin-bottom: 2px;">
+                            <div style="display: flex; justify-content: space-between; padding: 0 4px; margin-bottom: 12px; font-size: 10.5px; color: var(--gray-dark); font-weight: 600; letter-spacing: 0.5px;">
+                                <span>0 (Clean)</span>
+                                <span>2</span>
+                                <span>4</span>
+                                <span>6</span>
+                                <span>8</span>
+                                <span>10 (Max)</span>
+                            </div>
+                            <p style="font-size:11.5px; color:var(--gray-dark); margin-top:5px;">Typically, standard residential air systems accumulate 40 lbs of dust annually.</p>
+                        </div>
+
+                        <div style="background: var(--light); border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; font-size: 13px; line-height: 1.6; color: var(--gray-dark); margin-bottom: 25px;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom: 1px dashed var(--gray-light); padding-bottom: 8px;">
+                                <span>Airflow Restriction:</span>
+                                <strong id="duct-restrict" style="color:#0B7A53; font-weight: 800;">0% (Optimum Flow)</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>Allergen Concentration:</span>
+                                <strong id="duct-allergen" style="color:#0B7A53; font-weight: 800;">Low / Clean Air</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="../../pages/contact.html" class="btn btn-primary btn-full" style="font-size:13px;">Book Duct Inspection & Sanitize</a>
+                </div>
+
+                <!-- Right: Visualizer (Dark premium styled pipeline display) -->
+                <div class="planner-card" style="background: #0A192F; padding: 40px; border-radius: var(--border-radius); border: 1px solid rgba(255,255,255,0.06); box-shadow: var(--box-shadow); display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 300px;">
+                    <h4 style="font-family: var(--font-heading); color: #fff; font-size: 16px; margin: 0 0 20px 0; font-weight: 700; text-align: center; letter-spacing: 0.5px;">VENTILATION PIPE INTERNAL PREVIEW</h4>
+                    
+                    <div style="width: 100%; max-width: 450px; background: rgba(255,255,255,0.02); border-radius: 12px; padding: 30px; border: 1px solid rgba(255,255,255,0.04);">
+                        <svg id="duct-svg" width="100%" height="150" viewBox="0 0 200 80" style="display: block; overflow: visible;">
+                            <!-- Duct Pipe Borders -->
+                            <rect x="10" y="10" width="180" height="60" rx="6" fill="rgba(255,255,255,0.03)" stroke="#64748B" stroke-width="2.5" />
+                            <!-- Dynamic Air Flow lines (blue) -->
+                            <path id="duct-airflow" d="M 20 40 Q 50 35 100 40 T 180 40" fill="none" stroke="#60A5FA" stroke-width="5" stroke-linecap="round" opacity="0.9" />
+                            <!-- Dynamic Dirt/Dust layers (brown/grey overlay) -->
+                            <rect id="duct-dirt-top" x="11" y="11" width="178" height="2" fill="#78350F" opacity="0.0" rx="2" />
+                            <rect id="duct-dirt-bottom" x="11" y="67" width="178" height="2" fill="#78350F" opacity="0.0" rx="2" />
+                            <!-- Spore/Allergen dots -->
+                            <g id="duct-allergens" opacity="0.0">
+                                <circle cx="45" cy="45" r="2.8" fill="#D97706" />
+                                <circle cx="95" cy="45" r="2.0" fill="#D97706" />
+                                <circle cx="130" cy="45" r="2.5" fill="#D97706" />
+                            </g>
+                            <g id="duct-mold-spores" opacity="0.0">
+                                <circle cx="30" cy="25" r="1.8" fill="#0B7A53" />
+                                <circle cx="55" cy="55" r="2.2" fill="#0B7A53" />
+                                <circle cx="80" cy="30" r="1.8" fill="#0B7A53" />
+                                <circle cx="115" cy="55" r="2.2" fill="#0B7A53" />
+                                <circle cx="140" cy="25" r="1.8" fill="#0B7A53" />
+                                <circle cx="165" cy="50" r="2.2" fill="#0B7A53" />
+                            </g>
+                        </svg>
+                    </div>
+                    <div style="margin-top: 20px; font-size: 11.5px; color: rgba(255,255,255,0.4); text-align: center; max-width: 320px;">
+                        Air flows from left to right. Moving the slider will choke the flow line and increase particulate layers.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compressor Decibel Soundboard Section -->
+    <section class="reveal-up" style="background-color: var(--white); padding: 80px 0; border-top: 1px solid var(--gray-light); border-bottom: 1px solid var(--gray-light);">
+        <div class="container" style="max-width: 1150px; text-align: center;">
+            <div class="section-header centered" style="margin-bottom: 50px;">
+                <span class="section-tag">ACOUSTIC INNOVATION</span>
+                <h2>Quiet Comfort Decibel Soundboard</h2>
+                <p>AC condensers are often located right next to pool decks, patios, or bedroom windows. Click the buttons below to hear the drastic operating noise difference between old single-stage systems and modern variable-speed inverters.</p>
+            </div>
+
+            <!-- Visual waveform preview block -->
+            <div style="background: #060d1a; border-radius: 12px; padding: 25px; max-width: 600px; margin: 0 auto 40px auto; border: 1px solid rgba(255,255,255,0.06); box-shadow: var(--box-shadow);">
+                <div style="font-size: 11px; text-transform: uppercase; color: var(--gray-dark); margin-bottom: 15px; font-weight: 700; letter-spacing: 0.5px;">Live Decibel Waveform Simulation</div>
+                <canvas id="soundwave-canvas" role="img" aria-label="Operating noise decibel soundboard waveform simulation visualizing variable frequency waves." style="width: 100%; height: 100px; display: block;"></canvas>
+            </div>
+
+            <!-- Two-Column Soundboard Grid -->
+            <div class="planner-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; max-width: 900px; margin: 0 auto;">
+                <!-- Standard Single-Stage -->
+                <div style="background: var(--light); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 18px; margin: 0; font-weight: 800;">Standard Single-Stage</h3>
+                            <span style="background: #C22A36; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">74 DECIBELS</span>
+                        </div>
+                        <p style="font-size: 13.5px; color: var(--gray-dark); line-height: 1.5; margin-bottom: 20px;">Operates at 100% capacity at all times. Cycles on and off with a loud contactor click followed by a harsh, continuous hum equivalent to a vacuum cleaner.</p>
+                    </div>
+                    <button id="play-standard" class="btn btn-secondary btn-full" style="background: #C22A36; border: none; color: white; font-size: 13px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> Play Standard Noise (74 dB)</button>
+                </div>
+
+                <!-- Variable-Speed Inverter -->
+                <div style="background: var(--light); border: 1px solid var(--gray-light); border-radius: var(--border-radius); padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-family: var(--font-heading); color: var(--dark); font-size: 18px; margin: 0; font-weight: 800;">Variable-Speed Inverter</h3>
+                            <span style="background: #0B7A53; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">55 DECIBELS</span>
+                        </div>
+                        <p style="font-size: 13.5px; color: var(--gray-dark); line-height: 1.5; margin-bottom: 20px;">Ramps up and down slowly. Matches exact cooling load needs of the house, maintaining indoor temperatures quietly at a whisper-soft murmur.</p>
+                    </div>
+                    <button id="play-inverter" class="btn btn-secondary btn-full" style="background: #0B7A53; border: none; color: white; font-size: 13px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> Play Inverter Noise (55 dB)</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section for GEO / AI Citability -->
+    <section id="faq" aria-labelledby="faq-heading" style="background-color: var(--light); padding: 80px 0; border-top: 1px solid var(--gray-light);">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-header centered" style="margin-bottom:40px;">
+                <span class="section-tag">COMMON QUESTIONS</span>
+                <h2 id="faq-heading" style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark);">Frequently Asked Questions — HVAC Services in Port St. Lucie, FL</h2>
+            </div>
+
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);" open>
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">What is HVAC repair?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">HVAC repair is the professional diagnosis and restoration of a heating, ventilation, and air conditioning system by licensed technicians. It includes identifying failed components such as capacitors, compressors, refrigerant leaks, or blower motors, then repairing or replacing them to restore full cooling and heating performance. A/C Now LLC provides HVAC repair across Port St. Lucie, Palm City, Stuart, and Jupiter, FL.</p>
+            </details>
+
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">How much does AC repair cost in Port St. Lucie, FL?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">AC repair in Port St. Lucie, FL typically costs $150–$650 depending on the component replaced. A/C Now LLC charges a flat diagnostic fee of $89, waived for Service Club members. Capacitor replacements run $150–$300; compressor repairs and refrigerant recharging range $300–$650. All work is quoted flat-rate before any repairs begin. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a> for a same-day quote.</p>
+            </details>
+
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Why is A/C Now LLC known for military-grade precision?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">A/C Now LLC brings the standards of military service to every HVAC job. Owners Chris and Sean are veterans who apply the same discipline, accountability, and attention to detail they carried in uniform. Technicians arrive in fully stocked trucks, deliver written flat-rate estimates before any work begins, and back all installations with factory warranties. No subcontractors, no surprises — just precise, dependable service.</p>
+            </details>
+
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Does A/C Now LLC offer same-day AC repair?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">Yes. A/C Now LLC offers same-day AC repair appointments across Port St. Lucie, Stuart, Palm City, Jupiter, and Jensen Beach, FL. For emergency breakdowns, licensed technicians are dispatched 24/7. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a> any time.</p>
+            </details>
+
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">What areas do you serve on the Treasure Coast?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">A/C Now LLC serves the entire Treasure Coast including Port St. Lucie, Palm City, Stuart, Jupiter, Hobe Sound, Jensen Beach, and Fort Pierce, FL. We cover both Martin County and St. Lucie County for residential and commercial HVAC service. Call <a href="tel:7725213568" class="phone-link">(772) 521-3568</a> to confirm availability in your neighborhood.</p>
+            </details>
+
+            <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">How often should I service my AC?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">In Florida's hot, humid climate, HVAC systems should be professionally serviced at least twice per year — once before the summer cooling season (spring) and once before the winter heating season (fall). Twice-yearly tune-ups prevent breakdowns, extend system life, and maintain manufacturer warranties. A/C Now LLC's Service Club Memberships start at just $14/month and include precision cleanings and priority dispatch.</p>
+            </details>
+
+            <details style="border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Do you work on commercial HVAC systems?</h3></summary>
+                <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7;">Yes. A/C Now LLC is a licensed commercial HVAC contractor serving condo associations, HOA communities, office buildings, retail spaces, and restaurants throughout Port St. Lucie, Stuart, and the surrounding Treasure Coast. We handle rooftop package units, commercial split systems, multi-zone air handlers, and commercial preventive maintenance agreements. Learn more on our <a href="../../pages/commercial.html">Commercial HVAC page</a>.</p>
+            </details>
+        </div>
+    </section>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Air Conditioning Repair & HVAC Services",
+      "serviceType": "HVAC Services",
+      "provider": {
+        "@type": "HVACBusiness",
+        "@id": "https://acnowllc.com/#hvacbusiness"
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Port St. Lucie" },
+        { "@type": "City", "name": "Stuart" },
+        { "@type": "City", "name": "Palm City" },
+        { "@type": "City", "name": "Jensen Beach" }
+      ],
+      "description": "Comprehensive residential and commercial HVAC services including AC repair, system replacement, preventative maintenance, indoor air quality solutions, and ductless mini-split installation on the Treasure Coast.",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "USD",
+        "price": "95.00",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "95.00",
+          "priceCurrency": "USD",
+          "name": "Diagnostic Service Call Fee"
+        }
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is HVAC repair?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "HVAC repair is the professional diagnosis and restoration of a heating, ventilation, and air conditioning system by licensed technicians. It includes identifying failed components such as capacitors, compressors, refrigerant leaks, or blower motors, then repairing or replacing them to restore full cooling and heating performance. A/C Now LLC provides HVAC repair across Port St. Lucie, Palm City, Stuart, and Jupiter, FL." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does AC repair cost in Port St. Lucie, FL?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "AC repair in Port St. Lucie, FL typically costs $150–$650 depending on the component replaced. A/C Now LLC charges a flat diagnostic fee of $89, waived for Service Club members. Capacitor replacements run $150–$300; compressor repairs and refrigerant recharging range $300–$650. All work is quoted flat-rate before any repairs begin. Call (772) 521-3568 for a same-day quote." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is A/C Now LLC known for military-grade precision?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "A/C Now LLC brings the standards of military service to every HVAC job. Owners Chris and Sean are veterans who apply the same discipline, accountability, and attention to detail they carried in uniform. Technicians arrive in fully stocked trucks, deliver written flat-rate estimates before any work begins, and back all installations with factory warranties. No subcontractors, no surprises — just precise, dependable service." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does A/C Now LLC offer same-day AC repair?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Yes. A/C Now LLC offers same-day AC repair appointments across Port St. Lucie, Stuart, Palm City, Jupiter, and Jensen Beach, FL. For emergency breakdowns, licensed technicians are dispatched 24/7. Call (772) 521-3568 any time." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What areas do you serve on the Treasure Coast?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "A/C Now LLC serves the entire Treasure Coast including Port St. Lucie, Palm City, Stuart, Jupiter, Hobe Sound, Jensen Beach, and Fort Pierce, FL. We cover both Martin County and St. Lucie County for residential and commercial HVAC service. Call (772) 521-3568 to confirm availability in your neighborhood." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I service my AC?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "In Florida's hot, humid climate, HVAC systems should be professionally serviced at least twice per year — once before the summer cooling season (spring) and once before the winter heating season (fall). Twice-yearly tune-ups prevent breakdowns, extend system life, and maintain manufacturer warranties. A/C Now LLC's Service Club Memberships start at just $14/month and include precision cleanings and priority dispatch." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work on commercial HVAC systems?",
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Yes. A/C Now LLC is a licensed commercial HVAC contractor serving condo associations, HOA communities, office buildings, retail spaces, and restaurants throughout Port St. Lucie, Stuart, and the surrounding Treasure Coast. We handle rooftop package units, commercial split systems, multi-zone air handlers, and commercial preventive maintenance agreements. Learn more on our Commercial HVAC page." 
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Final Conversion CTA Block -->
+    <section class="cta-banner cta-banner-services" style="padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.05); color: var(--white); text-align: center;">
+        <div class="container" style="max-width: 800px;">
+            <h2 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px;">Ready for Comfort You Can Feel?</h2>
+            <p style="font-size: 18px; color: var(--gray-light); margin-bottom: 30px; line-height: 1.6;">Get same-day diagnostic service for a flat $89, or request a free estimate on a brand-new high-efficiency replacement system.</p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="tel:7725213568" class="btn btn-primary" style="padding: 14px 28px; background: linear-gradient(135deg, var(--secondary) 0%, #c12230 100%); border: none; box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call (772) 521-3568</a>
+                <a href="../../pages/contact.html" class="btn btn-secondary" style="padding: 14px 28px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--white);"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Book Service Online</a>
+            </div>
+        </div>
+    </section>
+
+    </main>
+<footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
+                <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
+                    <strong>A/C Now LLC</strong><br>
+                    <a href="../../pages/directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
+                    Port St. Lucie, FL 34986<br>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
+                </address>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Our Services</div>
+                <a href="../../pages/ac-repair.html">AC Repair</a>
+                <a href="../../pages/ac-installation.html">AC Installation</a>
+                <a href="../../pages/ac-maintenance.html">AC Maintenance</a>
+                <a href="../../pages/commercial.html">Commercial Services</a>
+                <a href="../../pages/pool-heating.html">Pool Heating</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Quick Links</div>
+                <a href="../../pages/about.html">About Us</a>
+                <a href="../../pages/reviews.html">Reviews</a>
+                <a href="../../pages/diagnose.html">DIY Troubleshooter</a>
+                <a href="../../pages/planner.html">AC Lifespan Planner</a>
+                <a href="../../pages/configurator.html">Build HVAC System</a>
+                <a href="../../pages/storm-prep.html">Storm Prep Checklist</a>
+                <a href="../../pages/areas.html">Service Areas</a>
+                <a href="../../pages/members.html" class="phase-2-only">Members Area</a>
+                <a href="../../pages/contact.html">Contact Us</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Service Cities</div>
+                <a href="../../index.html">Port St. Lucie</a>
+                <a href="../../pages/hvac-services-palm-city.html">Palm City</a>
+                <a href="../../pages/hvac-services-stuart.html">Stuart</a>
+                <a href="../../pages/areas.html">All Service Areas</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>&copy; 2026 A/C Now LLC. EPA 608 Certified • Florida License #CAC1820542</p>
+                <div style="font-size: 12.5px; display: flex; gap: 15px;">
+                    <a href="../../pages/privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="../../pages/accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../../assets/js/app.js?v=101" defer></script>
+    <script src="../../assets/js/duct-simulator.js?v=10" defer></script>
+    <script src="../../assets/js/soundboard.js?v=10" defer></script>
+    <!-- WCAG 4.1.2: Sticky CTA with role + aria-labels -->
+    <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
+        <a href="tel:+17725213568" class="sticky-cta-btn phone-btn" aria-label="Call A/C Now LLC at (772) 521-3568"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> Call Now</a>
+        <a href="../../pages/contact.html" class="sticky-cta-btn book-btn" aria-label="Book HVAC service online"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Book Online</a>
+    </div>
+
+</body>
+</html>

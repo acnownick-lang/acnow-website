@@ -1,0 +1,979 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+/* -----------------------------------------------------------
+   ESTATE MASTER GLOBAL CSS (FOR JORJ.COM)
+   Updated: Fluid Responsive Navigation & Spacing Refinements
+   ----------------------------------------------------------- */
+
+/* 1. GLOBAL TYPOGRAPHY & OVERFLOW PROTECTION */
+h1, h2, h3,
+.wprm-recipe-name,
+.entry-title,
+.page-title {
+    line-height: 1.25 !important; /* Raised from 1.1 to prevent line collisions on mobile */
+    margin-bottom: 0.6em !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    max-width: 100% !important;
+}
+
+h4, h5, h6,
+.elementor-heading-title,
+.elementor-post__title,
+.elementor-post__title a {
+    line-height: 1.3 !important; /* Slightly more breathing room for sub-headers */
+    margin-bottom: 0.6em !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    max-width: 100% !important;
+}
+
+/* 2. GLOBAL RESET & OVERFLOW */
+html, body { 
+    max-width: 100%; 
+    overflow-x: hidden; 
+}
+
+/* 3. THE ESTATE WRAPPER (Inside Posts) */
+.estate-recipe-post {
+    background-color: #F9F8F6;
+    font-family: 'Georgia', serif;
+    color: #333333;
+    line-height: 1.8;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: clamp(20px, 5vw, 50px); /* Fluid padding: 20px on mobile, scaling up to 50px on desktop */
+    box-sizing: border-box;
+}
+
+/* 4. THE STRATEGY BOX (GEO/LLM OPTIMIZATION) */
+.estate-strategy-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border: 1px solid #D4CDC1;
+    border-left: 5px solid #1B365D;
+    margin: 48px auto;
+    max-width: 780px;
+    box-shadow: 0 10px 30px rgba(138, 125, 106, 0.04);
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+.estate-strategy-box strong {
+    display: block;
+    color: #1B365D;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700;
+}
+.estate-strategy-box p {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #1B365D;
+    line-height: 1.4;
+}
+
+/* 5. ESTATE RECIPE CARD ARCHITECTURE (INTEGRATED & FLUID) */
+.estate-recipe-card {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+}
+
+.estate-recipe-title {
+    color: #1B365D;
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.estate-recipe-meta {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: clamp(10px, 2vw, 11px); 
+    color: #8A7D6A;
+    margin-bottom: 36px;
+    border-top: 1px solid #D4CDC1;
+    border-bottom: 1px solid #D4CDC1;
+    padding: 18px 0;
+}
+.estate-recipe-meta span { margin: 0 15px; }
+
+.estate-section-header {
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: clamp(11px, 2.5vw, 13px);
+    letter-spacing: 2px;
+    color: #1B365D;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #E5E0D8;
+    padding-bottom: 8px;
+    font-weight: 700;
+}
+
+.estate-recipe-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+.estate-recipe-list li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+    font-size: 1.05em;
+    line-height: 1.6;
+}
+.estate-recipe-list li::before {
+    content: "■";
+    color: #C59B27; /* Rich Gold marker */
+    position: absolute;
+    left: 0;
+    font-size: 8px;
+    top: 5px; /* Aligned vertically */
+}
+
+.estate-recipe-instructions { line-height: 1.8; }
+.estate-instruction-step { margin-bottom: 28px; font-size: 1.05em; line-height: 1.7; }
+.estate-instruction-step strong { color: #1B365D; font-family: 'Montserrat', sans-serif; font-size: 0.9em; text-transform: uppercase; margin-right: 5px; }
+
+/* 6. GLOBAL TYPOGRAPHY & TAGLINES */
+.estate-tagline {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.85em;
+    color: #C59B27; /* Gold branding color */
+    text-align: center;
+    margin-bottom: 8px;
+    display: block;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700;
+}
+
+.estate-recipe-post h1 {
+    color: #1B365D !important;
+    text-align: center !important;
+    font-size: clamp(1.8rem, 8vw, 3.2rem) !important;
+    font-weight: 500 !important;
+    margin-top: 20px !important;
+    margin-bottom: 10px !important;
+    font-style: italic !important;
+    letter-spacing: 1px !important;
+    font-family: 'Playfair Display', serif !important;
+    line-height: 1.25 !important;
+}
+
+.estate-recipe-post h2 {
+    color: #1B365D !important;
+    font-size: clamp(1.5rem, 6vw, 2.4rem) !important;
+    font-weight: 500 !important;
+    margin: 40px 0 20px 0 !important;
+    font-style: italic !important;
+    font-family: 'Playfair Display', serif !important;
+    line-height: 1.25 !important;
+}
+
+.estate-recipe-post > h3 {
+    font-size: clamp(1.4rem, 5.5vw, 2.0rem) !important; /* Fluid scaling for mobile sizes */
+    overflow-wrap: normal !important;                  /* Disables mid-word splitting */
+    word-wrap: normal !important;                      /* Disables mid-word splitting */
+    word-break: keep-all !important;                   /* Forces the whole word to wrap cleanly */
+}
+
+/* 7. MASTER NAVY/BEIGE BUTTONS */
+.estate-btn-container {
+    text-align: center;
+    margin: 30px 0 50px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.estate-btn {
+    padding: 12px 24px !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    font-size: 13px !important;
+    border-radius: 2px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+    display: inline-block !important;
+    transition: all 0.3s ease !important;
+    line-height: 1.2 !important;
+}
+.estate-btn-primary { 
+    background-color: #1B365D !important; 
+    color: #F9F8F6 !important; 
+    border: 1px solid #1B365D !important; 
+}
+.estate-btn-primary:hover { background-color: #F9F8F6 !important; color: #1B365D !important; }
+
+.estate-btn-secondary { 
+    background-color: #D4CDC1 !important; 
+    color: #1B365D !important; 
+    border: 1px solid #D4CDC1 !important; 
+}
+.estate-btn-secondary:hover { background-color: #F9F8F6 !important; border-color: #1B365D !important; color: #1B365D !important;}
+
+
+/* ==========================================================================
+   8. THE CLOSING TRINITY (UPGRADED COOKBOOK STATIONERY DESIGN - ACTIVE LOOK)
+   ========================================================================== */
+    /* ----------------------------------------------------------- */
+    /* NEIGHBORLY GRACE: GILDED STATIONERY CARD */
+    /* ----------------------------------------------------------- */
+    .neighborly-grace {
+        background-color: #ffffff !important; /* Pure white contrast background */
+        border: 1px solid #D4CDC1 !important;    /* Elegant light warm border */
+        border-top: 4px solid #C59B27 !important; /* Prominent gold header accent */
+        padding: clamp(24px, 6vw, 48px) !important; /* Fluid responsive padding for mobile/tablet/desktop */
+        margin: 48px auto !important;             /* Aligned vertical margin */
+        max-width: 780px !important;              /* Aligned breakout width constraints */
+        box-shadow: 0 10px 30px rgba(138, 125, 106, 0.04) !important; /* Ultra-soft warm shadow */
+        box-sizing: border-box !important;
+        border-radius: 2px !important;            /* Fine high-end border radius */
+        width: 100% !important;
+    }
+
+    /* Elegant serif style for the main section title */
+    .neighborly-grace h3 {
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 2.2rem !important;             /* Large luxury font size */
+        font-weight: 300 !important;              /* Soft elegant weight */
+        letter-spacing: 2px !important;           /* Widely spaced letters */
+        text-transform: uppercase !important;     /* Majestic caps */
+        color: #1B365D !important;                /* Royal stationery navy */
+        text-align: center !important;            /* Center aligned */
+        margin-top: 0 !important;
+        margin-bottom: 10px !important;
+        font-style: normal !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    /* Delicate elegant separator line or ornament */
+    .neighborly-grace h3::after {
+        content: "•  ~  •" !important;
+        display: block !important;
+        font-size: 0.85rem !important;
+        color: #C59B27 !important;                /* Gold color */
+        letter-spacing: 5px !important;
+        margin: 16px auto 0 auto !important;
+        text-align: center !important;
+        opacity: 0.85 !important;
+        font-weight: normal !important;
+    }
+
+    /* Remove default list padding and formatting */
+    .neighborly-grace ul.grace-list {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 30px 0 0 0 !important;
+    }
+
+    /* Custom styling for each sub-section list item */
+    .neighborly-grace ul.grace-list li {
+        padding: 20px 0 !important;               /* Clean padding */
+        margin: 0 !important;
+        border-bottom: 1px dotted #E5E0D8 !important; /* Fine dotted line separator */
+        font-family: 'Cormorant Garamond', serif !important; /* Beautiful serif reading text */
+        font-size: 1.15rem !important;
+        line-height: 1.8 !important;
+        color: #333333 !important;
+        text-align: left !important;
+        display: block !important;                /* Force block so strong tag sits on top */
+        background: none !important;
+    }
+
+    .neighborly-grace ul.grace-list li:last-child {
+        border-bottom: none !important;           /* Remove border from last item */
+        padding-bottom: 0 !important;
+    }
+
+    /* Style the strong element headers (THE PRESENTATION, THE POUR, THE VIBE) */
+    .neighborly-grace ul.grace-list li strong {
+        font-family: 'Montserrat', sans-serif !important; /* Contrast sans-serif header */
+        font-weight: 700 !important;
+        font-size: 0.75rem !important;            /* Small, punchy font size */
+        letter-spacing: 2.5px !important;         /* Wide letter spacing */
+        color: #C59B27 !important;                /* Gilded gold */
+        text-transform: uppercase !important;     /* Majestic caps */
+        display: block !important;                /* Force onto a new line for premium spacing */
+        margin-bottom: 8px !important;            /* Gap before description */
+        font-style: normal !important;
+    }
+
+    @media (max-width: 768px) {
+        .neighborly-grace {
+            margin: 25px auto !important;
+        }
+    }
+
+    /* ----------------------------------------------------------- */
+    /* THE HEART OF THE TABLE: LUXURY EDITORIAL BLOCKQUOTE */
+    /* ----------------------------------------------------------- */
+    .heart-of-table,
+    .heart-of-the-table {
+        background-color: #ffffff !important; /* Pure white contrast background */
+        border: 1px solid #D4CDC1 !important;    /* Consistent delicate sand border */
+        padding: clamp(24px, 6vw, 48px) !important;            /* Fluid responsive padding */
+        margin: 48px auto !important;             /* Aligned vertical margin */
+        max-width: 780px !important;              /* Aligned breakout width constraints */
+        box-sizing: border-box !important;
+        border-radius: 2px !important;
+        text-align: center !important;            /* Centered alignment */
+        position: relative !important;
+        box-shadow: 0 10px 30px rgba(138, 125, 106, 0.04) !important; /* Ultra-soft warm shadow */
+        width: 100% !important;
+    }
+
+    /* Small widely-spaced uppercase title */
+    .heart-of-table h3,
+    .heart-of-the-table h3 {
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.75rem !important;            /* Small, punchy font size */
+        letter-spacing: 3px !important;           /* Widely spaced letters */
+        color: #C59B27 !important;                /* Gilded gold */
+        text-transform: uppercase !important;     /* Majestic caps */
+        text-align: center !important;
+        margin: 0 0 15px 0 !important;
+        border: none !important;
+        padding: 0 0 10px 0 !important;
+        display: inline-block !important;
+        border-bottom: 1px solid #D4CDC1 !important; /* Thin horizontal separator */
+        font-style: normal !important;
+    }
+
+    /* Elegant, large italic serif reading text */
+    .heart-of-table p,
+    .heart-of-the-table p {
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 1.3rem !important;            /* High-impact reading size */
+        line-height: 1.9 !important;
+        color: #1B365D !important;                /* Royal navy */
+        font-style: italic !important;            /* Elegant quote style */
+        margin: 15px auto !important;
+        max-width: 720px !important;
+        position: relative !important;
+    }
+
+    /* Decorative large quotes */
+    .heart-of-table::before,
+    .heart-of-the-table::before {
+        content: "“" !important;
+        display: block !important;
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 4rem !important;
+        color: #C59B27 !important;
+        opacity: 0.25 !important;
+        line-height: 1 !important;
+        margin-bottom: -15px !important;
+        margin-top: -10px !important;
+    }
+
+    .heart-of-table::after,
+    .heart-of-the-table::after {
+        content: "”" !important;
+        display: block !important;
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 4rem !important;
+        color: #C59B27 !important;
+        opacity: 0.25 !important;
+        line-height: 1 !important;
+        margin-top: -10px !important;
+    }
+
+    @media (max-width: 768px) {
+        .heart-of-table,
+        .heart-of-the-table {
+            margin: 30px auto !important;
+        }
+    }
+
+    /* ----------------------------------------------------------- */
+    /* THE ART OF THE HOST: GILDED PORTRAIT FRAME CARD */
+    /* ----------------------------------------------------------- */
+    .art-of-host,
+    .art-of-the-host,
+    div.art-of-host,
+    div.art-of-the-host {
+        background-color: transparent !important; /* Elegant frameless transparent bg */
+        border-top: 1px solid #C59B27 !important;    /* Gold top pinstripe border */
+        border-bottom: 1px solid #C59B27 !important; /* Gold bottom pinstripe border */
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        padding: 48px 0 !important;               /* Generous vertical padding, no sides */
+        margin: 48px auto !important;             /* Centered on the page */
+        max-width: 780px !important;              /* Keep width consistent with Neighborly Grace */
+        box-sizing: border-box !important;
+        border-radius: 0 !important;
+        text-align: center !important;            /* Centered alignment */
+        position: relative !important;
+        box-shadow: none !important;              /* Remove all shadows */
+        width: 100% !important;
+    }
+
+    /* Stately Montserrat Title */
+    .art-of-host h3,
+    .art-of-host h4,
+    .art-of-the-host h3,
+    .art-of-the-host h4,
+    div.art-of-host h3,
+    div.art-of-host h4,
+    div.art-of-the-host h3,
+    div.art-of-the-host h4 {
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;            /* Slightly larger stately size */
+        letter-spacing: 3px !important;           /* Widely spaced letters */
+        color: #1B365D !important;                /* Royal Navy to contrast gold pinstripes */
+        text-transform: uppercase !important;     /* Majestic caps */
+        text-align: center !important;
+        margin: 0 auto 20px auto !important;
+        border: none !important;
+        padding: 0 !important;
+        display: block !important;
+        font-style: normal !important;
+    }
+
+    /* Small decorative elegant leaf/emblem above title */
+    .art-of-host h3::before,
+    .art-of-host h4::before,
+    .art-of-the-host h3::before,
+    .art-of-the-host h4::before,
+    div.art-of-host h3::before,
+    div.art-of-host h4::before,
+    div.art-of-the-host h3::before,
+    div.art-of-the-host h4::before {
+        content: "❦" !important;                  /* Floral leaf emblem */
+        display: block !important;
+        font-size: 1.2rem !important;
+        color: #C59B27 !important;                /* Gilded gold color */
+        margin-bottom: 12px !important;
+        text-align: center !important;
+        font-weight: normal !important;
+    }
+
+    /* Comfortable, premium reading text */
+    .art-of-host p,
+    .art-of-the-host p,
+    div.art-of-host p,
+    div.art-of-host p {
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 1.15rem !important;            /* Beautiful serif reading text */
+        line-height: 1.85 !important;
+        color: #333333 !important;                /* Soft charcoal reading text */
+        margin: 0 auto !important;
+        max-width: 680px !important;
+        text-align: center !important;
+    }
+
+    /* Centered flex-wrap list overriding Elementor's display: grid on all identical selectors */
+    .art-of-host ul,
+    .art-of-the-host ul,
+    .art-of-host .art-list,
+    .art-of-the-host .art-list,
+    div.art-of-host ul.art-list,
+    div.art-of-host ul,
+    div.art-of-the-host ul.art-list,
+    div.art-of-the-host ul {
+        list-style: none !important;
+        list-style-type: none !important;
+        padding: 0 !important;
+        margin: 25px auto 0 auto !important;
+        max-width: 680px !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 15px 35px !important;
+    }
+
+    /* Centered list items with inline dividers overriding padding/relative contexts */
+    .art-of-host li,
+    .art-of-the-host li,
+    .art-of-host .art-list li,
+    .art-of-the-host .art-list li,
+    div.art-of-host ul.art-list li,
+    div.art-of-host ul li,
+    div.art-of-the-host ul.art-list li,
+    div.art-of-the-host ul li {
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 1.15rem !important;
+        line-height: 1.6 !important;
+        color: #333333 !important;                /* Soft charcoal text */
+        text-align: center !important;
+        padding: 0 0 8px 0 !important;            /* Clean vertical padding, zero sides */
+        margin: 0 !important;
+        display: inline-block !important;
+        min-width: 200px !important;
+        border-bottom: 1px dotted #E5E0D8 !important; /* Fine dotted divider */
+        position: static !important;              /* Remove absolute positioning context */
+    }
+
+    /* Completely hide all pseudo-element absolute bullet markers on every competing selector */
+    .art-of-host li::before,
+    .art-of-host li:before,
+    .art-of-the-host li::before,
+    .art-of-the-host li:before,
+    .art-list li::before,
+    .art-list li:before,
+    div.art-of-host ul.art-list li::before,
+    div.art-of-host ul.art-list li:before,
+    div.art-of-host ul li::before,
+    div.art-of-host ul li:before,
+    div.art-of-the-host ul.art-list li::before,
+    div.art-of-the-host ul.art-list li:before,
+    div.art-of-the-host ul li::before,
+    div.art-of-the-host ul li:before {
+        content: none !important;
+        display: none !important;
+    }
+
+    /* Centered gold horizontal separator line at the bottom */
+    .art-of-host::after,
+    .art-of-the-host::after,
+    div.art-of-host::after,
+    div.art-of-the-host::after {
+        content: "" !important;
+        display: block !important;
+        width: 60px !important;
+        height: 1px !important;
+        background-color: #C59B27 !important;
+        margin: 25px auto 0 auto !important;
+        opacity: 0.8 !important;
+    }
+
+    @media (max-width: 768px) {
+        .art-of-host,
+        .art-of-the-host,
+        div.art-of-host,
+        div.art-of-the-host {
+            padding: 30px 0 !important;
+            margin: 35px auto !important;
+        }
+        .art-of-host ul,
+        .art-of-the-host ul,
+        .art-of-host .art-list,
+        .art-of-the-host .art-list,
+        div.art-of-host ul.art-list,
+        div.art-of-host ul,
+        div.art-of-the-host ul.art-list,
+        div.art-of-the-host ul {
+            gap: 12px 15px !important;
+        }
+        .art-of-host li,
+        .art-of-the-host li,
+        .art-of-host .art-list li,
+        .art-of-the-host .art-list li,
+        div.art-of-host ul.art-list li,
+        div.art-of-host ul li,
+        div.art-of-the-host ul.art-list li,
+        div.art-of-the-host ul li {
+            min-width: 140px !important;
+            font-size: 1.05rem !important;
+        }
+    }
+
+
+/* 9. IMAGES & KILL SWITCHES */
+.estate-recipe-post img { 
+    width: 100%; 
+    height: auto; 
+    border-radius: 2px; 
+    margin: 48px 0; 
+    box-shadow: 0 8px 25px rgba(138, 125, 106, 0.08) !important; 
+}
+.trinity-anchor-img { margin-bottom: 60px !important; }
+.wprm-recipe-buttons, .wprm-recipe-container .wprm-recipe-buttons { display: none !important; }
+
+/* 10. RESTORED MOBILE REFINEMENTS */
+@media screen and (max-width: 768px) {
+    .estate-recipe-post { padding: 25px 15px; }
+    .estate-recipe-post h1, .wprm-recipe-name {
+        -webkit-hyphens: none !important;
+        hyphens: none !important;
+        letter-spacing: 1.5px !important; 
+    }
+    .art-list { grid-template-columns: 1fr; }
+    .estate-btn { width: 100% !important; }
+    .estate-recipe-meta span { display: block; margin: 5px 0; }
+}
+
+/* 11. NAVIGATION: FLUID DESKTOP & SUB-MENU */
+.elementor-nav-menu .sub-menu {
+    top: 100% !important; 
+    background-color: #1B365D !important; 
+    padding: 15px 0 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+}
+.elementor-nav-menu .sub-menu .elementor-item {
+    color: #F9F8F6 !important; 
+    font-family: 'Montserrat', sans-serif !important;
+    /* Fluid scale for desktop dropdown items */
+    font-size: clamp(10px, 1.2vw, 12px) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    padding: 12px 25px !important;
+    display: block !important;
+}
+
+/* 12. NAVIGATION PROTECTION (MOBILE/TABLET TOGGLE) */
+@media screen and (max-width: 1024px) {
+    .elementor-menu-toggle { display: flex !important; z-index: 9999 !important; }
+    header .elementor-menu-toggle i, header .elementor-menu-toggle svg { fill: #1B365D !important; color: #1B365D !important; }
+    footer .elementor-menu-toggle i, footer .elementor-menu-toggle svg { fill: #F9F8F6 !important; color: #F9F8F6 !important; }
+}
+
+/* 13. DESKTOP TOGGLE KILL SWITCH */
+@media screen and (min-width: 1025px) {
+    .elementor-menu-toggle { display: none !important; }
+}
+
+/* 14. GLOBAL MOBILE MENU REFINEMENTS (FLUID & RESPONSIVE) */
+@media screen and (max-width: 1024px) {
+    .elementor-nav-menu--dropdown .elementor-item {
+        /* Fluid text size scaling from 16px to 22px */
+        font-size: clamp(16px, 4vw, 22px) !important;
+        /* Fluid vertical padding scaling with screen height */
+        padding: clamp(15px, 3vh, 25px) 15px !important;
+        font-style: normal !important;
+        line-height: 1.1 !important;
+        letter-spacing: 2px !important;
+        text-align: center !important;
+        white-space: normal !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+    }
+    footer .elementor-nav-menu--dropdown { background-color: transparent !important; width: 100% !important; }
+    footer .elementor-nav-menu--dropdown .elementor-item { 
+        color: #F9F8F6 !important; 
+        font-size: clamp(14px, 3vw, 18px) !important; 
+    }
+}
+
+/* 15. AUTOMATIC RECIPE CARD IMAGE STYLING */
+.estate-recipe-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+    margin: 30px 0;
+    border: 1px solid #D4CDC1;
+    padding: 5px; 
+    background: #fff;
+}
+
+/* 16. REFINING THE INSTRUCTION LIST */
+.estate-recipe-instructions ol {
+    counter-reset: recipe-counter;
+    list-style: none;
+    padding: 0;
+}
+
+.estate-recipe-instructions li {
+    counter-increment: recipe-counter;
+    position: relative;
+    padding-left: 52px; /* Increased from 45px for cleaner mobile indent */
+    margin-bottom: 28px; /* Increased from 20px for step separation */
+    line-height: 1.7;
+}
+
+.estate-recipe-instructions li::before {
+    content: counter(recipe-counter);
+    position: absolute;
+    left: 0;
+    top: 2px; /* Centered relative to first line of text */
+    width: 32px;
+    height: 32px;
+    background-color: #1B365D;
+    color: #F9F8F6;
+    text-align: center;
+    line-height: 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+/* 17. THE "ESTATE NOTE" STYLING */
+.estate-recipe-notes {
+    background-color: #ffffff; /* Pure white contrast card */
+    padding: 30px;
+    border: 1px solid #D4CDC1;
+    border-left: 3px solid #D4CDC1;
+    margin-top: 48px;
+    font-style: italic;
+    box-shadow: 0 10px 30px rgba(138, 125, 106, 0.04);
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+.estate-recipe-notes strong {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 8px;
+    color: #1B365D;
+}
+/* ==========================================
+   ULTRA-CLEAN "INGREDIENTS & METHOD ONLY" PRINT
+   ========================================== */
+@media print {
+    /* 1. Reset Page & Margins for a Single-Page Print */
+    @page {
+        size: auto;
+        margin: 20mm 20mm;
+    }
+    
+    /* 2. Hide All Images and Icons Globally */
+    img, 
+    svg, 
+    picture,
+    .trinity-anchor-img {
+        display: none !important;
+    }
+    
+    /* 3. Hide Website Clutter (Header, Footer, Menus & Search) */
+    header, 
+    footer, 
+    #masthead, 
+    #colophon,
+    .site-header, 
+    .site-footer,
+    .elementor-header, 
+    .elementor-footer,
+    .elementor-location-header, 
+    .elementor-location-footer,
+    .elementor-menu-toggle, 
+    .elementor-nav-menu, 
+    .elementor-search-form,
+    #searchform, 
+    .search-form, 
+    .explore-archive, 
+    .search-bar,
+    .elementor-back-to-top,
+    #back-to-top,
+    .estate-btn-container,
+    .wprm-recipe-buttons {
+        display: none !important;
+    }
+    
+    /* 4. Hide all narratives, post titles, metadata, strategy boxes, and note cards */
+    .estate-recipe-post h1,
+    .estate-recipe-meta,
+    .estate-strategy-box,
+    .estate-my-way,
+    blockquote,
+    .estate-recipe-notes,
+    .heart-of-table,
+    .neighborly-grace,
+    .estate-tagline {
+        display: none !important;
+    }
+    
+    /* Hide all story text and narrative headings outside the recipe card */
+    .estate-recipe-post > p,
+    .estate-recipe-post > h2,
+    .estate-recipe-post > h3, 
+    .estate-recipe-post > h4,
+    .estate-recipe-post > h5,
+    .estate-recipe-post > h6 {
+        display: none !important;
+    }
+    
+    /* 5. Format the Recipe Container to only show the Card Details */
+    body, html {
+        background: #ffffff !important;
+        color: #333333 !important;
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .estate-recipe-post {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        background: transparent !important;
+    }
+    
+    /* Strip the Recipe Card container borders entirely */
+    .estate-recipe-card {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+    }
+    
+    /* 6. Style the Ingredients and Instructions beautifully for the page */
+    .estate-recipe-ingredients,
+    .estate-recipe-instructions {
+        display: block !important;
+        width: 100% !important;
+        page-break-inside: avoid;
+        margin-bottom: 30px !important;
+    }
+    
+    /* Keep headings elegant and readable */
+    .estate-recipe-ingredients h3,
+    .estate-recipe-instructions h3 {
+        display: block !important;
+        font-family: 'Montserrat', sans-serif !important;
+        color: #1B365D !important;
+        text-transform: uppercase !important;
+        letter-spacing: 2px !important;
+        font-size: 1.3em !important;
+        border-bottom: 1px solid #D4CDC1 !important;
+        padding-bottom: 8px !important;
+        margin-bottom: 15px !important;
+        page-break-after: avoid;
+    }
+    
+    /* Suppress printed web-address link URLs */
+    a[href]:after {
+        content: "" !important;
+    }
+}
+
+/* ==========================================
+   PREVIEW NAVIGATION PORTAL HELPERS
+   ========================================== */
+.portal-nav {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 20px 20px 0 20px;
+}
+.back-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #C59B27;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.back-link:hover {
+    color: #1B365D;
+}
+
+/* ==========================================
+   ESTATE LONGFORM MUSEUM FRAMES & BREAKOUT GRIDS
+   ========================================== */
+
+/* Restrict reading column of longform essays to 620px for optimal line length */
+.estate-recipe-post > p,
+.estate-recipe-post > blockquote,
+.estate-recipe-post > .heart-of-table,
+.estate-recipe-post > .heart-of-the-table {
+    max-width: 620px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 1.125rem !important; /* Slightly larger, luxurious reading size */
+    line-height: 1.85 !important;
+    color: #3f3f3f !important;
+}
+
+/* Base Museum Photo Frame (Matted Look) */
+.estate-museum-frame {
+    background-color: #ffffff !important;
+    border: 1px solid #D4CDC1 !important; /* Clean hairline sand border */
+    padding: 10px !important; /* Elegant white matting border */
+    margin: 60px auto !important; /* Generous vertical whitespace */
+    box-shadow: 0 4px 12px rgba(138, 125, 106, 0.03) !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+.estate-museum-frame img {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.estate-museum-caption {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 10px !important;
+    color: #8A7D6A !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    text-align: center !important;
+    margin-top: 14px !important;
+    margin-bottom: 2px !important;
+    line-height: 1.4 !important;
+}
+
+/* Breakout Width Classes */
+.estate-museum-frame.full-width {
+    max-width: 620px !important; /* Matches reading column */
+}
+
+.estate-museum-frame.feature-bleed {
+    max-width: 780px !important; /* Breaks out of reading column */
+}
+
+.estate-museum-frame.inset-narrow {
+    max-width: 480px !important; /* Inset and narrower */
+}
+
+/* Category C: Bottom Dual-Image Diptych */
+.estate-diptych-row {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    max-width: 780px !important;
+    margin: 60px auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.estate-diptych-row .estate-museum-frame {
+    flex: 1 !important;
+    margin: 0 !important;
+    max-width: 380px !important;
+}
+
+/* Responsive Overrides */
+@media screen and (max-width: 768px) {
+    .estate-recipe-post > p,
+    .estate-recipe-post > blockquote,
+    .estate-recipe-post > .heart-of-table,
+    .estate-recipe-post > .heart-of-the-table {
+        padding: 0 10px !important;
+    }
+    .estate-museum-frame {
+        margin: 40px auto !important;
+        padding: 6px !important;
+    }
+    .estate-diptych-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 30px !important;
+        margin: 40px auto !important;
+    }
+    .estate-diptych-row .estate-museum-frame {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+}
+

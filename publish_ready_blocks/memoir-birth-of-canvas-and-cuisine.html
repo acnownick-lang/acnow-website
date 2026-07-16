@@ -1,0 +1,237 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat&display=swap');
+  
+  .memoir-body {
+    font-family: 'Georgia', serif;
+    line-height: 1.9;
+    color: #2c2a29;
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #faf9f6; /* warm paper background */
+    box-sizing: border-box;
+  }
+  
+  /* Drop Cap styling */
+  .drop-cap {
+    float: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 78px;
+    line-height: 58px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-left: 2px;
+    color: #1b365d;
+    font-weight: 700;
+  }
+  
+  /* Paragraphs */
+  .memoir-body p {
+    margin-bottom: 26px;
+    text-align: justify;
+  }
+  
+  /* Links style */
+  .memoir-body a.jorj-pantry-link {
+    color: #8A7D6A;
+    text-decoration: none;
+    border-bottom: 1px dotted #8A7D6A;
+    transition: all 0.3s ease;
+    font-weight: inherit;
+  }
+  .memoir-body a.jorj-pantry-link:hover {
+    color: #1b365d;
+    border-bottom: 1px solid #1b365d;
+  }
+  
+  /* Museum card picture frame styles */
+  .museum-card {
+    background: #ffffff;
+    border: 1px solid #D4CDC1;
+    padding: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.02);
+    box-sizing: border-box;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    z-index: 2;
+  }
+  .museum-card:hover {
+    transform: translateY(-4px);
+  }
+  .museum-card-inner {
+    border: 1px solid #D4CDC1;
+    padding: 8px;
+    background: #faf9f6;
+  }
+  .museum-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #D4CDC1;
+  }
+  .museum-card-caption {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 16px 0 0 0;
+    color: #8A7D6A;
+    line-height: 1.5;
+  }
+  
+  /* Floating / Positioning classes */
+  .museum-card.float-left {
+    float: left;
+    margin: 15px 30px 25px -30px;
+    transform: rotate(-1.5deg);
+  }
+  .museum-card.float-right {
+    float: right;
+    margin: 15px -30px 25px 30px;
+    transform: rotate(1.5deg);
+  }
+  
+  /* Quotes */
+  .memoir-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: #8A7D6A;
+    text-align: center;
+    margin: 48px auto;
+    padding: 0 40px;
+    line-height: 1.6;
+    max-width: 85%;
+    position: relative;
+    border: none !important;
+  }
+  .memoir-quote::before {
+    content: "“";
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: rgba(212, 205, 193, 0.3);
+    position: absolute;
+    top: -40px;
+    left: 0;
+  }
+  
+  /* Handshake Box styling */
+  .handshake-box {
+    background: #faf9f6;
+    border: 1px solid #D4CDC1;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    margin-top: 60px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+    clear: both;
+  }
+  .handshake-box::before {
+    content: "";
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid #D4CDC1;
+    pointer-events: none;
+  }
+  .handshake-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #1b365d;
+    margin-top: 0;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+  }
+  .handshake-box p {
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555555;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .handshake-cta {
+    display: inline-block;
+    background: #1b365d;
+    color: #ffffff !important;
+    padding: 16px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 10px rgba(27, 54, 93, 0.2);
+    border-radius: 2px;
+  }
+  .handshake-cta:hover {
+    background: #8A7D6A;
+    box-shadow: 0 6px 15px rgba(138, 125, 106, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Headings */
+  .memoir-body h2, .memoir-body h3, .memoir-body h4 {
+    font-family: 'Playfair Display', serif;
+    color: #1b365d;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+  .memoir-body h2 { font-size: 30px; }
+  .memoir-body h3 { font-size: 24px; }
+  
+  /* Clearfix */
+  .clear-flow {
+    clear: both;
+  }
+  
+  @media (max-width: 768px) {
+    .museum-card.float-left, .museum-card.float-right {
+      float: none;
+      margin: 20px 0;
+      width: 100% !important;
+      transform: none;
+    }
+    .memoir-quote {
+      font-size: 20px;
+      max-width: 100%;
+      padding: 0 15px;
+    }
+  }
+</style>
+<div class="memoir-body">
+<!-- THEMATIC TAGLINE -->
+
+<!-- ESSAY TITLE (NARRATIVE SEO) -->
+
+
+<!-- HERO IMAGE IS NATIVELY HANDLED BY WORDPRESS -->
+<!-- THE LORE -->
+<p><span class="drop-cap">M</span>y dear friend, Sue Fazio, and I decided to collaborate on what we call our “kitchen table book.” After two years of feverish painting, painstaking recipe testing, and a deliberate and dedicated publishing process... it’s finally here!</p>
+<p><em>Canvas and Cuisine: The Art of the Fresh Market</em> is part coffee table book and part travelogue. It is a visually delicious, delectably readable cookbook that pays tribute to what may be the world’s most important treasure: fresh, locally grown food. This book has been so incredibly fun to assemble!</p>
+<!-- HISTORICAL ANCHOR IMAGE 1 -->
+<div class="museum-card float-left" style="width: 45%; max-width: 480px;"><div class="museum-card-inner"><img alt="Jorj Morgan and Sue Fazio laughing together" decoding="async" src="https://jorj.com/wp-content/smush-webp/2018/12/new-year-old-friends-and-the-birth-of-this-book-1024x759.jpeg.webp"/></div></div>
+<h3>A Culinary Travelogue</h3>
+<p>Cobblestone streets winding down the Italian seaside town of Positano where merchants run their farmer’s markets. The burst of color and depth of texture shows a certain zest for life. You can take your finds at these open-air markets and make mouth-watering food.</p>
+<p>Canvas and Cuisine ensnares the senses of both the cook and the artist. You don't have to be one or the other to appreciate the fresh ingredients at the heart of every recipe; this is but the preface of a great culinary tale. I tell that tale in anecdotes of our travels, and Sue tells it with her paintbrushes. I’d give you a few hints of the crazy stuff in this book, but I’ll leave it at this: Sue and I make Lucy and Ethel look tame!</p>
+<!-- FLOATING POLAROID HISTORICAL IMAGE 2 -->
+<div class="museum-card float-right" style="width: 45%; max-width: 620px;"><div class="museum-card-inner"><img alt="A painted illustration of a fresh Italian market from the book" decoding="async" src="https://jorj.com/wp-content/smush-webp/2018/12/new-year-old-friends-and-the-birth-of-this-book.jpg.webp"/><p class="museum-card-caption">CANVAS &amp; CUISINE!</p></div></div>
+<h3>A Dedication and a Legacy</h3>
+<p>But here’s the most important thing of all to say about this book. It would not have been possible without our great influencer, Marti Huizenga. If you’re very lucky, once in your lifetime, you’ll meet a person that molds you into the somebody you want to become, simply by example. That person will have such a positive impact on you that you will be forever changed.</p>
+<p>Sue and I are lucky to have known and grown through our friendship with Marti. Together with her husband, Wayne, she hugged us into their circle, bringing us along on their adventures. Their monetary generosity is well documented, but not everyone was privy to Marti's generosity of spirit, her compassion for critters big and small, and most importantly, her generosity of friendship.</p>
+<div style="clear: both;"></div>
+<!-- HISTORICAL ANCHOR IMAGE 3 -->
+<div class="museum-card" style="width: 100%; max-width: 780px; clear: both;"><div class="museum-card-inner"><img alt="A group photo of Jorj, Sue, and their lifelong friends celebrating" decoding="async" src="https://jorj.com/wp-content/smush-webp/2018/12/new-year-old-friends-and-the-birth-of-this-book-2.jpg.webp"/><p class="museum-card-caption">FROM THE ARCHIVES: A GENEROSITY OF SPIRIT</p></div></div>
+
+<h3>A Book for Giving Back</h3>
+<p>It is because of Marti that Sue and I met so many years ago, and it is because of Marti’s inspiration and influence that Sue and I proudly donate the proceeds from Canvas &amp; Cuisine to our charities: the Boys and Girls Club of Hendersonville and Hospitality House of Avery County.</p>
+<p>Marti and Wayne are no longer with us. They are basking in the love and light that keeps them together eternally. We have dedicated Canvas and Cuisine to Marti, with love and wonderful memories of a life well-lived. Her voice is forever in our hearts.</p>
+<hr style="border: none; border-top: 1px solid #D4CDC1; margin: 50px 0;"/>
+<!-- THE ARCHITECT'S HANDSHAKE (LINK TO RECIPE) -->
+<div class="handshake-box"><h3>From the Memoir to the Kitchen</h3><p>Inspired by the enduring legacy of Marti Huizenga and the ongoing efforts toward hospitality in Avery County? Discover the Master Blueprint for our signature Hospitality House Tortellini  Salad.</p><a class="handshake-cta" href="https://jorj.com/southwestern-tortellini-pasta-salad">View Hospitality House Blueprint in The Vault</a></div>
+</div>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" class="phase-1">
+<head>
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('../index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC Maintenance Services in Martin County, FL | A/C Now LLC</title>
+    <meta name="description" content="AC Maintenance in Martin County, FL near St. Lucie Inlet and Indian River Lagoon. Regular maintenance tune-ups, filter cleaning, and system efficiency checkups. Veteran-owned, 24/7 same-day service.">
+    <link rel="canonical" href="https://acnowllc.com/heating-and-cooling-near-me/hvac-preventive-maintenance-in-martin-county/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://acnowllc.com/heating-and-cooling-near-me/hvac-preventive-maintenance-in-martin-county/">
+    <meta property="og:title" content="AC Maintenance Services in Martin County, FL | A/C Now LLC">
+    <meta property="og:description" content="AC Maintenance in Martin County, FL near St. Lucie Inlet and Indian River Lagoon. Regular maintenance tune-ups, filter cleaning, and system efficiency checkups. Veteran-owned, 24/7 same-day service.">
+    <meta property="og:image" content="https://acnowllc.com/../assets/images/mascot-logo.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+    </noscript>
+    <link rel="stylesheet" href="../../assets/css/redesign.css?v=108">
+    <!-- HVACBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HVACBusiness",
+      "name": "A/C Now LLC",
+      "@id": "https://acnowllc.com/#hvacbusiness",
+      "url": "https://acnowllc.com/heating-and-cooling-near-me/hvac-preventive-maintenance-in-martin-county/",
+      "image": "https://acnowllc.com/../assets/images/mascot-logo.svg",
+      "telephone": "(772) 521-3568",
+      "email": "info@acnowllc.com",
+      "priceRange": "$$",
+      "description": "A/C Now LLC is a veteran-owned, licensed HVAC contractor specializing in preventative AC maintenance programs across the Treasure Coast. License #CAC1820542.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
+        "addressLocality": "Martin County",
+        "addressRegion": "FL",
+        "postalCode": "34986",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 27.3138016,
+        "longitude": -80.3954409
+      }
+    }
+    </script>
+    <link rel="preload" as="image" href="../../assets/images/pillar_maintenance_bg.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="../../assets/images/mascot-logo-transparent.png" type="image/png" fetchpriority="high">
+    <style>
+        :root {
+            --primary: #0B63E5;
+            --secondary: #E63946;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);
+        }
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+            border: none !important;
+        }
+    </style>
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="apple-touch-icon" href="../../assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/images/mascot-logo.svg">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How often should my air conditioning system be serviced in Florida?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Due to Florida's high operating hours, high heat, and coastal humidity, we recommend having your AC system professionally serviced at least twice per year—once in the spring before the summer heat hits, and once in the fall."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in the Comfort Shield Protection Membership?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our Comfort Shield Protection Membership starts at just $14 per month. It includes two 50-point precision tune-ups annually, zero diagnostic fees on repairs, priority emergency scheduling, and a 15% discount on all repair parts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will regular AC maintenance help lower my monthly electric bill?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, dirty condenser coils, low refrigerant levels, and weak electrical capacitors force your compressor to work harder, using more energy. Bi-annual maintenance keeping components clean and operating correctly can reduce monthly cooling energy costs by 10% to 15%."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip Navigation Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span class="top-bar-item">
+                <!-- WCAG 1.1.1: Decorative SVG must be aria-hidden -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="../../index.html" class="logo-link">
+                <img src="../../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            </a>
+            <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+                                    <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="../../pages/ac-installation.html" class="nav-link">AC Installation</a>
+                <a href="../../pages/ac-repair.html" class="nav-link">AC Repair</a>
+                <a href="../../pages/ac-maintenance.html" class="nav-link active">AC Maintenance</a>
+                <a href="../../pages/commercial.html" class="nav-link">Commercial</a>
+                <a href="../../pages/pool-heating.html" class="nav-link">Pool Heating</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" onclick="return false;">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="../../pages/diagnose.html" class="">DIY Troubleshooter</a>
+                        <a href="../../pages/planner.html" class="">AC Lifespan Planner</a>
+                        <a href="../../pages/configurator.html" class="">Build HVAC System</a>
+                        <a href="corrosion-predictor.html" class="phase-2-only">Corrosion Risk Predictor</a>
+                        <a href="../../pages/storm-prep.html" class="">Storm Prep Checklist</a>
+                        <a href="../../pages/3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
+                    </div>
+                </div>
+                <a href="../../pages/members.html" class="nav-link phase-2-only">Members Area</a>
+            </nav>
+            <a href="../../pages/contact.html" class="btn btn-primary nav-cta">Get Free Estimate</a>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Subpage Banner -->
+        <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('../assets/images/pillar_maintenance_bg.webp'); min-height: 40vh; padding: 80px 0;">
+            <div class="container">
+                <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
+                    <span class="hero-subtitle">PREVENTATIVE SAVINGS</span>
+                    <h1 class="hero-title" style="font-size: 48px; margin-bottom: 12px;">AC Tune-Ups &amp; Maintenance</h1>
+                    <p class="hero-text" style="margin-bottom: 0;">Stop breakdowns before they happen. Lower your energy bills and preserve your manufacturer warranty with 21-point checks.</p>
+                    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:28px;">
+                        <a href="tel:7725213568" class="btn btn-primary btn-large" style="background: var(--primary);"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call (772) 521-3568</a>
+                        <a href="../../pages/contact.html" class="btn btn-secondary btn-large">Join Service Club</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlights -->
+        <section style="background: var(--dark); padding: 16px 0;">
+            <div class="container">
+                <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; align-items:center;">
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> 21-Point Maintenance Checklist</span>
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(11,99,229,0.35); border:1px solid rgba(11,99,229,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Waived Diagnostic Fees</span>
+                    <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(230,57,70,0.35); border:1px solid rgba(230,57,70,0.6); border-radius:999px; padding:8px 20px; font-size:14px; font-weight:700; color:#fff; letter-spacing:0.3px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> 15% Discount on Repairs</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Body Details -->
+        <section class="reveal" style="background-color: var(--white); padding: 140px 0 90px; scroll-margin-top: 110px;">
+            <div class="container">
+                <div class="about-grid grid-about" style="margin-bottom: 90px;">
+                    <div>
+                        <span class="section-tag">PREVENTATIVE SAVINGS</span>
+                        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 16px;">Lower Utility Bills &amp; Stop AC Breakdowns</h2>
+                        <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">
+                            South Florida's heat forces your air conditioner to run up to 10 hours a day. Without regular maintenance, efficiency drops by 5% annually, inflating your monthly electric bill. Our military-grade tune-ups keep your unit running cleanly, stop breakdown emergencies before they happen, and protect your manufacturer’s warranty.
+                        </p>
+                        <p style="color: var(--gray-dark); margin-bottom: 20px; line-height: 1.7;">
+                            We perform coil cleaning, drain line flushing, capacitor audits, and contactor inspections to verify your system is running at optimum coefficient of performance (COP) specs.
+                        </p>
+                        <div style="margin-top: 30px;">
+                            <a href="../../pages/planner.html" class="btn btn-primary">Try Our Comfort &amp; Lifespan Planner</a>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="../../assets/images/maintenance_premium.webp" alt="AC Preventative Maintenance" class="about-main-img" loading="lazy" width="600" height="450" style="border: 1px solid var(--gray-light); border-radius: 8px;">
+                    </div>
+                </div>
+
+                <!-- Membership Tiers Section -->
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <span class="section-tag">MEMBERSHIP TIERS</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--dark);">Comfort Shield Protection Memberships</h2>
+                    
+                    <!-- Billing Switch Toggle -->
+                    <div class="billing-toggle-container" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; margin-bottom: 30px;">
+                        <span class="billing-toggle-label" id="toggle-label-monthly">Bill Monthly</span>
+                        <label class="switch-toggle" style="margin: 0;">
+                            <input type="checkbox" id="billing-switch" onchange="toggleBillingPeriod(this.checked)" aria-label="Toggle billing period" checked>
+                            <span class="slider-round"></span>
+                        </label>
+                        <span class="billing-toggle-label active" id="toggle-label-yearly">Bill Annually <span class="annual-badge-discount" style="background: var(--gold); color: var(--dark); font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-left: 4px;">Save 5%</span></span>
+                    </div>
+
+                    <!-- Pricing Cards Grid -->
+                    <div class="pricing-section-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 90px; align-items: stretch;">
+                        <!-- Gold Plan -->
+                        <div class="pricing-tier-card card-3d reveal-up" data-delay="0" style="display:flex; flex-direction:column; justify-content:space-between; background:var(--white); border:1px solid var(--gray-light); padding:32px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.03);">
+                            <div>
+                                <span style="font-size:12px; font-weight:800; color:var(--primary); letter-spacing:0.5px; text-transform:uppercase;">Standard Program</span>
+                                <h3 style="font-family:var(--font-heading); font-size:24px; font-weight:800; color:var(--dark); margin:8px 0 16px 0;">Gold Plan</h3>
+                                <div class="price-box" style="margin-bottom:20px;">
+                                    <span class="price-num" style="font-size:42px; font-weight:800; color:var(--dark);">$155</span>
+                                    <span class="price-period" style="font-size:14px; color:var(--gray-dark);">/year</span>
+                                </div>
+                                <ul style="list-style:none; padding:0; margin:0 0 24px 0; font-size:14.5px; color:var(--gray-dark); line-height:1.8;">
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 2 Annual 21-Point Precision Tune-Ups</li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 $89 Diagnostic Fee Waived (with repair)</li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 15% Discount on Parts &amp; Labor Repairs</li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">🟢 Priority Dispatch Routing</li>
+                                </ul>
+                            </div>
+                            <a href="contact.html?plan=gold_annual" class="btn btn-secondary btn-full btn-tier" id="btn-preferred-tier" style="margin-top:15px; text-align:center; width:100%;">Protect My System</a>
+                        </div>
+
+                        <!-- Platinum Plan (Recommended) -->
+                        <div class="pricing-tier-card card-3d recommended-tier reveal-up" data-delay="150" style="display:flex; flex-direction:column; justify-content:space-between; background:var(--dark); color:white; border:2px solid var(--gold); padding:32px; border-radius:8px; box-shadow:0 10px 30px rgba(255,199,44,0.15); position:relative;">
+                            <span style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--gold); color:var(--dark); font-size:11px; font-weight:800; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:0.5px;">Most Popular Plan</span>
+                            <div>
+                                <span style="font-size:12px; font-weight:800; color:var(--gold); letter-spacing:0.5px; text-transform:uppercase;">Premium Program</span>
+                                <h3 style="font-family:var(--font-heading); font-size:24px; font-weight:800; color:white; margin:8px 0 16px 0;">Platinum Plan</h3>
+                                <div class="price-box" style="margin-bottom:20px;">
+                                    <span class="price-num" style="font-size:42px; font-weight:800; color:white;">$295</span>
+                                    <span class="price-period" style="font-size:14px; color:rgba(255,255,255,0.7);">/year</span>
+                                </div>
+                                <ul style="list-style:none; padding:0; margin:0 0 24px 0; font-size:14.5px; color:rgba(255,255,255,0.85); line-height:1.8;">
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ 4 Annual Precision Tune-Ups</li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ $89 Diagnostic Fee Waived (with repair)</li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ 15% Discount on Parts &amp; Labor Repairs</li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ Guaranteed 2-Hour Emergency Response</li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ 1 Free MERV 11 Filter per visit</li>
+                                    <li style="margin-bottom:10px; display:flex; align-items:center; gap:8px;">★ $100/yr Accrued Replacement Credit</li>
+                                </ul>
+                            </div>
+                            <a href="contact.html?plan=platinum_annual" class="btn btn-primary btn-full btn-tier" id="btn-comfort-tier" style="margin-top:15px; text-align:center; width:100%; background:var(--gold); color:var(--dark);">Waive Diagnostic Fee &amp; Secure Priority</a>
+                        </div>
+                    </div>
+
+                <!-- Single-Visit Precision Tune-Up Option -->
+                <div style="background: linear-gradient(135deg, rgba(11,99,229,0.05) 0%, rgba(11,99,229,0.02) 100%); border: 1.5px solid var(--primary); border-radius: 12px; padding: 30px; margin-top: -50px; margin-bottom: 70px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <span style="background: var(--primary); color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 8px;">No Subscription Required</span>
+                        <h4 style="font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--dark); margin: 0 0 8px 0;">One-Time Precision Tune-Up</h4>
+                        <p style="font-size: 14.5px; color: var(--gray-dark); margin: 0; line-height: 1.6;">Get a full 21-point system evaluation, chemical drain line flush, and condenser coil rinse for a flat one-time rate of <strong>$129</strong>. Perfect for annual compliance or system check-ups.</p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                        <div style="font-size: 32px; font-weight: 800; color: var(--dark); font-family: var(--font-heading); text-align: right;">
+                            $129<span style="font-size: 14px; font-weight: 600; color: var(--gray-dark); display: block; margin-top: -4px;">one-time fee</span>
+                        </div>
+                        <a href="contact.html?plan=precision_tuneup" class="btn btn-primary" style="padding: 14px 28px; font-weight: 700;">Book One-Time Visit</a>
+                    </div>
+                </div>
+
+                <!-- Call to Action Form -->
+                <div class="about-grid grid-about" style="background: var(--dark); padding: 50px; border-radius: 12px; color: white;">
+                    <div>
+                        <h2 style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: white; margin-bottom: 16px;">Request Your Maintenance Appointment</h2>
+                        <p style="color: rgba(255,255,255,0.8); margin-bottom: 24px; line-height: 1.7;">
+                            Secure your priority tune-up today. Our 21-point checklist tune-up will balance blower motors, verify capacitors, and chemically flush drain pans.
+                        </p>
+                        <div style="font-size: 14px; color: var(--gold); font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Protect Your Manufacturer Warranty
+                        </div>
+                    </div>
+                    <div>
+                        <form name="maintenance-request" method="POST" data-netlify="true" class="contact-form" style="display:flex; flex-direction:column; gap:16px;">
+                            <input autocomplete="name" type="hidden" name="form-name" value="maintenance-request">
+                            <div>
+                                <label for="name" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Full Name</label>
+                                <input autocomplete="name" type="text" id="name" name="name" required placeholder="John Doe" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;">
+                            </div>
+                            <div>
+                                <label for="phone" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Phone Number</label>
+                                <input autocomplete="tel" type="tel" id="phone" name="phone" required placeholder="(772) 521-3568" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;">
+                            </div>
+                            <div>
+                                <label for="preferred-date" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Preferred Date</label>
+                                <input autocomplete="name" type="date" id="preferred-date" name="preferred-date" required style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white; font-family:inherit;">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 10px; font-weight: 700; width: 100%;">Schedule Maintenance Tune-Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ Section for GEO / AI Citability -->
+        <section id="faq" aria-labelledby="faq-heading" style="background-color: var(--light); padding: 80px 0; border-top: 1px solid var(--gray-light);">
+            <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 50px; align-items: start;">
+                    <!-- Left: Graphic / Image Column -->
+                    <div style="position: sticky; top: 100px;">
+                        <span class="section-tag" style="display: block; margin-bottom: 10px;">MAINTENANCE FAQ</span>
+                        <h2 id="faq-heading" style="font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--dark); margin-bottom: 20px; line-height: 1.2;">Frequently Asked AC Maintenance Questions</h2>
+                        <p style="color: var(--gray-dark); font-size: 15px; line-height: 1.6; margin-bottom: 30px;">Get reliable answers on standard HVAC maintenance schedules, active parts warranty upkeep, and our Comfort Shield Protection memberships.</p>
+                        <div style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: var(--box-shadow); border: 1px solid var(--gray-light); height: 380px;">
+                            <img src="../../assets/images/maintenance_premium.jpg" alt="A/C Now Premium AC Maintenance Service" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(11, 21, 40, 0.4) 0%, transparent 100%);"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right: FAQ Accordions Column -->
+                    <div>
+                        <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);" open>
+                            <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">How often should my air conditioning system be serviced in Florida?</h3></summary>
+                            <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7; margin-bottom:0;">Due to Florida's high operating hours, high heat, and coastal humidity, we recommend having your AC system professionally serviced **at least twice per year**—once in the spring before the summer heat hits, and once in the fall. Regular bi-annual tune-ups prevent emergency breakdowns and maintain parts warranties.</p>
+                        </details>
+        
+                        <details style="margin-bottom: 16px; border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                            <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">What is included in the Comfort Shield Protection Membership?</h3></summary>
+                            <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7; margin-bottom:0;">Our Comfort Shield Protection Membership starts at just **$14 per month**. It includes two 50-point precision tune-ups annually, **zero diagnostic fees** on repairs, priority emergency scheduling, and a **15% discount** on all repair parts. Members save significant money on emergency repairs.</p>
+                        </details>
+        
+                        <details style="border: 1px solid var(--gray-light); border-radius: 8px; padding: 20px; background: var(--white);">
+                            <summary style="font-weight: 700; cursor: pointer; font-size: 17px; color: var(--dark); list-style: none;"><h3 style="display:inline; font-size:17px;">Will regular AC maintenance help lower my monthly electric bill?</h3></summary>
+                            <p style="margin-top: 12px; color: var(--gray-dark); line-height: 1.7; margin-bottom:0;">Yes. Dirty condenser coils, low refrigerant levels, and weak electrical capacitors force your compressor to work harder, using more energy. Standard maintenance keeping components clean and operating correctly can **reduce monthly cooling energy costs by 10% to 15%**.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" role="region" aria-label="Veteran Owned &amp; Operated Trust Badge" style="cursor: pointer; padding: 14px; margin: 15px 0;" onclick="window.location.href='contact.html?promo=military'">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military &amp; veterans receive a special honor discount applied directly to service invoices. Click to apply at booking.</p>
+                </div>
+                <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
+                    <strong>A/C Now LLC</strong><br>
+                    <a href="../../pages/directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
+                    Port St. Lucie, FL 34986<br>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
+                </address>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Our Services</div>
+                <a href="../../pages/ac-repair.html">AC Repair</a>
+                <a href="../../pages/ac-installation.html">AC Installation</a>
+                <a href="../../pages/ac-maintenance.html">AC Maintenance</a>
+                <a href="../../pages/commercial.html">Commercial Services</a>
+                <a href="../../pages/pool-heating.html">Pool Heating</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Quick Links</div>
+                <a href="../../pages/about.html">About Us</a>
+                <a href="../../pages/reviews.html">Reviews</a>
+                <a href="../../pages/diagnose.html">DIY Troubleshooter</a>
+                <a href="../../pages/planner.html">AC Lifespan Planner</a>
+                <a href="../../pages/configurator.html">Build HVAC System</a>
+                <a href="../../pages/storm-prep.html">Storm Prep Checklist</a>
+                <a href="../../pages/areas.html">Service Areas</a>
+                <a href="../../pages/members.html" class="phase-2-only">Members Area</a>
+                <a href="../../pages/contact.html">Contact Us</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Service Cities</div>
+                <a href="../../index.html">Port St. Lucie</a>
+                <a href="../../pages/hvac-services-palm-city.html">Palm City</a>
+                <a href="../../pages/hvac-services-stuart.html">Stuart</a>
+                <a href="../../pages/areas.html">All Service Areas</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>&copy; 2026 A/C Now LLC. EPA 608 Certified • Florida License #CAC1820542</p>
+                <div style="font-size: 12.5px; display: flex; gap: 15px;">
+                    <a href="../../pages/privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="../../pages/accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/app.js?v=101" defer></script>
+    <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
+        <a href="tel:+17725213568" class="sticky-cta-btn phone-btn" aria-label="Call A/C Now LLC at (772) 521-3568"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> Call Now</a>
+        <a href="../../pages/contact.html" class="sticky-cta-btn book-btn" aria-label="Book HVAC service online"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Book Online</a>
+    </div>
+</body>
+</html>

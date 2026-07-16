@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jorj.com Memoir Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .portal-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    .portal-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .portal-header h1 {
+      font-size: 2.6rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+    .portal-subtitle {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 10px;
+      font-weight: 500;
+    }
+    
+    /* Stats grid */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    .stat-card {
+      background-color: #FFF;
+      padding: 24px 20px;
+      border-radius: 4px;
+      text-align: center;
+      border: 1px solid rgba(130, 120, 108, 0.1);
+      box-shadow: 0 4px 12px rgba(27, 54, 93, 0.02);
+    }
+    .stat-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--warm-grey);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+    
+    /* Filters */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 45px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background-color: transparent;
+      border: 1px solid rgba(130, 120, 108, 0.2);
+      color: var(--text-dark);
+      padding: 8px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background-color: var(--gold);
+      color: #FFF;
+      border-color: var(--gold);
+    }
+    
+    /* Card Grid */
+    .memoirs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .memoir-card {
+      background-color: #FFF;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(130, 120, 108, 0.1);
+      transition: all 0.3s ease;
+    }
+    .memoir-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(27, 54, 93, 0.06);
+      border-color: rgba(197, 155, 39, 0.3);
+    }
+    
+    .card-header-bar {
+      padding: 10px 20px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #FFF;
+    }
+    .card-header-bar.travelogue { background-color: #2F6C9F; }
+    .card-header-bar.cozy { background-color: #C59B27; }
+    .card-header-bar.heritage { background-color: #8C5230; }
+    .card-header-bar.gatherings { background-color: #1B365D; }
+    
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-body .card-title {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      flex: 1;
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      line-height: 1.35;
+    }
+    .view-link {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: auto;
+      transition: color 0.2s ease;
+    }
+    .view-link:hover {
+      color: var(--navy);
+    }
+    
+    @media (max-width: 768px) {
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+  <script>
+    function filterCategory(cat) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      document.querySelectorAll('.memoir-card').forEach(card => {
+        if (cat === 'all' || card.dataset.category === cat) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="portal-container">
+    <header class="portal-header">
+      <h1>JORJ.COM LIFESTYLE ARCHIVE</h1>
+      <p class="portal-subtitle">Editorial Redesign Preview • 74 Memoirs</p>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val">74</div>
+        <div class="stat-lbl">Memoirs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">28,206</div>
+        <div class="stat-lbl">Total Words</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">381</div>
+        <div class="stat-lbl">Avg Words / Story</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">4</div>
+        <div class="stat-lbl">Categories</div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCategory('all')">All Stories</button>
+      <button class="filter-btn" onclick="filterCategory('travelogue')">Culinary Travelogues</button>
+      <button class="filter-btn" onclick="filterCategory('cozy')">Cozy Stories</button>
+      <button class="filter-btn" onclick="filterCategory('heritage')">Heritage Chronicles</button>
+      <button class="filter-btn" onclick="filterCategory('gatherings')">Gatherings & Guides</button>
+    </div>
+
+    <div class="memoirs-grid">
+      
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">4 Bon Appétit Recipes for Thanksgiving</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          521 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-4-bon-appetite-for-thanksgiving.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Finding Warmth on a Cozy Winter Day</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          244 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-a-cozy-winter-day.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">A Socially Distanced BBQ</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          319 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-a-socially-distanced-bbq.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="travelogue">
+      <div class="card-header-bar travelogue">
+        <span>Culinary Travelogue</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">A Taste of Italy</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          411 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-a-taste-of-italy.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">A Whimsical Tea Party for Mom</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          373 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-a-whimsical-tea-party-for-mom.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="travelogue">
+      <div class="card-header-bar travelogue">
+        <span>Culinary Travelogue</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">A Zanzibar Kitchen Journey</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          258 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-a-zanzibar-journey.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Art of the Post-Holiday Feast</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          231 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-art-of-post-holiday-feast.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Birth of Canvas and Cuisine</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          490 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-birth-of-canvas-and-cuisine.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Book Club: The Family Upstairs</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          346 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-book-club-the-family-upstairs.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="heritage">
+      <div class="card-header-bar heritage">
+        <span>Heritage Chronicles</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Camp Nana</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          373 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-camp-nana.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="heritage">
+      <div class="card-header-bar heritage">
+        <span>Heritage Chronicles</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Camp Nana: A Summer Tradition</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          322 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-camp-nana-summer-tradition.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Canvas & Cuisine Dinner Party</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          420 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-canvas-cuisine-cooking-party.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Catering & Afternoon Card Games</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          235 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-catering-martha-card-games.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Cheese Days Ahead</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          272 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-cheese-days-ahead.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="travelogue">
+      <div class="card-header-bar travelogue">
+        <span>Culinary Travelogue</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Authentic Chinese Hot Pots</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          391 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-chinese-hot-pots-a-must-eat-for-travel-channel-foodies.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Christmas Merry Making & the Fox</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          308 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-christmas-merry-making-and-the-fox.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Christmas Morning Chaos</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          204 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-christmas-morning-chaos.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Mother’s Day Cookbook Giveaway</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          478 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-cookbook-give-away-day-after-mothers-day.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Corner Restaurants & Burned Mouths</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          282 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-corner-restaurants-burned-mouths.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Countdown to Turkey Day</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          841 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-countdown-to-turkey-day.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Dinner for Four on the Floor</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          290 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-dinner-for-four-on-the-floor.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Embarrassing George Book</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          354 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-embarassing-george.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Emily Post’s Napkin Etiquette</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          605 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-emily-post-called-she-wants-you-to-put-your-napkin-in-your-lap.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">End of the Year Fresh Market Surprises!</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          395 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-end-of-the-year-fresh-market-surprises.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Farm Fresh</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          248 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-farm-fresh.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Final Countdown to Turkey Day</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          625 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-final-countdown-to-turkey-day.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Flu Fightin’ Magic</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          357 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-flu-fightin-magic.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="travelogue">
+      <div class="card-header-bar travelogue">
+        <span>Culinary Travelogue</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Boynton & Delray Food Tour</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          486 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-food-tour-of-boynton-and-delray-a-feast-of-world-cuisine.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Foodie Event Of A Lifetime</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          280 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-foodie-event-of-a-lifetime.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Foodie Friends on Buford Highway</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          288 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-foodie-friends-on-buford-highway.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="travelogue">
+      <div class="card-header-bar travelogue">
+        <span>Culinary Travelogue</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">South Africa Fundraising Walk</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          580 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-fundraising-walk-south-africa.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Garden Art Focaccia Bread</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          419 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-garden-bread-art.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="heritage">
+      <div class="card-header-bar heritage">
+        <span>Heritage Chronicles</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Grace in Giving: Estate Collection</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          243 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-giving-estate-collection.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="heritage">
+      <div class="card-header-bar heritage">
+        <span>Heritage Chronicles</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Gorgeous Grandma</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          288 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-gorgeous-grandma-day.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">A Celebration of National Guacamole Day</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          181 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-guacamole-day-avocado.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Holiday Cookies and Cocktails</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          211 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-holiday-cookies-and-cocktails.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Host a Father’s Day Tea</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          448 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-host-a-fathers-day-tea-on-june-19th-plus-other-ways-to-honor-dad.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Choosing the Best Grilling Wood</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          355 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-how-to-choose-the-correct-wood-for-cooking-smoking-and-grilling.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">It’s Here …. It’s Here!!</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          347 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-its-here-its-here.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Jen’s Soft Peanut Brittle</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          371 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-jens-soft-peanut-brittle-was-very-yummy-indeed.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">“Just a Little Something”</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          544 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-just-a-little-something.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="travelogue">
+      <div class="card-header-bar travelogue">
+        <span>Culinary Travelogue</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Learning in New Zealand: A Kiwi</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          387 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-learning-in-new-zealand-a-kiwi-journey.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Memorial Day BBQ Party</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          415 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-memorial-day-bbq-party.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Merry Christmas to All</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          293 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-merry-christmas-to-all-and-to-all-a-good-night.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Mother’s Day Experiences</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          472 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-mothers-day-experiences-over-things.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Certified Health Coach Q&A</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          137 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-my-qa-with-a-certified-health-coach-somebody-set-the-table.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Gwyneth Paltrow’s New Book</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          393 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-my-review-of-gwyneth-paltrows-new-book-how-to-win-it.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Thrive Market Organic Staples</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          245 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-no-one-can-accuse-this-foodie-of-failure-to-thrive.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">One Pretty</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          333 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-one-pretty-lunch.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Opening Day Anticipation</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          243 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-opening-day-anticipation.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Orange Bowl Memories</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          261 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-orange-bowl-memories.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Party Ready Croquettes!</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          376 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-party-ready-croquettes.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Behind-the-Scenes of a Cookbook</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          563 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-preorder-new-cookbook.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Sammy’s Doughnut Factory!</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          391 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-sammys-doughnut-factory.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Neighborly Grace In the Hurricane</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          248 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-shelter-in-the-hurricane.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">So Not Bored with My Board</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          532 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-so-not-bored-with-my-board.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Big Lies in a Small Town</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          426 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-southern-supper-book-club-big-lies-in-a-small-town.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Sweet Magnolias Draft</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          271 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-sweet-magnolias-draft.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="heritage">
+      <div class="card-header-bar heritage">
+        <span>Heritage Chronicles</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Talking Pie and a Generational Legacy</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          555 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-talking-pie-and-generational-legacy.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Tapas Crawl Dinner Party!</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          435 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-tapas-crawl-dinner-party.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Thanksgiving Hosting Guide</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          907 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-thanksgiving-is-almost-here-read-this-if-youre-hosting.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">What To Do With Thanksgiving Leftovers</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          658 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-thanksgiving-leftover-recipes.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Chuck Wagon Ride</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          331 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-the-chuck-wagon-ride.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Scrumptious Possibilities Group</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          361 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-the-dandiness-of-my-new-group.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="gatherings">
+      <div class="card-header-bar gatherings">
+        <span>Gatherings & Guides</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Fussy Dinner</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          210 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-the-fussy-dinner.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Glass Half Full</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          431 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-the-glass-half-full.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="heritage">
+      <div class="card-header-bar heritage">
+        <span>Heritage Chronicles</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Lava Legacy</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          322 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-the-lava-legacy.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Lost Golf Ball</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          293 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-the-lost-golf-ball.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="heritage">
+      <div class="card-header-bar heritage">
+        <span>Heritage Chronicles</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">The Nana Network Gives Back</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          284 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-the-nana-network-gives-back.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">There’s a New Shop on Main Street</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          417 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-theres-a-new-shop-on-main-street.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Vietnamese Cooking Class</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          551 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-vietnamese-cooking-class.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="travelogue">
+      <div class="card-header-bar travelogue">
+        <span>Culinary Travelogue</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Table Setting Tips from Down Under</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          521 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-were-going-down-under-for-our-next-table-setting-tips-from-interior-design-pros.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">What We’re Reading & Eating</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          293 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-what-im-reading-and-what-were-eating.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+
+    <div class="memoir-card" data-category="cozy">
+      <div class="card-header-bar cozy">
+        <span>Cozy Kitchen Stories</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">What Really Matters Most!</h3>
+        <div style="font-size: 11px; font-weight: 500; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 20px;">
+          417 WORDS • STORY 
+        </div>
+        <a href="memoirs/memoir-what-really-matters-most.html" class="view-link">View Story →</a>
+      </div>
+    </div>
+  
+    </div>
+  </div>
+</body>
+</html>

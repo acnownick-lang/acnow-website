@@ -1,0 +1,255 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat&display=swap');
+  
+  .memoir-body {
+    font-family: 'Georgia', serif;
+    line-height: 1.9;
+    color: #2c2a29;
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #faf9f6; /* warm paper background */
+    box-sizing: border-box;
+  }
+  
+  /* Drop Cap styling */
+  .drop-cap {
+    float: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 78px;
+    line-height: 58px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-left: 2px;
+    color: #1b365d;
+    font-weight: 700;
+  }
+  
+  /* Paragraphs */
+  .memoir-body p {
+    margin-bottom: 26px;
+    text-align: justify;
+  }
+  
+  /* Links style */
+  .memoir-body a.jorj-pantry-link {
+    color: #8A7D6A;
+    text-decoration: none;
+    border-bottom: 1px dotted #8A7D6A;
+    transition: all 0.3s ease;
+    font-weight: inherit;
+  }
+  .memoir-body a.jorj-pantry-link:hover {
+    color: #1b365d;
+    border-bottom: 1px solid #1b365d;
+  }
+  
+  /* Museum card picture frame styles */
+  .museum-card {
+    background: #ffffff;
+    border: 1px solid #D4CDC1;
+    padding: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.02);
+    box-sizing: border-box;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    z-index: 2;
+  }
+  .museum-card:hover {
+    transform: translateY(-4px);
+  }
+  .museum-card-inner {
+    border: 1px solid #D4CDC1;
+    padding: 8px;
+    background: #faf9f6;
+  }
+  .museum-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #D4CDC1;
+  }
+  .museum-card-caption {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 16px 0 0 0;
+    color: #8A7D6A;
+    line-height: 1.5;
+  }
+  
+  /* Floating / Positioning classes */
+  .museum-card.float-left {
+    float: left;
+    margin: 15px 30px 25px -30px;
+    transform: rotate(-1.5deg);
+  }
+  .museum-card.float-right {
+    float: right;
+    margin: 15px -30px 25px 30px;
+    transform: rotate(1.5deg);
+  }
+  
+  /* Quotes */
+  .memoir-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: #8A7D6A;
+    text-align: center;
+    margin: 48px auto;
+    padding: 0 40px;
+    line-height: 1.6;
+    max-width: 85%;
+    position: relative;
+    border: none !important;
+  }
+  .memoir-quote::before {
+    content: "“";
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: rgba(212, 205, 193, 0.3);
+    position: absolute;
+    top: -40px;
+    left: 0;
+  }
+  
+  /* Handshake Box styling */
+  .handshake-box {
+    background: #faf9f6;
+    border: 1px solid #D4CDC1;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    margin-top: 60px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+    clear: both;
+  }
+  .handshake-box::before {
+    content: "";
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid #D4CDC1;
+    pointer-events: none;
+  }
+  .handshake-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #1b365d;
+    margin-top: 0;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+  }
+  .handshake-box p {
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555555;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .handshake-cta {
+    display: inline-block;
+    background: #1b365d;
+    color: #ffffff !important;
+    padding: 16px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 10px rgba(27, 54, 93, 0.2);
+    border-radius: 2px;
+  }
+  .handshake-cta:hover {
+    background: #8A7D6A;
+    box-shadow: 0 6px 15px rgba(138, 125, 106, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Headings */
+  .memoir-body h2, .memoir-body h3, .memoir-body h4 {
+    font-family: 'Playfair Display', serif;
+    color: #1b365d;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+  .memoir-body h2 { font-size: 30px; }
+  .memoir-body h3 { font-size: 24px; }
+  
+  /* Clearfix */
+  .clear-flow {
+    clear: both;
+  }
+  
+  @media (max-width: 768px) {
+    .museum-card.float-left, .museum-card.float-right {
+      float: none;
+      margin: 20px 0;
+      width: 100% !important;
+      transform: none;
+    }
+    .memoir-quote {
+      font-size: 20px;
+      max-width: 100%;
+      padding: 0 15px;
+    }
+  }
+</style>
+<div class="memoir-body">
+
+
+
+<p>
+<span style="float: left; font-size: 65px; line-height: 50px; padding-top: 8px; padding-right: 8px; color: #1B365D; font-family: 'Playfair Display', serif;">
+   T
+  </span>
+  here are so many tragedies of a global pandemic... serious and heart-breaking tragedies. The helplessness of what we can and cannot do to protect ourselves and the ones we love is a full occupation. In our hearts, I know we’re all struggling to come up with ideas that make things just a little bit better for those around us.
+ </p>
+<div class="museum-card float-left" style="width: 45%; max-width: 480px;"><div class="museum-card-inner"><img alt="Camp Greystone Famous Opening-Day Scones layout" decoding="async" src="https://jorj.com/wp-content/smush-webp/2020/08/best-scones-recipe-camp-greystone.jpg.webp"/><p class="museum-card-caption">CAMP GREYSTONE FAMOUS OPENING-DAY SCONES LAYOUT</p></div></div>
+<p>
+  My "Nana" moment came when my granddaughter was informed that her beloved camp... Camp Greystone, tucked away in the Blue Ridge Mountains... announced they would be closed for the summer. She and all her fellow campers were devastated.
+ </p>
+<p>
+  In so many ways, summer camps are a rite of passage. The child leaves her family nest and flies to what will become her flock of friends, counselors, and influencers. Growing through this process allows girls to make independent choices in activities, what they wish to eat, and most especially the selection of summer friends who are destined to be friends throughout their lives.
+ </p>
+<p>
+  "Out of this disappointment, Camp Nana was born! Just a few of her closest friends were invited to our camp. After all... it was MY camp! It was an action-packed adventure."
+ </p>
+<h3>
+  Activities at Camp Nana
+ </h3>
+<div class="museum-card float-right" style="width: 45%; max-width: 620px;"><div class="museum-card-inner"><img alt="Freshly baked blueberry scones stack" decoding="async" src="/wp-content/uploads/2026/04/memoir-63725-image-3.jpg"/></div></div>
+<p>
+  Our activities included hiking, a ropes course, a thoroughly harrowing tubing trip down a river in a lightning storm, and a fully active haunted house! The crafts were candle making, bath bomb creating, jewelry designing, making fresh <a class="jorj-pantry-link" href="/pantry?ingredient=pasta" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">pasta</a>, and learning to grill pizza.
+ </p>
+<p>
+  In trying to fit the traditions of Camp Greystone into Nana Camp, I replicated their recipe for Opening Day Scones and offered them to the campers upon their arrival. These simple biscuits are light and airy and can be filled with either <a class="jorj-pantry-link" href="/pantry?ingredient=chocolate" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">chocolate</a> chips, berries, or <a class="jorj-pantry-link" href="/pantry?ingredient=oats" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">oats</a>. They are delish and I kept them coming all through camp!
+ </p>
+<p>
+  Perhaps inviting teens for a camp adventure is not on your agenda this summer. But if you dig deep and put on your thinking cap, perhaps you can come up with something special to do for a friend or family member that needs a smile. Can you?
+ </p>
+<div class="museum-card" style="width: 100%; max-width: 780px; clear: both;"><div class="museum-card-inner"><img alt="Camp Nana 2020 memories with kids and activities" decoding="async" src="https://jorj.com/wp-content/smush-webp/2020/08/camp-nana-2020-scaled.jpg.webp"/></div></div>
+<hr style="border: none; border-top: 1px solid #D4CDC1; margin: 50px 0;"/>
+<div class="heart-of-the-table">
+<h3>
+   From the Memoir to the Kitchen
+  </h3>
+<p>
+   To bring this memory to your own table, explore the Master Blueprint for our culinary recommendation below.
+  </p>
+<div class="estate-btn-container" style="margin-bottom: 0;">
+<a class="estate-btn estate-btn-primary" href="/heavy-cream-chocolate-chip-scones">
+    View the Recipe in The Estate Vault
+   </a>
+</div>
+</div>
+</div>

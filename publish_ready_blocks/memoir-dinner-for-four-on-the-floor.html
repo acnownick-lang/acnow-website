@@ -1,0 +1,234 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat&display=swap');
+  
+  .memoir-body {
+    font-family: 'Georgia', serif;
+    line-height: 1.9;
+    color: #2c2a29;
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #faf9f6; /* warm paper background */
+    box-sizing: border-box;
+  }
+  
+  /* Drop Cap styling */
+  .drop-cap {
+    float: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 78px;
+    line-height: 58px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-left: 2px;
+    color: #1b365d;
+    font-weight: 700;
+  }
+  
+  /* Paragraphs */
+  .memoir-body p {
+    margin-bottom: 26px;
+    text-align: justify;
+  }
+  
+  /* Links style */
+  .memoir-body a.jorj-pantry-link {
+    color: #8A7D6A;
+    text-decoration: none;
+    border-bottom: 1px dotted #8A7D6A;
+    transition: all 0.3s ease;
+    font-weight: inherit;
+  }
+  .memoir-body a.jorj-pantry-link:hover {
+    color: #1b365d;
+    border-bottom: 1px solid #1b365d;
+  }
+  
+  /* Museum card picture frame styles */
+  .museum-card {
+    background: #ffffff;
+    border: 1px solid #D4CDC1;
+    padding: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.02);
+    box-sizing: border-box;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    z-index: 2;
+  }
+  .museum-card:hover {
+    transform: translateY(-4px);
+  }
+  .museum-card-inner {
+    border: 1px solid #D4CDC1;
+    padding: 8px;
+    background: #faf9f6;
+  }
+  .museum-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #D4CDC1;
+  }
+  .museum-card-caption {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 16px 0 0 0;
+    color: #8A7D6A;
+    line-height: 1.5;
+  }
+  
+  /* Floating / Positioning classes */
+  .museum-card.float-left {
+    float: left;
+    margin: 15px 30px 25px -30px;
+    transform: rotate(-1.5deg);
+  }
+  .museum-card.float-right {
+    float: right;
+    margin: 15px -30px 25px 30px;
+    transform: rotate(1.5deg);
+  }
+  
+  /* Quotes */
+  .memoir-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: #8A7D6A;
+    text-align: center;
+    margin: 48px auto;
+    padding: 0 40px;
+    line-height: 1.6;
+    max-width: 85%;
+    position: relative;
+    border: none !important;
+  }
+  .memoir-quote::before {
+    content: "“";
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: rgba(212, 205, 193, 0.3);
+    position: absolute;
+    top: -40px;
+    left: 0;
+  }
+  
+  /* Handshake Box styling */
+  .handshake-box {
+    background: #faf9f6;
+    border: 1px solid #D4CDC1;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    margin-top: 60px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+    clear: both;
+  }
+  .handshake-box::before {
+    content: "";
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid #D4CDC1;
+    pointer-events: none;
+  }
+  .handshake-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #1b365d;
+    margin-top: 0;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+  }
+  .handshake-box p {
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555555;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .handshake-cta {
+    display: inline-block;
+    background: #1b365d;
+    color: #ffffff !important;
+    padding: 16px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 10px rgba(27, 54, 93, 0.2);
+    border-radius: 2px;
+  }
+  .handshake-cta:hover {
+    background: #8A7D6A;
+    box-shadow: 0 6px 15px rgba(138, 125, 106, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Headings */
+  .memoir-body h2, .memoir-body h3, .memoir-body h4 {
+    font-family: 'Playfair Display', serif;
+    color: #1b365d;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+  .memoir-body h2 { font-size: 30px; }
+  .memoir-body h3 { font-size: 24px; }
+  
+  /* Clearfix */
+  .clear-flow {
+    clear: both;
+  }
+  
+  @media (max-width: 768px) {
+    .museum-card.float-left, .museum-card.float-right {
+      float: none;
+      margin: 20px 0;
+      width: 100% !important;
+      transform: none;
+    }
+    .memoir-quote {
+      font-size: 20px;
+      max-width: 100%;
+      padding: 0 15px;
+    }
+  }
+</style>
+<div class="memoir-body">
+<!-- THEMATIC TAGLINE -->
+
+<!-- ESSAY TITLE (NARRATIVE SEO) -->
+
+
+<!-- HERO IMAGE IS NATIVELY HANDLED BY WORDPRESS -->
+<!-- THE LORE -->
+<p><span class="drop-cap">C</span>heese is my absolute go-to snack! I hide my favorites in the back of the cold cut drawer so that I can sneak in to grab a wedge, a cube, or a slice when no one is looking. I like grilled cheese, <a class="jorj-pantry-link" href="/pantry?ingredient=cauliflower" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">cauliflower</a> dunked in cheese sauce, pimento cheese sandwiches, melting cheese dips... Get the picture?</p>
+<p>In my book, <em>At Home Entertaining</em>, I designed a party that I called "Dinner for Four on the Floor." This was based on one of the very first dinner parties I ever hosted. I was living in my one-bedroom apartment, hosting my boyfriend (who would soon be my hubby, George) and my best friend Sherry and her hubby Jon.</p>
+<!-- HISTORICAL ANCHOR IMAGE 1 -->
+<div class="museum-card float-left" style="width: 45%; max-width: 480px;"><div class="museum-card-inner"><img alt="A vintage ceramic fondue pot bubbling with rich, melted cheese on a low coffee table" decoding="async" src="https://jorj.com/wp-content/smush-webp/2026/04/nostalgic-cheese-fondue-pot-memory-scaled.jpeg.webp"/></div></div>
+<h3>A Cheesy Obsession</h3>
+<p>"My small dining table sat two, so I improvised and threw cushions on the floor around my slightly larger coffee table. We sat on that floor for hours forming forever friendships and stuffing our faces with bread and veggies dipped in smooth, luxurious cheese."</p>
+<!-- FLOATING POLAROID HISTORICAL IMAGE 2 -->
+<div class="museum-card float-right" style="width: 45%; max-width: 620px;"><div class="museum-card-inner"><img alt="Thick slices of artisanal white bread, a block of premium melting cheese, and butter resting on a heavy wooden prep board" decoding="async" src="https://jorj.com/wp-content/smush-webp/2026/04/rustic-bread-cheese-butter-prep-scaled.jpeg.webp"/><p class="museum-card-caption">BREAD &amp; CHEESE PREP</p></div></div>
+<h3>The Art of the Melt</h3>
+<p>I borrowed fondue pots from friends and served fondue for dinner and dessert. I still LOVE fondue today! Melting cheese is yummy, and bread dipped into melting cheese is about the best THING ever. But melting cheese sandwiched in between toasted bread is a real close second.</p>
+<div style="clear: both;"></div>
+<!-- HISTORICAL ANCHOR IMAGE 3 -->
+<div class="museum-card" style="width: 100%; max-width: 780px; clear: both;"><div class="museum-card-inner"><img alt="An elegant evening gathering where couples are sitting casually on plush floor cushions around a low coffee table" decoding="async" src="https://jorj.com/wp-content/smush-webp/2026/04/elegant-floor-cushion-dinner-anchor-scaled.jpeg.webp"/><p class="museum-card-caption">FROM THE ARCHIVES: DINNER FOR FOUR ON THE FLOOR</p></div></div>
+
+<h3>Comfort and Connection</h3>
+<p>So while you're at it, why not pull up some pillows next to your coffee table and invite your best friends over to enjoy a bread and cheese experience they are sure to enjoy!</p>
+<hr style="border: none; border-top: 1px solid #D4CDC1; margin: 50px 0;"/>
+<!-- THE ARCHITECT'S HANDSHAKE (LINK TO RECIPE) -->
+<div class="handshake-box"><h3>From the Memoir to the Kitchen</h3><p>To bring this memory to your own coffee table, explore the Master Blueprint for the signature grilled cheese sandwich that captures the magic of that evening.</p><a class="handshake-cta" href="https://jorj.com/signature-grilled-cheese-sandwich">View the Recipe in The Estate Vault</a></div>
+</div>

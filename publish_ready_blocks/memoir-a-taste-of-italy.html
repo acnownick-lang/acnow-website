@@ -1,0 +1,235 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat&display=swap');
+  
+  .memoir-body {
+    font-family: 'Georgia', serif;
+    line-height: 1.9;
+    color: #2c2a29;
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #faf9f6; /* warm paper background */
+    box-sizing: border-box;
+  }
+  
+  /* Drop Cap styling */
+  .drop-cap {
+    float: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 78px;
+    line-height: 58px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-left: 2px;
+    color: #1b365d;
+    font-weight: 700;
+  }
+  
+  /* Paragraphs */
+  .memoir-body p {
+    margin-bottom: 26px;
+    text-align: justify;
+  }
+  
+  /* Links style */
+  .memoir-body a.jorj-pantry-link {
+    color: #8A7D6A;
+    text-decoration: none;
+    border-bottom: 1px dotted #8A7D6A;
+    transition: all 0.3s ease;
+    font-weight: inherit;
+  }
+  .memoir-body a.jorj-pantry-link:hover {
+    color: #1b365d;
+    border-bottom: 1px solid #1b365d;
+  }
+  
+  /* Museum card picture frame styles */
+  .museum-card {
+    background: #ffffff;
+    border: 1px solid #D4CDC1;
+    padding: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.02);
+    box-sizing: border-box;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    z-index: 2;
+  }
+  .museum-card:hover {
+    transform: translateY(-4px);
+  }
+  .museum-card-inner {
+    border: 1px solid #D4CDC1;
+    padding: 8px;
+    background: #faf9f6;
+  }
+  .museum-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #D4CDC1;
+  }
+  .museum-card-caption {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 16px 0 0 0;
+    color: #8A7D6A;
+    line-height: 1.5;
+  }
+  
+  /* Floating / Positioning classes */
+  .museum-card.float-left {
+    float: left;
+    margin: 15px 30px 25px -30px;
+    transform: rotate(-1.5deg);
+  }
+  .museum-card.float-right {
+    float: right;
+    margin: 15px -30px 25px 30px;
+    transform: rotate(1.5deg);
+  }
+  
+  /* Quotes */
+  .memoir-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: #8A7D6A;
+    text-align: center;
+    margin: 48px auto;
+    padding: 0 40px;
+    line-height: 1.6;
+    max-width: 85%;
+    position: relative;
+    border: none !important;
+  }
+  .memoir-quote::before {
+    content: "“";
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: rgba(212, 205, 193, 0.3);
+    position: absolute;
+    top: -40px;
+    left: 0;
+  }
+  
+  /* Handshake Box styling */
+  .handshake-box {
+    background: #faf9f6;
+    border: 1px solid #D4CDC1;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    margin-top: 60px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+    clear: both;
+  }
+  .handshake-box::before {
+    content: "";
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid #D4CDC1;
+    pointer-events: none;
+  }
+  .handshake-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #1b365d;
+    margin-top: 0;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+  }
+  .handshake-box p {
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555555;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .handshake-cta {
+    display: inline-block;
+    background: #1b365d;
+    color: #ffffff !important;
+    padding: 16px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 10px rgba(27, 54, 93, 0.2);
+    border-radius: 2px;
+  }
+  .handshake-cta:hover {
+    background: #8A7D6A;
+    box-shadow: 0 6px 15px rgba(138, 125, 106, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Headings */
+  .memoir-body h2, .memoir-body h3, .memoir-body h4 {
+    font-family: 'Playfair Display', serif;
+    color: #1b365d;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+  .memoir-body h2 { font-size: 30px; }
+  .memoir-body h3 { font-size: 24px; }
+  
+  /* Clearfix */
+  .clear-flow {
+    clear: both;
+  }
+  
+  @media (max-width: 768px) {
+    .museum-card.float-left, .museum-card.float-right {
+      float: none;
+      margin: 20px 0;
+      width: 100% !important;
+      transform: none;
+    }
+    .memoir-quote {
+      font-size: 20px;
+      max-width: 100%;
+      padding: 0 15px;
+    }
+  }
+</style>
+<div class="memoir-body">
+<!-- THEMATIC TAGLINE -->
+
+<!-- ESSAY TITLE (NARRATIVE SEO) -->
+
+
+<!-- THE LORE -->
+<p><span class="drop-cap">I</span> just returned from a whirlwind trip to Italy! We visited Sorrento and the Amalfi coast and then motored our way north to the region of Tuscany. Most of us on the trip took in the sights and attractions, but I focused on the food and wine.</p>
+<!-- FLOATING POLAROID IMAGE 1 (RIGHT) -->
+<div class="museum-card float-left" style="width: 45%; max-width: 480px;"><div class="museum-card-inner"><img alt="A smoke-filled platter of bite-size Italian pastries and truffles" decoding="async" src="https://jorj.com/wp-content/smush-webp/2018/10/my-taste-of-italy-2-768x1024.jpg.webp"/><p class="museum-card-caption">SORRENTO PASTRIES</p></div></div>
+<p>We interspersed multi-course meals in Michelin star restaurants with neighborhood trattorias, many of which offered menus featuring pages of pizza and <a class="jorj-pantry-link" href="/pantry?ingredient=pasta" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">pasta</a> choices. I came away with three favorite dishes. At the Don Alfonso 1890 Ristorante in Sorrento, my favorite course was dessert... a large platter filled with bite-size pastries from truffles to cookies to nut-coated cake sticks, all set atop a smoke-filled background. It was something!</p>
+<div style="clear: both;"></div>
+<!-- FLOATING POLAROID IMAGE 2 (LEFT) -->
+<div class="museum-card float-right" style="width: 45%; max-width: 620px;"><div class="museum-card-inner"><img alt="An elegantly presented peach-infused tuna tartare at the Belmond restaurant" decoding="async" src="https://jorj.com/wp-content/smush-webp/2018/10/my-taste-of-italy-4-768x1024.jpg.webp"/><p class="museum-card-caption">AMALFI TUNA TARTARE</p></div></div>
+<p>Just a quick nine minute helicopter ride from Sorrento you are transported to cliffside gardens and vast views of the Amalfi coast in the quaint city of Ravello. The Belmond restaurant in the Hotel Caruso sits at the top of the village and offers an outstanding dining experience. The menu features fresh Mediterranean cuisine, starring seafood from the coastal waters.</p>
+<blockquote class="memoir-quote">
+        "My favorite dish was an elegantly presented tuna tartar infused with fresh peaches. It was almost too gorgeous to eat, but I took one for our team and devoured every bite."
+    </blockquote>
+<div style="clear: both;"></div>
+<!-- FLOATING POLAROID IMAGE 3 (RIGHT) -->
+<div class="museum-card" style="width: 100%; max-width: 780px; clear: both;"><div class="museum-card-inner"><img alt="A brothy fish stew accented with shaved vegetables in Tuscany" decoding="async" src="https://jorj.com/wp-content/smush-webp/2018/10/my-taste-of-italy-3-768x1024.jpg.webp"/><p class="museum-card-caption">TUSCAN FISH STEW</p></div></div>
+<p>My final meal was a delicious lunch at Osteria di Passignano in Tuscany. The restaurant sits next to an ancient abbey house where a few monks still reside. The fields are filled with <a class="jorj-pantry-link" href="/pantry?ingredient=grape" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">grape</a> vines. A few varieties of wine are grown here, but the pride and joy is the Chianti Classico, a designation of wine that is solely made in this area. After a quick tour of the winery and gardens, we were treated to a multi-course meal that started with an extra virgin <a class="jorj-pantry-link" href="/pantry?ingredient=olive" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">olive</a> oil tasting. My favorite dish was a brothy fish stew accented with shaved vegetables that rose like stalagmites from the center of the dish.</p>
+<p>I arrived home after a lengthy 24 hours of traveling. After a day of emptying suitcases, petting the parent-deprived dog, and checking in with pals, I found myself in the kitchen. Inspired as I was, my first dish was neither <a class="jorj-pantry-link" href="/pantry?ingredient=pasta" onclick="if(window.parent !== window){window.parent.location.href=this.href; return false;}" onmouseout="this.style.color='#8A7D6A'; this.style.borderBottomColor='#8A7D6A'" onmouseover="this.style.color='#1B365D'; this.style.borderBottomColor='#1B365D'" style="color: #8A7D6A; text-decoration: none; border-bottom: 1px dotted #8A7D6A; font-weight: inherit; transition: color 0.2s;">pasta</a> nor pizza. Instead, it was the delicious Mediterranean-inspired fish dishes that won me over.</p>
+<p>I share this memory with you, not only because it is a simple, yummy dish, but also because it might inspire you to make Italy a destination in your own travel plans!</p>
+<div style="clear: both;"></div>
+<hr style="border: none; border-top: 1px solid #D4CDC1; margin: 50px 0;"/>
+<!-- THE ARCHITECT'S HANDSHAKE (No Box, Pure Conversational Transition) -->
+<div class="handshake-box"><h3>From the Memoir to the Kitchen</h3><p>To bring this memory to your own table, explore the Master Blueprint for the rustic, Italian-inspired poached  that captured my heart.</p><a class="handshake-cta" href="https://jorj.com/puttanesca-poached-cod">View the Recipe in The Estate Vault</a></div>
+</div>
