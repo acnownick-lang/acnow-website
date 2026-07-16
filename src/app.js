@@ -2507,16 +2507,35 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
     function initDevBar() {
         if (document.getElementById('acnow-dev-bar')) return;
 
+        // Check for URL query parameter toggles to set or clear dev mode
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('dev') === 'true' || params.get('admin') === 'true') {
+            localStorage.setItem('acnow_dev_mode', 'true');
+            sessionStorage.setItem('acnow_dev_mode', 'true');
+            // Clean up the URL query parameter and reload
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.location.replace(cleanUrl);
+            return;
+        } else if (params.get('dev') === 'false' || params.get('admin') === 'false') {
+            localStorage.removeItem('acnow_dev_mode');
+            sessionStorage.removeItem('acnow_dev_mode');
+            localStorage.removeItem('acnow_phase');
+            sessionStorage.removeItem('acnow_phase');
+            // Clean up the URL query parameter and reload
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.location.replace(cleanUrl);
+            return;
+        }
+
         // Get active phase state (aligned with global prioritized storage checks)
         const isDev = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
         const currentPhase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
 
-        // Gated: only show on local dev hosts, Netlify deploy previews, or staging
-        const devHosts = ["localhost", "127.0.0.1", "deploy-preview", "acnow-staging.netlify.app"];
-        const isDevHost = devHosts.some(host => window.location.hostname.includes(host));
+        // Gated: only show the QA review console bar if dev mode is explicitly enabled
+        if (!isDev) return;
 
-        // Unconditional: always render the QA review console bar on this deployment for test & critique
-        // if (!isDev && !isDevHost) return;
+        // Add padding class to body since dev bar is active
+        document.body.classList.add('has-dev-bar');
 
         // Get saved checkbox states
         let checklistStates = {};

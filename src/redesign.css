@@ -4444,11 +4444,14 @@ html.phase-1 a[href*="configurator.html"] {
    PREMIUM GLASSMORPHIC REVIEW CONSOLE & CHECKLIST SYSTEM (HORIZONTAL BOTTOM BAR)
    ========================================================================== */
 body {
-    padding-bottom: 65px !important; /* Prevent collapsed console from blocking page content */
     transition: padding-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-body.acnow-drawer-open {
+body.has-dev-bar {
+    padding-bottom: 65px !important; /* Prevent collapsed console from blocking page content */
+}
+
+body.has-dev-bar.acnow-drawer-open {
     padding-bottom: 420px !important;
 }
 @media (max-width: 991px) {
