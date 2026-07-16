@@ -71,12 +71,7 @@ def compute_jaccard(words1, words2):
 
 def main():
     site_dir = "/Users/nicholaselia/Desktop/Clients/acnow-netlify"
-    dir_path = os.path.join(site_dir, "heating-and-cooling-near-me")
-    html_files = glob.glob(os.path.join(dir_path, "**/index.html"), recursive=True)
-    
-    main_file = os.path.join(dir_path, "index.html")
-    if os.path.exists(main_file) and main_file not in html_files:
-        html_files.append(main_file)
+    html_files = glob.glob(os.path.join(site_dir, "**/index.html"), recursive=True)
         
     print(f"Verifying uniqueness for {len(html_files)} files...")
     
