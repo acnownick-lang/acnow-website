@@ -817,8 +817,8 @@
         <div class="members-container">
             <!-- VIEW A: SIGN UP / PROMO LANDING -->
             <!-- VIEW A: OWNER/STAFF PORTAL AUTH (Locked by default) -->
-            <div class="portal-view active" id="view-promo">
-                <div style="background: rgba(10, 24, 47, 0.9); border: 2px solid var(--primary); border-radius: var(--border-radius); padding: 45px; text-align: center; max-width: 500px; margin: 50px auto 80px auto; box-shadow: var(--box-shadow-lg); backdrop-filter: blur(10px);">
+            <div class="portal-view active" id="view-promo" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 20px 0;">
+                <div style="background: rgba(10, 24, 47, 0.9); border: 2px solid var(--primary); border-radius: var(--border-radius); padding: 45px; text-align: center; width: 100%; max-width: 480px; box-shadow: var(--box-shadow-lg); backdrop-filter: blur(10px); box-sizing: border-box;">
                     <div style="width: 70px; height: 70px; background: rgba(0, 98, 230, 0.1); border: 2px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; color: var(--primary);">
                         <svg viewBox="0 0 24 24" width="36" height="36" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     </div>
@@ -829,7 +829,8 @@
                         <label for="tech-pin-input" style="font-size: 11px; font-weight: 700; color: var(--gray-light); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Security PIN</label>
                         <input type="password" id="tech-pin-input" placeholder="Enter 4-Digit Security PIN" aria-label="Owner or Technician Access PIN" inputmode="numeric" pattern="[0-9]*" maxlength="4" style="width: 100%; padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; font-size: 14px; letter-spacing: 2px; text-align: center;">
                     </div>
-                    <button type="button" class="btn btn-primary btn-full" id="btn-unlock-tech" style="padding: 14px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px;">Unlock Command Console</button>
+                    <button type="button" class="btn btn-primary btn-full" id="btn-unlock-tech" style="padding: 14px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; width: 100%;">Unlock Command Console</button>
+                    <a href="../index.html" class="btn btn-secondary btn-full" style="display: block; margin-top: 12px; padding: 14px; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-align: center; text-decoration: none; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; border-radius: var(--border-radius); transition: background 0.2s ease; width: 100%; box-sizing: border-box;">← Back to Homepage</a>
                     <span id="tech-error-msg" style="color: #C22A36; font-size: 12px; display: block; margin-top: 15px; font-weight: 700;"></span>
                 </div>
             </div>
@@ -2510,6 +2511,8 @@
                 const activeToken = sessionStorage.getItem("tech_override_token");
                 const headerEl = document.querySelector("header");
                 const footerEl = document.querySelector("footer");
+                const heroEl = document.querySelector(".hero");
+
                 if (activeToken) {
                     viewPromo.classList.remove("active");
                     viewDashboard.classList.add("active");
@@ -2517,8 +2520,18 @@
                     viewDashboard.style.display = "block";
                     renderLogs();
                     renderSpecs();
-                    if (headerEl) headerEl.removeAttribute("inert");
-                    if (footerEl) footerEl.removeAttribute("inert");
+                    if (headerEl) {
+                        headerEl.removeAttribute("inert");
+                        headerEl.style.display = "";
+                    }
+                    if (footerEl) {
+                        footerEl.removeAttribute("inert");
+                        footerEl.style.display = "";
+                    }
+                    if (heroEl) {
+                        heroEl.style.display = "";
+                    }
+                    document.body.style.background = "";
 
                     // Validate session token with the serverless backend
                     if (navigator.onLine && window.location.protocol !== 'file:') {
@@ -2534,9 +2547,19 @@
                                 viewDashboard.classList.remove("active");
                                 viewPromo.classList.add("active");
                                 viewDashboard.style.display = "none";
-                                viewPromo.style.display = "block";
-                                if (headerEl) headerEl.setAttribute("inert", "");
-                                if (footerEl) footerEl.setAttribute("inert", "");
+                                viewPromo.style.display = "flex";
+                                if (headerEl) {
+                                    headerEl.setAttribute("inert", "");
+                                    headerEl.style.display = "none";
+                                }
+                                if (footerEl) {
+                                    footerEl.setAttribute("inert", "");
+                                    footerEl.style.display = "none";
+                                }
+                                if (heroEl) {
+                                    heroEl.style.display = "none";
+                                }
+                                document.body.style.background = "#0a192f";
                                 if (typeof window.showToast === "function") {
                                     window.showToast("Session expired. Please re-enter your PIN.", "error");
                                 }
@@ -2548,9 +2571,19 @@
                     viewDashboard.classList.remove("active");
                     viewPromo.classList.add("active");
                     viewDashboard.style.display = "none";
-                    viewPromo.style.display = "block";
-                    if (headerEl) headerEl.setAttribute("inert", "");
-                    if (footerEl) footerEl.setAttribute("inert", "");
+                    viewPromo.style.display = "flex";
+                    if (headerEl) {
+                        headerEl.setAttribute("inert", "");
+                        headerEl.style.display = "none";
+                    }
+                    if (footerEl) {
+                        footerEl.setAttribute("inert", "");
+                        footerEl.style.display = "none";
+                    }
+                    if (heroEl) {
+                        heroEl.style.display = "none";
+                    }
+                    document.body.style.background = "#0a192f";
                 }
             }
 
