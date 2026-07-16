@@ -803,7 +803,11 @@ page_image_map = {
     "/affordable-hvac-repair-services/best-hvac-maintenance-service-in-saint-lucie-west/": ("regional_img_88", "regional_img_89"),
     "/affordable-hvac-repair-services/difficulties-with-hvac-repair-services-in-martin-county/": ("regional_img_90", "regional_img_91"),
     "/affordable-hvac-repair-services/the-cares-you-should-take-with-your-hvac-in-port-saint-lucie/": ("regional_img_92", "regional_img_93"),
-    "/affordable-hvac-repair-services/things-about-hvac-repair-services-in-jensen-beach/": ("regional_img_94", "regional_img_95")
+    "/affordable-hvac-repair-services/things-about-hvac-repair-services-in-jensen-beach/": ("regional_img_94", "regional_img_95"),
+
+    # commercial-hvac pages (Fort Pierce)
+    "/commercial-hvac/commercial-air-conditioning-services-in-fort-pierce/": ("regional_img_96", "regional_img_97"),
+    "/commercial-hvac/commercial-hvac-companies-in-fort-pierce/": ("regional_img_98", "regional_img_99")
 }
 
 generated_count = 0
