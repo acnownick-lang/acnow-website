@@ -7,6 +7,18 @@
 /pages/corrosion-predictor.html         /index.html?redirected=phase2-restricted  302
 /*/corrosion-predictor.html             /index.html?redirected=phase2-restricted  302
 /corrosion-predictor                    /index.html?redirected=phase2-restricted  302
+
+# Estimate request redirects
+/estimate/                               /pages/contact.html                      301
+/estimate                                /pages/contact.html                      301
+/estimate.html                           /pages/contact.html                      301
+/request-estimate/                       /pages/contact.html                      301
+/request-estimate                        /pages/contact.html                      301
+/request-estimate.html                   /pages/contact.html                      301
+/free-estimate/                          /pages/contact.html                      301
+/free-estimate                           /pages/contact.html                      301
+/free-estimate.html                      /pages/contact.html                      301
+
 /about/  /pages/about.html  301
 /ac-replacement/ac-replacement-in-fort-pierce/  /pages/ac-installation.html  301
 /ac-replacement/ac-replacement-in-palm-beach-gardens/  /pages/ac-installation.html  301

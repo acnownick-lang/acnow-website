@@ -80,24 +80,44 @@ export default async (request: Request, context: Context) => {
 
     if (geoRegion === "FL") {
       const cityLower = geoCity.toLowerCase();
-      if (cityLower.includes("jupiter") || cityLower.includes("tequesta")) {
-        market = "Jupiter";
-      } else if (cityLower.includes("palm city")) {
-        market = "Palm City";
-      } else if (cityLower.includes("stuart") || cityLower.includes("jensen")) {
-        market = "Stuart";
-      } else if (cityLower.includes("port st. lucie") || cityLower.includes("psl") || cityLower.includes("fort pierce")) {
-        market = "Port St. Lucie";
-      } else if (geoCity) {
-        MARKET_DATA[geoCity] = {
-          headlineRes: `AC Repair & HVAC Services in ${geoCity}`,
-          headlineCom: `Commercial HVAC Services in ${geoCity}`,
-          serving: `Proudly serving ${geoCity} & surrounding areas.`,
-          phone: "(772) 521-3568",
-          phoneHref: "tel:7725213568"
-        };
-        market = geoCity;
+      const whitelist = [
+        "jensen beach",
+        "fort pierce",
+        "hobe sound",
+        "palm beach gardens",
+        "north palm beach",
+        "jupiter",
+        "tequesta",
+        "palm city",
+        "stuart",
+        "port st. lucie",
+        "psl"
+      ];
+      const isWhitelisted = whitelist.some(c => cityLower.includes(c) || c.includes(cityLower));
+      if (isWhitelisted) {
+        if (cityLower.includes("jupiter") || cityLower.includes("tequesta")) {
+          market = "Jupiter";
+        } else if (cityLower.includes("palm city")) {
+          market = "Palm City";
+        } else if (cityLower.includes("stuart") || cityLower.includes("jensen")) {
+          market = "Stuart";
+        } else if (cityLower.includes("port st. lucie") || cityLower.includes("psl") || cityLower.includes("fort pierce")) {
+          market = "Port St. Lucie";
+        } else if (geoCity) {
+          MARKET_DATA[geoCity] = {
+            headlineRes: `AC Repair & HVAC Services in ${geoCity}`,
+            headlineCom: `Commercial HVAC Services in ${geoCity}`,
+            serving: `Proudly serving ${geoCity} & surrounding areas.`,
+            phone: "(772) 521-3568",
+            phoneHref: "tel:7725213568"
+          };
+          market = geoCity;
+        }
+      } else {
+        market = "Default";
       }
+    } else {
+      market = "Default";
     }
   }
 

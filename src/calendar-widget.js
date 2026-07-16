@@ -45,14 +45,14 @@ function initCalendarWidget() {
             <label style="font-size: 13.5px; font-weight: 700; color: var(--dark); display: block; margin-bottom: 10px;">Select Live Dispatch Appointment Window</label>
             <p style="font-size:12px; color:var(--gray-dark); margin:0 0 15px 0; line-height:1.4;">Reserve a priority time slot. Our team will call to confirm as soon as possible.</p>
             
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; overflow-x: auto; padding-bottom: 5px;">
+            <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px;">
     `;
 
     // 1. Render Days Column Headers
     weekdays.forEach((day, index) => {
         const parts = day.split(", ");
         html += `
-            <div class="calendar-day-col" style="min-width: 90px; text-align: center;">
+            <div class="calendar-day-col" style="flex: 1 0 85px; text-align: center;">
                 <div style="font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 4px;">${parts[0].substring(0, 3)}</div>
                 <div style="font-size: 13px; font-weight: 800; color: var(--dark); margin-bottom: 10px; border-bottom: 1px solid var(--gray-light); padding-bottom: 6px;">${parts[1]}</div>
                 
@@ -90,8 +90,7 @@ function initCalendarWidget() {
             </div>
         </div>
         <div id="calendar-feedback-box" style="display: none; background: rgba(11, 99, 229, 0.04); border: 1px solid rgba(11, 99, 229, 0.1); padding: 12px 15px; border-radius: 6px; font-size: 12.5px; margin-bottom: 20px; animation: fadeIn 0.2s ease;">
-            Selected Appointment: <strong id="cal-selected-txt" style="color: var(--primary);">None</strong><br>
-            Assigned Technician: <strong id="cal-tech-txt" style="color: var(--dark);">TBD</strong>
+            Selected Appointment: <strong id="cal-selected-txt" style="color: var(--primary);">None</strong>
         </div>
     `;
 
@@ -137,14 +136,14 @@ function initCalendarWidget() {
                 hiddenInput.value = selectedSlot;
             }
 
-            // Assign Technician based on slot type (Morning = Sean, Afternoon/Evening = Chris)
-            let assignedTech = "Sean (Owner/Senior Specialist)";
-            if (selectedSlot.includes("Afternoon") || selectedSlot.includes("Evening")) {
-                assignedTech = "Chris (Lead Field Dispatcher)";
-            }
-
             selectedTxt.textContent = selectedSlot;
-            techTxt.textContent = assignedTech;
+            if (techTxt) {
+                let assignedTech = "Sean (Owner/Senior Specialist)";
+                if (selectedSlot.includes("Afternoon") || selectedSlot.includes("Evening")) {
+                    assignedTech = "Chris (Lead Field Dispatcher)";
+                }
+                techTxt.textContent = assignedTech;
+            }
             feedbackBox.style.display = "block";
 
             if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {

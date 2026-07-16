@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v65'; // Bumped: Local SEO landing pages deployment and image assets update
+const CACHE_NAME = 'acnow-cache-v66'; // Bumped for Round 18 updates (geotargeting whitelist, contact simplify, maintenance pricing, and veteran badge update)
 const DEBUG = true;
 
 // Helper function for structured logging

@@ -2037,6 +2037,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const match = document.cookie.match(/(?:^|; )nf_city=([^;]*)/);
         const city = match ? decodeURIComponent(match[1]) : "Port St. Lucie";
         
+        const serviceCities = ["Port St. Lucie", "Stuart", "Palm City", "Jensen Beach", "Fort Pierce", "Jupiter", "Hobe Sound", "Palm Beach Gardens", "North Palm Beach"];
+        const displayCity = serviceCities.includes(city) ? city : "Treasure Coast";
+        
         const CITY_COORDS = {
             "Port St. Lucie": { lat: 27.2858, lon: -80.3582, fallbackAqi: 42 },
             "Stuart": { lat: 27.1975, lon: -80.2528, fallbackAqi: 35 },
@@ -2090,11 +2093,9 @@ document.addEventListener("DOMContentLoaded", () => {
             globalBadgeSpan.style.gap = '6px';
             globalBadgeSpan.innerHTML = `
                 <span class="badge" style="background:${color}; color:#fff;" id="aqi-color-dot">AQI</span> 
-                Live ${city} Air Quality: <strong style="color:${color}; font-weight:700;">${aqiVal} (${category})</strong>
+                Live ${displayCity} Air Quality: <strong style="color:${color}; font-weight:700;">${aqiVal} (${category})</strong>
             `;
             topBarContent.appendChild(globalBadgeSpan);
-
-
         }
 
         // Inject services page card widget
@@ -2114,7 +2115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             servicesAqiWidget.innerHTML = `
                 <div style="width: 100%;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
-                        <span style="font-weight:700; color:${textColor};">${city} Air Index</span>
+                        <span style="font-weight:700; color:${textColor};">${displayCity} Air Index</span>
                         <span style="background:${color}; color:#fff; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">${category} (${aqiVal})</span>
                     </div>
                     <div style="font-size:12px; color:${descColor}; margin:0; line-height:1.4;">${desc} ${isSimulated ? '(Local seasonal average)' : ''}</div>
@@ -2123,6 +2124,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
     }
+
     initializeAQIDetector();
 
     // Inject Global Mute Toggle Button in Footer Bottom Bar
