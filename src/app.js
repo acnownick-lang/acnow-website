@@ -1523,6 +1523,110 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 5. AC Installation Estimate Form Handler
+    const acInstallForm = document.getElementById("installation-estimate-form");
+    if (acInstallForm) {
+        acInstallForm.addEventListener("submit", (e) => {
+            const nameVal = acInstallForm.querySelector("[name='name']").value.trim();
+            const nameParts = nameVal.split(" ");
+            const fname = nameParts[0] || "";
+            const lname = nameParts.slice(1).join(" ") || "";
+
+            const payload = {
+                fname,
+                lname,
+                tel: acInstallForm.querySelector("[name='phone']").value.trim(),
+                email: "",
+                city: "Not Provided",
+                message: `[AC Installation Estimate Request] [System Sizing: ${acInstallForm.querySelector("[name='system-size']").value}]`,
+                honeypot: ""
+            };
+
+            submitFormWithSync(e, acInstallForm, payload, () => {
+                if (typeof window.showToast === "function") { window.showToast("Estimate request submitted successfully! Our team will contact you shortly.", "success"); } else { alert("Estimate request submitted successfully! Our team will contact you shortly."); }
+                configurePushNotifications();
+            });
+        });
+    }
+
+    // 6. AC Maintenance Request Form Handler
+    const acMaintenanceForm = document.getElementById("maintenance-request-form");
+    if (acMaintenanceForm) {
+        acMaintenanceForm.addEventListener("submit", (e) => {
+            const nameVal = acMaintenanceForm.querySelector("[name='name']").value.trim();
+            const nameParts = nameVal.split(" ");
+            const fname = nameParts[0] || "";
+            const lname = nameParts.slice(1).join(" ") || "";
+
+            const payload = {
+                fname,
+                lname,
+                tel: acMaintenanceForm.querySelector("[name='phone']").value.trim(),
+                email: "",
+                city: "Not Provided",
+                message: `[AC Maintenance Tune-Up Request] [Preferred Date: ${acMaintenanceForm.querySelector("[name='preferred-date']").value}]`,
+                honeypot: ""
+            };
+
+            submitFormWithSync(e, acMaintenanceForm, payload, () => {
+                if (typeof window.showToast === "function") { window.showToast("Tune-up request submitted successfully! Our team will contact you shortly.", "success"); } else { alert("Tune-up request submitted successfully! Our team will contact you shortly."); }
+                configurePushNotifications();
+            });
+        });
+    }
+
+    // 7. AC Repair Request Form Handler
+    const acRepairForm = document.getElementById("repair-request-form");
+    if (acRepairForm) {
+        acRepairForm.addEventListener("submit", (e) => {
+            const nameVal = acRepairForm.querySelector("[name='name']").value.trim();
+            const nameParts = nameVal.split(" ");
+            const fname = nameParts[0] || "";
+            const lname = nameParts.slice(1).join(" ") || "";
+
+            const payload = {
+                fname,
+                lname,
+                tel: acRepairForm.querySelector("[name='phone']").value.trim(),
+                email: "",
+                city: "Not Provided",
+                message: `[AC Repair Request] [Symptoms/Description: ${acRepairForm.querySelector("[name='issue-description']").value.trim()}]`,
+                honeypot: ""
+            };
+
+            submitFormWithSync(e, acRepairForm, payload, () => {
+                if (typeof window.showToast === "function") { window.showToast("Repair dispatch request submitted successfully! Our team will contact you shortly.", "success"); } else { alert("Repair dispatch request submitted successfully! Our team will contact you shortly."); }
+                configurePushNotifications();
+            });
+        });
+    }
+
+    // 8. Pool Heating Estimate Form Handler
+    const poolHeatingForm = document.getElementById("pool-heating-form");
+    if (poolHeatingForm) {
+        poolHeatingForm.addEventListener("submit", (e) => {
+            const nameVal = poolHeatingForm.querySelector("[name='fullname']").value.trim();
+            const nameParts = nameVal.split(" ");
+            const fname = nameParts[0] || "";
+            const lname = nameParts.slice(1).join(" ") || "";
+
+            const payload = {
+                fname,
+                lname,
+                tel: poolHeatingForm.querySelector("[name='phone']").value.trim(),
+                email: poolHeatingForm.querySelector("[name='email']").value.trim(),
+                city: "Not Provided",
+                message: `[Pool Heating Estimate Request] [Type: ${poolHeatingForm.querySelector("[name='service-type']").value}] [Details: ${poolHeatingForm.querySelector("[name='message']").value.trim()}]`,
+                honeypot: poolHeatingForm.querySelector("[name='honeypot']").value
+            };
+
+            submitFormWithSync(e, poolHeatingForm, payload, () => {
+                if (typeof window.showToast === "function") { window.showToast("Pool heating estimate request submitted successfully! Our team will contact you shortly.", "success"); } else { alert("Pool heating estimate request submitted successfully! Our team will contact you shortly."); }
+                configurePushNotifications();
+            });
+        });
+    }
+
     // Corrosion Predictor Form Binding
     const corrosionForm = document.getElementById("corrosion-lead-form");
     if (corrosionForm) {
