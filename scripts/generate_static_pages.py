@@ -616,6 +616,102 @@ pilot_page_data = {
         "faq1_a": "Firsthand familiarity with Stuart's coastal humidity, hurricane history, and the demands of a climate that sees temperatures above 90°F roughly 81 days a year.",
         "faq2_q": "How has hurricane history shaped AC requirements in Stuart?",
         "faq2_a": "Severe storm exposure means outdoor units require heavy-duty anchoring and elevated pads to withstand high winds and potential standing water."
+    },
+    "/residential-air-conditioning/cooling-comfort-a-c-nows-expertise-in-residential-air-conditioning-in-fort-pierce/": {
+        "intro": "Fort Pierce homes work their air conditioners hard. Sitting at just 20 feet above sea level, the city sees roughly 51 inches of rain a year, with June-September delivering humid, saturated air that keeps compressors running nearly around the clock.",
+        "prose": "Homes closer to the port and marina areas see faster corrosion on outdoor units given the salt air — Fort Pierce marinas took a direct hit during the 2004 hurricanes. A/C Now LLC designs and repairs residential systems with extra durability for coastal settings.",
+        "faq1_q": "Does living near the water in Fort Pierce affect how often my AC needs maintenance?",
+        "faq1_a": "Coastal and port-adjacent properties benefit from more frequent attention to the outdoor unit, since salt-laden air accelerates corrosion faster than a few miles inland.",
+        "faq2_q": "Do you provide emergency AC repair services in Fort Pierce?",
+        "faq2_a": "Yes, we offer rapid same-day diagnostic service and emergency cooling restorations to get your home comfortable again quickly."
+    },
+    "/residential-air-conditioning/unveiling-comfort-a-c-nows-expertise-in-residential-air-conditioning/": {
+        "intro": "Jupiter's tropical rainforest climate splits into two seasons — milder, drier November-April and hot, wet May-October — meaning residential AC goes from light duty in winter to constant heavy-load operation for more than half the year.",
+        "prose": "The same environmental exposure that's required repeated repainting of the Jupiter Inlet Lighthouse since 1860 affects outdoor AC components too. As a local specialist, we help homeowners choose and maintain systems built to withstand coastal salt air.",
+        "faq1_q": "Does being so close to the Atlantic and the inlet affect what kind of AC equipment works best for a Jupiter home?",
+        "faq1_a": "Proximity to saltwater air influences how quickly outdoor components corrode — homes nearer the coastline benefit from equipment and maintenance intervals chosen with that exposure in mind.",
+        "faq2_q": "How can I prevent salt air from destroying my residential AC system?",
+        "faq2_a": "Regular freshwater coil flushes and selecting units with marine-grade protective epoxy coatings are highly effective ways to extend equipment lifespan."
+    },
+    "/residential-air-conditioning/mastering-comfort-residential-air-conditioning-expertise-with-a-c-now-in-palm-beach-gardens/": {
+        "intro": "With roughly 66 inches of rain most years and the heaviest downpours June-September, AC here isn't just fighting heat — it's fighting humidity almost every day.",
+        "prose": "Undersized or aging equipment tends to run long cycles without pulling moisture out of the air, showing up as that 'cool but sticky' feeling. We run precise load calculations to solve relative humidity issues in PGA Boulevard homes.",
+        "faq1_q": "How often should I really have my AC serviced living in Palm Beach Gardens, given how humid it gets?",
+        "faq1_a": "Most homes benefit from a maintenance visit twice a year — once before the heavy summer rains and once in cooler months.",
+        "faq2_q": "Why does my home feel humid even though my AC is running and set to a cool temperature?",
+        "faq2_a": "This is often a sign of an oversized system that cools the air too quickly without running long enough to extract moisture, or it could indicate leaky ductwork pulling in humid attic air."
+    },
+    "/residential-air-conditioning/mastering-comfort-understanding-how-residential-air-conditioning-works-in-palm-city-with-a-c-now/": {
+        "intro": "Palm City sits low — much of the town only a handful of feet above sea level along the South Fork of the St. Lucie River.",
+        "prose": "Between flood-prone lots near the river and sprawling homes in communities like Cobblestone, Harbour Ridge, Martin Downs, and Orchid Bay, no two AC setups look quite the same. We deliver custom-tailored residential integrations that respect HOA guidelines.",
+        "faq1_q": "My home is close to the river — should I be doing anything differently to protect my AC system before storm season?",
+        "faq1_a": "Homes in lower-lying parts near the South Fork are worth a proactive look — outdoor equipment near grade is more exposed to storm surge and heavy rain runoff.",
+        "faq2_q": "Does A/C Now LLC handle zoning for larger golf-course community estates in Palm City?",
+        "faq2_a": "Yes, we design and install multi-zone cooling systems to manage temperature balances across sprawling, multi-room layouts."
+    },
+    "/residential-air-conditioning/decoding-comfort-choices-central-air-conditioning-vs-split-system-a-c-nows-insight-in-port-saint-lucie/": {
+        "intro": "As Florida's sixth-largest city, Port St. Lucie stretches across more than 120 square miles, from Tradition to St. Lucie West — all low, flat, in the path of a humid subtropical climate that pushes cooling systems hard nearly year-round. A/C Now LLC calls Port St. Lucie home base.",
+        "prose": "Whether you choose a traditional central air system or a multi-zone ductless mini-split setup, we provide expert assessments of structural ductwork, electrical capability, and overall load to match your home perfectly.",
+        "faq1_q": "Why does my AC struggle with humidity even when the temperature seems fine?",
+        "faq1_a": "A system that's oversized — or cycling on and off too quickly — can cool the air fast without running long enough to wring the moisture out, leaving a house feeling clammy even at a comfortable setting.",
+        "faq2_q": "What is the primary difference between a central AC system and a ductless split system?",
+        "faq2_a": "Central AC uses a single blower to push air through ductwork across the whole house, while ductless mini-splits use individual zone units, allowing you to heat or cool rooms independently."
+    },
+    "/residential-air-conditioning/perfecting-home-comfort-a-c-nows-expertise-in-residential-air-conditioning-installation-in-stuart/": {
+        "intro": "Tucked into the confluence of the St. Lucie River, Indian River Lagoon, and Atlantic, Stuart packs a lot of coastline into just 9.5 square miles. Summer highs routinely sit high 80s-low 90s, with around 81 days a year breaking 90 degrees.",
+        "prose": "Older homes in Stuart's established downtown neighborhoods have unique needs. We design residential systems that respect existing home layouts, whether utilizing compact ductwork retrofits or installing ductless mini-splits.",
+        "faq1_q": "I live in one of Stuart's older homes near downtown — does that affect what kind of AC system will work best?",
+        "faq1_a": "Homes built decades ago often have ductwork or electrical panels that weren't designed with modern high-efficiency equipment in mind, so systems need to be matched carefully to the house's existing infrastructure.",
+        "faq2_q": "How does Stuart's humidity affect residential AC system lifespan?",
+        "faq2_a": "Sustained high humidity means duty cycles are longer, which typically limits equipment life to 8-12 years unless regular maintenance is performed."
+    },
+    "/pool-heating/pool-heating-in-jupiter/": {
+        "intro": "Between November and April, when Jupiter's tropical rainforest climate settles into its milder, drier stretch, unheated pools can sit too cold to enjoy most mornings and evenings.",
+        "prose": "Salt air off the Loxahatchee River and the Atlantic works on pool equipment cabinets and coils over time, the same way it's worn on ironwork at the Jupiter Inlet Lighthouse for over a century. We specify corrosion-resistant heat pumps built for coastal durability.",
+        "faq1_q": "How does living near the coast affect my pool heating equipment?",
+        "faq1_a": "Salt-laden air accelerates corrosion on any outdoor equipment; we account for that in both equipment recommendations and service checks.",
+        "faq2_q": "What is the most energy-efficient way to heat a pool in Jupiter?",
+        "faq2_a": "Electric pool heat pumps are highly efficient, capturing heat from the air to warm your pool and reducing energy bills compared to gas heaters."
+    },
+    "/pool-heating/pool-heating-in-palm-beach-gardens/": {
+        "intro": "In a city where a backyard pool is practically part of the standard package — near the fairways at PGA National or elsewhere — the cooler, drier months from late fall into spring are when a properly sized heat pump earns its keep.",
+        "prose": "A/C Now LLC installs high-efficiency heat pumps designed to extend your swim season and provide comfortable, predictable temperatures day or night.",
+        "faq1_q": "Is pool heating worth it in a community like PGA National where the pool is already there year-round?",
+        "faq1_a": "A heat pump extends the number of days the pool feels inviting rather than merely present, which matters most where the pool gets daily use.",
+        "faq2_q": "Can you service pool heaters inside gated communities in Palm Beach Gardens?",
+        "faq2_a": "Yes, we coordinate directly with HOAs and property managers to schedule prompt, authorized service calls throughout PGA National and surrounding communities."
+    },
+    "/pool-heating/pool-heating-in-stuart/": {
+        "intro": "Stuart sits where the St. Lucie River, Indian River Lagoon, and Atlantic all converge — giving the city humid, salt-heavy air. With summer highs regularly high 80s-low 90s, Stuart pools rarely need help staying warm May-September; it's the rest of the year where a heat pump extends the swim window.",
+        "prose": "Due to constant salt air, standard metal pool heaters degrade quickly. We recommend epoxy-coated coils and composite cabinets to protect your system from the elements.",
+        "faq1_q": "Does Stuart's location at the confluence of the river, lagoon, and ocean actually make a difference for pool equipment?",
+        "faq1_a": "Yes — more consistent salt and humidity exposure than further inland; we favor corrosion-resistant equipment for Stuart installations.",
+        "faq2_q": "When is a pool heater most needed for Stuart properties?",
+        "faq2_a": "Pool heaters are primarily used between late October and April, when overnight temperatures pull pool water below comfortable swimming levels."
+    },
+    "/pool-heating/pool-heating-in-fort-pierce/": {
+        "intro": "A pool that sits idle November-February isn't earning its keep, and in Fort Pierce, Atlantic breezes off the port can knock ten degrees off water temperature overnight.",
+        "prose": "Older housing stock around Lincoln Park sits closer to salt spray than pools further inland, accelerating corrosion on heat pump cabinets. We service and replace residential pool heaters of all generations.",
+        "faq1_q": "I have an older pool in a historic Fort Pierce neighborhood — can a heater be added without redoing everything?",
+        "faq1_a": "Often yes — many older pools can accept a heat pump or gas heater with modest updates rather than a full overhaul, depending on existing condition.",
+        "faq2_q": "How does port wind affect pool water temperature in Fort Pierce?",
+        "faq2_a": "Coastal winds speed up heat loss through evaporation, making a reliable heat pump or thermal cover essential for keeping pool temperatures stable."
+    },
+    "/pool-heating/pool-heating-in-palm-city/": {
+        "intro": "In Palm City's golf-course communities — Cobblestone, Harbour Ridge, Martin Downs, Islesworth, Orchid Bay — the pool is rarely an afterthought.",
+        "prose": "Palm City's low, flat terrain puts equipment placement and drainage near the top of the planning checklist, especially on properties backing up to community lakes or canals. We install elevated pads to protect units from runoff.",
+        "faq1_q": "My property backs up to a lake or golf course water feature — does that change the installation?",
+        "faq1_a": "Low-lying lots near water features need thoughtful equipment placement so the pad stays clear of runoff and standing water during heavy rain.",
+        "faq2_q": "Are pool heaters loud, and will they conflict with Palm City HOA rules?",
+        "faq2_a": "Modern pool heat pumps are designed for quiet operation; we choose low-decibel models that satisfy strict golf-community HOA rules."
+    },
+    "/pool-heating/pool-heating-in-port-saint-lucie/": {
+        "intro": "As the sixth-largest city in Florida and A/C Now LLC's home base, Port St. Lucie is where the company does the most pool heating work.",
+        "prose": "Newer developments like Tradition and St. Lucie West tend to have modern pool plumbing and electrical already roughed in, usually making for a more straightforward heat pump install.",
+        "faq1_q": "With Port St. Lucie's heavy summer rain, does that affect how pool heating equipment should be installed?",
+        "faq1_a": "Drainage and pad placement matter — equipment is sited so heavy summer rainfall doesn't pool around the unit.",
+        "faq2_q": "How much does it cost to operate an electric pool heat pump in Port St. Lucie?",
+        "faq2_a": "Electric pool heat pumps cost significantly less to run than gas heaters, typically averaging between $50 to $150 per month depending on pool size and target temperature."
     }
 }
 
@@ -739,6 +835,9 @@ for path in paths:
         content = content.replace("We specialize in commercial split system diagnostic repairs and complete facility change-outs. From crane-lifted rooftop package units to complex multi-compressor configurations, our EPA-certified and veteran-led team delivers military-grade HVAC engineering on time and on budget.", prose_wrapped)
         
         content = content.replace("A/C Now LLC is based in Port St. Lucie, but our service trucks actively route daily through neighborhoods across St. Lucie, Martin, and northern Palm Beach Counties. Because we are locally owned, we understand the local grid and neighborhood housing configurations, allowing us to perform fast, accurate air conditioner repairs and custom-designed system installations.", f"{intro_wrapped}\n                    <br><br>\n                    {prose_wrapped}")
+        
+        content = content.replace("Keep your pool comfortable from November through March. We diagnose, service, and install high-performance pool heat pumps that maximize heat exchange efficiency while keeping electricity consumption low.", intro_wrapped)
+        content = content.replace("At A/C NOW LLC, we offer professional installation, repair, and replacements of pool heating systems. Our skilled and experienced technicians can help you find the right heater for your pool, make sure it is installed correctly for optimal water flow, and take care of any mechanical repairs.", prose_wrapped)
 
 
     # 9. Create target directory and write index.html
