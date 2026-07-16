@@ -360,6 +360,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+
+        // Pre-populate city input fields on contact forms if geotargeting is active and not default
+        const cityInputs = document.querySelectorAll('input[name="city"], input[id="city"]');
+        cityInputs.forEach(input => {
+            if (market && market !== "Default" && !input.value) {
+                input.value = market;
+            }
+        });
     }
     applyClientGeotargeting();
 
@@ -1416,6 +1424,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (typeof window.showToast === "function") { window.showToast("Your service request has been transmitted. Technicians have been notified.", "success"); } else { alert("Your service request has been transmitted. Technicians have been notified."); }
                 configurePushNotifications();
             });
+        });
+    }
+
+    // 2b. Custom inline validation for city field on contact pages
+    const cityInput = document.getElementById("city");
+    const cityError = document.getElementById("city-error");
+    if (cityInput) {
+        cityInput.addEventListener("invalid", (e) => {
+            e.preventDefault(); // Suppress default browser tooltip
+            cityInput.style.borderColor = "#C22A36";
+            if (cityError) {
+                cityError.style.display = "block";
+            }
+        });
+        cityInput.addEventListener("input", () => {
+            if (cityInput.value.trim() !== "") {
+                cityInput.style.borderColor = "";
+                if (cityError) {
+                    cityError.style.display = "none";
+                }
+            }
         });
     }
 
