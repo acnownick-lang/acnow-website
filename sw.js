@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v83'; // Bumped to force refresh for Gold Plan highlight propagation
+const CACHE_NAME = 'acnow-cache-v84'; // Bumped to force refresh for calendar widget and static veteran card footer updates
 const DEBUG = true;
 
 // Helper function for structured logging
