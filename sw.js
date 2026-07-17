@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v94'; // Bumped: clean precaching of canonical paths, cache-put redirect guard
+const CACHE_NAME = 'acnow-cache-v95'; // Bumped: client-persistence gap fix, clients.claim() addition
 const DEBUG = false;
 
 // Helper function for structured logging
