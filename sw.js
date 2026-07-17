@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v82'; // Bumped to force refresh for blower motor description propagation
+const CACHE_NAME = 'acnow-cache-v83'; // Bumped to force refresh for Gold Plan highlight propagation
 const DEBUG = true;
 
 // Helper function for structured logging
