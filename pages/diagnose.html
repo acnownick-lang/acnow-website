@@ -311,9 +311,25 @@
             transform: translateY(-2px);
         }
         .option-card.selected {
-            border-color: var(--primary);
-            background: rgba(11, 99, 229, 0.05);
-            box-shadow: 0 4px 12px rgba(11, 99, 229, 0.15);
+            border: 3px solid var(--primary) !important;
+            box-shadow: 0 0 20px rgba(11, 99, 229, 0.4) !important;
+            transform: scale(1.02) translateY(-2px);
+        }
+        .option-card.selected div[style*="position: absolute"] {
+            background: linear-gradient(to right, rgba(11, 99, 229, 0.95) 45%, rgba(11, 99, 229, 0.7) 100%) !important;
+        }
+        .option-card.selected .option-icon {
+            color: #fff !important;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) !important;
+        }
+        .btn:disabled {
+            background: #cbd5e1 !important;
+            color: #64748b !important;
+            border-color: #cbd5e1 !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            transform: none !important;
+            opacity: 0.7;
         }
         .option-icon {
             font-size: 24px;

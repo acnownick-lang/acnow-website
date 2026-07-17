@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v84'; // Bumped to force refresh for calendar widget and static veteran card footer updates
+const CACHE_NAME = 'acnow-cache-v85'; // Bumped to force refresh for diagnostic wizard selected states and disabled button styles
 const DEBUG = true;
 
 // Helper function for structured logging
