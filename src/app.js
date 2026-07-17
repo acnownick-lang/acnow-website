@@ -322,6 +322,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 0. Client-side Geotargeting Fallback via Cookies
     function applyClientGeotargeting() {
+        // Only run geotargeting overrides on the homepage
+        const path = window.location.pathname;
+        const isHomepage = path === "/" || path === "/index.html" || path.endsWith("/pages/index.html") || path === "";
+        if (!isHomepage) return;
+
         const match = document.cookie.match(/(?:^|; )nf_city=([^;]*)/);
         if (!match) return;
         const market = decodeURIComponent(match[1]);
