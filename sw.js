@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v89'; // Bumped to force refresh for calendar widget timezone and 5PM cutoff update
+const CACHE_NAME = 'acnow-cache-v90'; // Bumped to force refresh after removing priority scheduling references globally
 const DEBUG = true;
 
 // Helper function for structured logging
