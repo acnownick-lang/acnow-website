@@ -29,7 +29,7 @@ files.forEach(file => {
     try {
         const srcPath = path.join(projectRoot, file.src);
         const destPath = path.join(projectRoot, file.dest);
-        execSync(`npx esbuild "${srcPath}" --minify --outfile="${destPath}"`);
+        execSync(`./node_modules/.bin/esbuild "${srcPath}" --minify --outfile="${destPath}"`);
         console.log(`Minified: ${file.src} -> ${file.dest} (${fs.statSync(destPath).size} bytes)`);
     } catch (err) {
         console.error(`Error minifying ${file.src}:`, err.message);

@@ -2,7 +2,7 @@ import os
 import re
 
 paths_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "old_paths.txt")
-site_dir = "/Users/nicholaselia/Desktop/Clients/acnow-netlify"
+site_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 with open(paths_file, "r") as f:
     paths = [line.strip() for line in f if line.strip()]

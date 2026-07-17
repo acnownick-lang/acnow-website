@@ -70,7 +70,7 @@ def compute_jaccard(words1, words2):
     return len(words1.intersection(words2)) / len(words1.union(words2))
 
 def main():
-    site_dir = "/Users/nicholaselia/Desktop/Clients/acnow-netlify"
+    site_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     html_files = glob.glob(os.path.join(site_dir, "**/index.html"), recursive=True)
         
     print(f"Verifying uniqueness for {len(html_files)} files...")

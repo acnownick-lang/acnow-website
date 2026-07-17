@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v78'; // Bumped to invalidate stale app.js, images, layout, and mobile-alignment caches for returning users
+const CACHE_NAME = 'acnow-cache-v79'; // Bumped to force refresh for flexible financing text updates
 const DEBUG = true;
 
 // Helper function for structured logging
