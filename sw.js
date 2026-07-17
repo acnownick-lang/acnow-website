@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v88'; // Bumped to force refresh for diagnostic wizard results and payload simplification
+const CACHE_NAME = 'acnow-cache-v89'; // Bumped to force refresh for calendar widget timezone and 5PM cutoff update
 const DEBUG = true;
 
 // Helper function for structured logging

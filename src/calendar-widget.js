@@ -2,15 +2,35 @@ function initCalendarWidget() {
     const calendarContainer = document.getElementById("dispatch-calendar-container");
     if (!calendarContainer) return;
 
-    // Generate Next 5 Weekdays (Monday - Friday)
+    // Generate Next 5 Weekdays (Monday - Friday) starting tomorrow (timezone-safe and hour-cutoff-safe)
     function getNextWeekdays() {
         const weekdays = [];
         const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         
-        let current = new Date();
-        // Shift to tomorrow to ensure advance bookings
+        // Get current date and hour in Florida/Eastern Time
+        const etOptions = { timeZone: "America/New_York", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", hour12: false };
+        const formatter = new Intl.DateTimeFormat("en-US", etOptions);
+        const parts = formatter.formatToParts(new Date());
+        const etDate = {};
+        parts.forEach(p => { etDate[p.type] = p.value; });
+        
+        const etYear = parseInt(etDate.year);
+        const etMonth = parseInt(etDate.month) - 1; // 0-indexed
+        const etDay = parseInt(etDate.day);
+        const etHour = parseInt(etDate.hour);
+        
+        // Establish today in Eastern Time
+        let current = new Date(etYear, etMonth, etDay);
+        
+        // 1. Shift to tomorrow relative to Florida
         current.setDate(current.getDate() + 1);
+        
+        // 2. Cutoff Rule: If it's already past 5:00 PM Eastern Time today, push tomorrow out by one extra day
+        // (Prevents late-night bookings of next-day morning slots)
+        if (etHour >= 17) {
+            current.setDate(current.getDate() + 1);
+        }
 
         while (weekdays.length < 5) {
             const dayNum = current.getDay();
@@ -43,9 +63,11 @@ function initCalendarWidget() {
     let html = `
         <div style="margin-bottom: 20px;">
             <label style="font-size: 13.5px; font-weight: 700; color: var(--dark); display: block; margin-bottom: 10px;">Select Live Dispatch Appointment Window</label>
-            <p style="font-size:12px; color:var(--gray-dark); margin:0 0 15px 0; line-height:1.45;">
-                Reserve a priority time slot. Our team will call to confirm as soon as possible.<br>
-                <strong style="color: #c2410c; font-weight: 700; display: block; margin-top: 5px;">* Same-day emergency appointments must go through our call center at (772) 521-3568 for the fastest response time.</strong>
+            <p style="font-size: 12.5px; color: var(--gray-dark); margin: 0 0 15px 0; line-height: 1.5;">
+                Reserve a priority time window. Our team will call to confirm as soon as possible.<br>
+                <strong style="color: #d01818; font-size: 13px; font-weight: 800; display: block; margin-top: 8px; padding: 10px 12px; background: rgba(208, 24, 24, 0.05); border-left: 3px solid #d01818; border-radius: 4px; line-height: 1.4;">
+                    ⚠️ Same-day appointments cannot be booked online. Please call our office directly at <a href="tel:7725213568" style="color: #d01818; text-decoration: underline;">(772) 521-3568</a> for immediate response.
+                </strong>
             </p>
             
             <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px;">
