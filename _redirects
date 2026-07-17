@@ -286,3 +286,17 @@ http://acnowllc.com/*       https://acnowllc.com/:splat   301!
 # Trailing slash redirects handled in main redirects section above
 /privacy/               /pages/privacy.html                 301
 /accessibility/         /pages/accessibility.html           301
+
+# Legacy estimate URLs redirected to contact-us page
+/estimate           /contact-us/   301
+/estimate/          /contact-us/   301
+/estimate-request   /contact-us/   301
+/estimate-request/  /contact-us/   301
+/request-estimate   /contact-us/   301
+/request-estimate/  /contact-us/   301
+/free-estimate      /contact-us/   301
+/free-estimate/     /contact-us/   301
+
+# Custom 404 page fallback (must be at the very bottom)
+/*                  /pages/404.html       404
+
