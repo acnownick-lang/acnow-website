@@ -31,7 +31,11 @@ function scanDirectory(dir) {
                 !relativeDir.startsWith('scratch') &&
                 !relativeDir.startsWith('publish_ready_blocks') &&
                 !relativeDir.startsWith('audit_reports') &&
-                !relativeDir.startsWith('dashboard-backup')) {
+                !relativeDir.startsWith('dashboard-backup') &&
+                !relativeDir.startsWith('claude-work') &&
+                !relativeDir.startsWith('backups') &&
+                !relativeDir.startsWith('phase-0-archive') &&
+                !relativeDir.startsWith('pages')) {
                 scanDirectory(fullPath);
             }
         } else if (file.endsWith('.html')) {

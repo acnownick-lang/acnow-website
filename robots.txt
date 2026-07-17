@@ -1,19 +1,21 @@
 User-agent: *
 Allow: /
 
-# Block internal utility and restricted pages
-Disallow: /offline.html
-Disallow: /members.html
-Disallow: /team-portal.html
-Disallow: /3d-airflow.html
-Disallow: /corrosion-predictor.html
+# Block internal utility and restricted pages (clean paths & prefixes)
+Disallow: /offline
+Disallow: /members
+Disallow: /team-portal
+Disallow: /3d-airflow
+Disallow: /corrosion-predictor
 Disallow: /configurator
-Disallow: /pages/offline.html
-Disallow: /pages/members.html
-Disallow: /pages/team-portal.html
-Disallow: /pages/3d-airflow.html
-Disallow: /pages/corrosion-predictor.html
-Disallow: /pages/configurator.html
-Disallow: /pages/success.html
+Disallow: /planner
+
+# Block raw pages templates directory
+Disallow: /pages/
+
+# Block archive and work folders
+Disallow: /claude-work/
+Disallow: /backups/
+Disallow: /phase-0-archive/
 
 Sitemap: https://acnowllc.com/sitemap.xml

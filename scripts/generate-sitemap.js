@@ -53,5 +53,24 @@ searchIndex.forEach(item => {
 
 xml += '</urlset>\n';
 
+// Supplemental entries: /hvac-services-{city}/ pages are served via 200-rewrite
+// from /pages/ (no physical directory), so add their canonical clean paths explicitly.
+const hvacServicesCities = [
+    'palm-city', 'stuart', 'port-st-lucie', 'jensen-beach',
+    'hobe-sound', 'north-palm-beach', 'fort-pierce', 'jupiter', 'palm-beach-gardens'
+];
+xml = xml.replace('</urlset>\n', '');
+hvacServicesCities.forEach(city => {
+    xml += '  <url>\n';
+    xml += `    <loc>https://acnowllc.com/hvac-services-${city}/</loc>\n`;
+    xml += `    <lastmod>${today}</lastmod>\n`;
+    xml += '    <changefreq>monthly</changefreq>\n';
+    xml += '    <priority>0.8</priority>\n';
+    xml += '  </url>\n';
+});
+xml += '</urlset>\n';
+
 fs.writeFileSync(sitemapFile, xml, 'utf-8');
-console.log(`sitemap.xml successfully written to: ${sitemapFile} (${searchIndex.length} URLs mapped)`);
+const totalCount = searchIndex.length + hvacServicesCities.length;
+console.log(`sitemap.xml successfully written to: ${sitemapFile} (${totalCount} URLs mapped)`);
+

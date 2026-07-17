@@ -28,7 +28,14 @@ export default async function handler(request: Request, context: Context) {
         if (authCookie !== "phase2") {
             const redirectUrl = new URL("/", request.url);
             redirectUrl.searchParams.set("redirected", "phase2-restricted");
-            return Response.redirect(redirectUrl.toString(), 302);
+            
+            return new Response(null, {
+                status: 302,
+                headers: {
+                    "Location": redirectUrl.toString(),
+                    "X-Robots-Tag": "noindex, nofollow"
+                }
+            });
         }
     }
 

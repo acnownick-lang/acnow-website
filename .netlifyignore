@@ -15,3 +15,6 @@ package.json
 package-lock.json
 netlify.toml
 test_configurator.mjs
+claude-work/
+backups/
+phase-0-archive/

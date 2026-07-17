@@ -80,6 +80,8 @@ def get_template_and_intent(path_lower):
     if "get-commercial-air-quality-services" in path_lower:
         return ("commercial.html", "Commercial Air Quality Services", "Commercial UV purifiers, heavy-duty filtration, and commercial air quality installation.")
     if "hvac-equipment-repair" in path_lower:
+        if "hvac-installation" in path_lower:
+            return ("ac-repair.html", "HVAC System Repair", "Same-day diagnostic calls, component replacement, and professional HVAC system repair.")
         return ("ac-repair.html", "HVAC Equipment Repair", "Same-day diagnostic calls, component replacement, and professional HVAC equipment repair.")
     if "hvac-installation-services" in path_lower:
         return ("ac-installation.html", "HVAC Installation Services", "High-efficiency central air conditioning installation and system replacement.")
@@ -998,7 +1000,7 @@ pilot_page_data = {
         "faq2_q": "Can you handle both repair and installation if we end up replacing?",
         "faq2_a": "Yes — the same team can pivot from inspection to a full installation without starting over with someone new."
     },
-    "/hvac-installation/hvac-installation-plam-beach-gardens/": {
+    "/hvac-installation/hvac-installation-palm-beach-gardens/": {
         "intro": "Palm Beach Gardens homes and businesses along the PGA Boulevard corridor put real demand on air conditioning. A tropical rainforest climate pushes rainfall to 66 inches a year, with June-September delivering 8-9+ inches monthly.",
         "prose": "We work with homeowners near PGA National Resort and the golf communities ringing the city's 12 courses, where cooling and dehumidification both matter. At 16 feet elevation and roughly 59.9 square miles, the city sees consistent heat and moisture rather than dramatic swings.",
         "faq1_q": "Does Palm Beach Gardens' humidity affect what kind of system gets installed?",
@@ -1006,7 +1008,7 @@ pilot_page_data = {
         "faq2_q": "I live near PGA National — does that affect installation planning?",
         "faq2_a": "Not fundamentally, but golf-course communities sometimes have HOA or landscaping considerations we account for."
     },
-    "/hvac-installation/hvac-installation-plam-beach-gardens/air-conditioning-installation-in-palm-beach-gardens/": {
+    "/hvac-installation/hvac-installation-palm-beach-gardens/air-conditioning-installation-in-palm-beach-gardens/": {
         "intro": "A new AC installation in Palm Beach Gardens has to handle the town's unique wet-season load. With roughly 66 inches of annual rainfall concentrated in June-September downpours, a system must be sized for both cooling and heavy moisture extraction.",
         "prose": "We run detailed manual load calculations for homes along the PGA Boulevard corridor and golf communities near PGA National Resort. Our installations prioritize marine-grade coil coatings and proper surge protection to withstand coastal humidity and frequent storm-induced power fluctuations.",
         "faq1_q": "How does A/C Now LLC size new air conditioning units for larger homes near PGA National?",
@@ -1014,7 +1016,7 @@ pilot_page_data = {
         "faq2_q": "What type of surge protection is recommended for new installs in Palm Beach Gardens?",
         "faq2_a": "We install whole-home or unit-specific surge protectors to protect high-efficiency inverter compressors from power spikes during local storm seasons."
     },
-    "/hvac-installation/hvac-installation-plam-beach-gardens/hvac-install-and-repair-in-palm-beach-gardens/": {
+    "/hvac-installation/hvac-installation-palm-beach-gardens/hvac-install-and-repair-in-palm-beach-gardens/": {
         "intro": "Not every AC problem in Palm Beach Gardens ends with a full system swap. Because we handle both repair and installation, the first question is whether your current unit is worth fixing.",
         "prose": "An aging unit struggling with humidity control, even if still blowing cold air, is often a replacement candidate; a newer system with an isolated issue — failed capacitor, refrigerant leak — is usually a straightforward repair. Given the region's history of multi-day outages after 2004-05 hurricanes, surge protection is worth discussing during either repair or install.",
         "faq1_q": "My AC is still cooling but the house feels humid — repair or new system?",
@@ -1492,6 +1494,62 @@ page_image_map = {
 
 generated_count = 0
 
+# Hub pages: exact clean paths that represent the whole service region,
+# not a specific city. Override title/H1/desc to be regional, not PSL-specific.
+# Pattern: "{Service} | Port St. Lucie & the Treasure Coast | A/C Now LLC" (<=60 chars enforced below)
+hub_page_overrides = {
+    "/hvac-installation/": {
+        "title": "HVAC Installation | Treasure Coast, FL | A/C Now LLC",
+        "h1":    "AC Installation &amp; Replacement on the Treasure Coast, FL",
+        "desc":  "AC installation and system replacement across Port St. Lucie, Stuart, Jupiter, and the Treasure Coast. Veteran-owned, same-day service.",
+    },
+    "/hvac-maintenance/": {
+        "title": "AC Tune-Ups & Maintenance | Treasure Coast | A/C Now LLC",
+        "h1":    "AC Tune-Ups &amp; Maintenance on the Treasure Coast, FL",
+        "desc":  "Seasonal tune-ups and preventive AC maintenance across Port St. Lucie, Stuart, and the Treasure Coast. Veteran-owned, same-day service.",
+    },
+    "/hvac-repair/": {
+        "title": "AC Repair & Diagnostics | Treasure Coast, FL | A/C Now",
+        "h1":    "AC Repair &amp; Troubleshooting on the Treasure Coast, FL",
+        "desc":  "Same-day AC repair and diagnostics across the Treasure Coast. Veteran technicians. Flat-rate pricing. All major brands.",
+    },
+    "/commercial-hvac/": {
+        "title": "Commercial HVAC | Treasure Coast, FL | A/C Now LLC",
+        "h1":    "Condo Board &amp; Commercial HVAC on the Treasure Coast, FL",
+        "desc":  "Commercial HVAC and condo board services across Port St. Lucie, Stuart, and the Treasure Coast. Veteran-owned, flat-rate pricing.",
+    },
+    "/ac-replacement/": {
+        "title": "AC Replacement Services | Treasure Coast, FL | A/C Now",
+        "h1":    "AC Unit Replacement on the Treasure Coast, FL",
+        "desc":  "High-efficiency AC unit replacement across the Treasure Coast. Veteran-owned. Manufacturer rebates handled. Same-day service.",
+    },
+    "/air-quality/": {
+        "title": "Air Quality & IAQ Services | Treasure Coast | A/C Now",
+        "h1":    "Air Quality &amp; IAQ Services on the Treasure Coast, FL",
+        "desc":  "Indoor air quality testing, UV purifiers, and filtration upgrades across the Treasure Coast. Veteran-owned, same-day service.",
+    },
+    "/ductless-mini-split-systems/": {
+        "title": "Ductless Mini-Split Systems | Treasure Coast | A/C Now",
+        "h1":    "Ductless Mini-Split Systems on the Treasure Coast, FL",
+        "desc":  "Ductless mini-split installation and service across the Treasure Coast. No ductwork needed. Veteran-owned, flat-rate pricing.",
+    },
+    "/residential-air-conditioning/": {
+        "title": "Residential Air Conditioning | Treasure Coast | A/C Now",
+        "h1":    "Residential Air Conditioning on the Treasure Coast, FL",
+        "desc":  "Full residential HVAC services across Port St. Lucie, Stuart, Jupiter, and the Treasure Coast. Veteran-owned, same-day service.",
+    },
+    "/pool-heating/": {
+        "title": "Pool Heater Services | Treasure Coast, FL | A/C Now LLC",
+        "h1":    "Pool Heater Services on the Treasure Coast, FL",
+        "desc":  "Pool heat pump installation, repair, and service across the Treasure Coast. Extend your swim season. Veteran-owned, flat-rate pricing.",
+    },
+    "/partners-and-referrals/": {
+        "title": "Partners & Referrals | A/C Now LLC",
+        "h1":    "Partners &amp; Referrals",
+        "desc":  "A/C Now LLC trusted vendor partners and local referral network across the Treasure Coast.",
+    },
+}
+
 
 for path in paths:
     if path == "/" or not path:
@@ -1545,29 +1603,41 @@ for path in paths:
             content = content.replace(f'href=\'{sp}?\'', f'href=\'{relative_prefix}pages/{sp}?\'')
         
     # 3. Localize SEO Title
-    if any(x in service_name for x in ["Services", "Systems", "Pumps", "Areas", "Diagnostics", "Guide"]):
-        base_title = f"{service_name} in {city_name}, FL"
+    _hub = hub_page_overrides.get(path)
+    if _hub:
+        # Hub page: use regional title/H1/desc directly
+        localized_title = _hub["title"]
+        _hub_h1 = _hub["h1"]
+        _hub_desc = _hub["desc"]
     else:
-        base_title = f"{service_name} Services in {city_name}, FL"
-        
-    if len(base_title) + len(" | A/C Now LLC") <= 60:
-        localized_title = f"{base_title} | A/C Now LLC"
-    elif len(base_title) + len(" | A/C Now") <= 60:
-        localized_title = f"{base_title} | A/C Now"
-    else:
-        localized_title = base_title
-        if len(localized_title) > 65:
-            localized_title = localized_title[:55] + "..."
+        _hub_h1 = None
+        _hub_desc = None
+        if any(x in service_name for x in ["Services", "Systems", "Pumps", "Areas", "Diagnostics", "Guide", "Installation", "Control"]):
+            base_title = f"{service_name} in {city_name}, FL"
+        else:
+            base_title = f"{service_name} Services in {city_name}, FL"
+            
+        if len(base_title) + len(" | A/C Now LLC") <= 60:
+            localized_title = f"{base_title} | A/C Now LLC"
+        elif len(base_title) + len(" | A/C Now") <= 60:
+            localized_title = f"{base_title} | A/C Now"
+        else:
+            localized_title = base_title
+            if len(localized_title) > 65:
+                localized_title = localized_title[:55] + "..."
             
     content = re.sub(r"<title>.*?</title>", f"<title>{localized_title}</title>", content)
     
     # 4. Localize Meta Description (capped strictly under 155-160 characters)
-    base_desc = f"{service_name} in {city_name}, FL. {meta_desc}"
-    desc_suffix = " Veteran-owned, same-day service."
-    if len(base_desc) + len(desc_suffix) <= 155:
-        localized_desc = base_desc + desc_suffix
+    if _hub_desc:
+        localized_desc = _hub_desc
     else:
-        localized_desc = base_desc
+        base_desc = f"{service_name} in {city_name}, FL. {meta_desc}"
+        desc_suffix = " Veteran-owned, same-day service."
+        if len(base_desc) + len(desc_suffix) <= 155:
+            localized_desc = base_desc + desc_suffix
+        else:
+            localized_desc = base_desc
         if len(localized_desc) > 155:
             localized_desc = localized_desc[:152] + "..."
             
@@ -1598,8 +1668,14 @@ for path in paths:
         content = re.sub(r'<meta name="twitter:image" content=".*?">', f'<meta name="twitter:image" content="https://acnowllc.com/assets/images/van_branded.jpg">', content)
         
     # 7. Localize JSON-LD Schema Location info (Service schema vs HVACBusiness schema)
-    if city_name != "Florida" and city_name != "Port St. Lucie":
+    # ALL generated regional/service pages emit Service schema — including Port St. Lucie.
+    # County/region pages use AdministrativeArea; city pages use City.
+    # The full HVACBusiness entity (with address) only belongs on homepage/office static pages.
+    if city_name != "Florida":
         wiki_url = wikipedia_map.get(city_name, "https://en.wikipedia.org/wiki/Port_St._Lucie,_Florida")
+        # Use AdministrativeArea for county/region names, City for city names
+        county_region_names = {"St. Lucie County", "Martin County", "Saint Lucie West"}
+        area_type = "AdministrativeArea" if city_name in county_region_names else "City"
         service_schema = f"""<script type="application/ld+json">
     {{
       "@context": "https://schema.org",
@@ -1615,7 +1691,7 @@ for path in paths:
         "telephone": "(772) 521-3568"
       }},
       "areaServed": {{
-        "@type": "City",
+        "@type": "{area_type}",
         "name": "{city_name}",
         "sameAs": "{wiki_url}"
       }}
@@ -1627,29 +1703,75 @@ for path in paths:
             content,
             flags=re.DOTALL
         )
-    else:
-        content = content.replace("https://acnowllc.com/../assets/images/mascot-logo.svg", "https://acnowllc.com/assets/images/van_branded.jpg")
+        # Also replace the Service+LocalBusiness+PostalAddress pattern used in commercial.html
+        # and pool-heating.html templates (different block structure, same fix needed)
+        content = re.sub(
+            r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"Service".*?"PostalAddress".*?</script>',
+            service_schema,
+            content,
+            flags=re.DOTALL
+        )
+    # Belt-and-suspenders: ensure no /../ survives in any absolute URL in meta/schema fields
+    content = content.replace("https://acnowllc.com/../assets/images/mascot-logo.svg", "https://acnowllc.com/assets/images/van_branded.jpg")
+    content = content.replace("https://acnowllc.com/../assets/", "https://acnowllc.com/assets/")
 
-    # Localize FAQ Page schema if present
+    # Localize FAQ Page schema if present (JSON-LD FAQPage blocks)
+    # ALL city and county/region names must be swapped — including county names that were
+    # previously missing from this list (root cause of B-3 wrong-city FAQ bug).
+    all_city_names = [
+        "Port St. Lucie", "Stuart", "Palm City", "Jensen Beach", "Fort Pierce",
+        "Hobe Sound", "Jupiter", "Palm Beach Gardens", "North Palm Beach",
+        "St. Lucie County", "Martin County", "Saint Lucie West"
+    ]
+
+    def collapse_repeated_city_list(text, city):
+        """
+        After naive city-name replacement, a template multi-city list like
+        'Port St. Lucie, Stuart, Palm City, and Jupiter' becomes
+        e.g. 'Jupiter, Jupiter, Jupiter, and Jupiter'.
+
+        This collapses any consecutive run of the same city name — regardless
+        of the preceding preposition ('in', 'across', 'throughout', etc.) and
+        regardless of what follows (another clause, ', FL', etc.) — down to a
+        single mention, then cleans up comma/conjunction artifacts.
+
+        Examples fixed:
+          'in Jupiter, Jupiter, Jupiter, and Jupiter, and coordinate'
+            => 'in Jupiter, and coordinate'
+          'across Jupiter, Jupiter, and Jupiter, FL'
+            => 'across Jupiter, FL'
+        """
+        escaped = re.escape(city)
+        # Match: the city name followed by one or more comma/and-separated
+        # repetitions of the SAME city. Handles ", ", ", and ", " and " separators.
+        sep = r'(?:\s*,\s*(?:and\s+)?)'
+        pattern = escaped + r'(?:' + sep + escaped + r')+'
+        text = re.sub(pattern, city, text)
+        # Clean up punctuation artifacts left after collapsing
+        text = re.sub(r',\s*,', ',', text)               # double commas
+        text = re.sub(r',\s*and\s*,', ', and', text)  # ", and,"
+        text = re.sub(r'\band\s+and\b', 'and', text)  # "and and"
+        return text
+
     faq_matches = list(re.finditer(r'<script type="application/ld\+json">(.*?FAQPage.*?)</script>', content, re.DOTALL))
     for m in faq_matches:
         orig_block = m.group(0)
         new_block = orig_block
-        new_block = new_block.replace("Port St. Lucie", city_name)
-        for c in ["Stuart", "Palm City", "Jensen Beach", "Fort Pierce", "Hobe Sound", "Jupiter", "Palm Beach Gardens", "North Palm Beach"]:
+        for c in all_city_names:
             if c != city_name:
                 new_block = new_block.replace(c, city_name)
+        new_block = collapse_repeated_city_list(new_block, city_name)
         content = content.replace(orig_block, new_block)
 
-    # Localize HTML details elements
+    # Localize HTML details elements (visible accordion — must match JSON-LD source)
     details_matches = list(re.finditer(r'<details[^>]*>.*?</details>', content, re.DOTALL))
     for m in details_matches:
         orig_block = m.group(0)
         new_block = orig_block
-        new_block = new_block.replace("Port St. Lucie", city_name)
-        for c in ["Stuart", "Palm City", "Jensen Beach", "Fort Pierce", "Hobe Sound", "Jupiter", "Palm Beach Gardens", "North Palm Beach"]:
+        for c in all_city_names:
             if c != city_name:
                 new_block = new_block.replace(c, city_name)
+        new_block = collapse_repeated_city_list(new_block, city_name)
         content = content.replace(orig_block, new_block)
 
     # Inject BreadcrumbList JSON-LD dynamically based on path depth
@@ -1716,19 +1838,63 @@ for path in paths:
         content = content.replace("</head>", f"{breadcrumb_html}</head>")
 
     # 8. Localize Page Headings (e.g. H1/H2)
-    h1_match = re.search(r'<h1([^>]*)>(.*?)</h1>', content)
-    if h1_match:
-        h1_attrs = h1_match.group(1)
-        h1_inner = h1_match.group(2)
-        # Strip hardcoded template city references to avoid double city titles
-        clean_inner = re.sub(r'Port St\.\s*Lucie(?:,\s*FL)?\s*', '', h1_inner).strip()
-        new_h1_text = f"{clean_inner} in {city_name}, FL"
+    if _hub_h1:
+        # Hub page: use the pre-defined regional H1 directly
         content = re.sub(
             r'<h1([^>]*)>(.*?)</h1>',
-            rf'<h1\1>{new_h1_text}</h1>',
+            rf'<h1\1>{_hub_h1}</h1>',
             content,
             count=1
         )
+    else:
+        h1_match = re.search(r'<h1([^>]*)>(.*?)</h1>', content)
+        if h1_match:
+            h1_attrs = h1_match.group(1)
+            h1_inner = h1_match.group(2)
+            
+            h1_base_map = {
+                "AC Installation": "AC Installation & Replacement",
+                "Air Quality & Comfort Installation": "Air Quality & Comfort Installation",
+                "Commercial Air Quality Services": "Commercial Air Quality Services",
+                "HVAC Equipment Repair": "HVAC Equipment Repair",
+                "HVAC System Repair": "HVAC System Repair & Services",
+                "HVAC Installation Services": "HVAC Installation Services",
+                "Air Conditioning Installation": "Air Conditioning Installation",
+                "HVAC Installation & Repair": "HVAC Installation & Repair",
+                "Indoor Air Quality Installation": "Indoor Air Quality Installation",
+                "Dehumidifier & Humidity Control": "Dehumidifier & Humidity Control",
+                "Air Quality Monitoring Installation": "Air Quality Monitoring Installation",
+                "AC Maintenance Service": "AC Tune-Ups & Maintenance",
+                "Heating Maintenance": "Heating Tune-Ups & Maintenance",
+                "AC Repair & Replacement Guide": "AC Repair & Replacement Guide",
+                "Air Quality Diagnostics": "Air Quality Diagnostics",
+                "HVAC Repair": "HVAC Repair & Troubleshooting",
+                "Pool Heater Installation & Repair": "Pool Heater Installation & Repair",
+                "Pool Heater Services": "Pool Heater Services",
+                "Pool Heating Services": "Pool Heating Services",
+                "Residential Cooling Comfort": "Residential Cooling Comfort",
+                "Central AC vs. Split Systems": "Central AC vs. Split Systems",
+                "Residential AC Expertise": "Residential AC Services",
+                "How Residential AC Works": "How Residential AC Works",
+                "Commercial AC Services": "Commercial AC Services",
+                "Commercial HVAC": "Condo Board & Commercial HVAC",
+                "Ductless Mini-Split Systems": "Ductless Mini-Split Systems",
+                "HVAC Services": "HVAC Services",
+                "Residential Air Conditioning": "Residential Air Conditioning",
+                "AC Maintenance": "AC Tune-Ups & Maintenance",
+                "AC Repair": "AC Repair & Troubleshooting",
+                "Pool Heat Pumps": "Pool Heat Pump Services",
+            }
+            
+            clean_inner = re.sub(r'Port St\.\s*Lucie(?:,\s*FL)?\s*', '', h1_inner).strip()
+            h1_base = h1_base_map.get(service_name, clean_inner)
+            new_h1_text = f"{h1_base} in {city_name}, FL"
+            content = re.sub(
+                r'<h1([^>]*)>(.*?)</h1>',
+                rf'<h1\1>{new_h1_text}</h1>',
+                content,
+                count=1
+            )
     
     # Let's replace the first paragraph in the hero if possible to add local landmark copy
     content = re.sub(

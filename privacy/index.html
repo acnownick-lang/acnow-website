@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" class="phase-1">
+<head>
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('../index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy & Cookie Disclosures | A/C Now LLC</title>
+    <meta name="description" content="Privacy Policy, Cookie Disclosures, and TCPA Lead Consent details for A/C Now LLC.">
+    <link rel="canonical" href="https://acnowllc.com/privacy/">
+    <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"></noscript>
+    <link rel="stylesheet" href="../assets/css/redesign.css?v=108">
+    <style>
+        .legal-container {
+            max-width: 900px;
+            background: var(--white);
+            padding: 50px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-light);
+            box-shadow: var(--box-shadow);
+        }
+        .legal-toc {
+            background: var(--light);
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+        .legal-toc-title {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .legal-toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .legal-toc-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14.5px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .legal-toc-link:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+        .legal-clause {
+            margin-bottom: 40px;
+            scroll-margin-top: 100px; /* Offset for sticky headers if any */
+        }
+        .legal-clause h2 {
+            font-family: var(--font-heading);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 8px;
+        }
+        .legal-clause p, .legal-clause ul {
+            line-height: 1.7;
+            font-size: 15px;
+            color: var(--gray-dark);
+            margin-bottom: 15px;
+        }
+        .legal-clause ul {
+            margin-left: 20px;
+        }
+        .legal-clause li {
+            margin-bottom: 8px;
+        }
+        
+        /* Highlight for SMS disclosure */
+        .sms-highlight-box {
+            background: rgba(11, 99, 229, 0.04);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .sms-highlight-box p {
+            margin-bottom: 12px;
+        }
+        .sms-highlight-box ul {
+            margin-bottom: 0;
+        }
+        
+        /* Changelog section styling */
+        .legal-changelog {
+            margin-top: 50px;
+            border-top: 2px dashed var(--gray-light);
+            padding-top: 30px;
+            scroll-margin-top: 100px;
+        }
+        .changelog-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .changelog-table th, .changelog-table td {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .changelog-table th {
+            background: var(--light);
+            color: var(--dark);
+            font-weight: 700;
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Privacy Policy | A/C Now LLC",
+      "description": "Read the privacy policy for A/C Now LLC detailing how we protect and handle your personal information.",
+      "url": "https://acnowllc.com/privacy/"
+    }
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span class="top-bar-item">
+                <!-- WCAG 1.1.1: Decorative SVG must be aria-hidden -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+            </span>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo-link">
+                <img src="../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+            </a>
+            <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+                                    <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="ac-installation.html" class="nav-link">AC Installation</a>
+                <a href="ac-repair.html" class="nav-link">AC Repair</a>
+                <a href="/pages/ac-maintenance.html" class="nav-link">AC Maintenance</a>
+                <a href="commercial.html" class="nav-link">Commercial</a>
+                <a href="pool-heating.html" class="nav-link">Pool Heating</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" onclick="return false;">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="diagnose.html" class="">DIY Troubleshooter</a>
+                        <a href="planner.html" class="">AC Lifespan Planner</a>
+                        <a href="configurator.html" class="">Build HVAC System</a><a href="storm-prep.html" class="">Storm Prep Checklist</a>
+                        <a href="3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
+                    </div>
+                </div>
+                <a href="members.html" class="nav-link phase-2-only">Members Area</a>
+            </nav>
+            <a href="/contact-us/" class="btn btn-primary nav-cta">Get Free Estimate</a>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%), url('../assets/images/banner-contact.webp'); min-height: 35vh; padding: 70px 0; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="container hero-container" style="text-align: center; position: relative; z-index: 2;">
+                <span class="hero-tag" style="background: rgba(11, 99, 229, 0.15); color: #60A5FA; border: 1px solid rgba(11, 99, 229, 0.35); padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-family: var(--font-heading); display: inline-block; margin-bottom: 20px;">LEGAL &amp; COMPLIANCE</span>
+                <h1 class="hero-title" style="font-size: 42px; margin-bottom: 12px; color: var(--white); font-weight: 800; font-family: var(--font-heading); line-height: 1.2;">Privacy Policy &amp; Cookie Disclosures</h1>
+                <p class="hero-subtitle" style="font-size: 16px; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto; line-height: 1.6;">Your privacy is our priority. Read our TCPA consent details and cookie disclosures.</p>
+            </div>
+            <div style="content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%); z-index: 3;"></div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="reveal" style="padding: 80px 0; background: var(--light);">
+            <div class="container legal-container">
+                <p style="color: var(--gray-dark); font-size: 14px; margin-bottom: 30px; border-bottom: 1px solid var(--gray-light); padding-bottom: 15px;">Last Updated: July 11, 2026</p>
+
+                <!-- Table of Contents -->
+                <nav class="legal-toc" aria-label="Table of Contents">
+                    <h2 class="legal-toc-title">
+                        <svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                        Table of Contents
+                    </h2>
+                    <ul class="legal-toc-list">
+                        <li><a href="#section-1" class="legal-toc-link">1. Information We Collect</a></li>
+                        <li><a href="#section-2" class="legal-toc-link">2. Communication and Text Messaging (SMS) Consent</a></li>
+                        <li><a href="#section-3" class="legal-toc-link">3. Cookie Disclosures</a></li>
+                        <li><a href="#section-4" class="legal-toc-link">4. Third-Party Sharing</a></li>
+                        <li><a href="#section-5" class="legal-toc-link">5. Contact Us</a></li>
+                        <li><a href="#changelog" class="legal-toc-link">6. Version History &amp; Changelog</a></li>
+                    </ul>
+                </nav>
+
+                <div class="legal-clause" id="section-1">
+                    <h2>1. Information We Collect</h2>
+                    <p>A/C Now LLC ("we", "us", "our") collects personal information you voluntarily provide to us when you fill out contact forms, run system configurators, request estimates, or use our Virtual HVAC Assistant. This information may include your name, telephone number, email address, physical address/service city, and details regarding your HVAC system issues.</p>
+                </div>
+
+                <div class="legal-clause" id="section-2">
+                    <h2>2. Communication and Text Messaging (SMS) Consent</h2>
+                    <div class="sms-highlight-box">
+                        <p>By providing your telephone number on our forms, you explicitly consent to receive calls and text messages (SMS/MMS) from A/C Now LLC, including communications generated via automated telephone dialing systems, pre-recorded messages, or artificial voices. These communications include scheduling, technician dispatch updates, emergency service coordination, and promotional quotes.</p>
+                        <p><strong>Key SMS Disclosures:</strong></p>
+                        <ul>
+                            <li>Consent is entirely voluntary and is not a condition of purchasing any services or equipment from us.</li>
+                            <li>Message and data rates may apply.</li>
+                            <li>Message frequency varies based on your service status (typically recurring only during scheduled calls).</li>
+                            <li>You can opt-out of text communications at any time by replying <strong>STOP</strong> to any message we send. Text <strong>HELP</strong> for customer support.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="legal-clause" id="section-3">
+                    <h2>3. Cookie Disclosures</h2>
+                    <p>Our website uses essential and functionality cookies to optimize your browsing experience. Specifically, we set a cookie named <code>nf_city</code> to store your geographical service location. This cookie allows our serverless edge functions to deliver localized content (such as displaying localized city text) and operates for 30 days. It does not track your online activity across third-party websites.</p>
+                </div>
+
+                <div class="legal-clause" id="section-4">
+                    <h2>4. Third-Party Sharing</h2>
+                    <p>We do not sell, rent, trade, or share your personal contact information (especially text messaging opt-in consent and telephone number data) with third parties for marketing or promotional purposes. We share data only with trusted subcontractors (such as serverless email dispatch services) solely to fulfill your service requests.</p>
+                </div>
+
+                <div class="legal-clause" id="section-5">
+                    <h2>5. Contact Us</h2>
+                    <p>If you have any questions regarding our Privacy Policy or your data rights, please contact us at:</p>
+                    <address style="font-style: normal; font-size: 14.5px; margin-top: 10px; line-height: 1.6; padding-left: 15px; border-left: 3px solid var(--primary);">
+                        <strong>A/C Now LLC</strong><br>
+                        1391 NW St. Lucie West Blvd, STE 120<br>
+                        Port St. Lucie, FL 34986<br>
+                        Phone: <a href="tel:7725213568">(772) 521-3568</a>
+                    </address>
+                </div>
+
+                <!-- Changelog / Version History -->
+                <div class="legal-changelog" id="changelog">
+                    <h2>6. Version History &amp; Changelog</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="changelog-table">
+                            <thead>
+                                <tr>
+                                    <th>Version</th>
+                                    <th>Date</th>
+                                    <th>Changes Summary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>v1.2</strong></td>
+                                    <td>July 11, 2026</td>
+                                    <td>Added SMS opt-in/opt-out disclosures and explicit TCPA lead consent text.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>v1.1</strong></td>
+                                    <td>May 14, 2026</td>
+                                    <td>Updated cookie disclosures to document geographical edge-routing location checks.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>v1.0</strong></td>
+                                    <td>March 1, 2025</td>
+                                    <td>Initial publication of privacy policies.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="../assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" style="display: block; padding: 14px; margin: 15px 0;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military and veterans receive discounts on equipment replacements as well as other services. Please let us know when booking and we thank you for your service to our country.</p>
+                </div>
+                <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
+                    <strong>A/C Now LLC</strong><br>
+                    <a href="directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
+                    Port St. Lucie, FL 34986<br>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
+                </address>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Our Services</div>
+                <a href="ac-repair.html">AC Repair</a>
+                <a href="ac-installation.html">AC Installation</a>
+                <a href="/pages/ac-maintenance.html">AC Maintenance</a>
+                <a href="commercial.html">Commercial Services</a>
+                <a href="pool-heating.html">Pool Heating</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Quick Links</div>
+                <a href="/about/">About Us</a>
+                <a href="/reviews/">Reviews</a>
+                <a href="diagnose.html">DIY Troubleshooter</a>
+                <a href="planner.html">AC Lifespan Planner</a>
+                <a href="configurator.html">Build HVAC System</a>
+                <a href="storm-prep.html">Storm Prep Checklist</a>
+                <a href="areas.html">Service Areas</a>
+                <a href="members.html" class="phase-2-only">Members Area</a>
+                <a href="/contact-us/">Contact Us</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Service Cities</div>
+                <a href="../index.html">Port St. Lucie</a>
+                <a href="hvac-services-palm-city.html">Palm City</a>
+                <a href="hvac-services-stuart.html">Stuart</a>
+                <a href="areas.html">All Service Areas</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>&copy; 2026 A/C Now LLC. EPA 608 Certified • Florida License #CAC1820542</p>
+                <div style="font-size: 12.5px; display: flex; gap: 15px;">
+                    <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="accessibility.html" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../assets/js/app.js?v=101" defer></script>
+</body>
+</html>
