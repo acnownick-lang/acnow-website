@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v93'; // Bumped: perf pass - ignoreSearch fix, lean precache, DEBUG off
+const CACHE_NAME = 'acnow-cache-v94'; // Bumped: clean precaching of canonical paths, cache-put redirect guard
 const DEBUG = false;
 
 // Helper function for structured logging
@@ -17,15 +17,15 @@ function log(level, message, ...args) {
 
 const STATIC_ASSETS = [
   'index.html',
-  'pages/contact.html',
+  'contact-us/',
   'pages/success.html',
-  'pages/about.html',
-  'pages/services.html',
-  'pages/ac-installation.html',
-  'pages/ac-repair.html',
-  'pages/ac-maintenance.html',
-  'pages/pool-heating.html',
-  'pages/areas.html',
+  'about/',
+  'services/',
+  'ac-installation/',
+  'ac-repair/',
+  'ac-maintenance/',
+  'pool-heating/',
+  'areas/',
   'assets/css/redesign.css',
   'assets/css/home.css',
   'assets/js/app.js',
@@ -248,7 +248,10 @@ self.addEventListener('fetch', event => {
         .then(networkResponse => {
           if (networkResponse.status === 200) {
             return caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, networkResponse.clone());
+              // Only cache standard non-redirected responses to avoid Cache API TypeErrors
+              if (!networkResponse.redirected) {
+                cache.put(event.request, networkResponse.clone());
+              }
               return networkResponse;
             });
           }

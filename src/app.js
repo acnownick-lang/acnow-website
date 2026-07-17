@@ -412,15 +412,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const copy = MARKET_DATA[market];
         if (!copy) return;
 
-        // Update title and hidden H1
-        if (!skipTitleOverride) {
-            document.title = `A/C Repair & HVAC Services in ${market === "Default" ? "Florida" : market + ", FL"} | A/C Now LLC`;
-        }
-        const hiddenH1 = document.querySelector('h1.visually-hidden');
-        if (hiddenH1) {
-            hiddenH1.textContent = `A/C Now LLC — AC Repair & HVAC Service in ${market === "Default" ? "Florida" : market + ", FL"} | Same-Day | 24/7 Emergency`;
-        }
-
         // Update index.html split hero headlines
         const resHeadline = document.getElementById('res-side-headline');
         if (resHeadline) {
