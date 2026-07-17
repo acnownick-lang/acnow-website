@@ -365,6 +365,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
+            "Fort Pierce": {
+                headlineRes: "Fort Pierce's Premier AC Repair",
+                headlineCom: "Commercial HVAC in Fort Pierce",
+                serving: "Serving Port St. Lucie, Fort Pierce & Vero Beach.",
+                phone: "(772) 521-3568",
+                phoneHref: "tel:7725213568"
+            },
+            "Jensen Beach": {
+                headlineRes: "Keep Your Family Cool in Jensen Beach",
+                headlineCom: "Commercial HVAC in Jensen Beach",
+                serving: "Serving Stuart, Jensen Beach & Port St. Lucie.",
+                phone: "(772) 521-3568",
+                phoneHref: "tel:7725213568"
+            },
+            "Hobe Sound": {
+                headlineRes: "Keep Your Family Cool in Hobe Sound",
+                headlineCom: "Commercial HVAC in Hobe Sound",
+                serving: "Serving Hobe Sound, Stuart & Jupiter.",
+                phone: "(772) 521-3568",
+                phoneHref: "tel:7725213568"
+            },
+            "Palm Beach Gardens": {
+                headlineRes: "Palm Beach Gardens HVAC Experts",
+                headlineCom: "Commercial HVAC in Palm Beach Gardens",
+                serving: "Serving Palm Beach Gardens, Jupiter & West Palm Beach.",
+                phone: "(772) 521-3568",
+                phoneHref: "tel:7725213568"
+            },
+            "North Palm Beach": {
+                headlineRes: "Keep Your Family Cool in North Palm Beach",
+                headlineCom: "Commercial HVAC in North Palm Beach",
+                serving: "Serving North Palm Beach, Palm Beach Gardens & Jupiter.",
+                phone: "(772) 521-3568",
+                phoneHref: "tel:7725213568"
+            },
             "Default": {
                 headlineRes: "Keep Your Family Cool",
                 headlineCom: "Manage Your Complex",
