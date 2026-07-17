@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v96'; // Bumped: robust navigation mode handling (fetch & cache URL)
+const CACHE_NAME = 'acnow-cache-v97'; // Bumped: bypass navigation caching entirely
 const DEBUG = false;
 
 // Helper function for structured logging
@@ -150,6 +150,13 @@ self.addEventListener('fetch', event => {
   // Bypass caching entirely for serverless function calls
   if (url.pathname.startsWith('/.netlify/')) return;
 
+  // Bypass service worker entirely for HTML document navigation requests to let the browser handle them directly
+  if (event.request.mode === 'navigate' || 
+      url.pathname.endsWith('.html') || 
+      url.pathname === '/') {
+    return;
+  }
+
   const isMediaOrFont = url.pathname.endsWith('.woff') || 
                         url.pathname.endsWith('.woff2') || 
                         url.pathname.endsWith('.ttf') || 
@@ -222,56 +229,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  const isRestrictedPath = url.pathname.includes('members') || 
-                           url.pathname.includes('team-portal') || 
-                           url.pathname.includes('3d-airflow') || 
-                           url.pathname.includes('corrosion-predictor');
 
-  const isHTMLRequest = (event.request.mode === 'navigate' || 
-                         url.pathname.endsWith('.html') || 
-                         url.pathname === '/');
-
-  if (isHTMLRequest) {
-    if (isRestrictedPath) {
-      event.respondWith(
-        fetch(event.request)
-          .catch(err => {
-            log('warn', 'Network request failed for restricted HTML page:', url.pathname, err);
-            return caches.match('pages/offline.html');
-          })
-      );
-      return;
-    }
-
-    // For navigate requests, fetch using the URL string to bypass browser-specific navigate-mode fetch/cache restrictions
-    const fetchPromise = event.request.mode === 'navigate'
-      ? fetch(event.request.url)
-      : fetch(event.request);
-
-    event.respondWith(
-      fetchPromise
-        .then(networkResponse => {
-          if (networkResponse.status === 200) {
-            return caches.open(CACHE_NAME).then(cache => {
-              // Only cache standard non-redirected responses to avoid Cache API TypeErrors
-              if (!networkResponse.redirected) {
-                // Use URL string as cache key to bypass navigate-mode cache.put restrictions
-                cache.put(event.request.url, networkResponse.clone());
-              }
-              return networkResponse;
-            });
-          }
-          return networkResponse;
-        })
-        .catch(err => {
-          log('warn', 'Network request failed for HTML page, checking cache:', url.pathname, err);
-          return caches.match(event.request.url, { ignoreSearch: true }).then(cachedResponse => {
-            if (cachedResponse) return cachedResponse;
-            return caches.match('pages/offline.html');
-          });
-        })
-    );
-  }
 });
 
 // Background Sync Handler
