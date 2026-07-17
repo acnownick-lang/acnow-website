@@ -1,6 +1,21 @@
 import os
 import re
 
+wikipedia_map = {
+    "Port St. Lucie": "https://en.wikipedia.org/wiki/Port_St._Lucie,_Florida",
+    "Stuart": "https://en.wikipedia.org/wiki/Stuart,_Florida",
+    "Palm City": "https://en.wikipedia.org/wiki/Palm_City,_Florida",
+    "Jensen Beach": "https://en.wikipedia.org/wiki/Jensen_Beach,_Florida",
+    "Fort Pierce": "https://en.wikipedia.org/wiki/Fort_Pierce,_Florida",
+    "Hobe Sound": "https://en.wikipedia.org/wiki/Hobe_Sound,_Florida",
+    "Jupiter": "https://en.wikipedia.org/wiki/Jupiter,_Florida",
+    "Palm Beach Gardens": "https://en.wikipedia.org/wiki/Palm_Beach_Gardens,_Florida",
+    "North Palm Beach": "https://en.wikipedia.org/wiki/North_Palm_Beach,_Florida",
+    "Saint Lucie West": "https://en.wikipedia.org/wiki/Port_St._Lucie,_Florida",
+    "St. Lucie County": "https://en.wikipedia.org/wiki/St._Lucie_County,_Florida",
+    "Martin County": "https://en.wikipedia.org/wiki/Martin_County,_Florida"
+}
+
 paths_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "old_paths.txt")
 site_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -53,7 +68,61 @@ def get_template_and_intent(path_lower):
     if path_stripped in ("partners-and-referrals", "partners-and-referrals.html"):
         return ("about.html", "Partners & Referrals", "A/C Now LLC partners and trusted local vendor networks.")
     
-    # 2. Topic/Service matches
+    # 2. Specific generated pages (high specificity)
+    if "ac-replacement-in-" in path_lower:
+        return ("ac-installation.html", "AC Replacement", "High-efficiency central air conditioning replacement services.")
+    if "commercial-air-conditioning-services" in path_lower:
+        return ("commercial.html", "Commercial AC Services", "Commercial cooling, rooftop package units, and premium commercial AC services.")
+    if "commercial-hvac-companies" in path_lower:
+        return ("commercial.html", "Commercial HVAC", "Heavy commercial heating and cooling, rooftop package units, and priority HVAC contracts.")
+    if "ensure-your-air-quality-and-comfort" in path_lower:
+        return ("ac-installation.html", "Air Quality & Comfort Installation", "Professional HVAC installation of air purifiers and dehumidifiers to ensure clean indoor air.")
+    if "get-commercial-air-quality-services" in path_lower:
+        return ("commercial.html", "Commercial Air Quality Services", "Commercial UV purifiers, heavy-duty filtration, and commercial air quality installation.")
+    if "hvac-equipment-repair" in path_lower:
+        return ("ac-repair.html", "HVAC Equipment Repair", "Same-day diagnostic calls, component replacement, and professional HVAC equipment repair.")
+    if "hvac-installation-services" in path_lower:
+        return ("ac-installation.html", "HVAC Installation Services", "High-efficiency central air conditioning installation and system replacement.")
+    if "air-conditioning-installation-in-" in path_lower:
+        return ("ac-installation.html", "Air Conditioning Installation", "Professional central air conditioning system installation and replacement.")
+    if "hvac-install-and-repair-in-" in path_lower:
+        return ("ac-installation.html", "HVAC Installation & Repair", "Reliable heating and cooling system installation and repair services.")
+    if "improve-your-air-quality-with-ac-now" in path_lower:
+        return ("ac-installation.html", "Indoor Air Quality Installation", "Improve indoor air quality with media filters, UV purifiers, and professional ventilation installation.")
+    if "optimize-your-humidity-indoors" in path_lower:
+        return ("ac-installation.html", "Dehumidifier & Humidity Control", "Optimize indoor humidity levels with whole-house dehumidifier installation.")
+    if "professional-air-quality-monitoring" in path_lower:
+        return ("ac-installation.html", "Air Quality Monitoring Installation", "Professional indoor air quality monitor installation and diagnostic analysis.")
+    if "air-conditioner-maintenance-service" in path_lower:
+        return ("ac-maintenance.html", "AC Maintenance Service", "Tune-ups, filter cleaning, and system efficiency checks.")
+    if "/heating-in-" in path_lower:
+        return ("ac-maintenance.html", "Heating Maintenance", "Furnace and heat pump tune-ups and preventative heating maintenance.")
+    if "should-i-repair-or-replace-my-air-conditioner" in path_lower:
+        return ("ac-repair.html", "AC Repair & Replacement Guide", "Expert guidance on whether to repair or replace your failing air conditioning unit.")
+    if "air-quality-monitoring-service" in path_lower:
+        return ("ac-repair.html", "Air Quality Diagnostics", "Diagnose and resolve indoor air quality problems, odors, and dust accumulation.")
+    if "/hvac-equipment-repair/" in path_lower:
+        return ("ac-repair.html", "HVAC Repair", "Diagnostic calls and reliable repair of all major brands of central heating & cooling equipment.")
+    if "pool-heater-installation-and-repair" in path_lower:
+        return ("pool-heating.html", "Pool Heater Installation & Repair", "Swimming pool heat pump installation, diagnostic testing, and repair services.")
+    if "pool-heater-installation-repair" in path_lower:
+        return ("pool-heating.html", "Pool Heater Services", "Energy-efficient pool heat pump installations, troubleshooting, and repairs.")
+    if "pool-heating-in-" in path_lower:
+        return ("pool-heating.html", "Pool Heating Services", "Extend your swimming season with high-efficiency pool heat pump sales and service.")
+    if "cooling-comfort-a-c-nows-expertise" in path_lower:
+        return ("services.html", "Residential Cooling Comfort", "Expert residential air conditioning service, repairs, and cooling comfort solutions.")
+    if "decoding-comfort-choices-central-air-conditioning" in path_lower:
+        return ("services.html", "Central AC vs. Split Systems", "Comparison and selection guidance between central air conditioning and ductless split systems.")
+    if "mastering-comfort-residential-air-conditioning-expertise" in path_lower:
+        return ("services.html", "Residential AC Expertise", "Mastering home comfort with professional residential air conditioning services.")
+    if "understanding-how-residential-air-conditioning-works" in path_lower:
+        return ("services.html", "How Residential AC Works", "Educational guide explaining the mechanics of home air conditioning and heat transfer.")
+    if "perfecting-home-comfort-a-c-nows-expertise" in path_lower:
+        return ("ac-installation.html", "Residential AC Installation", "Perfecting home comfort with professional air conditioning system installation.")
+    if "unveiling-comfort-a-c-nows-expertise" in path_lower:
+        return ("services.html", "Residential Air Conditioning", "Professional residential cooling and heating services for home comfort.")
+
+    # 3. Fallbacks (lower specificity)
     if "pool-heating" in path_lower or "pool-heater" in path_lower:
         return ("pool-heating.html", "Pool Heat Pumps", "Energy-efficient swimming pool heat pump installation, repairs, and maintenance.")
     if "commercial-hvac" in path_lower:
@@ -1476,15 +1545,37 @@ for path in paths:
             content = content.replace(f'href=\'{sp}?\'', f'href=\'{relative_prefix}pages/{sp}?\'')
         
     # 3. Localize SEO Title
-    if service_name.endswith("Services") or service_name.endswith("Systems") or service_name.endswith("Pumps") or service_name == "Service Areas":
-        localized_title = f"{service_name} in {city_name}, FL | A/C Now LLC"
+    if any(x in service_name for x in ["Services", "Systems", "Pumps", "Areas", "Diagnostics", "Guide"]):
+        base_title = f"{service_name} in {city_name}, FL"
     else:
-        localized_title = f"{service_name} Services in {city_name}, FL | A/C Now LLC"
+        base_title = f"{service_name} Services in {city_name}, FL"
+        
+    if len(base_title) + len(" | A/C Now LLC") <= 60:
+        localized_title = f"{base_title} | A/C Now LLC"
+    elif len(base_title) + len(" | A/C Now") <= 60:
+        localized_title = f"{base_title} | A/C Now"
+    else:
+        localized_title = base_title
+        if len(localized_title) > 65:
+            localized_title = localized_title[:55] + "..."
+            
     content = re.sub(r"<title>.*?</title>", f"<title>{localized_title}</title>", content)
     
-    # 4. Localize Meta Description
-    localized_desc = f"{service_name} in {city_name}, FL. {meta_desc} Veteran-owned, same-day service."
+    # 4. Localize Meta Description (capped strictly under 155-160 characters)
+    base_desc = f"{service_name} in {city_name}, FL. {meta_desc}"
+    desc_suffix = " Veteran-owned, same-day service."
+    if len(base_desc) + len(desc_suffix) <= 155:
+        localized_desc = base_desc + desc_suffix
+    else:
+        localized_desc = base_desc
+        if len(localized_desc) > 155:
+            localized_desc = localized_desc[:152] + "..."
+            
     content = re.sub(r'<meta name="description" content=".*?">', f'<meta name="description" content="{localized_desc}">', content)
+    
+    # Clean up og:image and relative path concatenated URLs
+    content = content.replace("https://acnowllc.com/../assets/images/mascot-logo.svg", "https://acnowllc.com/assets/images/van_branded.jpg")
+    content = content.replace("https://acnowllc.com/../assets/", "https://acnowllc.com/assets/")
     
     # 5. Localize Canonical Tag
     content = re.sub(r'<link rel="canonical" href=".*?">', f'<link rel="canonical" href="https://acnowllc.com{path}">', content)
@@ -1493,16 +1584,137 @@ for path in paths:
     content = re.sub(r'<meta property="og:url" content=".*?">', f'<meta property="og:url" content="https://acnowllc.com{path}">', content)
     content = re.sub(r'<meta property="og:title" content=".*?">', f'<meta property="og:title" content="{localized_title}">', content)
     content = re.sub(r'<meta property="og:description" content=".*?">', f'<meta property="og:description" content="{localized_desc}">', content)
-    content = re.sub(r'<meta name="twitter:title" content=".*?">', f'<meta name="twitter:title" content="{localized_title}">', content)
-    content = re.sub(r'<meta name="twitter:description" content=".*?">', f'<meta name="twitter:description" content="{localized_desc}">', content)
     
-    # 7. Localize JSON-LD Schema Location info
-    if city_name != "Florida" and city_name != "Port St. Lucie":
-        content = content.replace('"addressLocality": "Port St. Lucie"', f'"addressLocality": "{city_name}"')
+    # Add twitter:card meta tags if missing, otherwise replace
+    if 'name="twitter:card"' not in content:
+        twitter_meta = f"""    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{localized_title}">
+    <meta name="twitter:description" content="{localized_desc}">
+    <meta name="twitter:image" content="https://acnowllc.com/assets/images/van_branded.jpg">"""
+        content = content.replace('<meta property="og:url"', f'{twitter_meta}\n    <meta property="og:url"')
+    else:
+        content = re.sub(r'<meta name="twitter:title" content=".*?">', f'<meta name="twitter:title" content="{localized_title}">', content)
+        content = re.sub(r'<meta name="twitter:description" content=".*?">', f'<meta name="twitter:description" content="{localized_desc}">', content)
+        content = re.sub(r'<meta name="twitter:image" content=".*?">', f'<meta name="twitter:image" content="https://acnowllc.com/assets/images/van_branded.jpg">', content)
         
-    # Also update schema url and @id
-    content = re.sub(r'"url": "https://acnowllc\.com/.*?"', f'"url": "https://acnowllc.com{path}"', content)
-    
+    # 7. Localize JSON-LD Schema Location info (Service schema vs HVACBusiness schema)
+    if city_name != "Florida" and city_name != "Port St. Lucie":
+        wiki_url = wikipedia_map.get(city_name, "https://en.wikipedia.org/wiki/Port_St._Lucie,_Florida")
+        service_schema = f"""<script type="application/ld+json">
+    {{
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "{service_name} in {city_name}, FL",
+      "serviceType": "{service_name}",
+      "provider": {{
+        "@type": "HVACBusiness",
+        "@id": "https://acnowllc.com/#hvacbusiness",
+        "name": "A/C Now LLC",
+        "url": "https://acnowllc.com/",
+        "image": "https://acnowllc.com/assets/images/van_branded.jpg",
+        "telephone": "(772) 521-3568"
+      }},
+      "areaServed": {{
+        "@type": "City",
+        "name": "{city_name}",
+        "sameAs": "{wiki_url}"
+      }}
+    }}
+    </script>"""
+        content = re.sub(
+            r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"HVACBusiness".*?</script>',
+            service_schema,
+            content,
+            flags=re.DOTALL
+        )
+    else:
+        content = content.replace("https://acnowllc.com/../assets/images/mascot-logo.svg", "https://acnowllc.com/assets/images/van_branded.jpg")
+
+    # Localize FAQ Page schema if present
+    faq_matches = list(re.finditer(r'<script type="application/ld\+json">(.*?FAQPage.*?)</script>', content, re.DOTALL))
+    for m in faq_matches:
+        orig_block = m.group(0)
+        new_block = orig_block
+        new_block = new_block.replace("Port St. Lucie", city_name)
+        for c in ["Stuart", "Palm City", "Jensen Beach", "Fort Pierce", "Hobe Sound", "Jupiter", "Palm Beach Gardens", "North Palm Beach"]:
+            if c != city_name:
+                new_block = new_block.replace(c, city_name)
+        content = content.replace(orig_block, new_block)
+
+    # Localize HTML details elements
+    details_matches = list(re.finditer(r'<details[^>]*>.*?</details>', content, re.DOTALL))
+    for m in details_matches:
+        orig_block = m.group(0)
+        new_block = orig_block
+        new_block = new_block.replace("Port St. Lucie", city_name)
+        for c in ["Stuart", "Palm City", "Jensen Beach", "Fort Pierce", "Hobe Sound", "Jupiter", "Palm Beach Gardens", "North Palm Beach"]:
+            if c != city_name:
+                new_block = new_block.replace(c, city_name)
+        content = content.replace(orig_block, new_block)
+
+    # Inject BreadcrumbList JSON-LD dynamically based on path depth
+    # First, strip any pre-existing BreadcrumbList schema blocks from the template
+    content = re.sub(
+        r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"BreadcrumbList".*?</script>',
+        '',
+        content,
+        flags=re.DOTALL
+    )
+    if len(parts) >= 1:
+        cat_slug = parts[0]
+        cat_name_map = {
+            "ac-replacement": "AC Replacement",
+            "hvac-installation": "HVAC Installation",
+            "hvac-maintenance": "HVAC Maintenance",
+            "hvac-repair": "HVAC Repair",
+            "pool-heating": "Pool Heating",
+            "commercial-hvac": "Commercial HVAC",
+            "residential-air-conditioning": "Residential AC"
+        }
+        cat_name = cat_name_map.get(cat_slug, cat_slug.replace('-', ' ').title())
+        
+        breadcrumb_elements = [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://acnowllc.com/"
+            }
+        ]
+        
+        if len(parts) == 1:
+            breadcrumb_elements.append({
+                "@type": "ListItem",
+                "position": 2,
+                "name": cat_name,
+                "item": f"https://acnowllc.com/{cat_slug}/"
+            })
+        else:
+            breadcrumb_elements.append({
+                "@type": "ListItem",
+                "position": 2,
+                "name": cat_name,
+                "item": f"https://acnowllc.com/{cat_slug}/"
+            })
+            breadcrumb_elements.append({
+                "@type": "ListItem",
+                "position": 3,
+                "name": f"{service_name} in {city_name}, FL",
+                "item": f"https://acnowllc.com{path}"
+            })
+            
+        import json
+        breadcrumb_schema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": breadcrumb_elements
+        }
+        
+        breadcrumb_html = f"""    <script type="application/ld+json">
+    {json.dumps(breadcrumb_schema, indent=2)}
+    </script>\n"""
+        content = content.replace("</head>", f"{breadcrumb_html}</head>")
+
     # 8. Localize Page Headings (e.g. H1/H2)
     h1_match = re.search(r'<h1([^>]*)>(.*?)</h1>', content)
     if h1_match:
