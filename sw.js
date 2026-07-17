@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v85'; // Bumped to force refresh for diagnostic wizard selected states and disabled button styles
+const CACHE_NAME = 'acnow-cache-v87'; // Bumped to force refresh for diagnostic wizard grid layout overlay fix
 const DEBUG = true;
 
 // Helper function for structured logging

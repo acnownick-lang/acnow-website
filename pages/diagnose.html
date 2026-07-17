@@ -312,6 +312,10 @@
         }
         /* Option Card overrides to prevent layout shift and improve contrast */
         .option-card {
+            display: grid !important; /* Fixes WebKit flexbox absolute sizing bugs */
+            grid-template-columns: 1fr !important;
+            align-items: center !important;
+            height: 100% !important; /* Establishes definite height to fix WebKit/Blink absolute child height propagation */
             border: 2px solid rgba(255, 255, 255, 0.15) !important;
             box-sizing: border-box !important;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -323,7 +327,17 @@
             box-shadow: 0 0 0 1px #00F2FF, 0 12px 28px rgba(11, 99, 229, 0.4) !important;
             transform: scale(1.02) translateY(-4px);
         }
-        .option-card.selected div[style*="position: absolute"] {
+        /* Ensure absolute background overlay stretches correctly and handles gradient transitions */
+        .option-card > div:first-child {
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .option-card.selected > div:first-child {
             background: linear-gradient(to right, rgba(11, 99, 229, 0.95) 45%, rgba(11, 99, 229, 0.7) 100%) !important;
         }
         /* Glassmorphic icon container for unselected state (resolves cyan-on-white low contrast) */
