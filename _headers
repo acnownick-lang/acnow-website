@@ -23,3 +23,35 @@
 
   # XSS Protection header (legacy browsers)
   X-XSS-Protection: 1; mode=block
+
+# Path-specific headers for gated utility pages (prevent indexing)
+/pages/configurator.html
+  X-Robots-Tag: noindex, nofollow
+
+/pages/3d-airflow.html
+  X-Robots-Tag: noindex, nofollow
+
+/pages/members.html
+  X-Robots-Tag: noindex, nofollow
+
+/pages/team-portal.html
+  X-Robots-Tag: noindex, nofollow
+
+/pages/corrosion-predictor.html
+  X-Robots-Tag: noindex, nofollow
+
+/configurator
+  X-Robots-Tag: noindex, nofollow
+
+/3d-airflow
+  X-Robots-Tag: noindex, nofollow
+
+/members
+  X-Robots-Tag: noindex, nofollow
+
+/team-portal
+  X-Robots-Tag: noindex, nofollow
+
+/corrosion-predictor
+  X-Robots-Tag: noindex, nofollow
+
