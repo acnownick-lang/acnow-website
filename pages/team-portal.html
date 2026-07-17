@@ -905,8 +905,8 @@
                                         <div>
                                             <label for="tech-name-select" style="font-size: 11px; font-weight:700; color:var(--dark); display:block; margin-bottom:4px;">Technician Signature</label>
                                             <select id="tech-name-select" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:12.5px;">
-                                                <option value="Sean">Sean (Co-Owner)</option>
-                                                <option value="Chris">Chris (Co-Owner)</option>
+                                                <option value="Lead-Tech">AC Now Lead Technician</option>
+                                                <option value="Specialist">AC Now Service Specialist</option>
                                             </select>
                                         </div>
                                         <div>
@@ -1502,23 +1502,23 @@
                                         <div style="margin-bottom: 20px; text-align: left; max-width: 280px; margin-left: auto; margin-right: auto;">
                                             <label for="tech-qr-select" style="font-size: 10.5px; font-weight:700; color:rgba(255,255,255,0.8); display:block; margin-bottom:5px;">Active Technician</label>
                                             <select id="tech-qr-select" style="width:100%; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height: 36px; outline:none;">
-                                                <option value="Chris">Chris (Co-Owner)</option>
-                                                <option value="Sean">Sean (Co-Owner)</option>
+                                                <option value="Specialist">AC Now Service Specialist</option>
+                                                <option value="Lead-Tech">AC Now Lead Technician</option>
                                             </select>
                                         </div>
 
                                         <!-- QR Display Area -->
                                         <div style="background: #fff; padding: 20px; border-radius: 12px; display:inline-block; margin-bottom:15px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-                                            <!-- SVG QR Code representing: https://acnowllc.com/services.html?ref=Chris -->
+                                            <!-- SVG QR Code representing: https://acnowllc.com/services.html?ref=Specialist -->
                                             <svg id="tech-qr-svg" width="160" height="160" viewBox="0 0 29 29" style="display:block; margin:0 auto; shape-rendering:crispedges; fill:#000;">
                                                 <!-- Chris QR placeholder SVG path -->
                                                 <path d="M0 0h7v7H0zm2 2v3h3V2zm0 12h3v3H2zm8 0h3v3h-3zm12-12h7v7h-7zm2 2v3h3V2zM0 22h7v7H0zm2 2v3h3V24zm12 2h3v3h-3zm6-6h3v3h-3zm2 4h3v3h-3zm4-4h3v3h-3zm0 4h3v3h-3zm-6-8h3v3h-3zm2-4h3v3h-3zm2 4h3v3h-3zm2-4h3v3h-3z" />
                                             </svg>
-                                            <div id="tech-qr-label" style="font-size:11px; font-weight:700; color:#0a182f; margin-top:8px;">Referral ID: Chris</div>
+                                            <div id="tech-qr-label" style="font-size:11px; font-weight:700; color:#0a182f; margin-top:8px;">Referral ID: Specialist</div>
                                         </div>
                                         
                                         <div style="font-size:11.5px; color:rgba(255,255,255,0.8); line-height:1.5;">
-                                            Current Target Link: <a id="tech-qr-link" href="#" target="_blank" style="color:var(--primary); text-decoration:underline;">services.html?ref=Chris</a>
+                                            Current Target Link: <a id="tech-qr-link" href="#" target="_blank" style="color:var(--primary); text-decoration:underline;">services.html?ref=Specialist</a>
                                         </div>
                                     </div>
 
@@ -1528,15 +1528,6 @@
                                         <p style="font-size:11px; color:rgba(255,255,255,0.60); margin-bottom:15px; line-height:1.4;">Calculate your payouts for enrolling customers in Comfort Club plans and review company profit margins.</p>
                                         
                                         <div style="background: rgba(0,0,0,0.15); padding:15px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); margin-bottom:15px;">
-                                            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px;">
-                                                <span>Gold Plan ($155/yr) signup:</span>
-                                                <strong style="color:#0B7A53;">+$25.00 Payout</strong>
-                                            </div>
-                                            <div style="display:flex; justify-content:space-between; font-size:12px;">
-                                                <span>Platinum Plan ($295/yr) signup:</span>
-                                                <strong style="color:#0B7A53;">+$50.00 Payout</strong>
-                                            </div>
-                                        </div>
                                             <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px;">
                                                 <span>Comfort Club ($19.95/mo) signup:</span>
                                                 <strong style="color:#0B7A53;">+$25.00 Payout</strong>
@@ -1551,8 +1542,8 @@
                                             <div>
                                                 <label for="comm-plan-select" style="font-size: 10.5px; font-weight:700; color:rgba(255,255,255,0.8); display:block; margin-bottom:5px;">Select Plan Sold</label>
                                                 <select id="comm-plan-select" style="width:100%; padding:9px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#152238; color:#fff; font-size:12px; height: 36px; outline:none;" onchange="calculateCommissionTracker()">
-                                                     <option value="gold" selected>Gold Plan ($155/yr)</option>
-                                                     <option value="platinum">Platinum Plan ($295/yr)</option>
+                                                     <option value="gold" selected>Comfort Club ($19.95/mo)</option>
+                                                     <option value="platinum">Precision Elite ($29.95/mo)</option>
                                                  </select>
                                             </div>
                                             <div>
@@ -1927,8 +1918,8 @@
                                     <label for="dispatch-tech-assign" style="font-size:11px; font-weight:700; color:var(--dark); display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.4px;">Assign Technician</label>
                                     <select id="dispatch-tech-assign" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:12.5px; color:var(--dark); cursor:pointer;">
                                         <option value="auto">⚡ Auto-Assign (Next Available)</option>
-                                        <option value="Sean">Sean (Co-Owner)</option>
-                                        <option value="Chris">Chris (Co-Owner)</option>
+                                        <option value="Lead-Tech">AC Now Lead Technician</option>
+                                        <option value="Specialist">AC Now Service Specialist</option>
                                     </select>
                                 </div>
 
@@ -2358,8 +2349,8 @@
 
             // Initial logs seed
             const defaultLogs = [
-                { date: "2026-04-12", tech: "Sean (Co-Owner)", details: "Annual 21-point checkup completed. Balanced blower motor CFM, verified capacitor tolerances, and chemically flushed drain pan lines.", status: "🟢 COMPLETE" },
-                { date: "2025-10-08", tech: "Chris (Co-Owner)", details: "Fall system inspection. Chemically rinsed evaporator coil, cleared outdoor debris from central condenser pad, and replaced air filters.", status: "🟢 COMPLETE" }
+                { date: "2026-04-12", tech: "AC Now Lead Technician", details: "Annual 21-point checkup completed. Balanced blower motor CFM, verified capacitor tolerances, and chemically flushed drain pan lines.", status: "🟢 COMPLETE" },
+                { date: "2025-10-08", tech: "AC Now Service Specialist", details: "Fall system inspection. Chemically rinsed evaporator coil, cleared outdoor debris from central condenser pad, and replaced air filters.", status: "🟢 COMPLETE" }
             ];
 
             const defaultSpecs = {
@@ -2389,11 +2380,11 @@
                 const id = getActiveMemberId();
                 if (id === "ACN-44910") {
                     return [
-                        { date: "2026-05-15", tech: "Chris (Co-Owner)", details: "VIP Maintenance: Calibrated digital smart thermostat, checked heat strip amp draw, and cleaned drain line.", status: "🟢 COMPLETE" }
+                        { date: "2026-05-15", tech: "AC Now Service Specialist", details: "VIP Maintenance: Calibrated digital smart thermostat, checked heat strip amp draw, and cleaned drain line.", status: "🟢 COMPLETE" }
                     ];
                 } else if (id === "ACN-22108") {
                     return [
-                        { date: "2026-03-01", tech: "Sean (Co-Owner)", details: "Diagnostic Dispatch: Repaired shorted contactor, verified outdoor fan rotation, and tested refrigerant pressure.", status: "🟢 COMPLETE" }
+                        { date: "2026-03-01", tech: "AC Now Lead Technician", details: "Diagnostic Dispatch: Repaired shorted contactor, verified outdoor fan rotation, and tested refrigerant pressure.", status: "🟢 COMPLETE" }
                     ];
                 }
                 return defaultLogs;
@@ -4466,10 +4457,10 @@
                 if (qrSvg) {
                     const path = qrSvg.querySelector("path");
                     if (path) {
-                        if (techName === "Sean") {
+                        if (techName === "Lead-Tech") {
                             path.setAttribute("d", "M0 0h7v7H0zm2 2v3h3V2zm0 12h3v3H2zm8 0h3v3h-3zm12-12h7v7h-7zm2 2v3h3V2zM0 22h7v7H0zm2 2v3h3V24zm12 2h3v3h-3zm6-6h3v3h-3zm2 4h3v3h-3zm4-4h3v3h-3zm0 4h3v3h-3zm-6-8h3v3h-3zm2-4h3v3h-3zm2 4h3v3h-3zm2-4h3v3h-3z M10 0h3v3h-3zm4 4h3v3h-3zm4 0h3v3h-3zm-4 4h3v3h-3zm4 2h3v3h-3z");
                         } else {
-                            // Chris
+                            // Specialist
                             path.setAttribute("d", "M0 0h7v7H0zm2 2v3h3V2zm0 12h3v3H2zm8 0h3v3h-3zm12-12h7v7h-7zm2 2v3h3V2zM0 22h7v7H0zm2 2v3h3V24zm12 2h3v3h-3zm6-6h3v3h-3zm2 4h3v3h-3zm4-4h3v3h-3zm0 4h3v3h-3zm-6-8h3v3h-3zm2-4h3v3h-3zm2 4h3v3h-3zm2-4h3v3h-3z");
                         }
                     }
