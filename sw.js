@@ -1,5 +1,5 @@
-const CACHE_NAME = 'acnow-cache-v92'; // Bumped to force browser cache reload of updated HTML version tags
-const DEBUG = true;
+const CACHE_NAME = 'acnow-cache-v93'; // Bumped: perf pass - ignoreSearch fix, lean precache, DEBUG off
+const DEBUG = false;
 
 // Helper function for structured logging
 function log(level, message, ...args) {
@@ -106,7 +106,13 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         log('info', 'Pre-caching static assets');
-        return cache.addAll(STATIC_ASSETS);
+        // addAll() rejects (and the SW never installs) if ANY asset 404s.
+        // Cache files individually so one missing file cannot break the install.
+        return Promise.allSettled(
+          STATIC_ASSETS.map(url => cache.add(url).catch(err => {
+            log('warn', 'Precache skipped (not fatal):', url, err);
+          }))
+        );
       })
       .then(() => self.skipWaiting())
   );
@@ -188,7 +194,7 @@ self.addEventListener('fetch', event => {
   // 2. CSS & JS Code Assets: Stale-While-Revalidate
   if (isCodeAsset) {
     event.respondWith(
-      caches.match(event.request, { ignoreSearch: true }).then(cachedResponse => {
+      caches.match(event.request).then(cachedResponse => {
         const fetchPromise = fetch(event.request)
           .then(networkResponse => {
             if (networkResponse.status === 200) {
