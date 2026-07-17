@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v91'; // Bumped to force browser cache reload of updated HTML version tags
+const CACHE_NAME = 'acnow-cache-v92'; // Bumped to force browser cache reload of updated HTML version tags
 const DEBUG = true;
 
 // Helper function for structured logging
