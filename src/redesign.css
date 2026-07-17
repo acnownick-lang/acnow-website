@@ -3149,6 +3149,17 @@ section.trust-bar {
     }
 }
 
+/* Prevent WebKit layout collapse and grid overlap on mobile screens by keeping sticky only on desktop */
+.faq-sticky-sidebar {
+    position: relative;
+}
+@media (min-width: 992px) {
+    .faq-sticky-sidebar {
+        position: sticky;
+        top: 100px;
+    }
+}
+
 /* 4. Premium FAQ Accordion Styles */
 .faq-accordion-container {
     display: flex;
