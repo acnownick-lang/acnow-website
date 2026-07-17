@@ -310,17 +310,44 @@
             background: rgba(11, 99, 229, 0.02);
             transform: translateY(-2px);
         }
+        /* Option Card overrides to prevent layout shift and improve contrast */
+        .option-card {
+            border: 2px solid rgba(255, 255, 255, 0.15) !important;
+            box-sizing: border-box !important;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
         .option-card.selected {
-            border: 3px solid var(--primary) !important;
-            box-shadow: 0 0 20px rgba(11, 99, 229, 0.4) !important;
-            transform: scale(1.02) translateY(-2px);
+            border-color: #00F2FF !important; /* Cyan border */
+            box-shadow: 0 0 0 1px #00F2FF, 0 12px 28px rgba(11, 99, 229, 0.4) !important;
+            transform: scale(1.02) translateY(-4px);
         }
         .option-card.selected div[style*="position: absolute"] {
             background: linear-gradient(to right, rgba(11, 99, 229, 0.95) 45%, rgba(11, 99, 229, 0.7) 100%) !important;
         }
+        /* Glassmorphic icon container for unselected state (resolves cyan-on-white low contrast) */
+        .option-icon {
+            font-size: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.12) !important;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            color: #00F2FF !important;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        /* High-contrast selected icon (resolves white-on-white invisible icon) */
         .option-card.selected .option-icon {
-            color: #fff !important;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) !important;
+            background-color: var(--white) !important;
+            border-color: var(--white) !important;
+            color: #0B2140 !important; /* Dark navy for high-contrast on white background */
+            filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.5)) !important;
+            transform: scale(1.05);
         }
         .btn:disabled {
             background: #cbd5e1 !important;
@@ -330,17 +357,6 @@
             box-shadow: none !important;
             transform: none !important;
             opacity: 0.7;
-        }
-        .option-icon {
-            font-size: 24px;
-            width: 48px;
-            height: 48px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--gray-light);
         }
         .option-info h4 {
             font-family: var(--font-heading);
