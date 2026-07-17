@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v81'; // Bumped to force refresh for mobile FAQ overlap fix
+const CACHE_NAME = 'acnow-cache-v82'; // Bumped to force refresh for blower motor description propagation
 const DEBUG = true;
 
 // Helper function for structured logging
