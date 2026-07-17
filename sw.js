@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v95'; // Bumped: client-persistence gap fix, clients.claim() addition
+const CACHE_NAME = 'acnow-cache-v96'; // Bumped: robust navigation mode handling (fetch & cache URL)
 const DEBUG = false;
 
 // Helper function for structured logging
@@ -243,14 +243,20 @@ self.addEventListener('fetch', event => {
       return;
     }
 
+    // For navigate requests, fetch using the URL string to bypass browser-specific navigate-mode fetch/cache restrictions
+    const fetchPromise = event.request.mode === 'navigate'
+      ? fetch(event.request.url)
+      : fetch(event.request);
+
     event.respondWith(
-      fetch(event.request)
+      fetchPromise
         .then(networkResponse => {
           if (networkResponse.status === 200) {
             return caches.open(CACHE_NAME).then(cache => {
               // Only cache standard non-redirected responses to avoid Cache API TypeErrors
               if (!networkResponse.redirected) {
-                cache.put(event.request, networkResponse.clone());
+                // Use URL string as cache key to bypass navigate-mode cache.put restrictions
+                cache.put(event.request.url, networkResponse.clone());
               }
               return networkResponse;
             });
@@ -259,7 +265,7 @@ self.addEventListener('fetch', event => {
         })
         .catch(err => {
           log('warn', 'Network request failed for HTML page, checking cache:', url.pathname, err);
-          return caches.match(event.request, { ignoreSearch: true }).then(cachedResponse => {
+          return caches.match(event.request.url, { ignoreSearch: true }).then(cachedResponse => {
             if (cachedResponse) return cachedResponse;
             return caches.match('pages/offline.html');
           });
