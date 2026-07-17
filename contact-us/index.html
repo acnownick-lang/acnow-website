@@ -302,6 +302,9 @@
                                  <label for="message">How can we assist you? (Required)</label>
                                  <textarea id="message" rows="4" placeholder="Briefly describe your cooling or heating needs (e.g. AC repair, system replacement, preventative maintenance)..." name="message" required></textarea>
                              </div>
+                             <div class="form-group" style="margin-bottom:20px;">
+                                 <div id="dispatch-calendar-container" style="max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;"></div>
+                             </div>
                              <p style="font-size: 11px; color: var(--gray-dark); margin: 15px 0 20px 0; line-height: 1.5; text-align: left;">
                                  By submitting, you consent to receive calls and text messages (SMS/MMS) from A/C Now LLC at the number provided, including automated, pre-recorded, and promotional messages. Consent is not a condition of purchase. Message and data rates may apply. Message frequency varies. Reply STOP to cancel or HELP for help. View our <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>.
                              </p>
@@ -376,6 +379,7 @@
         </div>
     </footer>
     <script src="../assets/js/app.js?v=110"></script>
+    <script src="../assets/js/calendar-widget.js?v=101" defer></script>
     <!-- WCAG 4.1.2: Sticky CTA with role + aria-labels -->
     <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
         <a href="tel:+17725213568" class="sticky-cta-btn phone-btn" aria-label="Call A/C Now LLC at (772) 521-3568"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> Call Now</a>

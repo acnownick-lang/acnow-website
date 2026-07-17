@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v79'; // Bumped to force refresh for flexible financing text updates
+const CACHE_NAME = 'acnow-cache-v80'; // Bumped to force refresh for live dispatch calendar restoration
 const DEBUG = true;
 
 // Helper function for structured logging

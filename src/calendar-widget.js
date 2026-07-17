@@ -93,7 +93,8 @@ function initCalendarWidget() {
             </div>
         </div>
         <div id="calendar-feedback-box" style="display: none; background: rgba(11, 99, 229, 0.04); border: 1px solid rgba(11, 99, 229, 0.1); padding: 12px 15px; border-radius: 6px; font-size: 12.5px; margin-bottom: 20px; animation: fadeIn 0.2s ease;">
-            Selected Appointment: <strong id="cal-selected-txt" style="color: var(--primary);">None</strong>
+            Selected Appointment: <strong id="cal-selected-txt" style="color: var(--primary);">None</strong><br>
+            Assigned Technician: <strong id="cal-tech-txt" style="color: var(--dark);">TBD</strong>
         </div>
     `;
 
