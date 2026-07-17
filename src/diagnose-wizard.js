@@ -218,38 +218,29 @@ function initDiagnoseWizard() {
                     diyCheckedCount++;
                 }
             }
-        });
-
-        // Generate Diagnostic Summary for input payload
+        });        // Generate Diagnostic Summary for input payload (simplified to avoid sync failures)
         const symptomName = document.querySelector(`.option-card[data-symptom="${selectedSymptom}"] h4`).textContent;
-        diagSummaryInput.value = `[Symptom: ${symptomName}] [Checks Run: ${checkedDetails.join(" | ")}]`;
+        diagSummaryInput.value = `[DIY Troubleshooter Lead] Symptom: ${symptomName}`;
         sessionStorage.setItem("diag_step", "results");
         
-        let resultHtml = "";
-        let speechText = "";
-
-        if (diyCheckedCount > 0) {
-            resultHtml = `
-                <div class="diy-box">
-                    <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Potential Simple Fix Identified!</h4>
-                    <p style="font-size:14px; color:#065f46; line-height:1.6; margin-bottom:10px;">Based on your check, you identified a common homeowner issue (e.g. dirty filter, batteries, or breaker reset). Try resolving these items first!</p>
-                    <ul style="padding-left:20px; font-size:13px; color:#065f46; line-height:1.6; margin-bottom: 0;">
-                        <li><strong>Swap Filter:</strong> Replace clogged filters with a clean MERV 8 or 11 filter.</li>
-                        <li><strong>Batteries:</strong> Install brand new alkaline AA/AAA batteries in your thermostat.</li>
-                        <li><strong>Breaker Check:</strong> Flip the breaker fully to 'OFF' and then back to 'ON'.</li>
-                    </ul>
-                </div>
-            `;
-            speechText = "Potential simple fix identified. Based on your check, you found a common homeowner issue. Try swapping your dirty air filters, installing fresh AA batteries in the thermostat, or resetting the main circuit breakers first.";
-        } else {
-            resultHtml = `
-                <div class="diag-box">
-                    <h4><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:1.2em;height:1.2em;color:#991b1b;margin-right:8px;vertical-align:middle;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Professional Dispatch Recommended</h4>
-                    <p style="font-size:14px; color:#991b1b; line-height:1.6; margin-bottom: 0;">You have cleared the simple home checks, but the symptom persists. This indicates a technical component issue (e.g. refrigerant leak, electrical failure, or bad motor capacitor).</p>
-                </div>
-            `;
-            speechText = "Professional dispatch recommended. You have cleared the simple home checks, but the symptom persists. This indicates a technical component issue such as a refrigerant leak or electrical contactor failure. We recommend booking Sean or Chris for an on-site inspection.";
-        }
+        const resultHtml = `
+            <div class="diy-box" style="background: rgba(11, 99, 229, 0.04); border: 1px solid rgba(11, 99, 229, 0.1); padding: 25px; border-radius: var(--border-radius); color: var(--dark);">
+                <h4 style="color: var(--primary); font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-top: 0; margin-bottom: 12px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    Recommended Troubleshooting Steps
+                </h4>
+                <p style="font-size:14px; color: var(--gray-dark); line-height:1.6; margin-bottom:20px;">
+                    Before scheduling an on-site technician, we highly recommend trying these quick, common homeowner checks:
+                </p>
+                <ul style="padding-left:20px; font-size:14px; color: var(--dark); line-height:1.7; margin-bottom: 0; display: flex; flex-direction: column; gap: 10px;">
+                    <li><strong>Check Breakers:</strong> Locate the indoor and outdoor circuit breakers in your main electrical panel. Flip them fully to "OFF" and back to "ON" to reset.</li>
+                    <li><strong>Check Thermostat Batteries:</strong> Ensure your thermostat display is active and replace the old batteries with fresh AA or AAA alkaline batteries.</li>
+                    <li><strong>Clear the Condensate Drain:</strong> Verify that your drain line is clear and that water is not backing up to trip the float safety switch.</li>
+                    <li><strong>Change the Air Filter:</strong> A dirty, clogged filter blocks airflow and can cause your AC system to freeze up or stop cooling.</li>
+                </ul>
+            </div>
+        `;
+        const speechText = "Here are a few quick troubleshooting tips before booking. Please check your circuit breakers, ensure your thermostat has fresh batteries, verify that the condensate drain line is clear of blockages, and confirm your air filter is clean. If these items are clear, please request a diagnostic visit below.";
 
         // Voice Assistant HTML Widget
         const voiceWidgetHtml = `
