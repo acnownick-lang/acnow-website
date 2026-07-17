@@ -39,7 +39,7 @@ def get_city_info(path_lower):
     for key, val in city_landmark_map.items():
         if key in path_lower:
             return val
-    return ("Florida", "the local Treasure Coast region", "Florida")
+    return ("Port St. Lucie", "Port St. Lucie Botanical Gardens", "St. Lucie County")
 
 def get_template_and_intent(path_lower):
     # 1. Specific matches (Clean/Handcrafted URLs)
@@ -1483,7 +1483,7 @@ for path in paths:
     content = re.sub(r"<title>.*?</title>", f"<title>{localized_title}</title>", content)
     
     # 4. Localize Meta Description
-    localized_desc = f"{service_name} in {city_name}, FL near {landmark}. {meta_desc} Veteran-owned, 24/7 same-day service."
+    localized_desc = f"{service_name} in {city_name}, FL. {meta_desc} Veteran-owned, same-day service."
     content = re.sub(r'<meta name="description" content=".*?">', f'<meta name="description" content="{localized_desc}">', content)
     
     # 5. Localize Canonical Tag
