@@ -284,33 +284,51 @@ function urlBase64ToUint8Array(base64String) {
 document.addEventListener('DOMContentLoaded', () => {
     // Dedicated handler for the city field (prefill and custom inline validation)
     function setupCityFieldHandlers() {
-        const cityInput = document.getElementById("city");
+        const cityInputs = document.querySelectorAll('#city, #city_plan, #city_diag, #city_config, [name="city"]');
         const cityError = document.getElementById("city-error");
         
         // 1. Prefill from nf_city cookie if available and is a whitelisted service city
         const match = document.cookie.match(/(?:^|; )nf_city=([^;]*)/);
-        if (match && cityInput) {
+        const serviceCities = ["Port St. Lucie", "Stuart", "Palm City", "Jensen Beach", "Fort Pierce", "Jupiter", "Hobe Sound", "Palm Beach Gardens", "North Palm Beach"];
+        
+        let targetCity = "Port St. Lucie";
+        if (match) {
             const market = decodeURIComponent(match[1]);
-            const serviceCities = ["Port St. Lucie", "Stuart", "Palm City", "Jensen Beach", "Fort Pierce", "Jupiter", "Hobe Sound", "Palm Beach Gardens", "North Palm Beach"];
-            if (market && market !== "Default" && serviceCities.includes(market) && !cityInput.value) {
-                cityInput.value = market;
-                console.log(`[City Prefill] Auto-populated city field with: ${market}`);
+            if (market && market !== "Default" && serviceCities.includes(market)) {
+                targetCity = market;
             }
         }
         
+        cityInputs.forEach(cityInput => {
+            if (!cityInput.dataset.listenerAdded) {
+                cityInput.dataset.listenerAdded = "true";
+                cityInput.addEventListener('change', () => {
+                    cityInput.dataset.userEdited = "true";
+                });
+                cityInput.addEventListener('input', () => {
+                    cityInput.dataset.userEdited = "true";
+                });
+            }
+            if (cityInput.dataset.userEdited !== "true") {
+                cityInput.value = targetCity;
+                console.log(`[City Prefill] Populated city field ${cityInput.id || cityInput.name} with: ${targetCity}`);
+            }
+        });
+        
         // 2. Custom inline validation
-        if (cityInput) {
-            cityInput.addEventListener("invalid", (e) => {
+        const mainCityInput = document.getElementById("city");
+        if (mainCityInput) {
+            mainCityInput.addEventListener("invalid", (e) => {
                 e.preventDefault(); // Suppress default browser tooltip
-                cityInput.style.borderColor = "#C22A36";
+                mainCityInput.style.borderColor = "#C22A36";
                 if (cityError) {
                     cityError.style.display = "block";
                     cityError.style.visibility = "visible";
                 }
             });
-            cityInput.addEventListener("input", () => {
-                if (cityInput.value.trim() !== "") {
-                    cityInput.style.borderColor = "";
+            mainCityInput.addEventListener("input", () => {
+                if (mainCityInput.value.trim() !== "") {
+                    mainCityInput.style.borderColor = "";
                     if (cityError) {
                         cityError.style.display = "none";
                     }
@@ -333,8 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`[Geotargeting] Detected nf_city cookie: ${market}`);
 
         // Skip document title overrides for internal technician/members portals
-        const skipTitleOverride = window.location.pathname.endsWith("team-portal.html") || 
-                                  window.location.pathname.endsWith("members.html");
+        const skipTitleOverride = window.location.pathname.includes("team-portal") || 
+                                  window.location.pathname.includes("members");
 
         const MARKET_DATA = {
             "Stuart": {
@@ -480,9 +498,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Update top-bar with a premium greeting and priority support notice
-        const topBarMsg = document.querySelector(".top-bar-item.highlight");
-        if (topBarMsg) {
-            topBarMsg.innerHTML = '<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Welcome Back, Member | Priority Hotline Active';
+        const topBarContent = document.querySelector(".top-bar-content");
+        if (topBarContent && !document.getElementById("member-premium-badge")) {
+            const memberBadge = document.createElement("span");
+            memberBadge.id = "member-premium-badge";
+            memberBadge.className = "top-bar-item";
+            memberBadge.innerHTML = '<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Welcome Back, Member | Priority Hotline Active';
+            topBarContent.appendChild(memberBadge);
         }
         
         // Ingress a luxury gold drop-shadow to active primary buttons for logged-in users
@@ -2182,9 +2204,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 1. Live Air Quality Index (AQI) Detector & Global Mute Toggle Button
     async function initializeAQIDetector() {
-        const topBarContent = document.querySelector('.top-bar-content');
-        const servicesAqiWidget = document.getElementById('live-aqi-widget');
-        
         const match = document.cookie.match(/(?:^|; )nf_city=([^;]*)/);
         const city = match ? decodeURIComponent(match[1]) : "Port St. Lucie";
         
@@ -2225,42 +2244,43 @@ document.addEventListener("DOMContentLoaded", () => {
         let category = "Good";
         let color = "#10B981"; // Green
         let desc = "Ideal air conditions. Low pollen and pollutants.";
-        let alertHtml = "";
 
         if (aqiVal > 50 && aqiVal <= 100) {
             category = "Moderate";
             color = "#F59E0B"; // Yellow
             desc = "Acceptable air quality. Potential irritant for sensitive respiratory systems.";
-            alertHtml = `<div style="margin-top: 10px; font-size:11.5px; color:#B45309;">⚠️ Moderate AQI: We recommend installing a <strong>Guardian UV air purifier</strong> or booking an duct cleanliness check.</div>`;
         } else if (aqiVal > 100) {
             category = "Poor";
             color = "#EF4444"; // Red
             desc = "High allergen and pollutant count. Indoor filtration recommended.";
-            alertHtml = `<div style="margin-top: 10px; font-size:11.5px; color:#B91C1C; font-weight:600;">🚨 Poor AQI Alert: High allergen count. We highly recommend a <strong>HEPA filtration upgrade</strong> or chemical coil sanitize service.</div>`;
         }
 
-        // Inject global AQI Badge
+        // 1. Inject/Update global AQI Badge
+        const topBarContent = document.querySelector('.top-bar-content');
         if (topBarContent) {
-            const globalBadgeSpan = document.createElement('span');
-            globalBadgeSpan.className = 'top-bar-item highlight';
-            globalBadgeSpan.id = 'global-aqi-badge';
-            globalBadgeSpan.style.display = 'inline-flex';
-            globalBadgeSpan.style.alignItems = 'center';
-            globalBadgeSpan.style.gap = '6px';
+            let globalBadgeSpan = document.getElementById('global-aqi-badge');
+            if (!globalBadgeSpan) {
+                globalBadgeSpan = document.createElement('span');
+                globalBadgeSpan.className = 'top-bar-item highlight';
+                globalBadgeSpan.id = 'global-aqi-badge';
+                globalBadgeSpan.style.display = 'inline-flex';
+                globalBadgeSpan.style.alignItems = 'center';
+                globalBadgeSpan.style.gap = '6px';
+                topBarContent.appendChild(globalBadgeSpan);
+            }
             globalBadgeSpan.innerHTML = `
                 <span class="badge" style="background:${color}; color:#fff;" id="aqi-color-dot">AQI</span> 
                 Live ${displayCity} Air Quality: <strong style="color:${color}; font-weight:700;">${aqiVal} (${category})</strong>
             `;
-            topBarContent.appendChild(globalBadgeSpan);
         }
 
-        // Inject services page card widget
+        // 2. Inject/Update services page card widget
+        const servicesAqiWidget = document.getElementById('live-aqi-widget');
         if (servicesAqiWidget) {
-            const isServicesPage = window.location.pathname.includes("services.html");
-            const textColor = isServicesPage ? "#FFFFFF" : "var(--dark)";
-            const descColor = isServicesPage ? "#CBD5E1" : "var(--gray-dark)";
-            const alertColor = isServicesPage ? "#FBBF24" : "#B45309";
-            const alertPoorColor = isServicesPage ? "#F87171" : "#B91C1C";
+            const textColor = "#FFFFFF";
+            const descColor = "#CBD5E1";
+            const alertColor = "#FBBF24";
+            const alertPoorColor = "#F87171";
             
             const servicesAlertHtml = aqiVal > 50 && aqiVal <= 100 
                 ? `<div style="margin-top: 8px; font-size:11.5px; color:${alertColor};">⚠️ Moderate AQI: We recommend a <strong>Guardian UV air purifier</strong> or duct check.</div>`
@@ -2281,7 +2301,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    initializeAQIDetector();
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeAQIDetector);
+    } else {
+        initializeAQIDetector();
+    }
 
     // Inject Global Mute Toggle Button in Footer Bottom Bar
     function injectFooterSoundToggle() {
@@ -2879,19 +2903,12 @@ document.addEventListener("DOMContentLoaded", initPremiumUXFeatures);
                             <div class="left-side">
                                 <input type="checkbox" data-url="${item.url}" ${isChecked}>
                                 <a href="${(() => {
-                    let resolvedUrl = item.url;
-                    const isSubpage = window.location.pathname.includes('/pages/');
-                    if (isSubpage) {
-                        if (item.url === 'index.html') {
-                            resolvedUrl = '../index.html';
-                        }
-                    } else {
-                        if (item.url !== 'index.html') {
-                            resolvedUrl = 'pages/' + item.url;
-                        }
-                    }
-                    return resolvedUrl;
-                })()}">${item.phase === '2' ? '🚀 ' : ''}${item.name}</a>
+                                    let resolvedUrl = '/' + item.url;
+                                    if (item.url !== 'index.html' && item.url !== '404.html') {
+                                        resolvedUrl = '/pages/' + item.url;
+                                    }
+                                    return resolvedUrl;
+                                })()}">${item.phase === '2' ? '🚀 ' : ''}${item.name}</a>
                             </div>
                             <span class="phase-tag ${tagClass}">${tagLabel}</span>
                         </div>
@@ -3717,18 +3734,7 @@ async function loadSearchIndex() {
     searchIndexLoading = true;
     
     try {
-        const currentPath = window.location.pathname;
-        const pathParts = currentPath.split('/').filter(Boolean);
-        let depth = 0;
-        if (pathParts.length > 0) {
-            depth = pathParts.length - 1;
-        }
-        let prefix = '';
-        for (let i = 0; i < depth; i++) {
-            prefix += '../';
-        }
-        
-        const response = await fetch(prefix + 'assets/data/search-index.json');
+        const response = await fetch('/assets/data/search-index.json');
         if (!response.ok) throw new Error('Search index failed to load');
         searchIndexData = await response.json();
     } catch (err) {
@@ -3860,21 +3866,7 @@ function getCategoryInfoForSearch(urlPath) {
 }
 
 function getRelativeUrlForSearch(targetId) {
-    const currentPath = window.location.pathname;
-    const pathParts = currentPath.split('/').filter(Boolean);
-    
-    let depth = 0;
-    if (pathParts.length > 0) {
-        depth = pathParts.length - 1;
-    }
-    
-    let prefix = '';
-    for (let i = 0; i < depth; i++) {
-        prefix += '../';
-    }
-    
-    let relativeTarget = targetId.substring(1);
-    return prefix + relativeTarget;
+    return targetId;
 }
 
 function highlightTextForSearch(text, terms) {

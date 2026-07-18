@@ -562,21 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.cookie = "acnow_auth=phase2; path=/; max-age=86400; SameSite=Strict";
                 
                 setTimeout(() => {
-                    const path = window.location.pathname;
-                    const pathLower = path.toLowerCase();
-                    const marker = "acnow-netlify/";
-                    const markerIndex = pathLower.indexOf(marker);
-                    let depth = 0;
-                    if (markerIndex !== -1) {
-                        const subPath = path.substring(markerIndex + marker.length);
-                        const parts = subPath.split('/').filter(p => p && p !== 'index.html');
-                        depth = parts.length;
-                    } else {
-                        const parts = path.split('/').filter(p => p && p !== 'index.html');
-                        depth = parts.length;
-                    }
-                    const prefix = "../".repeat(depth);
-                    const targetUrl = prefix + 'pages/team-portal.html';
+                    const targetUrl = '/pages/team-portal.html';
                     console.log('[Mascot Backdoor] Redirecting to:', targetUrl);
                     window.location.href = targetUrl;
                 }, 300);
