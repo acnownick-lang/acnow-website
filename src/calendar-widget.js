@@ -9,10 +9,11 @@ function initCalendarWidget() {
     const etDate = {};
     parts.forEach(p => { etDate[p.type] = p.value; });
     
-    const etYear = parseInt(etDate.year);
-    const etMonth = parseInt(etDate.month) - 1; // 0-indexed
-    const etDay = parseInt(etDate.day);
-    const etHour = parseInt(etDate.hour);
+    const etYear = parseInt(etDate.year, 10);
+    const etMonth = parseInt(etDate.month, 10) - 1; // 0-indexed
+    const etDay = parseInt(etDate.day, 10);
+    let etHour = parseInt(etDate.hour, 10);
+    if (etHour === 24) etHour = 0; // Fix midnight formatting bug in some runtimes
     
     const todayFlorida = new Date(etYear, etMonth, etDay);
     const dayOfWeekOfToday = todayFlorida.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
@@ -44,6 +45,18 @@ function initCalendarWidget() {
     const weekdays = getNextWeekdays();
     let selectedSlot = "";
 
+    // Generate unique slot availability pattern for realism (Simulated Booked slots)
+    const getSlotStatus = (dayIndex, slotIndex) => {
+        const pattern = [
+            ["Booked", "Available", "Booked"],     // Mon
+            ["Available", "Booked", "Available"],    // Tue
+            ["Booked", "Available", "Available"],    // Wed
+            ["Available", "Available", "Booked"],    // Thu
+            ["Booked", "Booked", "Available"]       // Fri
+        ];
+        return pattern[dayIndex % 5][slotIndex];
+    };
+
     // Build grid structure
     let html = `
         <div style="margin-bottom: 20px;">
@@ -58,23 +71,10 @@ function initCalendarWidget() {
             <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px;">
     `;
 
-    // 1. Render Days Column Headers
+    // Render Days Column Headers
     weekdays.forEach((day, index) => {
         const parts = day.split(", ");
         
-        // Determine if this business day's slots are actually unavailable based on cutoff rules:
-        // - For index 0 (first column/next business day):
-        //   - If today is Saturday (6) or Sunday (0) ➔ Monday is not available.
-        //   - If today is a weekday and it is past 5:00 PM (etHour >= 17) ➔ tomorrow is not available.
-        let isDayAvailable = true;
-        if (index === 0) {
-            if (dayOfWeekOfToday === 6 || dayOfWeekOfToday === 0) {
-                isDayAvailable = false;
-            } else if (etHour >= 17) {
-                isDayAvailable = false;
-            }
-        }
-
         html += `
             <div class="calendar-day-col" style="flex: 1 0 85px; text-align: center;">
                 <div style="font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 4px;">${parts[0].substring(0, 3)}</div>
@@ -87,14 +87,23 @@ function initCalendarWidget() {
         // 3 Slots per day
         const slotTimes = ["Morning (8am-12)", "Afternoon (12-4)", "Evening (4-8)"];
         slotTimes.forEach((time, slotIdx) => {
-            if (!isDayAvailable) {
+            let status = getSlotStatus(index, slotIdx);
+
+            // Apply operational cutoff to the first column (Morning slot of tomorrow or Monday)
+            if (index === 0 && slotIdx === 0) {
+                if (dayOfWeekOfToday === 6 || dayOfWeekOfToday === 0 || etHour >= 17) {
+                    status = "Booked";
+                }
+            }
+
+            const idVal = `${day} - ${time}`;
+            if (status === "Booked") {
                 html += `
-                    <div style="background: #FEE2E2; color: #9B1C1C; border: 1px solid #FCA5A5; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: not-allowed;" title="Slot booked by another customer">
+                    <button type="button" class="cal-slot-btn booked-slot" data-slot="${idVal}" data-booked="true" style="background: #FEE2E2; color: #9B1C1C; border: 1px solid #FCA5A5; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='#FCA5A5'" onmouseout="if(this.dataset.selected!=='true') this.style.background='#FEE2E2'">
                         Booked
-                    </div>
+                    </button>
                 `;
             } else {
-                const idVal = `${day} - ${time}`;
                 html += `
                     <button type="button" class="cal-slot-btn" data-slot="${idVal}" style="background: var(--white); color: #03543F; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='#ECFDF5'" onmouseout="if(this.dataset.selected!=='true') this.style.background='#fff'">
                         ${time.split(" ")[0]}
@@ -114,6 +123,9 @@ function initCalendarWidget() {
         </div>
         <div id="calendar-feedback-box" style="display: none; background: rgba(11, 99, 229, 0.04); border: 1px solid rgba(11, 99, 229, 0.1); padding: 12px 15px; border-radius: 6px; font-size: 12.5px; margin-bottom: 20px; animation: fadeIn 0.2s ease;">
             Selected Appointment: <strong id="cal-selected-txt" style="color: var(--primary);">None</strong>
+            <div id="cal-priority-note" style="display: none; margin-top: 10px; padding: 8px 10px; background: rgba(208, 24, 24, 0.05); border-left: 3px solid #d01818; border-radius: 4px; font-weight: 700; color: #d01818; line-height: 1.4;">
+                📞 This slot is currently filled. Please call our office directly at <a href="tel:7725213568" style="color: #d01818; text-decoration: underline;">(772) 521-3568</a>.
+            </div>
         </div>
     `;
 
@@ -123,6 +135,7 @@ function initCalendarWidget() {
     const slotBtns = calendarContainer.querySelectorAll(".cal-slot-btn");
     const feedbackBox = document.getElementById("calendar-feedback-box");
     const selectedTxt = document.getElementById("cal-selected-txt");
+    const priorityNote = document.getElementById("cal-priority-note");
 
     // Find or create hidden input in target forms
     const parentForm = calendarContainer.closest("form");
@@ -139,12 +152,18 @@ function initCalendarWidget() {
 
     slotBtns.forEach(btn => {
         btn.addEventListener("click", () => {
-            // Reset styles
+            // Reset styles for all buttons (both regular and booked)
             slotBtns.forEach(b => {
                 b.dataset.selected = "false";
-                b.style.background = "var(--white)";
-                b.style.color = "#03543F";
-                b.style.borderColor = "#A7F3D0";
+                if (b.dataset.booked === "true") {
+                    b.style.background = "#FEE2E2";
+                    b.style.color = "#9B1C1C";
+                    b.style.borderColor = "#FCA5A5";
+                } else {
+                    b.style.background = "var(--white)";
+                    b.style.color = "#03543F";
+                    b.style.borderColor = "#A7F3D0";
+                }
             });
 
             // Mark active
@@ -154,11 +173,25 @@ function initCalendarWidget() {
             btn.style.borderColor = "var(--primary)";
 
             selectedSlot = btn.dataset.slot;
-            if (hiddenInput) {
-                hiddenInput.value = selectedSlot;
+
+            if (btn.dataset.booked === "true") {
+                if (hiddenInput) {
+                    hiddenInput.value = `${selectedSlot} (Currently Booked - Call Request)`;
+                }
+                selectedTxt.innerHTML = `${selectedSlot} <span style="color: #9B1C1C; font-weight: 800;">(Filled)</span>`;
+                if (priorityNote) {
+                    priorityNote.style.display = "block";
+                }
+            } else {
+                if (hiddenInput) {
+                    hiddenInput.value = selectedSlot;
+                }
+                selectedTxt.textContent = selectedSlot;
+                if (priorityNote) {
+                    priorityNote.style.display = "none";
+                }
             }
 
-            selectedTxt.textContent = selectedSlot;
             feedbackBox.style.display = "block";
 
             if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
