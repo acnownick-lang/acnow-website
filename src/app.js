@@ -341,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Keep Your Family Cool in Stuart",
                 headlineCom: "Manage Your Stuart Complex",
                 serving: "Serving Palm City, Stuart & Jensen Beach.",
+                region: "the Treasure Coast",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -348,6 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Keep Your Family Cool in Palm City",
                 headlineCom: "Manage Your Palm City Commercial Properties",
                 serving: "Serving Palm City, Stuart & Hobe Sound.",
+                region: "the Treasure Coast",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -355,6 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Jupiter's Premier AC Repair",
                 headlineCom: "Commercial HVAC in Jupiter & Tequesta",
                 serving: "Serving Jupiter, Tequesta & Hobe Sound.",
+                region: "northern Palm Beach County",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -362,6 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "PSL's Certified HVAC Experts",
                 headlineCom: "Rooftop Commercial Units in PSL",
                 serving: "Serving Port St. Lucie, Fort Pierce & Lakewood Park.",
+                region: "the Treasure Coast",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -369,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Fort Pierce's Premier AC Repair",
                 headlineCom: "Commercial HVAC in Fort Pierce",
                 serving: "Serving Port St. Lucie, Fort Pierce & Vero Beach.",
+                region: "the Treasure Coast",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -376,6 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Keep Your Family Cool in Jensen Beach",
                 headlineCom: "Commercial HVAC in Jensen Beach",
                 serving: "Serving Stuart, Jensen Beach & Port St. Lucie.",
+                region: "the Treasure Coast",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -383,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Keep Your Family Cool in Hobe Sound",
                 headlineCom: "Commercial HVAC in Hobe Sound",
                 serving: "Serving Hobe Sound, Stuart & Jupiter.",
+                region: "Martin County",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -390,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Palm Beach Gardens HVAC Experts",
                 headlineCom: "Commercial HVAC in Palm Beach Gardens",
                 serving: "Serving Palm Beach Gardens, Jupiter & West Palm Beach.",
+                region: "Palm Beach County",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -397,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Keep Your Family Cool in North Palm Beach",
                 headlineCom: "Commercial HVAC in North Palm Beach",
                 serving: "Serving North Palm Beach, Palm Beach Gardens & Jupiter.",
+                region: "Palm Beach County",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             },
@@ -404,6 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headlineRes: "Keep Your Family Cool",
                 headlineCom: "Manage Your Complex",
                 serving: "Serving Stuart, Palm City, Port St. Lucie & the Treasure Coast.",
+                region: "the Treasure Coast",
                 phone: "(772) 521-3568",
                 phoneHref: "tel:7725213568"
             }
@@ -426,6 +436,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const servingText = document.getElementById('serving-areas-text');
         if (servingText) {
             servingText.textContent = copy.serving;
+        }
+
+        // Update index.html about region text
+        const aboutRegion = document.getElementById('about-region-text');
+        if (aboutRegion && copy.region) {
+            aboutRegion.textContent = copy.region;
         }
 
         // Replace phone numbers and hrefs dynamically for non-default markets
