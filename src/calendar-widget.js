@@ -2,48 +2,32 @@ function initCalendarWidget() {
     const calendarContainer = document.getElementById("dispatch-calendar-container");
     if (!calendarContainer) return;
 
-    // Generate Next 5 Weekdays (Monday - Friday) starting tomorrow (timezone-safe and hour-cutoff-safe)
+    // Get current date and hour in Florida/Eastern Time
+    const etOptions = { timeZone: "America/New_York", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", hour12: false };
+    const formatter = new Intl.DateTimeFormat("en-US", etOptions);
+    const parts = formatter.formatToParts(new Date());
+    const etDate = {};
+    parts.forEach(p => { etDate[p.type] = p.value; });
+    
+    const etYear = parseInt(etDate.year);
+    const etMonth = parseInt(etDate.month) - 1; // 0-indexed
+    const etDay = parseInt(etDate.day);
+    const etHour = parseInt(etDate.hour);
+    
+    const todayFlorida = new Date(etYear, etMonth, etDay);
+    const dayOfWeekOfToday = todayFlorida.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+
+    // Generate Next 5 Weekdays (Monday - Friday) starting tomorrow (timezone-safe)
     function getNextWeekdays() {
         const weekdays = [];
         const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         
-        // Get current date and hour in Florida/Eastern Time
-        const etOptions = { timeZone: "America/New_York", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", hour12: false };
-        const formatter = new Intl.DateTimeFormat("en-US", etOptions);
-        const parts = formatter.formatToParts(new Date());
-        const etDate = {};
-        parts.forEach(p => { etDate[p.type] = p.value; });
-        
-        const etYear = parseInt(etDate.year);
-        const etMonth = parseInt(etDate.month) - 1; // 0-indexed
-        const etDay = parseInt(etDate.day);
-        const etHour = parseInt(etDate.hour);
-        
         // Establish today in Eastern Time
         let current = new Date(etYear, etMonth, etDay);
         
-        // 1. Determine starting offset based on Florida day of the week and 5:00 PM cutoff
-        const dayOfWeek = current.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
-        let daysToAdd = 1;
-
-        if (dayOfWeek === 1) { // Monday
-            daysToAdd = (etHour < 17) ? 1 : 2; // Tue or Wed
-        } else if (dayOfWeek === 2) { // Tuesday
-            daysToAdd = (etHour < 17) ? 1 : 2; // Wed or Thu
-        } else if (dayOfWeek === 3) { // Wednesday
-            daysToAdd = (etHour < 17) ? 1 : 2; // Thu or Fri
-        } else if (dayOfWeek === 4) { // Thursday
-            daysToAdd = (etHour < 17) ? 1 : 4; // Fri or Mon
-        } else if (dayOfWeek === 5) { // Friday
-            daysToAdd = (etHour < 17) ? 3 : 4; // Mon or Tue
-        } else if (dayOfWeek === 6) { // Saturday
-            daysToAdd = 3; // Tue
-        } else if (dayOfWeek === 0) { // Sunday
-            daysToAdd = 2; // Tue
-        }
-
-        current.setDate(current.getDate() + daysToAdd);
+        // Shift to tomorrow to ensure advance bookings
+        current.setDate(current.getDate() + 1);
 
         while (weekdays.length < 5) {
             const dayNum = current.getDay();
@@ -77,6 +61,20 @@ function initCalendarWidget() {
     // 1. Render Days Column Headers
     weekdays.forEach((day, index) => {
         const parts = day.split(", ");
+        
+        // Determine if this business day's slots are actually unavailable based on cutoff rules:
+        // - For index 0 (first column/next business day):
+        //   - If today is Saturday (6) or Sunday (0) ➔ Monday is not available.
+        //   - If today is a weekday and it is past 5:00 PM (etHour >= 17) ➔ tomorrow is not available.
+        let isDayAvailable = true;
+        if (index === 0) {
+            if (dayOfWeekOfToday === 6 || dayOfWeekOfToday === 0) {
+                isDayAvailable = false;
+            } else if (etHour >= 17) {
+                isDayAvailable = false;
+            }
+        }
+
         html += `
             <div class="calendar-day-col" style="flex: 1 0 85px; text-align: center;">
                 <div style="font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 4px;">${parts[0].substring(0, 3)}</div>
@@ -89,12 +87,20 @@ function initCalendarWidget() {
         // 3 Slots per day
         const slotTimes = ["Morning (8am-12)", "Afternoon (12-4)", "Evening (4-8)"];
         slotTimes.forEach((time, slotIdx) => {
-            const idVal = `${day} - ${time}`;
-            html += `
-                <button type="button" class="cal-slot-btn" data-slot="${idVal}" style="background: var(--white); color: #03543F; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='#ECFDF5'" onmouseout="if(this.dataset.selected!=='true') this.style.background='#fff'">
-                    ${time.split(" ")[0]}
-                </button>
-            `;
+            if (!isDayAvailable) {
+                html += `
+                    <div style="background: #FEE2E2; color: #9B1C1C; border: 1px solid #FCA5A5; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: not-allowed;" title="Slot booked by another customer">
+                        Booked
+                    </div>
+                `;
+            } else {
+                const idVal = `${day} - ${time}`;
+                html += `
+                    <button type="button" class="cal-slot-btn" data-slot="${idVal}" style="background: var(--white); color: #03543F; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='#ECFDF5'" onmouseout="if(this.dataset.selected!=='true') this.style.background='#fff'">
+                        ${time.split(" ")[0]}
+                    </button>
+                `;
+            }
         });
 
         html += `
