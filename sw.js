@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v98'; // Bumped: bypass navigation caching entirely
+const CACHE_NAME = 'acnow-cache-v99'; // Bumped: bypass navigation caching entirely
 const DEBUG = false;
 
 // Helper function for structured logging

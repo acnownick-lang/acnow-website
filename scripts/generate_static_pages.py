@@ -41,6 +41,7 @@ city_landmark_map = {
     "jupiter": ("Jupiter", "Jupiter Inlet Lighthouse and Dubois Park", "Palm Beach County"),
     "palm-beach-gardens": ("Palm Beach Gardens", "PGA National and Gardens Mall", "Palm Beach County"),
     "palm-beach-city": ("Palm Beach Gardens", "PGA National and Gardens Mall", "Palm Beach County"),
+    "north-palm-beach": ("North Palm Beach", "North Palm Beach Marina and Country Club", "Palm Beach County"),
     "port-saint-lucie": ("Port St. Lucie", "Port St. Lucie Botanical Gardens and Clover Park", "St. Lucie County"),
     "port-st-lucie": ("Port St. Lucie", "Port St. Lucie Botanical Gardens and Clover Park", "St. Lucie County"),
     "saint-lucie-west": ("Saint Lucie West", "Clover Park Stadium and Tradition", "St. Lucie County"),
@@ -1499,54 +1500,54 @@ generated_count = 0
 # Pattern: "{Service} | Port St. Lucie & the Treasure Coast | A/C Now LLC" (<=60 chars enforced below)
 hub_page_overrides = {
     "/hvac-installation/": {
-        "title": "HVAC Installation | Treasure Coast, FL | A/C Now LLC",
-        "h1":    "AC Installation &amp; Replacement on the Treasure Coast, FL",
-        "desc":  "AC installation and system replacement across Port St. Lucie, Stuart, Jupiter, and the Treasure Coast. Veteran-owned, same-day service.",
+        "title": "HVAC Installation | Treasure Coast & Palm Beaches | A/C Now",
+        "h1":    "AC Installation &amp; Replacement on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "AC installation and system replacement across Port St. Lucie, Stuart, Jupiter, and the Treasure Coast & Palm Beaches. Veteran-owned, same-day service.",
     },
     "/hvac-maintenance/": {
-        "title": "AC Tune-Ups & Maintenance | Treasure Coast | A/C Now LLC",
-        "h1":    "AC Tune-Ups &amp; Maintenance on the Treasure Coast, FL",
-        "desc":  "Seasonal tune-ups and preventive AC maintenance across Port St. Lucie, Stuart, and the Treasure Coast. Veteran-owned, same-day service.",
+        "title": "AC Maintenance | Treasure Coast & Palm Beaches | A/C Now",
+        "h1":    "AC Tune-Ups &amp; Maintenance on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "Seasonal tune-ups and preventive AC maintenance across Port St. Lucie, Stuart, and the Treasure Coast & Palm Beaches. Veteran-owned, same-day service.",
     },
     "/hvac-repair/": {
-        "title": "AC Repair & Diagnostics | Treasure Coast, FL | A/C Now",
-        "h1":    "AC Repair &amp; Troubleshooting on the Treasure Coast, FL",
-        "desc":  "Same-day AC repair and diagnostics across the Treasure Coast. Veteran technicians. Flat-rate pricing. All major brands.",
+        "title": "AC Repair | Treasure Coast & Palm Beaches | A/C Now",
+        "h1":    "AC Repair &amp; Troubleshooting on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "Same-day AC repair and diagnostics across the Treasure Coast & Palm Beaches. Veteran technicians. Flat-rate pricing. All major brands.",
     },
     "/commercial-hvac/": {
-        "title": "Commercial HVAC | Treasure Coast, FL | A/C Now LLC",
-        "h1":    "Condo Board &amp; Commercial HVAC on the Treasure Coast, FL",
-        "desc":  "Commercial HVAC and condo board services across Port St. Lucie, Stuart, and the Treasure Coast. Veteran-owned, flat-rate pricing.",
+        "title": "Commercial HVAC | Treasure Coast & Palm Beaches | A/C Now",
+        "h1":    "Condo Board &amp; Commercial HVAC on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "Commercial HVAC and condo board services across Port St. Lucie, Stuart, and the Treasure Coast & Palm Beaches. Veteran-owned, flat-rate pricing.",
     },
     "/ac-replacement/": {
-        "title": "AC Replacement Services | Treasure Coast, FL | A/C Now",
-        "h1":    "AC Unit Replacement on the Treasure Coast, FL",
-        "desc":  "High-efficiency AC unit replacement across the Treasure Coast. Veteran-owned. Manufacturer rebates handled. Same-day service.",
+        "title": "AC Replacement | Treasure Coast & Palm Beaches | A/C Now",
+        "h1":    "AC Unit Replacement on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "High-efficiency AC unit replacement across the Treasure Coast & Palm Beaches. Veteran-owned. Manufacturer rebates handled. Same-day service.",
     },
     "/air-quality/": {
-        "title": "Air Quality & IAQ Services | Treasure Coast | A/C Now",
-        "h1":    "Air Quality &amp; IAQ Services on the Treasure Coast, FL",
-        "desc":  "Indoor air quality testing, UV purifiers, and filtration upgrades across the Treasure Coast. Veteran-owned, same-day service.",
+        "title": "Air Quality | Treasure Coast & Palm Beaches | A/C Now",
+        "h1":    "Air Quality &amp; IAQ Services on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "Indoor air quality testing, UV purifiers, and filtration upgrades across the Treasure Coast & Palm Beaches. Veteran-owned, same-day service.",
     },
     "/ductless-mini-split-systems/": {
-        "title": "Ductless Mini-Split Systems | Treasure Coast | A/C Now",
-        "h1":    "Ductless Mini-Split Systems on the Treasure Coast, FL",
-        "desc":  "Ductless mini-split installation and service across the Treasure Coast. No ductwork needed. Veteran-owned, flat-rate pricing.",
+        "title": "Ductless Mini-Splits | Treasure Coast & Palm Beaches",
+        "h1":    "Ductless Mini-Split Systems on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "Ductless mini-split installation and service across the Treasure Coast & Palm Beaches. No ductwork needed. Veteran-owned, flat-rate pricing.",
     },
     "/residential-air-conditioning/": {
-        "title": "Residential Air Conditioning | Treasure Coast | A/C Now",
-        "h1":    "Residential Air Conditioning on the Treasure Coast, FL",
-        "desc":  "Full residential HVAC services across Port St. Lucie, Stuart, Jupiter, and the Treasure Coast. Veteran-owned, same-day service.",
+        "title": "Residential AC | Treasure Coast & Palm Beaches | A/C Now",
+        "h1":    "Residential Air Conditioning on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "Full residential HVAC services across Port St. Lucie, Stuart, Jupiter, and the Treasure Coast & Palm Beaches. Veteran-owned, same-day service.",
     },
     "/pool-heating/": {
-        "title": "Pool Heater Services | Treasure Coast, FL | A/C Now LLC",
-        "h1":    "Pool Heater Services on the Treasure Coast, FL",
-        "desc":  "Pool heat pump installation, repair, and service across the Treasure Coast. Extend your swim season. Veteran-owned, flat-rate pricing.",
+        "title": "Pool Heaters | Treasure Coast & Palm Beaches | A/C Now",
+        "h1":    "Pool Heater Services on the Treasure Coast &amp; Palm Beaches",
+        "desc":  "Pool heat pump installation, repair, and service across the Treasure Coast & Palm Beaches. Extend your swim season. Veteran-owned, flat-rate pricing.",
     },
     "/partners-and-referrals/": {
         "title": "Partners & Referrals | A/C Now LLC",
         "h1":    "Partners &amp; Referrals",
-        "desc":  "A/C Now LLC trusted vendor partners and local referral network across the Treasure Coast.",
+        "desc":  "A/C Now LLC trusted vendor partners and local referral network across the Treasure Coast & Palm Beaches.",
     },
 }
 
@@ -1952,6 +1953,20 @@ for path in paths:
         elif template_name == "services.html":
             content = content.replace("../assets/images/hvac-repair-img.webp", f"../assets/images/generated/{img1}.webp")
             content = content.replace("../assets/images/hvac-install-img-1.webp", f"../assets/images/generated/{img2}.webp")
+
+    # 8.9. Replace "the Treasure Coast" with "northern Palm Beach County" for Palm Beach County cities
+    if county == "Palm Beach County":
+        content = content.replace("on the Treasure Coast", "in northern Palm Beach County")
+        content = content.replace("on The Treasure Coast", "in Northern Palm Beach County")
+        content = content.replace("on the treasure coast", "in northern palm beach county")
+        content = content.replace("across the Treasure Coast", "across northern Palm Beach County")
+        content = content.replace("across The Treasure Coast", "across Northern Palm Beach County")
+        content = content.replace("throughout the Treasure Coast", "throughout northern Palm Beach County")
+        content = content.replace("throughout The Treasure Coast", "throughout Northern Palm Beach County")
+        content = content.replace("the Treasure Coast", "northern Palm Beach County")
+        content = content.replace("The Treasure Coast", "Northern Palm Beach County")
+        content = content.replace("Treasure Coast", "northern Palm Beach County")
+        content = content.replace("TREASURE COAST", "NORTHERN PALM BEACH COUNTY")
 
     # 9. Create target directory and write index.html
     relative_dir = path.strip("/")
