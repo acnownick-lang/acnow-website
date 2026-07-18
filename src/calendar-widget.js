@@ -23,14 +23,27 @@ function initCalendarWidget() {
         // Establish today in Eastern Time
         let current = new Date(etYear, etMonth, etDay);
         
-        // 1. Shift to tomorrow relative to Florida
-        current.setDate(current.getDate() + 1);
-        
-        // 2. Cutoff Rule: If it's already past 5:00 PM Eastern Time today, push tomorrow out by one extra day
-        // (Prevents late-night bookings of next-day morning slots)
-        if (etHour >= 17) {
-            current.setDate(current.getDate() + 1);
+        // 1. Determine starting offset based on Florida day of the week and 5:00 PM cutoff
+        const dayOfWeek = current.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+        let daysToAdd = 1;
+
+        if (dayOfWeek === 1) { // Monday
+            daysToAdd = (etHour < 17) ? 1 : 2; // Tue or Wed
+        } else if (dayOfWeek === 2) { // Tuesday
+            daysToAdd = (etHour < 17) ? 1 : 2; // Wed or Thu
+        } else if (dayOfWeek === 3) { // Wednesday
+            daysToAdd = (etHour < 17) ? 1 : 2; // Thu or Fri
+        } else if (dayOfWeek === 4) { // Thursday
+            daysToAdd = (etHour < 17) ? 1 : 4; // Fri or Mon
+        } else if (dayOfWeek === 5) { // Friday
+            daysToAdd = (etHour < 17) ? 3 : 4; // Mon or Tue
+        } else if (dayOfWeek === 6) { // Saturday
+            daysToAdd = 3; // Tue
+        } else if (dayOfWeek === 0) { // Sunday
+            daysToAdd = 2; // Tue
         }
+
+        current.setDate(current.getDate() + daysToAdd);
 
         while (weekdays.length < 5) {
             const dayNum = current.getDay();
