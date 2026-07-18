@@ -551,7 +551,7 @@
                                     <input autocomplete="name" type="hidden" id="plan_metrics_input" name="plan_metrics">
                                     <div class="grid-2-col" style="gap:10px; margin-bottom:10px;">
                                         <input autocomplete="name" type="text" id="fullname_plan" aria-label="Your Name" aria-label="Your Name" name="fullname" required placeholder="Your Name" style="padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:12.5px;">
-                                        <input autocomplete="tel" type="tel" id="phone_plan" aria-label="Phone Number" aria-label="Phone Number" name="phone" required placeholder="Phone Number" style="padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:12.5px;">
+                                        <input autocomplete="tel" type="tel" id="phone_plan" aria-label="Phone Number" name="phone" required placeholder="Phone Number" style="padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:12.5px;" pattern="^\+?[0-9\(\)\-\.\s]{10,20}$" title="Please enter a valid phone number (at least 10 digits)">
                                     </div>
                                     <div class="grid-2-col" style="gap:10px; margin-bottom:10px;">
                                         <input autocomplete="email" type="email" id="email_plan" aria-label="Email Address" aria-label="Email Address" name="email" required placeholder="Email Address" style="padding:10px; border-radius:6px; border:1px solid var(--gray-light); background:#fff; font-size:12.5px;">

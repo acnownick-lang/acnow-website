@@ -334,7 +334,7 @@
                             </div>
                             <div>
                                 <label for="phone" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Phone Number</label>
-                                <input autocomplete="tel" type="tel" id="phone" name="phone" required placeholder="(772) 521-3568" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;">
+                                <input autocomplete="tel" type="tel" id="phone" name="phone" required placeholder="(772) 521-3568" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;" pattern="^\+?[0-9\(\)\-\.\s]{10,20}$" title="Please enter a valid phone number (at least 10 digits)">
                             </div>
                             <div>
                                 <label for="system-size" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Approximate Sizing (if known)</label>

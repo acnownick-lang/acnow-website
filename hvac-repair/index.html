@@ -298,25 +298,39 @@
                             </div>
                             <div>
                                 <label for="phone" style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Phone Number</label>
-                                <input autocomplete="tel" type="tel" id="phone" name="phone" required placeholder="(772) 521-3568" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;">
+                                <input autocomplete="tel" type="tel" id="phone" name="phone" required placeholder="(772) 521-3568" style="width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:white;" pattern="^\+?[0-9\(\)\-\.\s]{10,20}$" title="Please enter a valid phone number (at least 10 digits)">
                             </div>
                             <div>
                                 <label style="display:block; font-size:12.5px; font-weight:600; text-transform:uppercase; margin-bottom:6px; color:rgba(255,255,255,0.75);">Common Symptoms (Tap to Add)</label>
                                 <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-                                    <button type="button" onclick="selectSymptom('AC Blowing Warm Air')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Warm Air</button>
-                                    <button type="button" onclick="selectSymptom('Unit Won\'t Turn On')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Won't Start</button>
-                                    <button type="button" onclick="selectSymptom('Water Leak')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Water Leak</button>
-                                    <button type="button" onclick="selectSymptom('Strange Noise')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Strange Noise</button>
+                                    <button type="button" onclick="selectSymptom(this, 'AC Blowing Warm Air')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="if(!this.classList.contains('selected')) this.style.background='rgba(255,255,255,0.1)'">Warm Air</button>
+                                    <button type="button" onclick="selectSymptom(this, 'Unit Won\'t Turn On')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="if(!this.classList.contains('selected')) this.style.background='rgba(255,255,255,0.1)'">Won't Start</button>
+                                    <button type="button" onclick="selectSymptom(this, 'Water Leak')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="if(!this.classList.contains('selected')) this.style.background='rgba(255,255,255,0.1)'">Water Leak</button>
+                                    <button type="button" onclick="selectSymptom(this, 'Strange Noise')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; font-weight:600; transition:var(--transition);" onmouseover="this.style.background='var(--primary)'" onmouseout="if(!this.classList.contains('selected')) this.style.background='rgba(255,255,255,0.1)'">Strange Noise</button>
                                 </div>
                                 <script>
-                                    function selectSymptom(text) {
+                                    function selectSymptom(btn, text) {
                                         const area = document.getElementById('issue-description');
-                                        if (area) {
-                                            if (area.value) {
-                                                area.value += ', ' + text;
-                                            } else {
-                                                area.value = text;
+                                        if (!area) return;
+                                        const isSelected = btn.classList.contains('selected');
+                                        if (isSelected) {
+                                            btn.classList.remove('selected');
+                                            btn.style.background = 'rgba(255,255,255,0.1)';
+                                            btn.style.borderColor = 'rgba(255,255,255,0.25)';
+                                            
+                                            let parts = area.value.split(',').map(s => s.trim()).filter(Boolean);
+                                            parts = parts.filter(p => p !== text);
+                                            area.value = parts.join(', ');
+                                        } else {
+                                            btn.classList.add('selected');
+                                            btn.style.background = 'var(--primary)';
+                                            btn.style.borderColor = 'var(--primary)';
+                                            
+                                            let parts = area.value.split(',').map(s => s.trim()).filter(Boolean);
+                                            if (!parts.includes(text)) {
+                                                parts.push(text);
                                             }
+                                            area.value = parts.join(', ');
                                         }
                                     }
                                 </script>

@@ -620,7 +620,7 @@
                                         <div class="grid-2-col" style="gap:15px;">
                                             <div>
                                                 <label for="phone_config" style="font-size:11.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:5px; text-transform:uppercase;">Phone Number</label>
-                                                <input autocomplete="tel" type="tel" id="phone_config" name="phone" required placeholder="(772) 521-3568" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--gray-light); background: var(--white); font-size: 13px;">
+                                                <input autocomplete="tel" type="tel" id="phone_config" name="phone" required placeholder="(772) 521-3568" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--gray-light); background: var(--white); font-size: 13px;" pattern="^\+?[0-9\(\)\-\.\s]{10,20}$" title="Please enter a valid phone number (at least 10 digits)">
                                             </div>
                                             <div>
                                                 <label for="email_config" style="font-size:11.5px; font-weight:700; color:var(--dark); display:block; margin-bottom:5px; text-transform:uppercase;">Email</label>

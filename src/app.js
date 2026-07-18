@@ -1001,6 +1001,13 @@ const throttle = (func, limit = 100) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Initialize min attribute on any preferred-date fields to today (local time)
+    const preferredDateInput = document.getElementById("preferred-date") || document.querySelector("[name='preferred-date']");
+    if (preferredDateInput) {
+        const todayStr = new Date().toLocaleDateString('en-CA'); // Outputs YYYY-MM-DD in client local timezone
+        preferredDateInput.setAttribute("min", todayStr);
+    }
+
     // 1. Scroll-Driven Navigation Blur
     const header = document.querySelector(".header");
     if (header) {
