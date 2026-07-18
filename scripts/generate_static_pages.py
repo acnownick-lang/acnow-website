@@ -1954,8 +1954,20 @@ for path in paths:
             content = content.replace("../assets/images/hvac-repair-img.webp", f"../assets/images/generated/{img1}.webp")
             content = content.replace("../assets/images/hvac-install-img-1.webp", f"../assets/images/generated/{img2}.webp")
 
-    # 8.9. Replace "the Treasure Coast" with "northern Palm Beach County" for Palm Beach County cities
+    # 8.9. Replace "the Treasure Coast & Palm Beaches" or "the Treasure Coast" with "northern Palm Beach County" for Palm Beach County cities
     if county == "Palm Beach County":
+        # First replace the combined serving phrase to avoid "northern Palm Beach County & Palm Beaches"
+        content = content.replace("on the Treasure Coast & Palm Beaches", "in northern Palm Beach County")
+        content = content.replace("on The Treasure Coast & Palm Beaches", "in Northern Palm Beach County")
+        content = content.replace("across the Treasure Coast & Palm Beaches", "across northern Palm Beach County")
+        content = content.replace("across The Treasure Coast & Palm Beaches", "across Northern Palm Beach County")
+        content = content.replace("throughout the Treasure Coast & Palm Beaches", "throughout northern Palm Beach County")
+        content = content.replace("throughout The Treasure Coast & Palm Beaches", "throughout Northern Palm Beach County")
+        content = content.replace("the Treasure Coast & Palm Beaches", "northern Palm Beach County")
+        content = content.replace("The Treasure Coast & Palm Beaches", "Northern Palm Beach County")
+        content = content.replace("Treasure Coast & Palm Beaches", "northern Palm Beach County")
+        
+        # Then replace any leftover standalone "Treasure Coast" references
         content = content.replace("on the Treasure Coast", "in northern Palm Beach County")
         content = content.replace("on The Treasure Coast", "in Northern Palm Beach County")
         content = content.replace("on the treasure coast", "in northern palm beach county")
