@@ -770,20 +770,89 @@ section {
 }
 
 .area-link-card {
-    background: var(--white);
-    border: 1px solid var(--gray-light);
-    border-radius: 8px;
-    padding: 16px 20px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 36px 24px;
     text-decoration: none;
     display: block;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.area-link-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+/* Card-specific background images */
+.area-card-psl::before { background-image: url('../images/psl_local_hero.jpg'); }
+.area-card-stuart::before { background-image: url('../images/banner-areas.webp'); }
+.area-card-palm-city::before { background-image: url('../images/banner-jupiter-island.webp'); }
+.area-card-jensen-beach::before { background-image: url('../images/jensen_local_hero.jpg'); }
+.area-card-fort-pierce::before { background-image: url('../images/fort_pierce_local_hero.jpg'); }
+.area-card-jupiter::before { background-image: url('../images/jupiter_local_hero.jpg'); }
+.area-card-hobe-sound::before { background-image: url('../images/hobe_local_hero.jpg'); }
+.area-card-pbg::before { background-image: url('../images/pbg_local_hero.jpg'); }
+.area-card-npb::before { background-image: url('../images/npb_local_hero.jpg'); }
+
+.area-link-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(10, 24, 47, 0.35) 0%, rgba(10, 24, 47, 0.8) 100%);
+    transition: background 0.3s ease;
+    z-index: 2;
+}
+
+.area-link-card .card-content {
+    position: relative;
+    z-index: 3;
+}
+
+.area-link-card span.city-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--white) !important;
+    display: block;
+    font-family: var(--font-heading);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.area-link-card span.region-sub {
+    font-size: 11.5px;
+    color: var(--gold) !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 6px;
+    display: block;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .area-link-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--box-shadow);
-    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+.area-link-card:hover::before {
+    transform: scale(1.08);
+}
+
+.area-link-card:hover::after {
+    background: linear-gradient(180deg, rgba(10, 24, 47, 0.15) 0%, rgba(10, 24, 47, 0.88) 100%);
 }
 
 @media (max-width: 768px) {
