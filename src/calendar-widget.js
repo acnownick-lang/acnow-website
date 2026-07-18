@@ -113,8 +113,7 @@ function initCalendarWidget() {
             </div>
         </div>
         <div id="calendar-feedback-box" style="display: none; background: rgba(11, 99, 229, 0.04); border: 1px solid rgba(11, 99, 229, 0.1); padding: 12px 15px; border-radius: 6px; font-size: 12.5px; margin-bottom: 20px; animation: fadeIn 0.2s ease;">
-            Selected Appointment: <strong id="cal-selected-txt" style="color: var(--primary);">None</strong><br>
-            Assigned Technician: <strong id="cal-tech-txt" style="color: var(--dark);">TBD</strong>
+            Selected Appointment: <strong id="cal-selected-txt" style="color: var(--primary);">None</strong>
         </div>
     `;
 
@@ -124,7 +123,6 @@ function initCalendarWidget() {
     const slotBtns = calendarContainer.querySelectorAll(".cal-slot-btn");
     const feedbackBox = document.getElementById("calendar-feedback-box");
     const selectedTxt = document.getElementById("cal-selected-txt");
-    const techTxt = document.getElementById("cal-tech-txt");
 
     // Find or create hidden input in target forms
     const parentForm = calendarContainer.closest("form");
@@ -160,16 +158,7 @@ function initCalendarWidget() {
                 hiddenInput.value = selectedSlot;
             }
 
-            // Assign Technician based on slot type (Morning = Lead Tech, Afternoon/Evening = Specialist)
-            let assignedTech = "AC Now Lead Technician";
-            if (selectedSlot.includes("Afternoon") || selectedSlot.includes("Evening")) {
-                assignedTech = "AC Now Service Specialist";
-            }
-
             selectedTxt.textContent = selectedSlot;
-            if (techTxt) {
-                techTxt.textContent = assignedTech;
-            }
             feedbackBox.style.display = "block";
 
             if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
