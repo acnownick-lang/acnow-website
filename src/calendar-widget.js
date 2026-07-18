@@ -60,18 +60,6 @@ function initCalendarWidget() {
     const weekdays = getNextWeekdays();
     let selectedSlot = "";
 
-    // Generate unique slot availability pattern based on day name length for realism
-    const getSlotStatus = (dayIndex, slotIndex) => {
-        const pattern = [
-            ["Booked", "Available", "Booked"],     // Mon
-            ["Available", "Booked", "Available"],    // Tue
-            ["Booked", "Available", "Available"],    // Wed
-            ["Available", "Available", "Booked"],    // Thu
-            ["Booked", "Booked", "Available"]       // Fri
-        ];
-        return pattern[dayIndex % 5][slotIndex];
-    };
-
     // Build grid structure
     let html = `
         <div style="margin-bottom: 20px;">
@@ -101,21 +89,12 @@ function initCalendarWidget() {
         // 3 Slots per day
         const slotTimes = ["Morning (8am-12)", "Afternoon (12-4)", "Evening (4-8)"];
         slotTimes.forEach((time, slotIdx) => {
-            const status = getSlotStatus(index, slotIdx);
-            if (status === "Booked") {
-                html += `
-                    <div style="background: #FEE2E2; color: #9B1C1C; border: 1px solid #FCA5A5; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: not-allowed;" title="Slot booked by another customer">
-                        Booked
-                    </div>
-                `;
-            } else {
-                const idVal = `${day} - ${time}`;
-                html += `
-                    <button type="button" class="cal-slot-btn" data-slot="${idVal}" style="background: var(--white); color: #03543F; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='#ECFDF5'" onmouseout="if(this.dataset.selected!=='true') this.style.background='#fff'">
-                        ${time.split(" ")[0]}
-                    </button>
-                `;
-            }
+            const idVal = `${day} - ${time}`;
+            html += `
+                <button type="button" class="cal-slot-btn" data-slot="${idVal}" style="background: var(--white); color: #03543F; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 700; padding: 8px 4px; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.background='#ECFDF5'" onmouseout="if(this.dataset.selected!=='true') this.style.background='#fff'">
+                    ${time.split(" ")[0]}
+                </button>
+            `;
         });
 
         html += `
