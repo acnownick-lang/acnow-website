@@ -1588,21 +1588,49 @@ for path in paths:
     content = content.replace("url('../", f"url('{relative_prefix}")
     content = content.replace('url("../', f'url("{relative_prefix}')
     
-    # 2. Update sibling page links (no prefix originally, e.g. href="ac-repair.html")
+    # 2. Update sibling page links → root-absolute canonical hrefs.
+    #    Service/core pages have clean canonical paths; tools stay under /pages/.
+    CANONICAL_MAP = {
+        "ac-installation.html": "/ac-installation/",
+        "ac-repair.html":       "/ac-repair/",
+        "ac-maintenance.html":  "/ac-maintenance/",
+        "commercial.html":      "/commercial/",
+        "pool-heating.html":    "/pool-heating/",
+        "contact.html":         "/contact-us/",
+        "about.html":           "/about/",
+        "areas.html":           "/areas/",
+        "reviews.html":         "/reviews/",
+        "accessibility.html":   "/accessibility/",
+        "privacy.html":         "/privacy/",
+        "services.html":        "/services/",
+        # Tools live under /pages/ — root-absolute
+        "diagnose.html":        "/pages/diagnose.html",
+        "planner.html":         "/pages/planner.html",
+        "configurator.html":    "/pages/configurator.html",
+        "storm-prep.html":      "/pages/storm-prep.html",
+        "3d-airflow.html":      "/pages/3d-airflow.html",
+        "members.html":         "/pages/members.html",
+        "directions.html":      "/pages/directions.html",
+        "hvac-services-palm-city.html":        "/pages/hvac-services-palm-city.html",
+        "hvac-services-stuart.html":           "/pages/hvac-services-stuart.html",
+    }
     for sp in sibling_pages:
-        if sp == "contact.html":
-            content = content.replace('href="contact.html"', f'href="{relative_prefix}contact-us/"')
-            content = content.replace('href="contact.html?', f'href="{relative_prefix}contact-us/?')
-            content = content.replace('href=\'contact.html\'', f'href=\'{relative_prefix}contact-us/\'')
-            content = content.replace('href=\'contact.html?', f'href=\'{relative_prefix}contact-us/?')
+        canonical = CANONICAL_MAP.get(sp)
+        if canonical:
+            # Replace bare href="X.html" with root-absolute canonical
+            content = content.replace(f'href="{sp}"', f'href="{canonical}"')
+            content = content.replace(f'href="{sp}#', f'href="{canonical}#')
+            content = content.replace(f'href="{sp}?', f'href="{canonical}?')
+            content = content.replace(f"href='{sp}'", f"href='{canonical}'")
+            # Also replace any relative_prefix variants left over
+            content = content.replace(f'href="{relative_prefix}pages/{sp}"', f'href="{canonical}"')
+            content = content.replace(f'href="{relative_prefix}{sp}"', f'href="{canonical}"')
         else:
+            # Fallback: keep existing relative_prefix logic
             content = content.replace(f'href="{sp}"', f'href="{relative_prefix}pages/{sp}"')
             content = content.replace(f'href="{sp}#', f'href="{relative_prefix}pages/{sp}#')
             content = content.replace(f'href="{sp}?', f'href="{relative_prefix}pages/{sp}?')
-            content = content.replace(f'href=\'{sp}\'', f'href=\'{relative_prefix}pages/{sp}\'')
-            content = content.replace(f'href=\'{sp}#\'', f'href=\'{relative_prefix}pages/{sp}#\'')
-            content = content.replace(f'href=\'{sp}?\'', f'href=\'{relative_prefix}pages/{sp}?\'')
-        
+
     # 3. Localize SEO Title
     _hub = hub_page_overrides.get(path)
     if _hub:

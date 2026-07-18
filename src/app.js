@@ -1901,7 +1901,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const banner = document.createElement('div');
         banner.id = 'pwa-install-banner';
         
-        banner.style.cssText = "position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #FFFFFF; color: #0A182F; padding: 15px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 1px #0B63E5; display: flex; align-items: center; justify-content: space-between; gap: 15px; width: calc(100% - 40px); max-width: 450px;";
+        banner.style.cssText = "position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 1003; background: #FFFFFF; color: #0A182F; padding: 15px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 1px #0B63E5; display: flex; align-items: center; justify-content: space-between; gap: 15px; width: calc(100% - 40px); max-width: 450px;";
 
         const isIos = isIosSafari();
 
@@ -2676,11 +2676,17 @@ function initPremiumUXFeatures() {
     backToTopBtn.setAttribute("aria-label", "Scroll back to top");
     backToTopBtn.innerHTML = "▲";
     backToTopBtn.style.position = "fixed";
-    backToTopBtn.style.bottom = "25px";
-    
-    // Position dynamically to prevent colliding with Chatbot FAB (which is always visible)
-    backToTopBtn.style.right = "95px";
-    
+    // On mobile (≤768px), raise by CTA bar height (85px = 60px bar + 25px gap)
+    // so the button never overlaps the in-flow CTA bar at page bottom.
+    const isMobileViewport = () => window.innerWidth <= 768;
+    backToTopBtn.style.bottom = isMobileViewport() ? "85px" : "25px";
+    window.addEventListener("resize", () => {
+        backToTopBtn.style.bottom = isMobileViewport() ? "85px" : "25px";
+    }, { passive: true });
+    // Bottom-LEFT: clear of chat FAB (bottom-right 25px) — no bounding-box intersection
+    backToTopBtn.style.left = "25px";
+    backToTopBtn.style.right = "";
+
     backToTopBtn.style.width = "48px";
     backToTopBtn.style.height = "48px";
     backToTopBtn.style.borderRadius = "50%";
@@ -2689,7 +2695,7 @@ function initPremiumUXFeatures() {
     backToTopBtn.style.color = "var(--white)";
     backToTopBtn.style.fontSize = "16px";
     backToTopBtn.style.cursor = "pointer";
-    backToTopBtn.style.zIndex = "9999";
+    backToTopBtn.style.zIndex = "1001"; /* Back-to-top: above header (1000), below chat FAB (1002) */
     backToTopBtn.style.display = "none";
     backToTopBtn.style.alignItems = "center";
     backToTopBtn.style.justifyContent = "center";

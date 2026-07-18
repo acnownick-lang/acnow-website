@@ -2033,27 +2033,35 @@ section[id] {
 
 
 /* ==========================================================================
-   Sticky Mobile Call-To-Action (Conversion Optimizer)
+   Mobile Call-To-Action Bar — IN-FLOW (sits above footer, not a fixed overlay)
+
+   Z-INDEX ORDER FOR ALL FLOATING ELEMENTS (documented, no 99999 on overlays):
+     scroll-progress-bar : 99999  (top bar, thin, non-interactive — OK to be highest)
+     skip-link           : 99998  (keyboard a11y, visually at top)
+     pwa-install-banner  : 1003   (bottom-center, injected by JS — above chat)
+     chat FAB            : 1002   (bottom-RIGHT, injected by JS)
+     back-to-top btn     : 1001   (bottom-LEFT, injected by JS)
+     header              : 1000   (sticky top nav)
+   The CTA bar is position:static — normal document flow, no z-index needed.
    ========================================================================== */
 .mobile-sticky-cta-bar {
     display: none;
 }
 
 @media (max-width: 768px) {
+    /* In-flow bar: user scrolls to it above the footer */
     .mobile-sticky-cta-bar {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        position: static;      /* NOT fixed — sits in document flow */
         width: 100%;
         height: 60px;
         background: #0A182F;
         border-top: 2px solid #FFC72C;
-        z-index: 99999;
+        /* No z-index needed — not a stacking context overlay */
         box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
     }
-    
+
     .sticky-cta-btn {
         display: flex;
         align-items: center;
@@ -2067,20 +2075,18 @@ section[id] {
         letter-spacing: 0.5px;
         border: none;
     }
-    
+
     .sticky-cta-btn.phone-btn {
         background: #0B63E5;
         color: #FFFFFF;
     }
-    
+
     .sticky-cta-btn.book-btn {
         background: #FFC72C;
         color: #0A182F;
     }
-    
-    body {
-        padding-bottom: 60px !important;
-    }
+
+    /* REMOVED: body { padding-bottom: 60px } — no longer needed for in-flow bar */
 }
 
 
@@ -2091,7 +2097,7 @@ section[id] {
     position: absolute;
     top: -80px;
     left: 16px;
-    z-index: 99999;
+    z-index: 99998; /* Below scroll-progress-bar (99999) */
     background: var(--primary);
     color: #fff;
     padding: 10px 20px;
@@ -2509,19 +2515,17 @@ section.trust-bar {
 }
 
 
-/* ── FIX H: Sticky Mobile CTA Bar ───────────────────────────────────────── */
+/* ── FIX H: Sticky Mobile CTA Bar (iOS safe area) ───────────────────────── */
 
 @media (max-width: 768px) {
     .mobile-sticky-cta-bar {
-        /* iOS safe area padding for notched devices */
+        /* iOS safe area: extra padding at bottom for notched devices */
         padding-bottom: env(safe-area-inset-bottom, 0px);
+        /* Height grows with safe area, so bar never clips iOS home indicator */
         height: calc(60px + env(safe-area-inset-bottom, 0px));
     }
 
-    body {
-        /* Match the bar's dynamic height */
-        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)) !important;
-    }
+    /* NOTE: body padding-bottom removed — bar is in-flow, no compensation needed */
 
     /* Visual divider between the two CTA buttons */
     .sticky-cta-btn.phone-btn {
@@ -3511,7 +3515,7 @@ section.trust-bar {
   color: var(--white);
   border: none;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1002; /* Chat FAB: above back-to-top (1001), below PWA install (1003) */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3811,19 +3815,20 @@ section.trust-bar {
     filter: brightness(0.95);
 }
 
-/* Floating Chat FAB Mobile Repositioning to prevent Sticky Bar Collisions */
+/* Floating Chat FAB on Mobile — clear the in-flow CTA bar height (85px = 60px bar + 25px gap) */
 @media (max-width: 768px) {
     #ac-chat-fab {
-        bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
-        right: 16px !important;
+        /* Raised by bar height so FAB never overlaps in-flow CTA bar at page bottom */
+        bottom: 85px !important;
+        right: 25px !important;
     }
     #ac-chat-widget {
-        bottom: calc(145px + env(safe-area-inset-bottom, 0px)) !important;
+        bottom: 160px !important;
         right: 16px !important;
         left: 16px !important;
         width: auto !important;
         max-width: none !important;
-        height: calc(100vh - 220px) !important;
+        height: calc(100vh - 180px) !important;
     }
 }
 
