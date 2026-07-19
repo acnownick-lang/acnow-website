@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acnow-cache-v113'; // Bumped: bypass navigation caching entirely
+const CACHE_NAME = 'acnow-cache-v114'; // Bumped: invalidating cache for transparency fix
 const DEBUG = false;
 
 // Helper function for structured logging
@@ -161,7 +161,7 @@ self.addEventListener('fetch', event => {
                         url.pathname.endsWith('.woff2') || 
                         url.pathname.endsWith('.ttf') || 
                         url.pathname.endsWith('.svg') ||
-                        url.pathname.includes('/downloaded_images/') || 
+                        url.pathname.includes('/assets/images/') || 
                         url.pathname.endsWith('.webp') || 
                         url.pathname.endsWith('.png') || 
                         url.pathname.endsWith('.jpg') || 
@@ -173,7 +173,7 @@ self.addEventListener('fetch', event => {
   // 1. Media & Fonts: Cache First with Network Fallback
   if (isMediaOrFont) {
     event.respondWith(
-      caches.match(event.request, { ignoreSearch: true }).then(cachedResponse => {
+      caches.match(event.request).then(cachedResponse => {
         if (cachedResponse) {
           log('info', 'Cache hit (Media/Font):', url.pathname);
           return cachedResponse;
@@ -358,8 +358,8 @@ self.addEventListener('push', event => {
   const title = data.title || 'A/C Now Dispatch';
   const options = {
     body: data.body || 'Technician dispatch status updated.',
-    icon: '/downloaded_images/mascot-logo-transparent.png?v=2',
-    badge: '/downloaded_images/Logo2.webp',
+    icon: '/assets/images/mascot-logo-transparent.png?v=2',
+    badge: '/assets/images/Logo2.webp',
     image: data.image || null, // Display tech photos or maps if provided
     tag: data.tag || 'dispatch-update', // Collapses duplicate dispatches
     renotify: data.renotify !== undefined ? data.renotify : true,
@@ -412,8 +412,8 @@ function showSyncCompletedNotification(payload) {
   const name = payload.fname ? ` ${payload.fname}` : '';
   const options = {
     body: `Hi${name}, your saved service request has been sent to our team successfully!`,
-    icon: '/downloaded_images/mascot-logo-transparent.png?v=2',
-    badge: '/downloaded_images/Logo2.webp',
+    icon: '/assets/images/mascot-logo-transparent.png?v=2',
+    badge: '/assets/images/Logo2.webp',
     tag: 'sync-success-notification'
   };
   self.registration.showNotification('A/C Service Request Transmitted', options);
