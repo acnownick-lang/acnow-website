@@ -8,6 +8,10 @@
     "ws": "^8.21.0"
   },
   "devDependencies": {
-    "esbuild": "^0.20.0"
+    "@lhci/cli": "^0.14.0",
+    "critical": "^6.0.5",
+    "esbuild": "^0.20.0",
+    "lighthouse": "^11.7.1",
+    "penthouse": "^2.3.3"
   }
 }

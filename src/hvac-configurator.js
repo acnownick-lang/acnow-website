@@ -216,10 +216,10 @@ function initHvacConfigurator() {
         if (imgWrap && sysImg) {
             imgWrap.style.display = "block";
             if (systemStyle === "ductless") {
-                sysImg.src = "../assets/images/config-ductless.webp";
+                sysImg.src = "/assets/images/config-ductless.webp";
                 sysImg.alt = "Mitsubishi M-Series Ductless mini-split installation matched preview";
             } else {
-                sysImg.src = "../assets/images/config-central.webp";
+                sysImg.src = "/assets/images/config-central.webp";
                 sysImg.alt = "RunTru by Trane Central A/C condenser installation matched preview";
             }
         }

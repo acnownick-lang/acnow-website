@@ -1,0 +1,15 @@
+:root { --primary: #0B63E5; --primary-hover: #084fc2; --secondary: #E63946; --secondary-text: #B91C2C; --gold: #FFC72C; --gold-hover: #E0AE20; --dark: #0A182F; --light: #F6F8FC; --gray-light: #E5E9F0; --gray-dark: #3D5478; --text: #2D3748; --white: #FFFFFF; --border-radius: 12px; --transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s cubic-bezier(0.4, 0, 0.2, 1); --font-heading: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif; --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
+:root { --accent: var(--primary); --text-main: var(--text); }
+:root { --transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-family: var(--font-body); color: var(--text); background-color: var(--white); scrollbar-gutter: stable; }
+body { line-height: 1.6; font-size: 16px; overflow-x: hidden; }
+body { position: relative; z-index: 3; padding: 30px; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; color: var(--white); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+body { padding: 50px; }
+body { position: relative; }
+body { padding: 30px; }
+body { padding-bottom: 60px }
+body { padding: 20px 16px !important; }
+body { transition: padding-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.hero, .reveal.split-hero, .reveal.hero.animating, .reveal.hero.active, .reveal.split-hero.animating, .reveal.split-hero.active { opacity: 1 !important; transform: translate3d(0, 0, 0) !important; transition: none !important; transition-duration: 0s !important; }
+.reveal.split-hero, .reveal.hero.animating, .reveal.hero.active, .reveal.split-hero.animating, .reveal.split-hero.active { opacity: 1 !important; transform: translate3d(0, 0, 0) !important; transition: none !important; transition-duration: 0s !important; }

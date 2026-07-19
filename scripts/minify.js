@@ -36,3 +36,42 @@ files.forEach(file => {
     }
 });
 console.log("All assets minified successfully!");
+
+// ─── Image size guard ─────────────────────────────────────────────────────────
+// Fails the build if any JPG/PNG/GIF in assets/images exceeds 300KB AND has
+// no corresponding .webp file (meaning it would be served without a lighter alternative).
+// JPG source originals that have a .webp pair are fine — browsers get the webp via <picture>.
+const { execSync: execSyncGuard } = require('child_process');
+const LIMIT_KB = 300;
+const imgDir = path.join(projectRoot, 'assets', 'images');
+
+let candidatesRaw = '';
+try {
+    candidatesRaw = execSyncGuard(
+        `find "${imgDir}" -type f \\( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \\) -size +${LIMIT_KB}k`,
+        { encoding: 'utf8' }
+    ).trim();
+} catch (e) {
+    candidatesRaw = '';
+}
+
+// Filter: only flag files that have NO corresponding .webp
+const trueOffenders = candidatesRaw
+    ? candidatesRaw.split('\n')
+        .map(f => f.trim())
+        .filter(f => f && !fs.existsSync(f.replace(/\.(jpe?g|png|gif)$/i, '.webp')))
+    : [];
+
+if (trueOffenders.length > 0) {
+    console.error('\n🚫 BUILD FAILED — Oversized images with no webp alternative (>' + LIMIT_KB + 'KB):');
+    trueOffenders.forEach(f => {
+        try {
+            const kb = Math.round(fs.statSync(f).size / 1024);
+            console.error(`   ${kb}KB  ${path.relative(projectRoot, f)}`);
+        } catch (_) { console.error(`   ${f}`); }
+    });
+    console.error('\nRun: python3 scripts/optimize_images.py to generate webp variants.\n');
+    process.exit(1);
+} else {
+    console.log(`✅ Image size check passed — all large images have webp alternatives.`);
+}

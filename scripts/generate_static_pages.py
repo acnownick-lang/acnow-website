@@ -1689,12 +1689,12 @@ for path in paths:
         twitter_meta = f"""    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{localized_title}">
     <meta name="twitter:description" content="{localized_desc}">
-    <meta name="twitter:image" content="https://acnowllc.com/assets/images/van_branded.jpg">"""
+    <meta name="twitter:image" content="https://acnowllc.com/assets/images/og_social.jpg">"""
         content = content.replace('<meta property="og:url"', f'{twitter_meta}\n    <meta property="og:url"')
     else:
         content = re.sub(r'<meta name="twitter:title" content=".*?">', f'<meta name="twitter:title" content="{localized_title}">', content)
         content = re.sub(r'<meta name="twitter:description" content=".*?">', f'<meta name="twitter:description" content="{localized_desc}">', content)
-        content = re.sub(r'<meta name="twitter:image" content=".*?">', f'<meta name="twitter:image" content="https://acnowllc.com/assets/images/van_branded.jpg">', content)
+        content = re.sub(r'<meta name="twitter:image" content=".*?">', f'<meta name="twitter:image" content="https://acnowllc.com/assets/images/og_social.jpg">', content)
         
     # 7. Localize JSON-LD Schema Location info (Service schema vs HVACBusiness schema)
     # ALL generated regional/service pages emit Service schema — including Port St. Lucie.
@@ -1716,7 +1716,7 @@ for path in paths:
         "@id": "https://acnowllc.com/#hvacbusiness",
         "name": "A/C Now LLC",
         "url": "https://acnowllc.com/",
-        "image": "https://acnowllc.com/assets/images/van_branded.jpg",
+        "image": "https://acnowllc.com/assets/images/og_social.jpg",
         "telephone": "(772) 521-3568"
       }},
       "areaServed": {{
@@ -1967,20 +1967,23 @@ for path in paths:
     if path in page_image_map:
         img1, img2 = page_image_map[path]
         if template_name == "ac-installation.html":
-            content = content.replace("../assets/images/install_premium.webp", f"../assets/images/generated/{img1}.webp")
-            content = content.replace("../assets/images/hvac-install-img-1.webp", f"../assets/images/generated/{img2}.webp")
+            content = content.replace("/assets/images/install_premium.webp", f"/assets/images/generated/{img1}.webp")
+            content = content.replace("/assets/images/hvac-install-img-1.webp", f"/assets/images/generated/{img2}.webp")
         elif template_name == "ac-maintenance.html":
-            content = content.replace("../assets/images/maintenance_premium.webp", f"../assets/images/generated/{img1}.webp")
-            content = content.replace("../assets/images/hvac-maintenance-img.webp", f"../assets/images/generated/{img2}.webp")
+            content = content.replace("/assets/images/maintenance_premium.webp", f"/assets/images/generated/{img1}.webp")
+            content = content.replace("/assets/images/hvac-maintenance-img.webp", f"/assets/images/generated/{img2}.webp")
         elif template_name == "ac-repair.html":
-            content = content.replace("../assets/images/repair_premium.webp", f"../assets/images/generated/{img1}.webp")
-            content = content.replace("../assets/images/generated/compressor_install.jpg", f"../assets/images/generated/{img2}.jpg")
+            content = content.replace("/assets/images/repair_premium.webp", f"/assets/images/generated/{img1}.webp")
+            # Swap all three picture element attrs for the regional card image
+            content = content.replace("/assets/images/generated/compressor_install_mobile.webp", f"/assets/images/generated/{img2}_mobile.webp")
+            content = content.replace("/assets/images/generated/compressor_install.webp", f"/assets/images/generated/{img2}.webp")
+            content = content.replace("/assets/images/generated/compressor_install.jpg", f"/assets/images/generated/{img2}.jpg")
         elif template_name == "pool-heating.html":
-            content = content.replace("../assets/images/pool-inno-install.webp", f"../assets/images/generated/{img1}.webp")
-            content = content.replace("../assets/images/pool-faq-graphic.webp", f"../assets/images/generated/{img2}.webp")
+            content = content.replace("/assets/images/pool-inno-install.webp", f"/assets/images/generated/{img1}.webp")
+            content = content.replace("/assets/images/pool-faq-graphic.webp", f"/assets/images/generated/{img2}.webp")
         elif template_name == "services.html":
-            content = content.replace("../assets/images/hvac-repair-img.webp", f"../assets/images/generated/{img1}.webp")
-            content = content.replace("../assets/images/hvac-install-img-1.webp", f"../assets/images/generated/{img2}.webp")
+            content = content.replace("/assets/images/hvac-repair-img.webp", f"/assets/images/generated/{img1}.webp")
+            content = content.replace("/assets/images/hvac-install-img-1.webp", f"/assets/images/generated/{img2}.webp")
 
     # 8.9. Replace "the Treasure Coast & Palm Beaches" or "the Treasure Coast" with "northern Palm Beach County" for Palm Beach County cities
     if county == "Palm Beach County":

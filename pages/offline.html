@@ -191,12 +191,12 @@
         }
     </style>
     <link rel="manifest" href="../manifest.json">
-    <link rel="apple-touch-icon" href="../assets/images/mascot-logo-transparent.png">
-    <link rel="icon" type="image/svg+xml" href="../assets/images/mascot-logo.svg">
+    <link rel="apple-touch-icon" href="/assets/images/mascot-logo-transparent.png">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/mascot-logo.svg">
 </head>
 <body>
     <div class="container">
-        <img src="../assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
+        <img src="/assets/images/mascot-logo-transparent.png" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="high" width="280" height="130">
         <div class="offline-icon">📶🚫</div>
         <h1>Connection Lost</h1>
         <p>You are currently offline. A/C failures are urgent, and we are still here to help! Call our team directly for immediate dispatches.</p>
@@ -297,7 +297,7 @@
             btn.disabled = true;
             try {
                 // Fetch request with a cache-busting query parameter to test actual connectivity
-                await fetch('../assets/images/Logo2.webp?cb=' + Date.now(), { method: 'HEAD' });
+                await fetch('/assets/images/Logo2.webp?cb=' + Date.now(), { method: 'HEAD' });
                 window.showToast('Connection restored! Reconnecting now...', 'success');
                 setTimeout(() => {
                     window.location.reload();

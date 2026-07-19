@@ -1961,7 +1961,209 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 0. Interactive "Sound of Comfort" Web Audio Synthesizer
+    // ── Static "Get the App" — Platform-Adaptive Install Modal ───────────────
+    // Present in the Quick Links footer of every page. NEVER a silent no-op.
+    // Platforms: ios | android-prompt | android-manual | desktop-chrome | standalone | other
+
+    function getPlatform() {
+        const ua = navigator.userAgent;
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+            || (window.navigator.standalone === true);
+        if (isStandalone) return 'standalone';
+
+        const isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+        const isIosSafari = isIos && /WebKit/.test(ua) && !/CriOS|FxiOS|OPiOS/.test(ua);
+        if (isIosSafari) return 'ios';
+
+        const isAndroid = /Android/.test(ua);
+        const isChromium = /Chrome\//.test(ua) || /Chromium\//.test(ua);
+        const isEdge = /Edg\//.test(ua);
+        const isMobile = /Mobi|Android/i.test(ua);
+
+        if (isAndroid && isChromium && deferredPrompt) return 'android-prompt';
+        if (isAndroid && (isChromium || /Chrome/.test(ua))) return 'android-manual';
+        if ((isChromium || isEdge) && !isMobile) return 'desktop-chrome';
+        return 'other';
+    }
+
+    function getModalContent(platform) {
+        const configs = {
+            ios: {
+                title: 'Install A/C Now App',
+                subtitle: 'Fast offline access & emergency calling',
+                steps: [
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`, html: 'Tap the <strong>Share</strong> button in Safari\'s toolbar at the bottom of your screen.' },
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`, html: 'Scroll down in the share sheet and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong>.' },
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`, html: 'Tap <strong>&ldquo;Add&rdquo;</strong> in the top-right corner to confirm.' }
+                ],
+                note: 'Works on iPhone & iPad with Safari. Opens instantly — no App Store needed.'
+            },
+            'android-manual': {
+                title: 'Install A/C Now App',
+                subtitle: 'One tap access from your home screen',
+                steps: [
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>`, html: 'Tap the <strong>&#8942; menu</strong> in the top-right corner of Chrome.' },
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`, html: 'Select <strong>&ldquo;Add to Home Screen&rdquo;</strong> from the menu.' },
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`, html: 'Tap <strong>&ldquo;Add&rdquo;</strong> to confirm. The app icon appears on your home screen.' }
+                ],
+                note: 'No download needed — installs instantly from your browser.'
+            },
+            'desktop-chrome': {
+                title: 'Install A/C Now App',
+                subtitle: 'Quick access from your taskbar or desktop',
+                steps: [
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>`, html: 'Look for the <strong>install icon</strong> (&oplus;) in the address bar on the right side.' },
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>`, html: 'Or click the <strong>&#8942; menu</strong> &rarr; <strong>&ldquo;Cast, save, and share&rdquo;</strong> &rarr; <strong>&ldquo;Install A/C Now&rdquo;</strong>.' },
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`, html: 'Click <strong>&ldquo;Install&rdquo;</strong> in the prompt to add it to your taskbar and desktop.' }
+                ],
+                note: 'Works in Chrome and Microsoft Edge. Runs in its own window — no tabs needed.'
+            },
+            other: {
+                title: 'Get the A/C Now App',
+                subtitle: 'Your browser has limited install support',
+                steps: [
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`, html: 'For the best experience, open this page in <strong>Google Chrome</strong> or <strong>Safari</strong>.' },
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`, html: 'On <strong>iPhone/iPad</strong>: open in Safari, then use Share &rarr; Add to Home Screen.' },
+                    { icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`, html: 'Or <strong>bookmark this page</strong> now for quick one-tap access anytime.' }
+                ],
+                note: 'acnowllc.com · (772) 521-3568 — Save us before your next AC emergency.'
+            }
+        };
+        return configs[platform] || configs.other;
+    }
+
+    function buildInstallModal(platform) {
+        const existing = document.getElementById('pwa-ios-modal-overlay');
+        if (existing) {
+            existing.dataset.platform = platform;
+            renderModalContent(platform);
+            return;
+        }
+        const overlay = document.createElement('div');
+        overlay.id = 'pwa-ios-modal-overlay';
+        overlay.dataset.platform = platform;
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-labelledby', 'pwa-ios-modal-title');
+        overlay.innerHTML = `
+          <div id="pwa-ios-modal">
+            <button id="pwa-ios-modal-close" aria-label="Close install instructions">&times;</button>
+            <div class="ios-modal-header">
+              <img src="/assets/images/Logo2.webp" alt="A/C Now app icon">
+              <div>
+                <h3 id="pwa-ios-modal-title"></h3>
+                <p id="pwa-ios-modal-subtitle"></p>
+              </div>
+            </div>
+            <div class="ios-modal-steps" id="pwa-modal-steps"></div>
+            <p class="ios-modal-note" id="pwa-modal-note"></p>
+          </div>`;
+        document.body.appendChild(overlay);
+        function closeModal() {
+            overlay.classList.remove('visible');
+            overlay.setAttribute('aria-hidden', 'true');
+        }
+        document.getElementById('pwa-ios-modal-close').addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+        document.addEventListener('keydown', function onKey(e) {
+            if (e.key === 'Escape') { closeModal(); document.removeEventListener('keydown', onKey); }
+        });
+        renderModalContent(platform);
+    }
+
+    function renderModalContent(platform) {
+        const cfg = getModalContent(platform);
+        const title = document.getElementById('pwa-ios-modal-title');
+        const subtitle = document.getElementById('pwa-ios-modal-subtitle');
+        const stepsEl = document.getElementById('pwa-modal-steps');
+        const noteEl = document.getElementById('pwa-modal-note');
+        if (!title) return;
+
+        title.textContent = cfg.title;
+        subtitle.textContent = cfg.subtitle;
+        stepsEl.innerHTML = cfg.steps.map((step, i) => `
+          <div class="ios-modal-step">
+            <div class="ios-step-num">${i + 1}</div>
+            <div class="ios-step-text">
+              ${step.html}
+              ${step.icon ? `<span class="ios-step-icon" aria-hidden="true">${step.icon}</span>` : ''}
+            </div>
+          </div>`).join('');
+        noteEl.textContent = cfg.note;
+    }
+
+    function openInstallModal(platform) {
+        buildInstallModal(platform);
+        const overlay = document.getElementById('pwa-ios-modal-overlay');
+        overlay.removeAttribute('aria-hidden');
+        requestAnimationFrame(() => {
+            overlay.classList.add('visible');
+            const close = document.getElementById('pwa-ios-modal-close');
+            if (close) close.focus();
+        });
+    }
+
+    function updateGetAppButtons() {
+        const btns = document.querySelectorAll('.footer-get-app-btn');
+        if (!btns.length) return;
+
+        const platform = getPlatform();
+
+        if (platform === 'standalone') {
+            btns.forEach(btn => {
+                btn.innerHTML = '✓ App Installed';
+                btn.classList.add('pwa-installed');
+                btn.disabled = true;
+                btn.style.cursor = 'default';
+            });
+            return;
+        }
+
+        btns.forEach(btn => {
+            // Remove any previously attached listener by cloning
+            const fresh = btn.cloneNode(true);
+            btn.parentNode.replaceChild(fresh, btn);
+            fresh.addEventListener('click', () => {
+                const currentPlatform = getPlatform(); // Re-evaluate at click time
+                if (currentPlatform === 'android-prompt' && deferredPrompt) {
+                    // Case 1: Native install prompt available — fire it
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choice) => {
+                        console.log('[PWA] Install outcome:', choice.outcome);
+                        if (choice.outcome === 'accepted') {
+                            fresh.innerHTML = '✓ Installing…';
+                            fresh.classList.add('pwa-installed');
+                        }
+                        deferredPrompt = null;
+                    });
+                } else {
+                    // All other cases: show platform-adaptive modal — NEVER a no-op
+                    openInstallModal(currentPlatform);
+                }
+            });
+        });
+    }
+
+    // Wire on DOMContentLoaded (button is already in static HTML)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateGetAppButtons);
+    } else {
+        updateGetAppButtons();
+    }
+
+    // On app install, update all button instances
+    window.addEventListener('appinstalled', () => {
+        document.querySelectorAll('.footer-get-app-btn').forEach(btn => {
+            btn.innerHTML = '✓ App Installed';
+            btn.classList.add('pwa-installed');
+            btn.disabled = true;
+        });
+        const banner = document.getElementById('pwa-install-banner');
+        if (banner) banner.remove();
+        console.log('[PWA] App installed — static entry points updated.');
+    });
+
+
     const ComfortAudio = {
         ctx: null,
         isMuted: true,
