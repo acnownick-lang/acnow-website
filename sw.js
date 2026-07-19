@@ -358,7 +358,7 @@ self.addEventListener('push', event => {
   const title = data.title || 'A/C Now Dispatch';
   const options = {
     body: data.body || 'Technician dispatch status updated.',
-    icon: '/downloaded_images/mascot-logo-transparent.png',
+    icon: '/downloaded_images/mascot-logo-transparent.png?v=2',
     badge: '/downloaded_images/Logo2.webp',
     image: data.image || null, // Display tech photos or maps if provided
     tag: data.tag || 'dispatch-update', // Collapses duplicate dispatches
@@ -412,7 +412,7 @@ function showSyncCompletedNotification(payload) {
   const name = payload.fname ? ` ${payload.fname}` : '';
   const options = {
     body: `Hi${name}, your saved service request has been sent to our team successfully!`,
-    icon: '/downloaded_images/mascot-logo-transparent.png',
+    icon: '/downloaded_images/mascot-logo-transparent.png?v=2',
     badge: '/downloaded_images/Logo2.webp',
     tag: 'sync-success-notification'
   };

@@ -1,6 +1,10 @@
 // Netlify Serverless Function: chat-assistant
 // Pre-qualifies customer symptoms locally using a rules-based diagnostic lookup,
 // sends dispatch briefs to Resend and Discord, and handles follow-up routing.
+// Lead Ledger: every prequalify invocation is written to Netlify Blobs (store: "leads")
+// BEFORE any notification attempt. Delivery status updated after each send.
+
+import { getStore } from "@netlify/blobs";
 
 function escapeHTML(str) {
   if (typeof str !== "string") return "";
@@ -27,7 +31,7 @@ function sanitizeDiscordText(str) {
     .replace(/@everyone/g, "@\\everyone")
     .replace(/@here/g, "@\\here")
     .replace(/<@&?\d+>/g, "[mention]");
-  clean = clean.replace(/([*`_~|\\\[\]])/g, "\\$1");
+  clean = clean.replace(/([*`_~|\\[\]])/g, "\\$1");
   return clean;
 }
 
@@ -39,6 +43,26 @@ function getCleanString(val, maxLen, fallback = "") {
     clean = clean.substring(0, maxLen);
   }
   return clean;
+}
+
+// Generate a unique, time-sortable lead ID
+function generateLeadId() {
+  const ts = new Date().toISOString().replace(/[:.]/g, "-");
+  const rand = Math.random().toString(36).substring(2, 10);
+  return `lead_${ts}_${rand}`;
+}
+
+// Write or update a lead record in the Netlify Blobs "leads" store.
+// Returns true on success, false on failure (caller continues either way).
+async function persistLead(leadId, record) {
+  try {
+    const store = getStore({ name: "leads", consistency: "strong" });
+    await store.setJSON(leadId, record);
+    return true;
+  } catch (err) {
+    console.error(`[Ledger] Blob operation failed for ${leadId}:`, err.message || err);
+    return false;
+  }
 }
 
 function getLocalDiagnosis(issue, name, city) {
@@ -227,17 +251,244 @@ export async function handler(event, context) {
         };
       }
 
-      // Execute local rules-based diagnostic lookup (100% free, 0ms latency)
-      const diag = getLocalDiagnosis(cleanIssue, cleanName, cleanCity);
+      const issueLower = cleanIssue.toLowerCase();
 
-      // Still dispatch notifications to Discord and Resend
-      await dispatchToDiscord(cleanName, cleanCity, cleanIssue, diag.diagnosticCode, diag.urgencyLevel, diag.techNote);
-      await dispatchToResend(cleanName, cleanCity, cleanIssue, diag.briefing);
+      // Check symptoms
+      const hasSymptom = 
+        issueLower.includes("warm") || 
+        issueLower.includes("cool") || 
+        issueLower.includes("temp") || 
+        issueLower.includes("hot") || 
+        issueLower.includes("heat") || 
+        issueLower.includes("blowing") ||
+        issueLower.includes("leak") || 
+        issueLower.includes("water") || 
+        issueLower.includes("drain") || 
+        issueLower.includes("drip") || 
+        issueLower.includes("flow") ||
+        issueLower.includes("noise") || 
+        issueLower.includes("loud") || 
+        issueLower.includes("squeal") || 
+        issueLower.includes("buzz") || 
+        issueLower.includes("rattle") ||
+        issueLower.includes("power") || 
+        issueLower.includes("dead") || 
+        issueLower.includes("off") || 
+        issueLower.includes("blank") || 
+        issueLower.includes("won't turn") || 
+        issueLower.includes("wont turn") ||
+        issueLower.includes("ac") ||
+        issueLower.includes("a/c") ||
+        issueLower.includes("compressor") ||
+        issueLower.includes("condenser") ||
+        issueLower.includes("thermostat") ||
+        issueLower.includes("filter");
+
+      // Check booking intent
+      const isBooking = 
+        issueLower.includes("book") || 
+        issueLower.includes("schedule") || 
+        issueLower.includes("estimate") || 
+        issueLower.includes("quote") || 
+        issueLower.includes("come out") || 
+        issueLower.includes("send someone") || 
+        issueLower.includes("repair my") || 
+        issueLower.includes("request service") || 
+        issueLower.includes("dispatch") || 
+        issueLower.includes("need service") ||
+        issueLower.includes("diagnostic fee") ||
+        issueLower.includes("diagnostic charge");
+
+      // Check service/admin intent
+      const isServiceAdmin = 
+        issueLower.includes("confirm") || 
+        issueLower.includes("confirmation") || 
+        issueLower.includes("appointment") || 
+        issueLower.includes("reschedule") || 
+        issueLower.includes("cancel") || 
+        issueLower.includes("invoice") || 
+        issueLower.includes("receipt") || 
+        issueLower.includes("bill") || 
+        issueLower.includes("price") || 
+        issueLower.includes("hours") || 
+        issueLower.includes("speak to") || 
+        issueLower.includes("human") || 
+        issueLower.includes("agent") || 
+        issueLower.includes("person") || 
+        issueLower.includes("real person") || 
+        issueLower.includes("customer service");
+
+      let leadType = "Service Booking Request";
+      let briefing = "";
+      let isDiagnosticFlow = false;
+      let diagCode = "HVAC-GENERAL";
+      let urgencyLevel = "Medium";
+      let techNote = "Awaiting manual dispatcher review.";
+
+      if (isBooking && !hasSymptom) {
+        leadType = "Service Booking Request";
+        briefing = `Thank you, ${cleanName}. I have received your service booking request for ${cleanCity} and dispatched it directly to our office desk. A team member will contact you shortly to confirm your booking. For immediate assistance, please call us directly at **(772) 521-3568**.`;
+        diagCode = "booking-direct";
+        urgencyLevel = "High";
+        techNote = "Direct booking request bypasses diagnostics.";
+      } else if (isServiceAdmin) {
+        leadType = "Customer Service Request";
+        briefing = `Thank you, ${cleanName}. I have received your inquiry regarding customer service/admin support and routed it to our office team. We will review your request and follow up shortly. For immediate assistance, please call us directly at **(772) 521-3568**.`;
+        diagCode = "service-admin";
+        urgencyLevel = "Medium";
+        techNote = "General service/admin inquiry.";
+      } else if (!hasSymptom) {
+        // Unrecognized else-bucket
+        leadType = "Customer Service Request";
+        briefing = `Thank you, ${cleanName}. I have received your message and routed it directly to our office desk. Our team will review your message and follow up shortly. For immediate assistance, please call us directly at **(772) 521-3568**.`;
+        diagCode = "unrecognized-inquiry";
+        urgencyLevel = "Medium";
+        techNote = "Unrecognized else-bucket inquiry.";
+      } else {
+        // Cooling Symptom Diagnostic Flow
+        isDiagnosticFlow = true;
+        leadType = "Pre-Qualified HVAC Lead";
+        const diagResult = getLocalDiagnosis(cleanIssue, cleanName, cleanCity);
+        briefing = diagResult.briefing;
+        diagCode = diagResult.diagnosticCode;
+        urgencyLevel = diagResult.urgencyLevel;
+        techNote = diagResult.techNote;
+      }
+
+      // Parse legacy fields / dynamic day time
+      let preferredDate = getCleanString(body.preferred_date || body.preferred_day || body["preferred-date"], 100, "").trim();
+      let preferredTime = getCleanString(body.preferred_time || body["preferred-time"], 100, "").trim();
+
+      let finalDayTime = "First Available";
+      if (preferredDate) {
+        if (preferredTime && preferredTime !== "First Available") {
+          finalDayTime = `${preferredDate} (${preferredTime})`;
+        } else {
+          finalDayTime = preferredDate;
+        }
+      } else {
+        const msgStr = cleanIssue;
+        const reservedSlotMatch = msgStr.match(/\[Reserved Slot\]\s*([^|\]\n]+)/);
+        const prefDateMatchBrackets = msgStr.match(/\[Preferred Date:\s*([^|\]\n]+)\]/);
+        const prefDateMatchColon = msgStr.match(/\[Preferred Date\]\s*([^|\]\n]+)/);
+
+        if (reservedSlotMatch) {
+          finalDayTime = reservedSlotMatch[1].trim();
+        } else if (prefDateMatchBrackets) {
+          finalDayTime = prefDateMatchBrackets[1].trim();
+        } else if (prefDateMatchColon) {
+          finalDayTime = prefDateMatchColon[1].trim();
+        }
+      }
+
+      let leadSource = "Chat Assistant (Prequalify)";
+      if (!isDiagnosticFlow) {
+        leadSource = `Chat Assistant (${leadType})`;
+      }
+
+      // ───────────────────────────────────────────────────────────────────────
+      // LEAD LEDGER — Write to Netlify Blobs BEFORE any notification attempt.
+      // ───────────────────────────────────────────────────────────────────────
+      const leadId = generateLeadId();
+      const leadRecord = {
+        leadId,
+        timestamp: new Date().toISOString(),
+        source: "chat-assistant",
+        fields: {
+          name: cleanName,
+          city: cleanCity,
+          issue: cleanIssue,
+          diagnosticCode: diagCode,
+          urgencyLevel: urgencyLevel,
+          techNote: techNote,
+          leadType: leadType,
+          leadSource: leadSource,
+          preferred_date: preferredDate,
+          preferred_time: preferredTime,
+          requested_day_time: finalDayTime,
+        },
+        delivery: {
+          resend: { status: "pending", error: null, attemptedAt: null },
+          discord: { status: "pending", error: null, attemptedAt: null },
+        },
+      };
+
+      const blobWritten = await persistLead(leadId, leadRecord);
+      if (blobWritten) {
+        console.log(`[Ledger] Lead ${leadId} persisted to "leads" blob store.`);
+      }
+
+      // Dispatch notifications, collecting outcomes for ledger update
+      const discordResult = await dispatchToDiscord(
+        cleanName, cleanCity, cleanIssue,
+        diagCode, urgencyLevel, techNote,
+        leadId, leadType, finalDayTime, leadSource
+      );
+      const resendResult = await dispatchToResend(
+        cleanName, cleanCity, cleanIssue, 
+        isDiagnosticFlow ? briefing : "", 
+        leadType, finalDayTime, leadSource
+      );
+
+      // Customer Booking Confirmation (Gated behind Flag)
+      const CONFIRMATIONS_ENABLED = false;
+      const safeEmail = getCleanString(body.email || body.emailAddress, 100, "").trim();
+      if (CONFIRMATIONS_ENABLED && safeEmail && safeEmail !== "No Email Provided" && safeEmail !== "N/A") {
+        try {
+          const RESEND_API_KEY = process.env.RESEND_API_KEY;
+          if (RESEND_API_KEY) {
+            await fetch("https://api.resend.com/emails", {
+              method: "POST",
+              headers: {
+                "Authorization": `Bearer ${RESEND_API_KEY}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                from: "A/C Now LLC <confirmations@mail.acnowllc.com>",
+                to: [safeEmail],
+                replyTo: "acnowpsl@gmail.com", // TODO: Update to office@acnowllc.com or info@acnowllc.com once set up
+                subject: "Service Request Received - A/C Now LLC",
+                html: `
+                  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+                    <h2 style="color: #0b63e5; margin-top: 0;">We've Received Your Request!</h2>
+                    <p>Hello ${escapeHTML(cleanName)},</p>
+                    <p>Thank you for reaching out to A/C Now LLC. We have received your chat request for <strong>${escapeHTML(cleanCity)}</strong>.</p>
+                    
+                    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; border-left: 4px solid #0b63e5; margin: 20px 0;">
+                      <p style="margin: 0 0 8px 0;"><strong>Requested Day/Time:</strong> ${escapeHTML(finalDayTime)}</p>
+                      <p style="margin: 0;"><strong>Lead Source:</strong> ${escapeHTML(leadSource)}</p>
+                    </div>
+                    
+                    <p>Our veteran-led crew will contact you shortly to confirm your booking and schedule a technician.</p>
+                    <p>If you need emergency service or immediate assistance, please call us directly at <strong>(772) 521-3568</strong> (available 24/7).</p>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+                    <p style="font-size: 12px; color: #777; margin: 0;">A/C Now LLC • 1391 NW St. Lucie West Blvd • Port St. Lucie, FL 34986</p>
+                  </div>
+                `,
+              }),
+            });
+            console.log(`[Confirmations] Confirmation email sent to chat customer ${safeEmail}`);
+          }
+        } catch (confirmErr) {
+          console.error("[Confirmations] Failed to send customer confirmation:", confirmErr);
+        }
+      }
+
+      // Update ledger with delivery outcomes
+      leadRecord.delivery.resend = resendResult;
+      leadRecord.delivery.discord = discordResult;
+
+      if (blobWritten) {
+        const updated = await persistLead(leadId, leadRecord);
+        if (updated) {
+          console.log(`[Ledger] Delivery status updated for ${leadId} — resend:${resendResult.status} discord:${discordResult.status}`);
+        }
+      }
 
       return {
         statusCode: 200,
         headers: corsHeaders,
-        body: JSON.stringify({ success: true, briefing: diag.briefing }),
+        body: JSON.stringify({ success: true, briefing: briefing, ledgerId: leadId }),
       };
     } 
     
@@ -268,19 +519,41 @@ export async function handler(event, context) {
   }
 }
 
-async function dispatchToDiscord(name, city, issue, code, urgency, techNote) {
+// Returns a delivery status object: { status, error, attemptedAt }
+async function dispatchToDiscord(name, city, issue, code, urgency, techNote, leadId, leadType, finalDayTime, leadSource) {
   const url = process.env.DISCORD_WEBHOOK_URL;
-  if (!url) return;
+  const attemptedAt = new Date().toISOString();
 
-  const colorMap = { "Low": 3066993, "Medium": 15105570, "High": 15158332 };
-  const color = colorMap[urgency] || 746469;
+  if (!url) {
+    return { status: "failed", error: "DISCORD_WEBHOOK_URL not configured", attemptedAt };
+  }
+
+  const isDiag = code !== "HVAC-GENERAL" && code !== undefined && code !== "booking-direct" && code !== "service-admin" && code !== "unrecognized-inquiry";
+  const color = isDiag ? 16720437 : 746469;
 
   const discordName = sanitizeDiscordText(name) || "Anonymous Customer";
   const discordCity = sanitizeDiscordText(city) || "Not Provided";
   const discordIssue = sanitizeDiscordText(issue) || "No Issue Details Provided";
-  const discordCode = sanitizeDiscordText(code) || "HVAC-GENERAL";
-  const discordUrgency = sanitizeDiscordText(urgency) || "Medium";
-  const discordTechNote = sanitizeDiscordText(techNote) || "Awaiting troubleshooting.";
+  const discordDayTime = sanitizeDiscordText(finalDayTime);
+  const discordLeadSource = sanitizeDiscordText(leadSource);
+  const discordLeadType = sanitizeDiscordText(leadType);
+
+  const fields = [
+    { name: "🕒 Requested Day/Time", value: `**${discordDayTime}**`, inline: false },
+    { name: "🔌 Lead Source", value: discordLeadSource, inline: false },
+    { name: "👤 Customer Name", value: discordName, inline: true },
+    { name: "📍 Service City", value: `${discordCity}, FL`, inline: true },
+    { name: "📋 Lead Type", value: discordLeadType, inline: true },
+    { name: "💬 Customer Verbatim Message", value: discordIssue, inline: false }
+  ];
+
+  if (isDiag) {
+    fields.push(
+      { name: "⚠️ Urgency Level", value: `**${urgency}**`, inline: true },
+      { name: "🛠️ Diagnostic Code", value: `\`${code}\``, inline: true },
+      { name: "🔧 Tech Note", value: techNote || "Awaiting troubleshooting.", inline: false }
+    );
+  }
 
   try {
     const response = await fetch(url, {
@@ -290,39 +563,82 @@ async function dispatchToDiscord(name, city, issue, code, urgency, techNote) {
         username: "A/C Now Chat Dispatcher",
         avatar_url: "https://acnowllc.com/downloaded_images/mascot-logo-transparent.png",
         embeds: [{
-          title: `💬 New Pre-qualified HVAC Lead`,
+          title: `💬 Chat Assistant Alert: ${discordLeadType}`,
           color: color,
-          fields: [
-            { name: "👤 Customer Name", value: discordName, inline: true },
-            { name: "📍 Service City", value: `${discordCity}, FL`, inline: true },
-            { name: "⚠️ Urgency Level", value: `**${discordUrgency}**`, inline: true },
-            { name: "🛠️ Diagnostic Code", value: `\`${discordCode}\``, inline: true },
-            { name: "📝 System Issue", value: discordIssue, inline: false },
-            { name: "🔧 Tech Note", value: discordTechNote, inline: false }
-          ],
-          footer: { text: "A/C Now Serverless Dispatch Assistant" },
+          fields: fields,
+          footer: { text: `A/C Now Serverless Dispatch Assistant • Lead ID: ${leadId || "unknown"}` },
           timestamp: new Date().toISOString()
         }]
       })
     });
 
-    if (!response.ok) {
+    if (response.ok) {
+      return { status: "sent", error: null, attemptedAt };
+    } else {
       const errText = await response.text();
+      const errMsg = `HTTP ${response.status}: ${errText.substring(0, 300)}`;
       console.error(`Discord Webhook rejected request with status ${response.status}: ${errText}`);
+      return { status: "failed", error: errMsg, attemptedAt };
     }
   } catch (err) {
     console.error("Failed to dispatch to Discord:", err);
+    return { status: "failed", error: err.message || String(err), attemptedAt };
   }
 }
 
-async function dispatchToResend(name, city, issue, briefing) {
+// Returns a delivery status object: { status, error, attemptedAt }
+async function dispatchToResend(name, city, issue, briefing, leadType, finalDayTime, leadSource) {
   const key = process.env.RESEND_API_KEY;
-  if (!key) return;
+  const attemptedAt = new Date().toISOString();
+
+  if (!key) {
+    return { status: "failed", error: "RESEND_API_KEY not configured", attemptedAt };
+  }
 
   const safeName = escapeHTML(name);
   const safeCity = escapeHTML(city);
   const safeIssue = escapeHTML(issue);
-  const safeBriefing = escapeHTML(briefing).replace(/\n/g, "<br>");
+  const safeBriefing = briefing ? briefing.replace(/\n/g, "<br>") : "";
+  const safeDayTime = escapeHTML(finalDayTime);
+  const safeLeadSource = escapeHTML(leadSource);
+  const safeLeadType = escapeHTML(leadType);
+
+  const emailSubject = `[A/C Now Lead] - ${safeLeadType}: ${safeName} (${safeCity})`;
+  const emailHtml = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+      <h2 style="color: #0b63e5; border-bottom: 2px solid #0b63e5; padding-bottom: 10px; margin-top: 0;">New Chat Assistant Lead Alert</h2>
+      
+      <div style="background-color: #f0f7ff; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #0b63e5;">
+        <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Requested Day/Time:</strong> <span style="color: #0b63e5; font-weight: bold;">${safeDayTime}</span></p>
+        <p style="margin: 0; font-size: 15px;"><strong>Lead Source:</strong> ${safeLeadSource}</p>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+        <tr>
+          <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee; width: 30%;">Lead Type:</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${safeLeadType}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee;">Customer Name:</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${safeName}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee;">Service City:</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eee;">${safeCity}, FL</td>
+        </tr>
+      </table>
+      <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 6px; border-left: 4px solid #6c757d;">
+        <h4 style="margin: 0 0 10px 0; color: #333;">Customer's Verbatim Message:</h4>
+        <p style="margin: 0; color: #555; line-height: 1.5; font-style: italic;">"${safeIssue}"</p>
+      </div>
+      ${briefing ? `
+      <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+      <div style="padding: 15px; background: #fffcf0; border-radius: 6px; border-left: 4px solid #e5a90b; border: 1px solid #fceec5;">
+        <h4 style="margin-top: 0; color: #b07c00;">Diagnostic Brief &amp; Dispatch Advice:</h4>
+        <p style="color: #666; line-height: 1.6; font-size: 14px;">${safeBriefing}</p>
+      </div>` : ""}
+    </div>
+  `;
 
   try {
     const response = await fetch("https://api.resend.com/emails", {
@@ -334,28 +650,21 @@ async function dispatchToResend(name, city, issue, briefing) {
       body: JSON.stringify({
         from: "A/C Now Site Alerts <alerts@mail.acnowllc.com>",
         to: ["acnowpsl@gmail.com"],
-        subject: `[A/C Now Lead] - Pre-Qualified: ${safeName} (${safeCity})`,
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
-            <h2 style="color: #0b63e5; border-bottom: 2px solid #0b63e5; padding-bottom: 10px; margin-top: 0;">New Pre-Qualified Lead</h2>
-            <p><strong>Customer Name:</strong> ${safeName}</p>
-            <p><strong>City:</strong> ${safeCity}, FL</p>
-            <p><strong>Raw System Behavior Reported:</strong> ${safeIssue}</p>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-            <div style="padding: 15px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid #0b63e5;">
-              <h3 style="margin-top: 0; color: #333;">Diagnostic Brief & Dispatch Advice:</h3>
-              <p style="color: #555; line-height: 1.6;">${safeBriefing}</p>
-            </div>
-          </div>
-        `
+        subject: emailSubject,
+        html: emailHtml
       })
     });
 
-    if (!response.ok) {
+    if (response.ok) {
+      return { status: "sent", error: null, attemptedAt };
+    } else {
       const errText = await response.text();
+      const errMsg = `HTTP ${response.status}: ${errText.substring(0, 300)}`;
       console.error(`Resend API rejected request with status ${response.status}: ${errText}`);
+      return { status: "failed", error: errMsg, attemptedAt };
     }
   } catch (err) {
     console.error("Failed to dispatch to Resend:", err);
+    return { status: "failed", error: err.message || String(err), attemptedAt };
   }
 }

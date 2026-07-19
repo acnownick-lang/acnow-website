@@ -362,6 +362,14 @@ function initDiagnoseWizard() {
                 ? `| [Reserved Slot] ${slotVal} | [Notes] ${userNotes}`
                 : (userNotes ? `| [Notes] ${userNotes}` : "");
 
+            let preferred_date = "";
+            let preferred_time = "";
+            if (slotVal && slotVal !== "None") {
+                const parts = slotVal.split(" - ");
+                preferred_date = parts[0] ? parts[0].trim() : "";
+                preferred_time = parts[1] ? parts[1].trim() : "";
+            }
+
             const payload = {
                 fname,
                 lname,
@@ -371,6 +379,8 @@ function initDiagnoseWizard() {
                 tel: phoneVal,
                 email: document.getElementById("email_diag").value.trim(),
                 city: document.getElementById("city_diag").value.trim(),
+                preferred_date,
+                preferred_time,
                 message: `[DIY Troubleshooter Lead] Customer completed DIY troubleshooting checklist. ${notesText}`,
                 honeypot: document.getElementById("honeypot_diag").value
             };

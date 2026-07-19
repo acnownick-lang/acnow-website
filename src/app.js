@@ -1496,10 +1496,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // Asynchronous Lead Capture Integrations (Connecting to Serverless Functions)
+    // Set min date = today on all date inputs dynamically
+    try {
+        document.querySelectorAll("input[type='date']").forEach(input => {
+            const today = new Date().toLocaleDateString("en-CA");
+            input.setAttribute("min", today);
+        });
+    } catch (e) {
+        console.warn("Failed to set min date on inputs:", e);
+    }
+
     const serverlessLeadUrl = "/.netlify/functions/submit-lead";
-
-
 
     // 1. Homepage General Contact Form Handler
     const hpContactForm = document.getElementById("hp-general-contact-form");
@@ -1510,12 +1517,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const fname = nameParts[0] || "";
             const lname = nameParts.slice(1).join(" ") || "";
 
+            const dateEl = document.getElementById("preferred-date");
+            const timeEl = document.getElementById("preferred-time");
+
             const payload = {
                 fname,
                 lname,
                 tel: document.getElementById("phone").value.trim(),
                 email: document.getElementById("email").value.trim(),
                 city: document.getElementById("city").value.trim(),
+                preferred_date: dateEl ? dateEl.value : "",
+                preferred_time: timeEl ? timeEl.value : "First Available",
                 message: `[Service Requested: ${document.getElementById("service").value}] ${document.getElementById("message").value.trim()}`,
                 honeypot: document.getElementById("honeypot").value
             };
@@ -1542,12 +1554,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? `[Reserved Slot] ${slotVal} | [Message] ${userMsg}`
                 : userMsg;
 
+            let preferred_date = "";
+            let preferred_time = "";
+            if (slotVal && slotVal !== "None") {
+                const parts = slotVal.split(" - ");
+                preferred_date = parts[0] ? parts[0].trim() : "";
+                preferred_time = parts[1] ? parts[1].trim() : "";
+            }
+
             const payload = {
                 fname,
                 lname,
                 tel: document.getElementById("tel").value.trim(),
                 email: document.getElementById("email").value.trim(),
                 city: document.getElementById("city").value.trim(),
+                preferred_date,
+                preferred_time,
                 message: messageText,
                 honeypot: document.getElementById("honeypot_1").value
             };
@@ -1558,7 +1580,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. Contact Page Troubleshooter Wizard Handler
+    // 3. Contact Page Troubleshooter Wizard Handler (legacy/unused reference)
     const contactWizardForm = document.getElementById("contact-wizard-form");
     if (contactWizardForm) {
         contactWizardForm.addEventListener("submit", (e) => {
@@ -1612,12 +1634,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const fname = nameParts[0] || "";
             const lname = nameParts.slice(1).join(" ") || "";
 
+            const dateEl = acInstallForm.querySelector("#preferred-date");
+            const timeEl = acInstallForm.querySelector("#preferred-time");
+            const emailEl = acInstallForm.querySelector("[name='email']");
+
             const payload = {
                 fname,
                 lname,
                 tel: acInstallForm.querySelector("[name='phone']").value.trim(),
-                email: "",
+                email: emailEl ? emailEl.value.trim() : "",
                 city: "Not Provided",
+                preferred_date: dateEl ? dateEl.value : "",
+                preferred_time: timeEl ? timeEl.value : "First Available",
                 message: `[AC Installation Estimate Request] [System Sizing: ${acInstallForm.querySelector("[name='system-size']").value}]`,
                 honeypot: ""
             };
@@ -1637,13 +1665,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const fname = nameParts[0] || "";
             const lname = nameParts.slice(1).join(" ") || "";
 
+            const dateEl = acMaintenanceForm.querySelector("#preferred-date");
+            const timeEl = acMaintenanceForm.querySelector("#preferred-time");
+            const emailEl = acMaintenanceForm.querySelector("[name='email']");
+
             const payload = {
                 fname,
                 lname,
                 tel: acMaintenanceForm.querySelector("[name='phone']").value.trim(),
-                email: "",
+                email: emailEl ? emailEl.value.trim() : "",
                 city: "Not Provided",
-                message: `[AC Maintenance Tune-Up Request] [Preferred Date: ${acMaintenanceForm.querySelector("[name='preferred-date']").value}]`,
+                preferred_date: dateEl ? dateEl.value : "",
+                preferred_time: timeEl ? timeEl.value : "First Available",
+                message: `[AC Maintenance Tune-Up Request] [Preferred Date: ${dateEl ? dateEl.value : ""}]`,
                 honeypot: ""
             };
 
@@ -1662,12 +1696,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const fname = nameParts[0] || "";
             const lname = nameParts.slice(1).join(" ") || "";
 
+            const dateEl = acRepairForm.querySelector("#preferred-date");
+            const timeEl = acRepairForm.querySelector("#preferred-time");
+            const emailEl = acRepairForm.querySelector("[name='email']");
+
             const payload = {
                 fname,
                 lname,
                 tel: acRepairForm.querySelector("[name='phone']").value.trim(),
-                email: "",
+                email: emailEl ? emailEl.value.trim() : "",
                 city: "Not Provided",
+                preferred_date: dateEl ? dateEl.value : "",
+                preferred_time: timeEl ? timeEl.value : "First Available",
                 message: `[AC Repair Request] [Symptoms/Description: ${acRepairForm.querySelector("[name='issue-description']").value.trim()}]`,
                 honeypot: ""
             };
@@ -1687,12 +1727,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const fname = nameParts[0] || "";
             const lname = nameParts.slice(1).join(" ") || "";
 
+            const dateEl = poolHeatingForm.querySelector("#preferred-date-pool");
+            const timeEl = poolHeatingForm.querySelector("#preferred-time-pool");
+            const emailEl = poolHeatingForm.querySelector("[name='email']");
+
             const payload = {
                 fname,
                 lname,
                 tel: poolHeatingForm.querySelector("[name='phone']").value.trim(),
-                email: poolHeatingForm.querySelector("[name='email']").value.trim(),
+                email: emailEl ? emailEl.value.trim() : "",
                 city: "Not Provided",
+                preferred_date: dateEl ? dateEl.value : "",
+                preferred_time: timeEl ? timeEl.value : "First Available",
                 message: `[Pool Heating Estimate Request] [Type: ${poolHeatingForm.querySelector("[name='service-type']").value}] [Details: ${poolHeatingForm.querySelector("[name='message']").value.trim()}]`,
                 honeypot: poolHeatingForm.querySelector("[name='honeypot']").value
             };
@@ -4222,3 +4268,35 @@ function initGlobalSearchTrigger() {
     }
 }
 
+
+// ── CSS Background Image Deferral (Item 1 — LCP optimisation) ────────────────
+// Moves 307KB of eager CSS background images off the critical-path bandwidth.
+// .smart-climate-section and .contact-section have background-image only in
+// the .bg-loaded modifier (src/redesign.css). This IO adds .bg-loaded when the
+// section is 300px away from the viewport, giving the image time to arrive
+// before the user reaches it.  rootMargin:'300px' is chosen to be safe on slow
+// connections without pulling the image before it's needed.
+(function initDeferredBgImages() {
+    const bgSections = document.querySelectorAll(
+        '.smart-climate-section, .contact-section'
+    );
+    if (!bgSections.length) return;
+
+    if ('IntersectionObserver' in window) {
+        const bgObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('bg-loaded');
+                        bgObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { rootMargin: '300px' }
+        );
+        bgSections.forEach((s) => bgObserver.observe(s));
+    } else {
+        // Fallback: add bg-loaded immediately for browsers without IO support
+        bgSections.forEach((s) => s.classList.add('bg-loaded'));
+    }
+})();

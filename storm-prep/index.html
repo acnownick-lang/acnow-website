@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" class="phase-1">
+<head>
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0B63E5">
+
+    <script>
+        (function() {
+            let isDevMode = false;
+            let phase = '1';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                let urlPhase = params.get('phase');
+                isDevMode = (sessionStorage.getItem('acnow_dev_mode') === 'true') || (localStorage.getItem('acnow_dev_mode') === 'true');
+                
+                if (isDevMode && (urlPhase === '1' || urlPhase === '2')) {
+                    phase = urlPhase;
+                    sessionStorage.setItem('acnow_phase', phase); localStorage.setItem('acnow_phase', phase);
+                } else {
+                    phase = sessionStorage.getItem('acnow_phase') || localStorage.getItem('acnow_phase') || '1';
+                }
+            } catch (e) {
+                console.warn('Storage blocked: defaulting to guest phase 1', e);
+            }
+            
+            if (phase === '1') {
+                const path = window.location.pathname.toLowerCase();
+                if (path.includes('members') || 
+                    path.includes('team-portal') || 
+                    path.includes('3d-airflow') || 
+                    path.includes('corrosion-predictor')) {
+                    window.location.replace('../index.html?redirected=phase2-restricted');
+                    return;
+                }
+            }
+            
+            if (phase === '2') {
+                document.documentElement.classList.remove('phase-1');
+                document.documentElement.classList.add('phase-2');
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storm Safety Checklist | A/C Now LLC</title>
+    <meta name="description" content="Prepare your home's air conditioner for severe tropical storms and hurricanes. Follow our step-by-step checklist to minimize wind, water, and power damage.">
+    <link rel="canonical" href="https://acnowllc.com/storm-prep/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://acnowllc.com/storm-prep.html">
+    <meta property="og:title" content="Storm & Hurricane Safety Checklist | A/C Now LLC">
+    <meta property="og:description" content="Prepare your home's air conditioner for severe tropical storms and hurricanes. Follow our step-by-step checklist to minimize wind, water, and power damage.">
+        <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hurricane & Storm Prep | A/C Now LLC">
+    <meta name="twitter:image" content="https://acnowllc.com/assets/images/og_social.jpg">
+    <meta property="og:image" content="https://acnowllc.com/assets/images/og_social.jpg">
+    <!-- Google Fonts: Non-blocking (CWV fix) -->
+    <!-- Self-hosted fonts: eliminates external fonts.googleapis.com connection (CWV fix) -->
+    <link rel="preload" href="/assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <style id="critical-css">:root{--primary:#0B63E5;--primary-hover:#084fc2;--secondary:#E63946;--secondary-text:#B91C2C;--gold:#FFC72C;--gold-hover:#E0AE20;--dark:#0A182F;--light:#F6F8FC;--gray-light:#E5E9F0;--gray-dark:#3D5478;--text:#2D3748;--white:#FFFFFF;--border-radius:12px;--font-heading:'Outfit',sans-serif;--font-body:'Inter',sans-serif;--box-shadow:0 10px 30px rgba(0,0,0,0.05)}*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;font-family:var(--font-body);color:var(--text);background-color:var(--white);scrollbar-gutter:stable}body{line-height:1.6;font-size:16px;overflow-x:hidden}.container{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}.top-bar{background-color:var(--dark);color:var(--white);font-size:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08)}.top-bar-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}.top-bar-item{display:inline-flex;align-items:center;gap:8px}.top-bar-item svg{color:var(--primary)}.header{background-color:rgba(255,255,255,0.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.02);border-bottom:1px solid var(--gray-light);padding:5px 0}.header-container{display:flex;justify-content:space-between;align-items:center;position:relative;padding-left:330px;min-height:110px}.logo-link{position:absolute!important;left:10px;top:50%!important;transform:translateY(-50%)!important;z-index:100!important;display:block!important}.logo-img{max-height:100px!important;height:100px!important;width:auto!important;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.12))!important;margin:0!important}.nav{display:flex;margin-left:auto;gap:15px!important}.nav-link{text-decoration:none;color:var(--dark);font-weight:500;font-size:13.5px!important;white-space:nowrap!important;position:relative;padding:8px 0}.nav-link:after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background-color:var(--primary);transform:scaleX(0);transform-origin:left}.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:600;text-decoration:none;padding:12px 24px;border-radius:var(--border-radius);border:none;font-size:15px}.btn-primary{background:linear-gradient(135deg,var(--primary) 0%,#004ecc 100%);color:var(--white);box-shadow:0 4px 15px rgba(11,99,229,0.3)}.btn-secondary{background-color:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.4)}.btn-large{padding:16px 36px;font-size:16px}.hero{padding:160px 0 80px!important;background-size:cover;background-position:center;color:var(--white);min-height:80vh;display:flex;align-items:center;position:relative}.hero-content{max-width:650px;animation:fadeInUp 0.8s ease-out}.hero-subtitle{font-family:var(--font-heading);font-weight:700;color:var(--primary);letter-spacing:2px;font-size:13px;display:block;margin-bottom:16px;background:linear-gradient(90deg,#60A5FA,#3B82F6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hero-title{font-family:var(--font-heading);font-size:64px;font-weight:800;line-height:1.1;margin-bottom:24px}.hero-text{font-size:18px;color:#E2E8F0;margin-bottom:36px;line-height:1.7}section{padding:90px 0}.footer-links a{color:#94A3B8;text-decoration:none;font-size:14px}@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}@media (max-width:768px){.nav{display:none}.hero-title{font-size:44px}}:root{--accent:var(--primary);--text-main:var(--text)}.phone-link{color:var(--primary);text-decoration:none;font-weight:600}.mobile-nav-toggle{display:none;background:none;border:none;color:var(--dark);font-size:32px;line-height:1;padding:8px;min-width:44px;min-height:44px}@media (max-width:991px){.mobile-nav-toggle{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}.nav{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;width:auto;background-color:var(--white);border-bottom:1px solid var(--gray-light);padding:16px 20px;gap:4px;box-shadow:0 15px 30px rgba(0,0,0,0.08);z-index:1002;animation:slideDown 0.25s ease-out}.nav .nav-link{padding:12px 8px!important;width:100%;display:block!important;border-bottom:1px solid var(--gray-light);font-size:15px!important;white-space:normal!important}.nav .nav-link:last-of-type{border-bottom:none}}@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.header{background-color:var(--white)!important;border-bottom:1px solid var(--gray-light)!important;z-index:1000}.header-container{display:flex!important;justify-content:space-between!important;align-items:center!important;position:relative!important;min-height:100px!important;padding-left:280px!important;padding-right:20px!important}.logo-link{position:absolute!important;left:20px!important;top:5px!important;z-index:1001!important;display:block!important;transform:none!important;overflow:visible!important}.logo-img{max-height:95px!important;height:95px!important;width:auto!important;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.12))!important;margin:0!important;background:transparent!important}.nav-cta{display:none!important}.nav-link{white-space:nowrap!important;font-size:13.5px!important;font-weight:600!important;color:var(--dark)!important}@media (max-width:991px){.header-container{justify-content:space-between!important;padding-left:15px!important;padding-right:15px!important;min-height:80px!important;flex-direction:row!important;align-items:center!important}.logo-link{position:static!important;transform:none!important}.logo-img{max-height:80px!important;height:80px!important}.nav{margin-right:0!important;gap:15px!important}}h1,.hero-title{text-wrap:balance}section{padding:clamp(50px,8vw,90px) 0!important}.header{background-color:rgba(255,255,255,0.8)!important;backdrop-filter:blur(12px) saturate(180%)!important;-webkit-backdrop-filter:blur(12px) saturate(180%)!important}@media (max-width:768px){.nav-cta{display:none!important}}::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:#0A182F}::-webkit-scrollbar-thumb{background:#0B63E5;border-radius:5px;border:2px solid #0A182F}::-webkit-scrollbar-thumb:hover{background:#FFC72C}.reveal{opacity:0;transform:translate3d(0,35px,0)}.reveal.hero{opacity:1!important;transform:translate3d(0,0,0)!important}.header{position:sticky;top:0;z-index:1000;background-color:var(--white);transform:translate3d(0,0,0);will-change:background-color,box-shadow;box-shadow:0 2px 10px rgba(0,0,0,0.03)}.skip-link{position:absolute;top:-80px;left:16px;z-index:99998;background:var(--primary);color:#fff;padding:10px 20px;border-radius:0 0 8px 8px;font-weight:700;font-family:var(--font-heading);text-decoration:none;font-size:15px;white-space:nowrap}img{max-width:100%;height:auto;display:block}@media (max-width:480px){.hero-title{font-size:clamp(26px,8vw,38px)!important;line-height:1.2!important}.hero-text{font-size:15px!important}}.container{overflow-x:clip}.footer-links a{color:#B0BEC5}@media (max-width:768px){.hero-title{font-size:32px!important;line-height:1.2}.hero-text{font-size:16px!important}}.hero-content .btn-secondary{border-color:rgba(255,255,255,0.65)!important}.footer-links a{display:inline-block;padding-left:0!important}.reveal{will-change:auto!important}@media (prefers-reduced-motion:reduce){*,::before,::after{animation-delay:-1ms!important;animation-duration:1ms!important;animation-iteration-count:1!important;background-attachment:scroll!important;scroll-behavior:auto!important}}.icon-inline{display:inline-block;vertical-align:-0.2em;width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-right:8px;flex-shrink:0}@media (max-width:767px){.btn{min-height:48px!important;padding-top:12px!important;padding-bottom:12px!important;font-size:16px!important}}.header{-webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important}.nav-dropdown{position:relative;display:inline-block}.dropdown-content{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background-color:var(--dark);min-width:220px;box-shadow:0 10px 25px rgba(0,0,0,0.4),0 0 15px rgba(11,99,229,0.15);border:1px solid rgba(255,255,255,0.1);border-radius:8px;z-index:1010;padding:8px 0;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.dropdown-content a{color:var(--white)!important;padding:10px 20px;text-decoration:none;display:block;font-size:13.5px;font-weight:500}@media (max-width:991px){.dropdown-content{position:static;transform:none;box-shadow:none;border:none;background:transparent;padding-left:15px;display:block}.dropdown-content a{padding:8px 15px;font-size:14.5px}.dropdown-trigger{font-weight:700!important}}html.phase-1 .phase-2-only{display:none!important}input{border-color:#718096!important}::placeholder{color:#4A5568!important;opacity:1!important}</style>
+    <link rel="preload" href="/assets/css/redesign.css?v=122" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/css/redesign.css?v=122"></noscript>
+    <!-- HVACBusiness Schema -->
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "HVACBusiness",
+  "name": "A/C Now LLC",
+  "@id": "https://acnowllc.com/#hvacbusiness",
+  "url": "https://acnowllc.com/",
+  "image": "https://acnowllc.com/assets/images/og_social.jpg",
+  "telephone": "(772) 521-3568",
+  "email": "info@acnowllc.com",
+  "priceRange": "$$",
+  "description": "A/C Now LLC is a veteran-owned, licensed HVAC contractor serving Port St. Lucie, Stuart, Palm City, Jupiter, Jensen Beach, Fort Pierce, and Hobe Sound, FL. We provide residential and commercial AC repair, installation, and maintenance with military-grade precision. License #CAC1820542.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1391 NW St. Lucie West Blvd, STE 120",
+    "addressLocality": "Port St. Lucie",
+    "addressRegion": "FL",
+    "postalCode": "34986",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 27.3138016,
+    "longitude": -80.3954409
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "08:00",
+      "closes": "18:00"
+    }
+  ]
+}</script>
+    <!-- LCP Preload -->
+    <link rel="preload" as="image" href="/assets/images/banner-storm.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="/assets/images/mascot-logo-transparent.png?v=2" type="image/png" fetchpriority="high">
+
+    <style>
+        /* Dual-Gate Split Hero layout aesthetics */
+        :root {
+            --primary: #0B63E5;
+            --secondary: #E63946;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);
+        }
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 50%, var(--secondary) 50%);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+            border: none !important;
+        }
+    </style>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="/assets/images/mascot-logo-transparent.png?v=2">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/mascot-logo.svg">
+<style>
+
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13.5px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .invoice-row:last-child {
+            border-bottom: none;
+        }
+        .invoice-row span:first-child {
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+        .invoice-row span:last-child {
+            color: var(--dark);
+            font-weight: 700;
+        }
+        .accessory-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .accessory-item label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-bottom: 0;
+            padding: 12px 15px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        .option-box-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .option-box {
+            background: var(--light);
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .option-box:hover {
+            border-color: var(--primary);
+            background: rgba(11, 99, 229, 0.02);
+        }
+        .option-box.active {
+            border-color: var(--primary);
+            background: rgba(11, 99, 229, 0.05);
+        }
+        .option-box h4 {
+            font-family: var(--font-heading);
+            color: var(--dark);
+            margin: 0 0 6px 0;
+            font-size: 14.5px;
+            font-weight: 700;
+        }
+        .option-box p {
+            margin: 0;
+            font-size: 11.5px;
+            color: var(--gray-dark);
+            line-height: 1.4;
+        }
+        .slider-group {
+            margin-bottom: 20px;
+        }
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .input-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--gray-light);
+            outline: none;
+            accent-color: var(--primary);
+        }
+        .toggle-btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        .toggle-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--gray-light);
+            background: var(--white);
+            color: var(--gray-dark);
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .toggle-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .toggle-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        .report-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13.5px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .report-row:last-child {
+            border-bottom: none;
+        }
+        .option-card {
+            background: var(--light);
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .option-card:hover {
+            border-color: var(--primary);
+            background: rgba(11, 99, 229, 0.02);
+            transform: translateY(-2px);
+        }
+        .option-card.selected {
+            border-color: var(--primary);
+            background: rgba(11, 99, 229, 0.05);
+            box-shadow: 0 4px 12px rgba(11, 99, 229, 0.15);
+        }
+        .option-icon {
+            font-size: 24px;
+            width: 48px;
+            height: 48px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--gray-light);
+        }
+        .option-info h4 {
+            font-family: var(--font-heading);
+            color: var(--dark);
+            margin: 0 0 4px 0;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .option-info p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--gray-dark);
+        }
+        .wizard-step {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        .wizard-step.active {
+            display: block;
+        }
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+        }
+        .check-item {
+            background: var(--light);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .check-item-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: var(--white);
+            color: var(--white);
+            transition: var(--transition);
+        }
+        .checkbox-custom.checked {
+            background: var(--primary);
+        }
+        .checkbox-custom svg {
+            width: 12px;
+            height: 12px;
+            stroke-width: 3;
+        }
+        .check-info h4 {
+            font-family: var(--font-heading);
+            color: var(--dark);
+            margin: 0 0 4px 0;
+            font-size: 15.5px;
+            font-weight: 700;
+        }
+        .check-info p {
+            margin: 0 0 12px 0;
+            font-size: 13px;
+            color: var(--gray-dark);
+            line-height: 1.45;
+        }
+        .check-hint {
+            background: rgba(11, 99, 229, 0.05);
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary);
+            font-size: 12px;
+            color: var(--gray-dark);
+            display: none;
+        }
+        .diag-box {
+            background: var(--light);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .diag-box h4 {
+            color: var(--secondary);
+            font-family: var(--font-heading);
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        @media (max-width: 991px) {
+            #storm-card-cta {
+                display: none !important;
+            }
+        }
+    
+</style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://acnowllc.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Hurricane & Storm Prep",
+          "item": "https://acnowllc.com/storm-prep"
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <!-- WCAG 2.4.1: Skip Navigation Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span class="top-bar-item">
+                <!-- WCAG 1.1.1: Decorative SVG must be aria-hidden -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Call for Service: <strong><a href="tel:+17725213568" class="phone-link" data-geo="phone" style="color: inherit; text-decoration: none;" aria-label="Call A/C Now LLC at (772) 521-3568">(772) 521-3568</a></strong>
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="/" class="logo-link">
+                <img src="/assets/images/mascot-logo-transparent.png?v=2" alt="A/C Now LLC Logo" class="logo-img" fetchpriority="low" width="280" height="130">
+            </a>
+            <!-- WCAG 4.1.2: aria-expanded + aria-controls on hamburger -->
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav" id="hamburger-btn">☰</button>
+                                    <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+                <a href="/ac-installation/" class="nav-link">AC Installation</a>
+                <a href="/ac-repair/" class="nav-link">AC Repair</a>
+                <a href="/ac-maintenance/" class="nav-link">AC Maintenance</a>
+                <a href="/commercial/" class="nav-link">Commercial</a>
+                <a href="/pool-heating/" class="nav-link">Pool Heating</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger" onclick="return false;">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="/pages/diagnose.html" class="">DIY Troubleshooter</a>
+                        <a href="/pages/planner.html" class="">AC Lifespan Planner</a>
+                        <a href="/pages/configurator.html" class="">Build HVAC System</a><a href="/storm-prep/" class="">Storm Prep Checklist</a>
+                        <a href="/pages/3d-airflow.html" class="phase-2-only">Airflow Simulator</a>
+                    </div>
+                </div>
+                <a href="/pages/members.html" class="nav-link phase-2-only">Members Area</a>
+            </nav>
+            <a href="/contact-us/" class="btn btn-primary nav-cta">Get Free Estimate</a>
+        </div>
+    </header>
+    <main id="main-content">
+    <!-- Subpage Banner -->
+    <section class="reveal hero" style="background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.8) 0%, rgba(10, 24, 47, 0.75) 100%); position:relative; overflow:hidden; min-height: 35vh; padding: 70px 0;">
+            <img src="/assets/images/banner-storm.webp" srcset="/assets/images/banner-storm_mobile.webp 480w, /assets/images/banner-storm.webp 1200w" sizes="100vw" class="hero-bg-img" alt="" aria-hidden="true" fetchpriority="high" loading="eager" width="1200" height="500" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <div class="container">
+            <div class="hero-content" style="max-width: 800px; text-align: center; margin: 0 auto;">
+                <span class="hero-subtitle" style="color: var(--gold); letter-spacing: 2px; font-weight: 700; text-transform: uppercase; font-size: 12px;">TREASURE COAST HURRICANE SAFETY</span>
+                <h1 class="hero-title" style="font-size: 42px; margin-bottom: 12px; color: var(--white); font-weight: 800; font-family: var(--font-heading);">Storm Safety Checklist</h1>
+                <p class="hero-text" style="color: var(--gray-light); max-width: 600px; margin: 0 auto; font-size: 15px;">Prepare your cooling system for a hurricane. Go through the checklist to secure your condenser, book a pre-storm safety inspection, and pre-book priority recovery visits.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <section class="reveal" style="padding: 130px 0 60px; background: var(--white); scroll-margin-top: 110px;">
+        <div class="container">
+            <!-- Cache notification banner -->
+            <div id="storm-cache-banner" style="display: none; background: #FFFBEB; border: 1px solid #FCD34D; border-radius: var(--border-radius); padding: 15px 20px; margin-bottom: 25px; align-items: center; gap: 15px; text-align: left; box-shadow: var(--box-shadow);">
+                <span style="font-size: 20px; color: #D97706;" aria-hidden="true">⚠️</span>
+                <div style="flex: 1;">
+                    <strong style="font-size: 13.5px; color: #92400E; display: block;">Showing Cached Results</strong>
+                    <span id="storm-cache-date-text" style="font-size: 12px; color: #B45309;">These options were loaded from your last session. Reset the checklist or modify any item to start fresh.</span>
+                </div>
+                <button type="button" onclick="document.getElementById('btn-reset-storm').click()" style="background: #D97706; color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s; white-space: nowrap;" onmouseover="this.style.background='#B45309'" onmouseout="this.style.background='#D97706'">Reset Checklist</button>
+            </div>
+
+            <div class="toolbox-panel-container"><div class="tool-grid-2col">
+                            <div class="planner-card">
+                                <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 22px; margin-bottom: 15px; font-weight: 800; margin-top: 0;">Treasure Coast & Palm Beaches Storm Checklist</h2>
+                                <p style="color:var(--gray-dark); font-size:13.5px; margin-bottom:20px;">Toggle these essential checklist items as you complete them to assess your storm preparedness score.</p>
+                                <form id="storm-checklist-form" style="display:flex; flex-direction:column; gap:12px;">
+                                    <div class="accessory-item">
+                                        <label for="storm-tstat">
+                                            <input type="checkbox" id="storm-tstat" class="storm-check">
+                                            <span>Power Off Thermostat</span>
+                                        </label>
+                                    </div>
+                                    <div class="accessory-item">
+                                        <label for="storm-breaker">
+                                            <input type="checkbox" id="storm-breaker" class="storm-check">
+                                            <span>Shut Off HVAC Main Breaker</span>
+                                        </label>
+                                    </div>
+                                    <div class="accessory-item">
+                                        <label for="storm-tie">
+                                            <input type="checkbox" id="storm-tie" class="storm-check">
+                                            <span>Verify Condenser Tie-Down Straps</span>
+                                        </label>
+                                    </div>
+                                    <div class="accessory-item">
+                                        <label for="storm-clear">
+                                            <input type="checkbox" id="storm-clear" class="storm-check">
+                                            <span>Clear Backyard Objects &amp; Projectiles</span>
+                                        </label>
+                                    </div>
+                                    <div class="accessory-item" style="padding-right: 15px;">
+                                        <label for="storm-line" style="width: auto; flex: 1; padding-right: 5px;">
+                                            <input type="checkbox" id="storm-line" class="storm-check">
+                                            <span>Pre-Storm Unit Security Inspection ($59)</span>
+                                        </label>
+                                        <a href="/contact-us/?plan=pre-storm-inspection#contact" class="btn btn-primary" style="font-size: 11px; padding: 6px 12px; height: auto; min-height: 28px; white-space: nowrap; border-radius: 4px; display: inline-flex; align-items: center; font-family: var(--font-heading); font-weight: 700; flex-shrink: 0; background: var(--primary); color: #fff; text-decoration: none;">Book Now</a>
+                                    </div>
+                                    <button type="button" id="btn-reset-storm" class="btn btn-secondary btn-full" style="margin-top: 10px; font-size: 12px; padding: 8px 12px; height: auto; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--gray-light); color: var(--gray-dark);">Reset Checklist</button>
+                                </form>
+                            </div>
+ 
+                            <div class="planner-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+                                <div>
+                                    <h2 style="font-family: var(--font-heading); color: var(--dark); font-size: 20px; margin-bottom: 20px; font-weight: 800; margin-top: 0;">Storm Preparedness Index</h2>
+                                    <div style="text-align:center; margin-bottom:25px;" aria-live="polite">
+                                        <div id="storm-score" style="font-size:48px; font-weight:800; color:#64748b; font-family:var(--font-heading);">—</div>
+                                        <div id="storm-score-text" style="font-size:13.5px; color:#64748b; font-weight:600; text-transform:uppercase; margin-top:5px;">Awaiting Assessment</div>
+                                        <div id="storm-resume-note" style="display:none; font-size:11.5px; color:#64748b; margin-top:6px; font-style:italic; font-weight:600;">(Resumed from previous visit)</div>
+                                        <div class="progress-track" style="background: var(--gray-light); height: 8px; border-radius: 4px; overflow: hidden; margin: 15px auto 0; max-width: 200px;">
+                                            <div id="storm-progress-fill" style="background: #9ca3af; width: 0%; height: 100%; transition: width 0.3s ease, background-color 0.3s ease;"></div>
+                                        </div>
+                                    </div>
+                                    <div id="storm-priority-badge" style="background:rgba(100,116,139,0.08); border:1px solid rgba(100,116,139,0.15); padding:15px; border-radius:8px; color:#64748b; font-size:12.5px; text-align:center; font-weight:700;">
+                                        Priority Dispatch Queue Status: Awaiting Assessment
+                                    </div>
+                                </div>
+                                <a href="/contact-us/" id="storm-card-cta" class="btn btn-primary btn-full" style="margin-top:20px;">Pre-Book Emergency Storm Dispatch</a>
+                            </div>
+                        </div></div>
+
+            <!-- Storm Narrative Section -->
+            <div style="margin-top: 80px; border-top: 1px solid var(--gray-light); padding-top: 60px;">
+                <div style="max-width: 800px; margin: 0 auto 60px auto;">
+                    <span class="section-tag" style="background: rgba(230,57,70,0.06); color: var(--secondary); padding: 5px 15px; border-radius: 999px; font-size: 11px; font-weight:700;">WHY STORM PREP MATTERS</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 28px; font-weight: 800; color: var(--dark); margin-top: 10px; margin-bottom: 16px;">Protecting Your HVAC on the Treasure Coast & Palm Beaches</h2>
+                    <p style="color: var(--gray-dark); font-size: 15px; line-height: 1.7; margin-bottom: 15px;">
+                        During Florida's active hurricane season, air conditioning systems are highly vulnerable. Outdoor condenser units are subject to extreme wind velocities that can turn loose backyard debris, patio furniture, and tree limbs into dangerous high-speed projectiles, crushing coil fins and piercing refrigerant lines.
+                    </p>
+                    <p style="color: var(--gray-dark); font-size: 15px; line-height: 1.7; margin-bottom: 15px;">
+                        Additionally, heavy torrential rains and coastal storm surges can flood low-lying properties. Submerging an active compressor's electrical circuit boards or fan motor under standing water can cause permanent short circuits and catastrophic compressor failure once grid power is restored. Taking preventive steps beforehand secures your physical investment and safeguards your home from expensive equipment replacements.
+                    </p>
+                </div>
+            </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const stormForm = document.getElementById("storm-checklist-form");
+    const stormScore = document.getElementById("storm-score");
+    const stormScoreText = document.getElementById("storm-score-text");
+    const stormPriority = document.getElementById("storm-priority-badge");
+    const progressFill = document.getElementById("storm-progress-fill");
+    const resumeNote = document.getElementById("storm-resume-note");
+    const cacheBanner = document.getElementById("storm-cache-banner");
+    const cacheDateText = document.getElementById("storm-cache-date-text");
+
+    if (stormForm) {
+        const checks = stormForm.querySelectorAll("input[type='checkbox']");
+        let userInteracted = false;
+
+        // Restore from localStorage
+        checks.forEach(c => {
+            const savedState = localStorage.getItem(`storm_check_${c.id}`);
+            if (savedState !== null) {
+                c.checked = savedState === "true";
+            }
+        });
+
+        // Show cache warning banner on load if any boxes were checked in a previous session
+        let initialChecked = 0;
+        checks.forEach(c => {
+            if (c.checked) initialChecked++;
+        });
+        const lastSaved = localStorage.getItem("storm_check_last_saved");
+        if (initialChecked > 0 && lastSaved) {
+            if (cacheBanner && cacheDateText) {
+                cacheDateText.textContent = `Showing cached results from your last session on ${lastSaved}. Reset the checklist or change any option to recalculate.`;
+                cacheBanner.style.display = "flex";
+            }
+            if (resumeNote) {
+                resumeNote.style.display = "block";
+            }
+        }
+
+        function updateStormScore() {
+            let checkedCount = 0;
+            checks.forEach(c => {
+                if(c.checked) checkedCount++;
+                localStorage.setItem(`storm_check_${c.id}`, c.checked);
+            });
+
+            // Store timestamp when user interacts and checks items, or clean up if empty
+            if (userInteracted) {
+                if (checkedCount > 0) {
+                    const now = new Date();
+                    const dateString = now.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    });
+                    localStorage.setItem("storm_check_last_saved", dateString);
+                } else {
+                    localStorage.removeItem("storm_check_last_saved");
+                }
+            }
+
+            // Restore interaction state if there are checks saved in localStorage
+            if (checkedCount > 0) {
+                userInteracted = true;
+            } else {
+                userInteracted = false;
+            }
+
+            const pct = Math.round((checkedCount / checks.length) * 100);
+            if (stormScore) {
+                if (userInteracted) {
+                    stormScore.textContent = `${pct}%`;
+                    stormScore.style.color = checkedCount === 0 ? "#64748b" : (pct === 100 ? "#0B7A53" : (pct === 80 ? "#10B981" : (pct === 60 ? "#D97706" : "#C22A36")));
+                } else {
+                    stormScore.textContent = "—";
+                    stormScore.style.color = "#64748b";
+                }
+            }
+
+            if (progressFill) {
+                progressFill.style.width = `${pct}%`;
+                if (pct === 100) {
+                    progressFill.style.backgroundColor = "#0B7A53"; // dark green
+                } else if (pct === 80) {
+                    progressFill.style.backgroundColor = "#10B981"; // light green
+                } else if (pct === 60) {
+                    progressFill.style.backgroundColor = "#D97706"; // dark orange/gold
+                } else {
+                    progressFill.style.backgroundColor = "#C22A36"; // dark red
+                }
+            }
+
+            if (stormScoreText && stormPriority) {
+                if (checkedCount === 0) {
+                    stormScoreText.textContent = "AWAITING ASSESSMENT";
+                    stormScoreText.style.color = "#64748b";
+                    stormPriority.textContent = "Priority Dispatch: Assessment Pending";
+                    stormPriority.style.background = "rgba(100, 116, 139, 0.08)";
+                    stormPriority.style.borderColor = "rgba(100, 116, 139, 0.15)";
+                    stormPriority.style.color = "#64748b";
+                } else if (pct === 100) {
+                    stormScoreText.textContent = "SECURED / READY";
+                    stormScoreText.style.color = "#0B7A53";
+                    stormPriority.textContent = "Priority Dispatch: Recommended (100% Prepared)";
+                    stormPriority.style.background = "rgba(11, 122, 83, 0.08)";
+                    stormPriority.style.borderColor = "rgba(11, 122, 83, 0.15)";
+                    stormPriority.style.color = "#0B7A53";
+                } else if (pct === 80) {
+                    stormScoreText.textContent = "LOW RISK / PREPARED";
+                    stormScoreText.style.color = "#10B981";
+                    stormPriority.textContent = "Priority Dispatch: Recommended (80% Prepared)";
+                    stormPriority.style.background = "rgba(16, 185, 129, 0.08)";
+                    stormPriority.style.borderColor = "rgba(16, 185, 129, 0.15)";
+                    stormPriority.style.color = "#10B981";
+                } else if (pct === 60) {
+                    stormScoreText.textContent = "MODERATE RISK";
+                    stormScoreText.style.color = "#D97706";
+                    stormPriority.textContent = "Priority Dispatch: Recommended (60% Prepared)";
+                    stormPriority.style.background = "rgba(217, 119, 6, 0.08)";
+                    stormPriority.style.borderColor = "rgba(217, 119, 6, 0.15)";
+                    stormPriority.style.color = "#D97706";
+                } else {
+                    stormScoreText.textContent = "HIGH RISK";
+                    stormScoreText.style.color = "#C22A36";
+                    stormPriority.textContent = "Priority Dispatch: Standard Standby Support";
+                    stormPriority.style.background = "rgba(194, 42, 54, 0.08)";
+                    stormPriority.style.borderColor = "rgba(194, 42, 54, 0.15)";
+                    stormPriority.style.color = "#C22A36";
+                }
+            }
+        }
+        
+        checks.forEach(c => c.addEventListener("change", () => {
+            userInteracted = true;
+            if (resumeNote) {
+                resumeNote.style.display = "none";
+            }
+            if (cacheBanner) {
+                cacheBanner.style.display = "none";
+            }
+            updateStormScore();
+        }));
+        
+        const btnReset = document.getElementById("btn-reset-storm");
+        if (btnReset) {
+            btnReset.addEventListener("click", () => {
+                checks.forEach(c => {
+                    c.checked = false;
+                    localStorage.removeItem(`storm_check_${c.id}`);
+                });
+                localStorage.removeItem("storm_check_last_saved");
+                userInteracted = false;
+                if (resumeNote) {
+                    resumeNote.style.display = "none";
+                }
+                if (cacheBanner) {
+                    cacheBanner.style.display = "none";
+                }
+                updateStormScore();
+                if (window.ComfortAudio && typeof window.ComfortAudio.playClick === "function") {
+                    window.ComfortAudio.playClick();
+                }
+            });
+        }
+
+        updateStormScore();
+    }
+});
+</script>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="/assets/images/Logo2.webp" width="160" height="72" alt="A/C Now LLC — Veteran-Owned HVAC Services" class="footer-logo" loading="lazy">
+                <p class="brand-tagline">Comfort you can feel, service you can trust. Locally owned veteran business.</p>
+                
+                <!-- Veteran Trust Badge -->
+                <div class="veteran-discount-card" style="display: block; padding: 14px; margin: 15px 0;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="color: var(--gold); font-size: 15px; font-weight: 900; line-height: 1;">★</span>
+                        <strong style="color: var(--white); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.5px;">🎖️ Veteran Owned &amp; Operated</strong>
+                    </div>
+                    <p style="margin: 0; font-size: 11.5px; line-height: 1.4; color: #CBD5E1;">Active military and veterans receive discounts on equipment replacements as well as other services. Please let us know when booking and we thank you for your service to our country.</p>
+                </div>
+                <address style="font-style:normal;font-size:13px;color:var(--gray-dark,#6b7280);margin-top:10px;line-height:1.6;">
+                    <strong>A/C Now LLC</strong><br>
+                    <a href="/pages/directions.html" style="color: inherit; text-decoration: underline;">1391 NW St. Lucie West Blvd, STE 120</a><br>
+                    Port St. Lucie, FL 34986<br>
+                    <a href="tel:+17725213568" class="phone-link" data-geo="phone">(772) 521-3568</a>
+                </address>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Our Services</div>
+                <a href="/ac-repair/">AC Repair</a>
+                <a href="/ac-installation/">AC Installation</a>
+                <a href="/ac-maintenance/">AC Maintenance</a>
+                <a href="/commercial/">Commercial Services</a>
+                <a href="/pool-heating/">Pool Heating</a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Quick Links</div>
+                <a href="/about/">About Us</a>
+                <a href="/reviews/">Reviews</a>
+                <a href="/pages/diagnose.html">DIY Troubleshooter</a>
+                <a href="/pages/planner.html">AC Lifespan Planner</a>
+                <a href="/pages/configurator.html">Build HVAC System</a>
+                <a href="/storm-prep/">Storm Prep Checklist</a>
+                <a href="/areas/">Service Areas</a>
+                <a href="/pages/members.html" class="phase-2-only">Members Area</a>
+                <a href="/contact-us/">Contact Us</a>
+                <button id="pwa-get-app-btn" class="footer-get-app-btn" aria-label="Install the A/C Now app on your device" type="button"><span class="get-app-icon" aria-hidden="true">📲</span> Get the App</button>
+            </div>
+            <div class="footer-links">
+                <div class="footer-heading">Service Cities</div>
+                <a href="/">Port St. Lucie</a>
+                <a href="/pages/hvac-services-palm-city.html">Palm City</a>
+                <a href="/pages/hvac-services-stuart.html">Stuart</a>
+                <a href="/areas/">All Service Areas</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>&copy; 2026 A/C Now LLC. EPA 608 Certified • Florida License #CAC1820542</p>
+                <div style="font-size: 12.5px; display: flex; gap: 15px;">
+                    <a href="/privacy/" style="color: inherit; text-decoration: underline;">Privacy Policy</a>
+                    <a href="/accessibility/" style="color: inherit; text-decoration: underline;">Accessibility Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="/assets/js/duct-simulator.js?v=10" defer></script>
+    <script src="/assets/js/soundboard.js?v=10" defer></script>
+    <!-- WCAG 4.1.2: Sticky CTA with role + aria-labels -->
+    <div class="mobile-sticky-cta-bar" role="region" aria-label="Quick contact actions">
+        <a href="tel:+17725213568" class="sticky-cta-btn phone-btn" aria-label="Call A/C Now LLC at (772) 521-3568"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> Call Now</a>
+        <a href="/contact-us/" class="sticky-cta-btn book-btn" aria-label="Book HVAC service online"><span aria-hidden="true"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Book Online</a>
+    </div>
+
+    <script src="/assets/js/app.js?v=115" defer></script>
+
+</body>
+</html>

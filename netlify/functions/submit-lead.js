@@ -1,6 +1,11 @@
 // Netlify Serverless Function: submit-lead
 // Handles contact form and diagnostic wizard submissions, processes spam filtration,
 // and routes alerts to A/C Now LLC operators via Resend Email and Discord Webhooks.
+// Lead Ledger: every submission is written to Netlify Blobs (store: "leads") BEFORE
+// any notification attempt. Delivery status is updated after each notification.
+// Blob write failure never blocks notifications — both paths are independent.
+
+import { getStore } from "@netlify/blobs";
 
 function escapeHTML(str) {
   if (typeof str !== "string") return "";
@@ -18,7 +23,7 @@ function sanitizeDiscordText(str) {
     .replace(/@everyone/g, "@\\everyone")
     .replace(/@here/g, "@\\here")
     .replace(/<@&?\d+>/g, "[mention]");
-  clean = clean.replace(/([*`_~|\\\[\]])/g, "\\$1");
+  clean = clean.replace(/([*`_~|\\[\]])/g, "\\$1");
   return clean;
 }
 
@@ -30,6 +35,26 @@ function getCleanString(val, maxLen, fallback = "") {
     clean = clean.substring(0, maxLen);
   }
   return clean;
+}
+
+// Generate a unique, time-sortable lead ID
+function generateLeadId() {
+  const ts = new Date().toISOString().replace(/[:.]/g, "-");
+  const rand = Math.random().toString(36).substring(2, 10);
+  return `lead_${ts}_${rand}`;
+}
+
+// Write or update a lead record in the Netlify Blobs "leads" store.
+// Returns true on success, false on failure (caller continues either way).
+async function persistLead(leadId, record) {
+  try {
+    const store = getStore({ name: "leads", consistency: "strong" });
+    await store.setJSON(leadId, record);
+    return true;
+  } catch (err) {
+    console.error(`[Ledger] Blob operation failed for ${leadId}:`, err.message || err);
+    return false;
+  }
 }
 
 export async function handler(event, context) {
@@ -162,8 +187,8 @@ export async function handler(event, context) {
         phone: rawPhone,
         issue: rawIssue,
         issueDescription: issueDescription,
-        email: getCleanString(data.email, 100, "N/A"),
-        city: getCleanString(data.city, 100, "N/A"),
+        email: getCleanString(data.email, 100, "No Email Provided"),
+        city: getCleanString(data.city, 100, "Not Provided"),
         message: getCleanString(data.message, 5000, `AC Diagnostics Run. System Behavior Reported: ${issueDescription}.`),
         militaryVerified: isMilitary
       };
@@ -176,7 +201,7 @@ export async function handler(event, context) {
       const rawMessage = getCleanString(data.message, 5000);
       const message = rawMessage || "No additional details provided.";
 
-      // Require name and at least one contact channel (phone or email)
+      // Require name and phone only (phone-first business)
       if (!fname && !lname) {
         return {
           statusCode: 400,
@@ -184,18 +209,18 @@ export async function handler(event, context) {
           body: JSON.stringify({ error: "Customer name is required." }),
         };
       }
-      if (!phone && !email) {
+      if (!phone) {
         return {
           statusCode: 400,
           headers: corsHeaders,
-          body: JSON.stringify({ error: "Either phone number or email is required." }),
+          body: JSON.stringify({ error: "Phone number is required." }),
         };
       }
 
       leadDetails = {
         type: "General Service Request",
         name: `${fname} ${lname}`.trim(),
-        phone: phone || "No Phone Provided",
+        phone: phone,
         email: email || "No Email Provided",
         city: city || "Not Provided",
         message: message,
@@ -226,9 +251,95 @@ export async function handler(event, context) {
       }
     }
 
-    console.log(`Processing new lead: [${leadDetails.type}] from ${leadDetails.name}`);
+    // ─────────────────────────────────────────────────────────────────────────
+    // Extract Preferred Date / Preferred Time & Parse Legacy / Regex Fallback
+    // ─────────────────────────────────────────────────────────────────────────
+    let preferredDate = getCleanString(data.preferred_date || data.preferred_day || data["preferred-date"], 100, "").trim();
+    let preferredTime = getCleanString(data.preferred_time || data["preferred-time"], 100, "").trim();
 
-    // Escape HTML values
+    let finalDayTime = "First Available";
+
+    if (preferredDate) {
+      if (preferredTime && preferredTime !== "First Available") {
+        finalDayTime = `${preferredDate} (${preferredTime})`;
+      } else {
+        finalDayTime = preferredDate;
+      }
+    } else {
+      // Legacy-blob regex parsing: try to extract from message
+      const msgStr = leadDetails.message || "";
+      const reservedSlotMatch = msgStr.match(/\[Reserved Slot\]\s*([^|\]\n]+)/);
+      const prefDateMatchBrackets = msgStr.match(/\[Preferred Date:\s*([^|\]\n]+)\]/);
+      const prefDateMatchColon = msgStr.match(/\[Preferred Date\]\s*([^|\]\n]+)/);
+
+      if (reservedSlotMatch) {
+        finalDayTime = reservedSlotMatch[1].trim();
+      } else if (prefDateMatchBrackets) {
+        finalDayTime = prefDateMatchBrackets[1].trim();
+      } else if (prefDateMatchColon) {
+        finalDayTime = prefDateMatchColon[1].trim();
+      }
+    }
+
+    // Determine specific Lead Source for auditability
+    let leadSource = "General Contact / Inquiry";
+    if (isWizard) {
+      leadSource = "AC Troubleshooter Wizard";
+    } else {
+      const msgStr = leadDetails.message || "";
+      if (msgStr.includes("[AC Installation Estimate Request]")) {
+        leadSource = "AC Installation Estimate Form";
+      } else if (msgStr.includes("[AC Maintenance Tune-Up Request]")) {
+        leadSource = "AC Maintenance Request Form";
+      } else if (msgStr.includes("[AC Repair Request]")) {
+        leadSource = "AC Repair Request Form";
+      } else if (msgStr.includes("[Pool Heating Estimate Request]")) {
+        leadSource = "Pool Heating Estimate Form";
+      } else if (msgStr.includes("[Commercial Bid Request]")) {
+        leadSource = "Commercial Consultation Form";
+      } else if (msgStr.includes("[Reserved Slot]")) {
+        leadSource = "Contact Page Form (with calendar)";
+      }
+    }
+
+    console.log(`Processing new lead: [${leadDetails.type}] from ${leadDetails.name} (Source: ${leadSource})`);
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 4. LEAD LEDGER — Write to Netlify Blobs BEFORE any notification attempt.
+    // ─────────────────────────────────────────────────────────────────────────
+    const leadId = generateLeadId();
+    const leadRecord = {
+      leadId,
+      timestamp: new Date().toISOString(),
+      source: "submit-lead",
+      isWizard,
+      fields: {
+        type: leadDetails.type,
+        name: leadDetails.name,
+        phone: leadDetails.phone,
+        email: leadDetails.email,
+        city: leadDetails.city,
+        message: leadDetails.message,
+        preferred_date: preferredDate,
+        preferred_time: preferredTime,
+        requested_day_time: finalDayTime,
+        lead_source: leadSource,
+        militaryVerified: leadDetails.militaryVerified,
+        ...(leadDetails.issue ? { issue: leadDetails.issue } : {}),
+        ...(leadDetails.issueDescription ? { issueDescription: leadDetails.issueDescription } : {}),
+      },
+      delivery: {
+        resend: { status: "pending", error: null, attemptedAt: null },
+        discord: { status: "pending", error: null, attemptedAt: null },
+      },
+    };
+
+    const blobWritten = await persistLead(leadId, leadRecord);
+    if (blobWritten) {
+      console.log(`[Ledger] Lead ${leadId} persisted to "leads" blob store.`);
+    }
+
+    // Escape HTML values for email
     const safeType = escapeHTML(leadDetails.type);
     const safeName = escapeHTML(leadDetails.name);
     const safePhone = escapeHTML(leadDetails.phone);
@@ -241,6 +352,12 @@ export async function handler(event, context) {
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
         <h2 style="color: #0b63e5; border-bottom: 2px solid #0b63e5; padding-bottom: 10px; margin-top: 0;">New A/C Now Lead Alert</h2>
+        
+        <div style="background-color: #f0f7ff; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #0b63e5;">
+          <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Requested Day/Time:</strong> <span style="color: #0b63e5; font-weight: bold;">${escapeHTML(finalDayTime)}</span></p>
+          <p style="margin: 0; font-size: 15px;"><strong>Lead Source:</strong> ${escapeHTML(leadSource)}</p>
+        </div>
+
         <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
           <tr>
             <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee; width: 30%;">Source Type:</td>
@@ -285,9 +402,10 @@ export async function handler(event, context) {
       </div>
     `;
 
-    // 4. Dispatch Email Notification via Resend
+    // 5. Dispatch Email Notification via Resend
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
     let emailSent = false;
+    let emailError = null;
     if (RESEND_API_KEY) {
       try {
         const emailResponse = await fetch("https://api.resend.com/emails", {
@@ -309,16 +427,61 @@ export async function handler(event, context) {
           console.log("Lead notification email sent successfully via Resend.");
         } else {
           const errText = await emailResponse.text();
+          emailError = `HTTP ${emailResponse.status}: ${errText.substring(0, 300)}`;
           console.error("Resend API rejected request:", errText);
         }
       } catch (err) {
+        emailError = err.message || String(err);
         console.error("Error connecting to Resend service:", err);
+      }
+    } else {
+      emailError = "RESEND_API_KEY not configured";
+    }
+
+    // 5a. Dispatch Customer Booking Confirmation (Gated behind Flag)
+    const CONFIRMATIONS_ENABLED = false;
+    if (CONFIRMATIONS_ENABLED && leadDetails.email && leadDetails.email !== "No Email Provided" && leadDetails.email !== "N/A") {
+      try {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${RESEND_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "A/C Now LLC <confirmations@mail.acnowllc.com>",
+            to: [leadDetails.email],
+            replyTo: "acnowpsl@gmail.com", // TODO: Update to office@acnowllc.com or info@acnowllc.com once set up
+            subject: "Service Request Received - A/C Now LLC",
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+                <h2 style="color: #0b63e5; margin-top: 0;">We've Received Your Request!</h2>
+                <p>Hello ${escapeHTML(leadDetails.name)},</p>
+                <p>Thank you for reaching out to A/C Now LLC. We have received your service request and our dispatcher is reviewing it.</p>
+                
+                <div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; border-left: 4px solid #0b63e5; margin: 20px 0;">
+                  <p style="margin: 0 0 8px 0;"><strong>Requested Day/Time:</strong> ${escapeHTML(finalDayTime)}</p>
+                  <p style="margin: 0;"><strong>Lead Source:</strong> ${escapeHTML(leadSource)}</p>
+                </div>
+                
+                <p>Our veteran-led crew will contact you shortly to confirm your booking and schedule a technician.</p>
+                <p>If you need emergency service or immediate assistance, please call us directly at <strong>(772) 521-3568</strong> (available 24/7).</p>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+                <p style="font-size: 12px; color: #777; margin: 0;">A/C Now LLC • 1391 NW St. Lucie West Blvd • Port St. Lucie, FL 34986</p>
+              </div>
+            `,
+          }),
+        });
+        console.log(`[Confirmations] Confirmation email sent to customer ${leadDetails.email}`);
+      } catch (confirmErr) {
+        console.error("[Confirmations] Failed to dispatch customer confirmation:", confirmErr);
       }
     }
 
-    // 5. Dispatch Instant Push Notification via Discord Webhook
+    // 6. Dispatch Instant Push Notification via Discord Webhook
     const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
     let discordSent = false;
+    let discordError = null;
     if (DISCORD_WEBHOOK_URL) {
       try {
         // Fallback checks prevent empty values which trigger Discord 400 Bad Request
@@ -329,6 +492,8 @@ export async function handler(event, context) {
         const discordMessage = sanitizeDiscordText(leadDetails.message) || "No Message Body Provided";
         const discordType = sanitizeDiscordText(leadDetails.type) || "General Service Request";
         const discordIssueDesc = leadDetails.issueDescription ? sanitizeDiscordText(leadDetails.issueDescription) : "";
+        const discordDayTime = sanitizeDiscordText(finalDayTime);
+        const discordLeadSource = sanitizeDiscordText(leadSource);
 
         const discordPayload = {
           username: "A/C Now Lead Bot",
@@ -338,6 +503,8 @@ export async function handler(event, context) {
               title: `🚨 New Lead: ${discordType}`,
               color: isWizard ? 16720437 : 746469,
               fields: [
+                { name: "🕒 Requested Day/Time", value: `**${discordDayTime}**`, inline: false },
+                { name: "🔌 Lead Source", value: discordLeadSource, inline: false },
                 { name: "👤 Customer Name", value: discordName, inline: true },
                 { 
                   name: "📞 Phone", 
@@ -353,7 +520,7 @@ export async function handler(event, context) {
                 ]),
                 { name: "💬 Customer Message", value: discordMessage, inline: false }
               ],
-              footer: { text: "A/C Now Serverless Dispatcher" },
+              footer: { text: `A/C Now Serverless Dispatcher • Lead ID: ${leadId}` },
               timestamp: new Date().toISOString()
             }
           ]
@@ -370,10 +537,33 @@ export async function handler(event, context) {
           console.log("Lead notification sent to Discord channel successfully.");
         } else {
           const errText = await discordResponse.text();
+          discordError = `HTTP ${discordResponse.status}: ${errText.substring(0, 300)}`;
           console.error(`Discord webhook rejected request with status ${discordResponse.status}: ${errText}`);
         }
       } catch (err) {
+        discordError = err.message || String(err);
         console.error("Error posting to Discord Webhook:", err);
+      }
+    } else {
+      discordError = "DISCORD_WEBHOOK_URL not configured";
+    }
+
+    // 7. Update Ledger with delivery outcomes
+    leadRecord.delivery.resend = {
+      status: emailSent ? "sent" : "failed",
+      error: emailSent ? null : emailError,
+      attemptedAt: new Date().toISOString(),
+    };
+    leadRecord.delivery.discord = {
+      status: discordSent ? "sent" : "failed",
+      error: discordSent ? null : discordError,
+      attemptedAt: new Date().toISOString(),
+    };
+
+    if (blobWritten) {
+      const updated = await persistLead(leadId, leadRecord);
+      if (updated) {
+        console.log(`[Ledger] Delivery status updated for ${leadId} — resend:${leadRecord.delivery.resend.status} discord:${leadRecord.delivery.discord.status}`);
       }
     }
 
@@ -383,9 +573,10 @@ export async function handler(event, context) {
       body: JSON.stringify({
         success: true,
         message: "Lead processed successfully.",
+        ledgerId: leadId,
         notifications: {
-          email: emailSent ? "sent" : "skipped",
-          discord: discordSent ? "sent" : "skipped"
+          email: emailSent ? "sent" : "failed",
+          discord: discordSent ? "sent" : "failed"
         }
       }),
     };

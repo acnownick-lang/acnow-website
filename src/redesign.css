@@ -904,7 +904,9 @@ section {
 
 /* Smart Climate Section */
 .smart-climate-section {
-    background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.78) 0%, rgba(10, 24, 47, 0.88) 100%), url('../images/smart_climate_bg.webp');
+    /* background-image deferred — IO class-swap adds .bg-loaded when section enters viewport */
+    /* Fallback: solid dark-navy matches the gradient overlay so the section is never transparent */
+    background-color: #0A182F;
     background-size: cover;
     background-position: center;
     padding: 100px 0;
@@ -912,14 +914,23 @@ section {
     overflow: hidden;
     z-index: 1;
 }
+/* Deferred background — applied by IntersectionObserver (app.js) at rootMargin 300px */
+.smart-climate-section.bg-loaded {
+    background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.78) 0%, rgba(10, 24, 47, 0.88) 100%), url('../images/smart_climate_bg.webp');
+}
 
 /* Contact Section */
 .contact-section {
-    background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.85) 0%, rgba(10, 24, 47, 0.9) 100%), url('../images/contact_bg.webp');
+    /* background-image deferred — IO class-swap adds .bg-loaded when section enters viewport */
+    background-color: #0A182F;
     background-size: cover;
     background-position: center;
     padding: 100px 0;
     position: relative;
+}
+/* Deferred background — applied by IntersectionObserver (app.js) at rootMargin 300px */
+.contact-section.bg-loaded {
+    background-image: linear-gradient(180deg, rgba(10, 24, 47, 0.85) 0%, rgba(10, 24, 47, 0.9) 100%), url('../images/contact_bg.webp');
 }
 
 .contact-section h2 {
@@ -2561,7 +2572,9 @@ section.trust-bar {
        padding-bottom:145px gives 12px breathing room above the FAB so
        the Privacy Policy / Accessibility links are never obscured.        */
     .footer-bottom {
-        padding-bottom: 145px;
+        /* Chat FAB: bottom:85px h:60px → top-edge at 145px from viewport bottom.
+           175px = 145px + 30px breathing room so Privacy Policy / Accessibility links clear both FABs. */
+        padding-bottom: 175px;
     }
 }
 
