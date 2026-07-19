@@ -1607,7 +1607,7 @@ for path in paths:
         "diagnose.html":        "/pages/diagnose.html",
         "planner.html":         "/pages/planner.html",
         "configurator.html":    "/pages/configurator.html",
-        "storm-prep.html":      "/pages/storm-prep.html",
+        "storm-prep.html":      "/storm-prep/",
         "3d-airflow.html":      "/pages/3d-airflow.html",
         "members.html":         "/pages/members.html",
         "directions.html":      "/pages/directions.html",
@@ -1700,7 +1700,58 @@ for path in paths:
     # ALL generated regional/service pages emit Service schema — including Port St. Lucie.
     # County/region pages use AdministrativeArea; city pages use City.
     # The full HVACBusiness entity (with address) only belongs on homepage/office static pages.
-    if city_name != "Florida":
+    # Full 13-city regional areaServed list — used by hub pages to represent the whole service area.
+    # City-specific pages use a single city entry (below); hubs use the array (correct modeling).
+    REGIONAL_AREA_SERVED_JSON = """[
+        {"@type": "City", "name": "Port St. Lucie"},
+        {"@type": "City", "name": "Stuart"},
+        {"@type": "City", "name": "Palm City"},
+        {"@type": "City", "name": "Jensen Beach"},
+        {"@type": "City", "name": "Fort Pierce"},
+        {"@type": "City", "name": "Hobe Sound"},
+        {"@type": "City", "name": "Jupiter"},
+        {"@type": "City", "name": "Palm Beach Gardens"},
+        {"@type": "City", "name": "North Palm Beach"},
+        {"@type": "City", "name": "Tequesta"},
+        {"@type": "City", "name": "Lakewood Park"},
+        {"@type": "City", "name": "Vero Beach"},
+        {"@type": "City", "name": "West Palm Beach"}
+      ]"""
+
+    if _hub:
+        # Hub page: full regional areaServed array (13 cities)
+        hub_area_served = REGIONAL_AREA_SERVED_JSON
+        hub_service_name = _hub.get("title", service_name).split(" | ")[0]
+        service_schema = f"""<script type="application/ld+json">
+    {{
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "{hub_service_name}",
+      "serviceType": "{service_name}",
+      "provider": {{
+        "@type": "HVACBusiness",
+        "@id": "https://acnowllc.com/#hvacbusiness",
+        "name": "A/C Now LLC",
+        "url": "https://acnowllc.com/",
+        "image": "https://acnowllc.com/assets/images/og_social.jpg",
+        "telephone": "(772) 521-3568"
+      }},
+      "areaServed": {hub_area_served}
+    }}
+    </script>"""
+        content = re.sub(
+            r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"HVACBusiness"(?:(?!</script>).)*?</script>',
+            service_schema,
+            content,
+            flags=re.DOTALL
+        )
+        content = re.sub(
+            r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"Service"(?:(?!</script>).)*?"PostalAddress"(?:(?!</script>).)*?</script>',
+            service_schema,
+            content,
+            flags=re.DOTALL
+        )
+    elif city_name != "Florida":
         wiki_url = wikipedia_map.get(city_name, "https://en.wikipedia.org/wiki/Port_St._Lucie,_Florida")
         # Use AdministrativeArea for county/region names, City for city names
         county_region_names = {"St. Lucie County", "Martin County", "Saint Lucie West"}
@@ -1727,7 +1778,7 @@ for path in paths:
     }}
     </script>"""
         content = re.sub(
-            r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"HVACBusiness".*?</script>',
+            r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"HVACBusiness"(?:(?!</script>).)*?</script>',
             service_schema,
             content,
             flags=re.DOTALL
@@ -1735,7 +1786,7 @@ for path in paths:
         # Also replace the Service+LocalBusiness+PostalAddress pattern used in commercial.html
         # and pool-heating.html templates (different block structure, same fix needed)
         content = re.sub(
-            r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"Service".*?"PostalAddress".*?</script>',
+            r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"Service"(?:(?!</script>).)*?"PostalAddress"(?:(?!</script>).)*?</script>',
             service_schema,
             content,
             flags=re.DOTALL
@@ -1782,7 +1833,7 @@ for path in paths:
         text = re.sub(r'\band\s+and\b', 'and', text)  # "and and"
         return text
 
-    faq_matches = list(re.finditer(r'<script type="application/ld\+json">(.*?FAQPage.*?)</script>', content, re.DOTALL))
+    faq_matches = list(re.finditer(r'<script type="application/ld\+json">((?:(?!</script>).)*?FAQPage(?:(?!</script>).)*?)</script>', content, re.DOTALL))
     for m in faq_matches:
         orig_block = m.group(0)
         new_block = orig_block
@@ -1806,11 +1857,12 @@ for path in paths:
     # Inject BreadcrumbList JSON-LD dynamically based on path depth
     # First, strip any pre-existing BreadcrumbList schema blocks from the template
     content = re.sub(
-        r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"BreadcrumbList".*?</script>',
+        r'<script type="application/ld\+json">\s*\{\s*"@context":\s*"https://schema.org",\s*"@type":\s*"BreadcrumbList"(?:(?!</script>).)*?</script>',
         '',
         content,
         flags=re.DOTALL
     )
+
     if len(parts) >= 1:
         cat_slug = parts[0]
         cat_name_map = {
